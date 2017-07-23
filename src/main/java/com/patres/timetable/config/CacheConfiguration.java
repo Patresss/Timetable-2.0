@@ -41,8 +41,45 @@ public class CacheConfiguration {
     public JCacheManagerCustomizer cacheManagerCustomizer() {
         return cm -> {
             cm.createCache(com.patres.timetable.domain.User.class.getName(), jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.User.class.getName() + ".divisions", jcacheConfiguration);
             cm.createCache(com.patres.timetable.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.patres.timetable.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName(), jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".timetables", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".divisionPlaces", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".divisionTeachers", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".divisionSubjects", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".divisionLessons", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".divisionPeriods", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".divisionProperties", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".parents", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".users", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".preferredTeachers", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".preferredSubjects", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".preferredPlaces", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Properties.class.getName(), jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Teacher.class.getName(), jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Teacher.class.getName() + ".timetables", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Teacher.class.getName() + ".preferredSubjects", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Teacher.class.getName() + ".preferredDivisions", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Teacher.class.getName() + ".preferredPlaces", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Subject.class.getName(), jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Subject.class.getName() + ".timetables", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Subject.class.getName() + ".preferredTeachers", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Subject.class.getName() + ".preferredDivisions", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Subject.class.getName() + ".preferredPlaces", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Place.class.getName(), jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Place.class.getName() + ".timetables", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Place.class.getName() + ".preferredSubjects", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Place.class.getName() + ".preferredDivisions", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Place.class.getName() + ".preferredTeachers", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Timetable.class.getName(), jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Lesson.class.getName(), jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Lesson.class.getName() + ".timetables", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Period.class.getName(), jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Period.class.getName() + ".intervalTimes", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Period.class.getName() + ".timetables", jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Interval.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
