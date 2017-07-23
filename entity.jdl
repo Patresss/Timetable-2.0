@@ -24,8 +24,9 @@ relationship ManyToMany {
     Division{parent(name)} to Division
 }
 
-relationship ManyToOne {
-Division{user(login)} to User{division}
+
+relationship ManyToMany {
+    Division{user(login)} to User{division}
 }
 
 entity Properties {
