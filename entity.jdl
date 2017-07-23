@@ -1,0 +1,30 @@
+enum DivisionType {
+    SCHOOL,
+    CLASS,
+    SUBGROUP
+}
+
+entity Division {
+    name String required,
+    shortName String,
+    numberOfPeople Long,
+    divisionType DivisionType required,
+    colorBackground String,
+    colorText String
+}
+
+entity Place {
+    name String required,
+    numberOfSeats Long,
+    shortName String,
+    colorBackground String,
+    colorText String
+}
+
+relationship OneToMany {
+    Division{divisionsPlace} to Place{owner(name)}
+}
+
+relationship ManyToMany {
+Place{preferredDivision(name)} to Division{preferredPlace}
+}
