@@ -4,27 +4,140 @@ enum DivisionType {
     SUBGROUP
 }
 
+enum EventType {
+    LESSON,
+    SUBSTITUTION,
+    SPECIAL
+}
+
+
 entity Division {
     name String required,
     shortName String,
     numberOfPeople Long,
     divisionType DivisionType required,
     colorBackground String,
-    colorText String
-}
-
-entity Place {
-    name String required,
-    numberOfSeats Long,
-    shortName String,
-    colorBackground String,
-    colorText String
-}
-
-relationship OneToMany {
-    Division{divisionsPlace} to Place{owner(name)}
+    colorText String,
 }
 
 relationship ManyToMany {
-Place{preferredDivision(name)} to Division{preferredPlace}
+    Division{parent(name)} to Division
 }
+
+relationship ManyToOne {
+Division{user(login)} to User{division}
+}
+
+entity Properties {
+propertyKey String required,
+propertyValue String
+}
+
+entity Teacher {
+name String required,
+surname String required,
+degree String,
+shortName String
+}
+
+entity Subject {
+name String required,
+shortName String,
+colorBackground String,
+colorText String
+}
+
+entity Place {
+name String required,
+numberOfSeats Long,
+shortName String,
+colorBackground String,
+colorText String
+}
+
+entity Timetable {
+title String required,
+startTime String required,
+endTime String required,
+startDate LocalDate,
+endDate LocalDate,
+date LocalDate,
+type EventType required,
+everyWeek Long,
+startWithWeek Long,
+description String,
+colorBackground String,
+colorText String,
+
+inMonday Boolean,
+inTuesday Boolean,
+inWednesday Boolean,
+inThursday Boolean,
+inFriday Boolean,
+inSaturday Boolean,
+inSunday Boolean
+}
+
+entity Lesson {
+name String required,
+startTime String required,
+endTime String required,
+}
+
+entity Period {
+name String required
+}
+
+entity Interval {
+included Boolean,
+startDate LocalDate,
+endDate LocalDate
+}
+
+relationship OneToMany {
+Period{intervalTime} to Interval{period(name)}
+}
+
+// ================================================================
+// Timetable propeties
+// ================================================================
+relationship OneToMany {
+Place{timetable} to Timetable{place(name)},
+Subject{timetable} to Timetable{subject(name)},
+Teacher{timetable} to Timetable{teacher(surname)},
+Division{timetable} to Timetable{division(name)},
+Lesson{timetable} to Timetable{lesson(name)},
+Period{timetable} to Timetable{period(name)}
+}
+
+// ================================================================
+// Belonging to the Division
+// ================================================================
+relationship OneToMany {
+Division{divisionPlace} to Place{division(name)},
+Division{divisionTeacher} to Teacher{division(name)},
+Division{divisionSubject} to Subject{division(name)},
+Division{divisionLesson} to Lesson{division(name)},
+Division{divisionPeriod} to Period{division(name)},
+Division{divisionProperties} to Properties{division(name)}
+}
+
+// ================================================================
+// Preference
+// ================================================================
+relationship ManyToMany {
+Division{preferredTeacher(surname)} to Teacher{preferredDivision},
+Teacher{preferredSubject(name)} to Subject{preferredTeacher},
+Division{preferredSubject(name)} to Subject{preferredDivision},
+Place{preferredSubject(name)} to Subject{preferredPlace},
+Place{preferredDivision(name)} to Division{preferredPlace},
+Place{preferredTeacher(surname)} to Teacher{preferredPlace}
+}
+
+
+paginate all with pagination
+service all with serviceClass
+
+dto * with mapstruct
+
+
