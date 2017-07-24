@@ -1,0 +1,131 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "place",
+            "otherEntityName": "place",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "subject",
+            "otherEntityName": "subject",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "teacher",
+            "otherEntityName": "teacher",
+            "otherEntityField": "surname"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "division",
+            "otherEntityName": "division",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "lesson",
+            "otherEntityName": "lesson",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "period",
+            "otherEntityName": "period",
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "startTime",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "endTime",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "startDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "EventType",
+            "fieldValues": "LESSON,SUBSTITUTION,SPECIAL",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "everyWeek",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "startWithWeek",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "colorBackground",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "colorText",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "inMonday",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "inTuesday",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "inWednesday",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "inThursday",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "inFriday",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "inSaturday",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "inSunday",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20170723115926",
+    "entityTableName": "timetable",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass"
+}

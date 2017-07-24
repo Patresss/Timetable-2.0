@@ -1,0 +1,30 @@
+{
+    "timetableApp": {
+        "teacher" : {
+            "home": {
+                "title": "Teachers",
+                "createLabel": "Dodaj Teacher",
+                "createOrEditLabel": "Dodaj lub edytuj: Teacher",
+                "search": "Szukaj Teacher"
+            },
+            "created": "Utworzono nowy Teacher z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Teacher z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Teacher z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Teacher {{ id }}?"
+            },
+            "detail": {
+                "title": "Teacher"
+            },
+            "name": "Name",
+            "surname": "Surname",
+            "degree": "Degree",
+            "shortName": "Short Name",
+            "timetable": "Timetable",
+            "preferredSubject": "Preferred Subject",
+            "division": "Division",
+            "preferredDivision": "Preferred Division",
+            "preferredPlace": "Preferred Place"
+        }
+    }
+}

@@ -1,0 +1,46 @@
+{
+    "timetableApp": {
+        "timetable" : {
+            "home": {
+                "title": "Timetables",
+                "createLabel": "Dodaj Timetable",
+                "createOrEditLabel": "Dodaj lub edytuj: Timetable",
+                "search": "Szukaj Timetable"
+            },
+            "created": "Utworzono nowy Timetable z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Timetable z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Timetable z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Timetable {{ id }}?"
+            },
+            "detail": {
+                "title": "Timetable"
+            },
+            "title": "Title",
+            "startTime": "Start Time",
+            "endTime": "End Time",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "date": "Date",
+            "type": "Type",
+            "everyWeek": "Every Week",
+            "startWithWeek": "Start With Week",
+            "description": "Description",
+            "colorBackground": "Color Background",
+            "colorText": "Color Text",
+            "inMonday": "In Monday",
+            "inTuesday": "In Tuesday",
+            "inWednesday": "In Wednesday",
+            "inThursday": "In Thursday",
+            "inFriday": "In Friday",
+            "inSaturday": "In Saturday",
+            "inSunday": "In Sunday",
+            "place": "Place",
+            "subject": "Subject",
+            "teacher": "Teacher",
+            "division": "Division",
+            "lesson": "Lesson",
+            "period": "Period"
+        }
+    }
+}

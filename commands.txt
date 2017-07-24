@@ -1,2 +1,5 @@
 npm install -g generator-jhipster
 jhipster import-jdl entity.jdl
+
+DROP DATABASE "timetable";
+CREATE DATABASE Timetable;

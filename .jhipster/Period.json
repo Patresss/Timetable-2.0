@@ -1,0 +1,37 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "intervalTime",
+            "otherEntityName": "interval",
+            "otherEntityRelationshipName": "period"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "timetable",
+            "otherEntityName": "timetable",
+            "otherEntityRelationshipName": "period"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "division",
+            "otherEntityName": "division",
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170723115928",
+    "entityTableName": "period",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass"
+}

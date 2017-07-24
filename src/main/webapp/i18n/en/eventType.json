@@ -1,0 +1,10 @@
+{
+    "timetableApp": {
+        "EventType" : {
+            "null": "",
+            "LESSON": "LESSON",
+            "SUBSTITUTION": "SUBSTITUTION",
+            "SPECIAL": "SPECIAL"
+        }
+    }
+}

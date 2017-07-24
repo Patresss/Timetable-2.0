@@ -1,0 +1,39 @@
+{
+    "timetableApp": {
+        "division" : {
+            "home": {
+                "title": "Divisions",
+                "createLabel": "Dodaj Division",
+                "createOrEditLabel": "Dodaj lub edytuj: Division",
+                "search": "Szukaj Division"
+            },
+            "created": "Utworzono nowy Division z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Division z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Division z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Division {{ id }}?"
+            },
+            "detail": {
+                "title": "Division"
+            },
+            "name": "Name",
+            "shortName": "Short Name",
+            "numberOfPeople": "Number Of People",
+            "divisionType": "Division Type",
+            "colorBackground": "Color Background",
+            "colorText": "Color Text",
+            "timetable": "Timetable",
+            "divisionPlace": "Division Place",
+            "divisionTeacher": "Division Teacher",
+            "divisionSubject": "Division Subject",
+            "divisionLesson": "Division Lesson",
+            "divisionPeriod": "Division Period",
+            "divisionProperties": "Division Properties",
+            "parent": "Parent",
+            "user": "User",
+            "preferredTeacher": "Preferred Teacher",
+            "preferredSubject": "Preferred Subject",
+            "preferredPlace": "Preferred Place"
+        }
+    }
+}

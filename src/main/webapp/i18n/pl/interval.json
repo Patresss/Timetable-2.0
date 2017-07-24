@@ -1,0 +1,25 @@
+{
+    "timetableApp": {
+        "interval" : {
+            "home": {
+                "title": "Intervals",
+                "createLabel": "Dodaj Interval",
+                "createOrEditLabel": "Dodaj lub edytuj: Interval",
+                "search": "Szukaj Interval"
+            },
+            "created": "Utworzono nowy Interval z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Interval z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Interval z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Interval {{ id }}?"
+            },
+            "detail": {
+                "title": "Interval"
+            },
+            "included": "Included",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "period": "Period"
+        }
+    }
+}

@@ -1,0 +1,149 @@
+<div>
+    <h2>
+        <span jhiTranslate="timetableApp.timetable.home.title">Timetables</span>
+        <button class="btn btn-primary float-right jh-create-entity create-timetable" [routerLink]="['/', { outlets: { popup: ['timetable-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="timetableApp.timetable.home.createLabel">
+            Create new Timetable
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'timetableApp.timetable.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="timetables">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="title"><span jhiTranslate="timetableApp.timetable.title">Title</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="startTime"><span jhiTranslate="timetableApp.timetable.startTime">Start Time</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="endTime"><span jhiTranslate="timetableApp.timetable.endTime">End Time</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="startDate"><span jhiTranslate="timetableApp.timetable.startDate">Start Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="endDate"><span jhiTranslate="timetableApp.timetable.endDate">End Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="date"><span jhiTranslate="timetableApp.timetable.date">Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="type"><span jhiTranslate="timetableApp.timetable.type">Type</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="everyWeek"><span jhiTranslate="timetableApp.timetable.everyWeek">Every Week</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="startWithWeek"><span jhiTranslate="timetableApp.timetable.startWithWeek">Start With Week</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="description"><span jhiTranslate="timetableApp.timetable.description">Description</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="colorBackground"><span jhiTranslate="timetableApp.timetable.colorBackground">Color Background</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="colorText"><span jhiTranslate="timetableApp.timetable.colorText">Color Text</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="inMonday"><span jhiTranslate="timetableApp.timetable.inMonday">In Monday</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="inTuesday"><span jhiTranslate="timetableApp.timetable.inTuesday">In Tuesday</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="inWednesday"><span jhiTranslate="timetableApp.timetable.inWednesday">In Wednesday</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="inThursday"><span jhiTranslate="timetableApp.timetable.inThursday">In Thursday</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="inFriday"><span jhiTranslate="timetableApp.timetable.inFriday">In Friday</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="inSaturday"><span jhiTranslate="timetableApp.timetable.inSaturday">In Saturday</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="inSunday"><span jhiTranslate="timetableApp.timetable.inSunday">In Sunday</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="placeName"><span jhiTranslate="timetableApp.timetable.place">Place</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="subjectName"><span jhiTranslate="timetableApp.timetable.subject">Subject</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="teacherSurname"><span jhiTranslate="timetableApp.timetable.teacher">Teacher</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="divisionName"><span jhiTranslate="timetableApp.timetable.division">Division</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="lessonName"><span jhiTranslate="timetableApp.timetable.lesson">Lesson</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="periodName"><span jhiTranslate="timetableApp.timetable.period">Period</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let timetable of timetables ;trackBy: trackId">
+                <td><a [routerLink]="['../timetable', timetable.id ]">{{timetable.id}}</a></td>
+                <td>{{timetable.title}}</td>
+                <td>{{timetable.startTime}}</td>
+                <td>{{timetable.endTime}}</td>
+                <td>{{timetable.startDate | date:'mediumDate'}}</td>
+                <td>{{timetable.endDate | date:'mediumDate'}}</td>
+                <td>{{timetable.date | date:'mediumDate'}}</td>
+                <td jhiTranslate="{{'timetableApp.EventType.' + timetable.type}}">{{timetable.type}}</td>
+                <td>{{timetable.everyWeek}}</td>
+                <td>{{timetable.startWithWeek}}</td>
+                <td>{{timetable.description}}</td>
+                <td>{{timetable.colorBackground}}</td>
+                <td>{{timetable.colorText}}</td>
+                <td>{{timetable.inMonday}}</td>
+                <td>{{timetable.inTuesday}}</td>
+                <td>{{timetable.inWednesday}}</td>
+                <td>{{timetable.inThursday}}</td>
+                <td>{{timetable.inFriday}}</td>
+                <td>{{timetable.inSaturday}}</td>
+                <td>{{timetable.inSunday}}</td>
+                <td>
+                    <div *ngIf="timetable.placeId">
+                        <a [routerLink]="['../place', timetable.placeId  ]" >{{timetable.placeName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="timetable.subjectId">
+                        <a [routerLink]="['../subject', timetable.subjectId  ]" >{{timetable.subjectName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="timetable.teacherId">
+                        <a [routerLink]="['../teacher', timetable.teacherId  ]" >{{timetable.teacherSurname}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="timetable.divisionId">
+                        <a [routerLink]="['../division', timetable.divisionId  ]" >{{timetable.divisionName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="timetable.lessonId">
+                        <a [routerLink]="['../lesson', timetable.lessonId  ]" >{{timetable.lessonName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="timetable.periodId">
+                        <a [routerLink]="['../period', timetable.periodId  ]" >{{timetable.periodName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../timetable', timetable.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'timetable/'+ timetable.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'timetable/'+ timetable.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="timetables && timetables.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

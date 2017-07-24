@@ -1,0 +1,64 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "timetable",
+            "otherEntityName": "timetable",
+            "otherEntityRelationshipName": "subject"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "division",
+            "otherEntityName": "division",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "preferredTeacher",
+            "otherEntityName": "teacher",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "preferredSubject"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "preferredDivision",
+            "otherEntityName": "division",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "preferredSubject"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "preferredPlace",
+            "otherEntityName": "place",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "preferredSubject"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "shortName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "colorBackground",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "colorText",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170723115924",
+    "entityTableName": "subject",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass"
+}

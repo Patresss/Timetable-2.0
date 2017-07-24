@@ -1,0 +1,31 @@
+{
+    "timetableApp": {
+        "place" : {
+            "home": {
+                "title": "Places",
+                "createLabel": "Dodaj Place",
+                "createOrEditLabel": "Dodaj lub edytuj: Place",
+                "search": "Szukaj Place"
+            },
+            "created": "Utworzono nowy Place z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Place z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Place z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Place {{ id }}?"
+            },
+            "detail": {
+                "title": "Place"
+            },
+            "name": "Name",
+            "numberOfSeats": "Number Of Seats",
+            "shortName": "Short Name",
+            "colorBackground": "Color Background",
+            "colorText": "Color Text",
+            "timetable": "Timetable",
+            "preferredSubject": "Preferred Subject",
+            "preferredDivision": "Preferred Division",
+            "preferredTeacher": "Preferred Teacher",
+            "division": "Division"
+        }
+    }
+}

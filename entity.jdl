@@ -58,8 +58,8 @@ colorText String
 
 entity Timetable {
 title String required,
-startTime String required,
-endTime String required,
+startTime Long,
+endTime Long,
 startDate LocalDate,
 endDate LocalDate,
 date LocalDate,

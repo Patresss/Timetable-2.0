@@ -1,0 +1,69 @@
+
+<div *ngIf="division">
+    <h2><span jhiTranslate="timetableApp.division.detail.title">Division</span> {{division.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="timetableApp.division.name">Name</span></dt>
+        <dd>
+            <span>{{division.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.division.shortName">Short Name</span></dt>
+        <dd>
+            <span>{{division.shortName}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.division.numberOfPeople">Number Of People</span></dt>
+        <dd>
+            <span>{{division.numberOfPeople}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.division.divisionType">Division Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'timetableApp.DivisionType.' + division.divisionType}}">{{division.divisionType}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.division.colorBackground">Color Background</span></dt>
+        <dd>
+            <span>{{division.colorBackground}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.division.colorText">Color Text</span></dt>
+        <dd>
+            <span>{{division.colorText}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.division.parent">Parent</span></dt>
+        <dd>
+            <span *ngFor="let parent of division.parents; let last = last">
+                <a [routerLink]="['/division', parent?.id ]">{{parent.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.division.user">User</span></dt>
+        <dd>
+            <span *ngFor="let user of division.users; let last = last">
+                {{user.login}}{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.division.preferredTeacher">Preferred Teacher</span></dt>
+        <dd>
+            <span *ngFor="let preferredTeacher of division.preferredTeachers; let last = last">
+                <a [routerLink]="['/teacher', preferredTeacher?.id ]">{{preferredTeacher.surname}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.division.preferredSubject">Preferred Subject</span></dt>
+        <dd>
+            <span *ngFor="let preferredSubject of division.preferredSubjects; let last = last">
+                <a [routerLink]="['/subject', preferredSubject?.id ]">{{preferredSubject.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'division/'+ division.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

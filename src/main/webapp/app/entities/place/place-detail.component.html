@@ -1,0 +1,65 @@
+
+<div *ngIf="place">
+    <h2><span jhiTranslate="timetableApp.place.detail.title">Place</span> {{place.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="timetableApp.place.name">Name</span></dt>
+        <dd>
+            <span>{{place.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.place.numberOfSeats">Number Of Seats</span></dt>
+        <dd>
+            <span>{{place.numberOfSeats}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.place.shortName">Short Name</span></dt>
+        <dd>
+            <span>{{place.shortName}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.place.colorBackground">Color Background</span></dt>
+        <dd>
+            <span>{{place.colorBackground}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.place.colorText">Color Text</span></dt>
+        <dd>
+            <span>{{place.colorText}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.place.preferredSubject">Preferred Subject</span></dt>
+        <dd>
+            <span *ngFor="let preferredSubject of place.preferredSubjects; let last = last">
+                <a [routerLink]="['/subject', preferredSubject?.id ]">{{preferredSubject.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.place.preferredDivision">Preferred Division</span></dt>
+        <dd>
+            <span *ngFor="let preferredDivision of place.preferredDivisions; let last = last">
+                <a [routerLink]="['/division', preferredDivision?.id ]">{{preferredDivision.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.place.preferredTeacher">Preferred Teacher</span></dt>
+        <dd>
+            <span *ngFor="let preferredTeacher of place.preferredTeachers; let last = last">
+                <a [routerLink]="['/teacher', preferredTeacher?.id ]">{{preferredTeacher.surname}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.place.division">Division</span></dt>
+        <dd>
+            <div *ngIf="place.divisionId">
+                <a [routerLink]="['/division', place.divisionId]">{{place.divisionName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'place/'+ place.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

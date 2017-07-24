@@ -1,0 +1,124 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "timetable",
+            "otherEntityName": "timetable",
+            "otherEntityRelationshipName": "division"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "divisionPlace",
+            "otherEntityName": "place",
+            "otherEntityRelationshipName": "division"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "divisionTeacher",
+            "otherEntityName": "teacher",
+            "otherEntityRelationshipName": "division"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "divisionSubject",
+            "otherEntityName": "subject",
+            "otherEntityRelationshipName": "division"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "divisionLesson",
+            "otherEntityName": "lesson",
+            "otherEntityRelationshipName": "division"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "divisionPeriod",
+            "otherEntityName": "period",
+            "otherEntityRelationshipName": "division"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "divisionProperties",
+            "otherEntityName": "properties",
+            "otherEntityRelationshipName": "division"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "parent",
+            "otherEntityName": "division",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "division",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "login",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "preferredDivision",
+            "relationshipName": "preferredTeacher",
+            "otherEntityName": "teacher",
+            "otherEntityField": "surname",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "preferredDivision",
+            "relationshipName": "preferredSubject",
+            "otherEntityName": "subject",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "preferredPlace",
+            "otherEntityName": "place",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "preferredDivision"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "shortName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numberOfPeople",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "divisionType",
+            "fieldType": "DivisionType",
+            "fieldValues": "SCHOOL,CLASS,SUBGROUP",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "colorBackground",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "colorText",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170723115921",
+    "entityTableName": "division",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass"
+}

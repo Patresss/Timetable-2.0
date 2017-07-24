@@ -1,0 +1,133 @@
+
+<div *ngIf="timetable">
+    <h2><span jhiTranslate="timetableApp.timetable.detail.title">Timetable</span> {{timetable.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="timetableApp.timetable.title">Title</span></dt>
+        <dd>
+            <span>{{timetable.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.startTime">Start Time</span></dt>
+        <dd>
+            <span>{{timetable.startTime}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.endTime">End Time</span></dt>
+        <dd>
+            <span>{{timetable.endTime}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.startDate">Start Date</span></dt>
+        <dd>
+            <span>{{timetable.startDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.endDate">End Date</span></dt>
+        <dd>
+            <span>{{timetable.endDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.date">Date</span></dt>
+        <dd>
+            <span>{{timetable.date | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.type">Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'timetableApp.EventType.' + timetable.type}}">{{timetable.type}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.everyWeek">Every Week</span></dt>
+        <dd>
+            <span>{{timetable.everyWeek}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.startWithWeek">Start With Week</span></dt>
+        <dd>
+            <span>{{timetable.startWithWeek}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.description">Description</span></dt>
+        <dd>
+            <span>{{timetable.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.colorBackground">Color Background</span></dt>
+        <dd>
+            <span>{{timetable.colorBackground}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.colorText">Color Text</span></dt>
+        <dd>
+            <span>{{timetable.colorText}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.inMonday">In Monday</span></dt>
+        <dd>
+            <span>{{timetable.inMonday}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.inTuesday">In Tuesday</span></dt>
+        <dd>
+            <span>{{timetable.inTuesday}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.inWednesday">In Wednesday</span></dt>
+        <dd>
+            <span>{{timetable.inWednesday}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.inThursday">In Thursday</span></dt>
+        <dd>
+            <span>{{timetable.inThursday}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.inFriday">In Friday</span></dt>
+        <dd>
+            <span>{{timetable.inFriday}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.inSaturday">In Saturday</span></dt>
+        <dd>
+            <span>{{timetable.inSaturday}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.inSunday">In Sunday</span></dt>
+        <dd>
+            <span>{{timetable.inSunday}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.place">Place</span></dt>
+        <dd>
+            <div *ngIf="timetable.placeId">
+                <a [routerLink]="['/place', timetable.placeId]">{{timetable.placeName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.subject">Subject</span></dt>
+        <dd>
+            <div *ngIf="timetable.subjectId">
+                <a [routerLink]="['/subject', timetable.subjectId]">{{timetable.subjectName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.teacher">Teacher</span></dt>
+        <dd>
+            <div *ngIf="timetable.teacherId">
+                <a [routerLink]="['/teacher', timetable.teacherId]">{{timetable.teacherSurname}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.division">Division</span></dt>
+        <dd>
+            <div *ngIf="timetable.divisionId">
+                <a [routerLink]="['/division', timetable.divisionId]">{{timetable.divisionName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.lesson">Lesson</span></dt>
+        <dd>
+            <div *ngIf="timetable.lessonId">
+                <a [routerLink]="['/lesson', timetable.lessonId]">{{timetable.lessonName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.timetable.period">Period</span></dt>
+        <dd>
+            <div *ngIf="timetable.periodId">
+                <a [routerLink]="['/period', timetable.periodId]">{{timetable.periodName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'timetable/'+ timetable.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

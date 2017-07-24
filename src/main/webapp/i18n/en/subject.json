@@ -1,0 +1,30 @@
+{
+    "timetableApp": {
+        "subject" : {
+            "home": {
+                "title": "Subjects",
+                "createLabel": "Create a new Subject",
+                "createOrEditLabel": "Create or edit a Subject",
+                "search": "Search for Subject"
+            },
+            "created": "A new Subject is created with identifier {{ param }}",
+            "updated": "A Subject is updated with identifier {{ param }}",
+            "deleted": "A Subject is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Subject {{ id }}?"
+            },
+            "detail": {
+                "title": "Subject"
+            },
+            "name": "Name",
+            "shortName": "Short Name",
+            "colorBackground": "Color Background",
+            "colorText": "Color Text",
+            "timetable": "Timetable",
+            "division": "Division",
+            "preferredTeacher": "Preferred Teacher",
+            "preferredDivision": "Preferred Division",
+            "preferredPlace": "Preferred Place"
+        }
+    }
+}

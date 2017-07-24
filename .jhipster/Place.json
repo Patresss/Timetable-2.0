@@ -1,0 +1,71 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "timetable",
+            "otherEntityName": "timetable",
+            "otherEntityRelationshipName": "place"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "preferredPlace",
+            "relationshipName": "preferredSubject",
+            "otherEntityName": "subject",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "preferredPlace",
+            "relationshipName": "preferredDivision",
+            "otherEntityName": "division",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "preferredPlace",
+            "relationshipName": "preferredTeacher",
+            "otherEntityName": "teacher",
+            "otherEntityField": "surname",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "division",
+            "otherEntityName": "division",
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "numberOfSeats",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "shortName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "colorBackground",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "colorText",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170723115925",
+    "entityTableName": "place",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass"
+}

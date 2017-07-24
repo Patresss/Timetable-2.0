@@ -1,0 +1,68 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "timetable",
+            "otherEntityName": "timetable",
+            "otherEntityRelationshipName": "teacher"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "preferredTeacher",
+            "relationshipName": "preferredSubject",
+            "otherEntityName": "subject",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "division",
+            "otherEntityName": "division",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "preferredDivision",
+            "otherEntityName": "division",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "preferredTeacher"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "preferredPlace",
+            "otherEntityName": "place",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "preferredTeacher"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "surname",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "degree",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "shortName",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170723115923",
+    "entityTableName": "teacher",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass"
+}
