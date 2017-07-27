@@ -64,6 +64,14 @@ public class TeacherService {
             .map(teacherMapper::toDto);
     }
 
+
+    @Transactional(readOnly = true)
+    public Page<TeacherDTO> findByDivisionInCurrentUser(Pageable pageable) {
+        log.debug("Request to get all Teachers");
+        return teacherRepository.findByDivisionInCurrentUser(pageable)
+            .map(teacherMapper::toDto);
+    }
+
     /**
      *  Get one teacher by id.
      *

@@ -95,10 +95,14 @@ public class TeacherResource {
     @Timed
     public ResponseEntity<List<TeacherDTO>> getAllTeachers(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Teachers");
-        Page<TeacherDTO> page = teacherService.findAll(pageable);
+
+      //  Page<TeacherDTO> page = teacherService.findAll(pageable);
+        Page<TeacherDTO> page = teacherService.findByDivisionInCurrentUser(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/teachers");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+
+
 
     /**
      * GET  /teachers/:id : get the "id" teacher.
