@@ -2,7 +2,6 @@ package com.patres.timetable.service;
 
 import com.patres.timetable.domain.Subject;
 import com.patres.timetable.repository.SubjectRepository;
-import com.patres.timetable.repository.search.SubjectSearchRepository;
 import com.patres.timetable.service.dto.SubjectDTO;
 import com.patres.timetable.service.mapper.SubjectMapper;
 import org.slf4j.Logger;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Subject.
@@ -28,12 +25,9 @@ public class SubjectService {
 
     private final SubjectMapper subjectMapper;
 
-    private final SubjectSearchRepository subjectSearchRepository;
-
-    public SubjectService(SubjectRepository subjectRepository, SubjectMapper subjectMapper, SubjectSearchRepository subjectSearchRepository) {
+    public SubjectService(SubjectRepository subjectRepository, SubjectMapper subjectMapper) {
         this.subjectRepository = subjectRepository;
         this.subjectMapper = subjectMapper;
-        this.subjectSearchRepository = subjectSearchRepository;
     }
 
     /**
@@ -46,9 +40,7 @@ public class SubjectService {
         log.debug("Request to save Subject : {}", subjectDTO);
         Subject subject = subjectMapper.toEntity(subjectDTO);
         subject = subjectRepository.save(subject);
-        SubjectDTO result = subjectMapper.toDto(subject);
-        subjectSearchRepository.save(subject);
-        return result;
+        return subjectMapper.toDto(subject);
     }
 
     /**
@@ -85,20 +77,5 @@ public class SubjectService {
     public void delete(Long id) {
         log.debug("Request to delete Subject : {}", id);
         subjectRepository.delete(id);
-        subjectSearchRepository.delete(id);
-    }
-
-    /**
-     * Search for the subject corresponding to the query.
-     *
-     *  @param query the query of the search
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true)
-    public Page<SubjectDTO> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of Subjects for query {}", query);
-        Page<Subject> result = subjectSearchRepository.search(queryStringQuery(query), pageable);
-        return result.map(subjectMapper::toDto);
     }
 }

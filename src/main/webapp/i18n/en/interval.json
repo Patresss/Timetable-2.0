@@ -4,8 +4,7 @@
             "home": {
                 "title": "Intervals",
                 "createLabel": "Create a new Interval",
-                "createOrEditLabel": "Create or edit a Interval",
-                "search": "Search for Interval"
+                "createOrEditLabel": "Create or edit a Interval"
             },
             "created": "A new Interval is created with identifier {{ param }}",
             "updated": "A Interval is updated with identifier {{ param }}",

@@ -4,8 +4,7 @@
             "home": {
                 "title": "Subjects",
                 "createLabel": "Create a new Subject",
-                "createOrEditLabel": "Create or edit a Subject",
-                "search": "Search for Subject"
+                "createOrEditLabel": "Create or edit a Subject"
             },
             "created": "A new Subject is created with identifier {{ param }}",
             "updated": "A Subject is updated with identifier {{ param }}",

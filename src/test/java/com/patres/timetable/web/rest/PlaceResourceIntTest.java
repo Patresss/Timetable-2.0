@@ -5,7 +5,6 @@ import com.patres.timetable.TimetableApp;
 import com.patres.timetable.domain.Place;
 import com.patres.timetable.repository.PlaceRepository;
 import com.patres.timetable.service.PlaceService;
-import com.patres.timetable.repository.search.PlaceSearchRepository;
 import com.patres.timetable.service.dto.PlaceDTO;
 import com.patres.timetable.service.mapper.PlaceMapper;
 import com.patres.timetable.web.rest.errors.ExceptionTranslator;
@@ -66,9 +65,6 @@ public class PlaceResourceIntTest {
     private PlaceService placeService;
 
     @Autowired
-    private PlaceSearchRepository placeSearchRepository;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -112,7 +108,6 @@ public class PlaceResourceIntTest {
 
     @Before
     public void initTest() {
-        placeSearchRepository.deleteAll();
         place = createEntity(em);
     }
 
@@ -137,10 +132,6 @@ public class PlaceResourceIntTest {
         assertThat(testPlace.getShortName()).isEqualTo(DEFAULT_SHORT_NAME);
         assertThat(testPlace.getColorBackground()).isEqualTo(DEFAULT_COLOR_BACKGROUND);
         assertThat(testPlace.getColorText()).isEqualTo(DEFAULT_COLOR_TEXT);
-
-        // Validate the Place in Elasticsearch
-        Place placeEs = placeSearchRepository.findOne(testPlace.getId());
-        assertThat(placeEs).isEqualToComparingFieldByField(testPlace);
     }
 
     @Test
@@ -231,7 +222,6 @@ public class PlaceResourceIntTest {
     public void updatePlace() throws Exception {
         // Initialize the database
         placeRepository.saveAndFlush(place);
-        placeSearchRepository.save(place);
         int databaseSizeBeforeUpdate = placeRepository.findAll().size();
 
         // Update the place
@@ -258,10 +248,6 @@ public class PlaceResourceIntTest {
         assertThat(testPlace.getShortName()).isEqualTo(UPDATED_SHORT_NAME);
         assertThat(testPlace.getColorBackground()).isEqualTo(UPDATED_COLOR_BACKGROUND);
         assertThat(testPlace.getColorText()).isEqualTo(UPDATED_COLOR_TEXT);
-
-        // Validate the Place in Elasticsearch
-        Place placeEs = placeSearchRepository.findOne(testPlace.getId());
-        assertThat(placeEs).isEqualToComparingFieldByField(testPlace);
     }
 
     @Test
@@ -288,7 +274,6 @@ public class PlaceResourceIntTest {
     public void deletePlace() throws Exception {
         // Initialize the database
         placeRepository.saveAndFlush(place);
-        placeSearchRepository.save(place);
         int databaseSizeBeforeDelete = placeRepository.findAll().size();
 
         // Get the place
@@ -296,32 +281,9 @@ public class PlaceResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
-        // Validate Elasticsearch is empty
-        boolean placeExistsInEs = placeSearchRepository.exists(place.getId());
-        assertThat(placeExistsInEs).isFalse();
-
         // Validate the database is empty
         List<Place> placeList = placeRepository.findAll();
         assertThat(placeList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void searchPlace() throws Exception {
-        // Initialize the database
-        placeRepository.saveAndFlush(place);
-        placeSearchRepository.save(place);
-
-        // Search the place
-        restPlaceMockMvc.perform(get("/api/_search/places?query=id:" + place.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(place.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].numberOfSeats").value(hasItem(DEFAULT_NUMBER_OF_SEATS.intValue())))
-            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].colorBackground").value(hasItem(DEFAULT_COLOR_BACKGROUND.toString())))
-            .andExpect(jsonPath("$.[*].colorText").value(hasItem(DEFAULT_COLOR_TEXT.toString())));
     }
 
     @Test

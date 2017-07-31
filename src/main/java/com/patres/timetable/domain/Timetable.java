@@ -2,7 +2,6 @@ package com.patres.timetable.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -18,7 +17,6 @@ import com.patres.timetable.domain.enumeration.EventType;
 @Entity
 @Table(name = "timetable")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "timetable")
 public class Timetable implements Serializable {
 
     private static final long serialVersionUID = 1L;

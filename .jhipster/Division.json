@@ -116,7 +116,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20170723115921",
+    "changelogDate": "20170731144135",
     "entityTableName": "division",
     "dto": "mapstruct",
     "pagination": "pagination",

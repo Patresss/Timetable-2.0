@@ -3,7 +3,6 @@ package com.patres.timetable.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -18,7 +17,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "lesson")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "lesson")
 public class Lesson implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,11 +32,11 @@ public class Lesson implements Serializable {
 
     @NotNull
     @Column(name = "start_time", nullable = false)
-    private String startTime;
+    private Long startTime;
 
     @NotNull
     @Column(name = "end_time", nullable = false)
-    private String endTime;
+    private Long endTime;
 
     @OneToMany(mappedBy = "lesson")
     @JsonIgnore
@@ -69,29 +67,29 @@ public class Lesson implements Serializable {
         this.name = name;
     }
 
-    public String getStartTime() {
+    public Long getStartTime() {
         return startTime;
     }
 
-    public Lesson startTime(String startTime) {
+    public Lesson startTime(Long startTime) {
         this.startTime = startTime;
         return this;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Long startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Long getEndTime() {
         return endTime;
     }
 
-    public Lesson endTime(String endTime) {
+    public Lesson endTime(Long endTime) {
         this.endTime = endTime;
         return this;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Long endTime) {
         this.endTime = endTime;
     }
 

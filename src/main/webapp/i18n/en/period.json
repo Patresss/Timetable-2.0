@@ -4,8 +4,7 @@
             "home": {
                 "title": "Periods",
                 "createLabel": "Create a new Period",
-                "createOrEditLabel": "Create or edit a Period",
-                "search": "Search for Period"
+                "createOrEditLabel": "Create or edit a Period"
             },
             "created": "A new Period is created with identifier {{ param }}",
             "updated": "A Period is updated with identifier {{ param }}",

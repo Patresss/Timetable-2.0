@@ -4,8 +4,7 @@
             "home": {
                 "title": "Lessons",
                 "createLabel": "Dodaj Lesson",
-                "createOrEditLabel": "Dodaj lub edytuj: Lesson",
-                "search": "Szukaj Lesson"
+                "createOrEditLabel": "Dodaj lub edytuj: Lesson"
             },
             "created": "Utworzono nowy Lesson z identyfikatorem {{ param }}",
             "updated": "Uaktualniono Lesson z identyfikatorem {{ param }}",

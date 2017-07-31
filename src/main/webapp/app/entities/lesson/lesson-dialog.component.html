@@ -25,23 +25,31 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="timetableApp.lesson.startTime" for="field_startTime">Start Time</label>
-            <input type="text" class="form-control" name="startTime" id="field_startTime"
+            <input type="number" class="form-control" name="startTime" id="field_startTime"
                 [(ngModel)]="lesson.startTime" required />
             <div [hidden]="!(editForm.controls.startTime?.dirty && editForm.controls.startTime?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.startTime?.errors?.required" jhiTranslate="entity.validation.required">
                    This field is required.
                 </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.startTime?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
             </div>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="timetableApp.lesson.endTime" for="field_endTime">End Time</label>
-            <input type="text" class="form-control" name="endTime" id="field_endTime"
+            <input type="number" class="form-control" name="endTime" id="field_endTime"
                 [(ngModel)]="lesson.endTime" required />
             <div [hidden]="!(editForm.controls.endTime?.dirty && editForm.controls.endTime?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.endTime?.errors?.required" jhiTranslate="entity.validation.required">
                    This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.endTime?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
                 </small>
             </div>
         </div>

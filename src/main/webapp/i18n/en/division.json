@@ -4,8 +4,7 @@
             "home": {
                 "title": "Divisions",
                 "createLabel": "Create a new Division",
-                "createOrEditLabel": "Create or edit a Division",
-                "search": "Search for Division"
+                "createOrEditLabel": "Create or edit a Division"
             },
             "created": "A new Division is created with identifier {{ param }}",
             "updated": "A Division is updated with identifier {{ param }}",

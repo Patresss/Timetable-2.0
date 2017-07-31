@@ -24,20 +24,20 @@
         },
         {
             "fieldName": "startTime",
-            "fieldType": "String",
+            "fieldType": "Long",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
             "fieldName": "endTime",
-            "fieldType": "String",
+            "fieldType": "Long",
             "fieldValidateRules": [
                 "required"
             ]
         }
     ],
-    "changelogDate": "20170723115927",
+    "changelogDate": "20170731144141",
     "entityTableName": "lesson",
     "dto": "mapstruct",
     "pagination": "pagination",

@@ -21,9 +21,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Interval.
@@ -126,22 +123,4 @@ public class IntervalResource {
         intervalService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-
-    /**
-     * SEARCH  /_search/intervals?query=:query : search for the interval corresponding
-     * to the query.
-     *
-     * @param query the query of the interval search
-     * @param pageable the pagination information
-     * @return the result of the search
-     */
-    @GetMapping("/_search/intervals")
-    @Timed
-    public ResponseEntity<List<IntervalDTO>> searchIntervals(@RequestParam String query, @ApiParam Pageable pageable) {
-        log.debug("REST request to search for a page of Intervals for query {}", query);
-        Page<IntervalDTO> page = intervalService.search(query, pageable);
-        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/intervals");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
 }

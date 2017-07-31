@@ -5,7 +5,6 @@ import com.patres.timetable.TimetableApp;
 import com.patres.timetable.domain.Division;
 import com.patres.timetable.repository.DivisionRepository;
 import com.patres.timetable.service.DivisionService;
-import com.patres.timetable.repository.search.DivisionSearchRepository;
 import com.patres.timetable.service.dto.DivisionDTO;
 import com.patres.timetable.service.mapper.DivisionMapper;
 import com.patres.timetable.web.rest.errors.ExceptionTranslator;
@@ -70,9 +69,6 @@ public class DivisionResourceIntTest {
     private DivisionService divisionService;
 
     @Autowired
-    private DivisionSearchRepository divisionSearchRepository;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -117,7 +113,6 @@ public class DivisionResourceIntTest {
 
     @Before
     public void initTest() {
-        divisionSearchRepository.deleteAll();
         division = createEntity(em);
     }
 
@@ -143,10 +138,6 @@ public class DivisionResourceIntTest {
         assertThat(testDivision.getDivisionType()).isEqualTo(DEFAULT_DIVISION_TYPE);
         assertThat(testDivision.getColorBackground()).isEqualTo(DEFAULT_COLOR_BACKGROUND);
         assertThat(testDivision.getColorText()).isEqualTo(DEFAULT_COLOR_TEXT);
-
-        // Validate the Division in Elasticsearch
-        Division divisionEs = divisionSearchRepository.findOne(testDivision.getId());
-        assertThat(divisionEs).isEqualToComparingFieldByField(testDivision);
     }
 
     @Test
@@ -258,7 +249,6 @@ public class DivisionResourceIntTest {
     public void updateDivision() throws Exception {
         // Initialize the database
         divisionRepository.saveAndFlush(division);
-        divisionSearchRepository.save(division);
         int databaseSizeBeforeUpdate = divisionRepository.findAll().size();
 
         // Update the division
@@ -287,10 +277,6 @@ public class DivisionResourceIntTest {
         assertThat(testDivision.getDivisionType()).isEqualTo(UPDATED_DIVISION_TYPE);
         assertThat(testDivision.getColorBackground()).isEqualTo(UPDATED_COLOR_BACKGROUND);
         assertThat(testDivision.getColorText()).isEqualTo(UPDATED_COLOR_TEXT);
-
-        // Validate the Division in Elasticsearch
-        Division divisionEs = divisionSearchRepository.findOne(testDivision.getId());
-        assertThat(divisionEs).isEqualToComparingFieldByField(testDivision);
     }
 
     @Test
@@ -317,7 +303,6 @@ public class DivisionResourceIntTest {
     public void deleteDivision() throws Exception {
         // Initialize the database
         divisionRepository.saveAndFlush(division);
-        divisionSearchRepository.save(division);
         int databaseSizeBeforeDelete = divisionRepository.findAll().size();
 
         // Get the division
@@ -325,33 +310,9 @@ public class DivisionResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
-        // Validate Elasticsearch is empty
-        boolean divisionExistsInEs = divisionSearchRepository.exists(division.getId());
-        assertThat(divisionExistsInEs).isFalse();
-
         // Validate the database is empty
         List<Division> divisionList = divisionRepository.findAll();
         assertThat(divisionList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void searchDivision() throws Exception {
-        // Initialize the database
-        divisionRepository.saveAndFlush(division);
-        divisionSearchRepository.save(division);
-
-        // Search the division
-        restDivisionMockMvc.perform(get("/api/_search/divisions?query=id:" + division.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(division.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].numberOfPeople").value(hasItem(DEFAULT_NUMBER_OF_PEOPLE.intValue())))
-            .andExpect(jsonPath("$.[*].divisionType").value(hasItem(DEFAULT_DIVISION_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].colorBackground").value(hasItem(DEFAULT_COLOR_BACKGROUND.toString())))
-            .andExpect(jsonPath("$.[*].colorText").value(hasItem(DEFAULT_COLOR_TEXT.toString())));
     }
 
     @Test

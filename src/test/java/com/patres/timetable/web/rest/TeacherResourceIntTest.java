@@ -5,7 +5,6 @@ import com.patres.timetable.TimetableApp;
 import com.patres.timetable.domain.Teacher;
 import com.patres.timetable.repository.TeacherRepository;
 import com.patres.timetable.service.TeacherService;
-import com.patres.timetable.repository.search.TeacherSearchRepository;
 import com.patres.timetable.service.dto.TeacherDTO;
 import com.patres.timetable.service.mapper.TeacherMapper;
 import com.patres.timetable.web.rest.errors.ExceptionTranslator;
@@ -63,9 +62,6 @@ public class TeacherResourceIntTest {
     private TeacherService teacherService;
 
     @Autowired
-    private TeacherSearchRepository teacherSearchRepository;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -108,7 +104,6 @@ public class TeacherResourceIntTest {
 
     @Before
     public void initTest() {
-        teacherSearchRepository.deleteAll();
         teacher = createEntity(em);
     }
 
@@ -132,10 +127,6 @@ public class TeacherResourceIntTest {
         assertThat(testTeacher.getSurname()).isEqualTo(DEFAULT_SURNAME);
         assertThat(testTeacher.getDegree()).isEqualTo(DEFAULT_DEGREE);
         assertThat(testTeacher.getShortName()).isEqualTo(DEFAULT_SHORT_NAME);
-
-        // Validate the Teacher in Elasticsearch
-        Teacher teacherEs = teacherSearchRepository.findOne(testTeacher.getId());
-        assertThat(teacherEs).isEqualToComparingFieldByField(testTeacher);
     }
 
     @Test
@@ -243,7 +234,6 @@ public class TeacherResourceIntTest {
     public void updateTeacher() throws Exception {
         // Initialize the database
         teacherRepository.saveAndFlush(teacher);
-        teacherSearchRepository.save(teacher);
         int databaseSizeBeforeUpdate = teacherRepository.findAll().size();
 
         // Update the teacher
@@ -268,10 +258,6 @@ public class TeacherResourceIntTest {
         assertThat(testTeacher.getSurname()).isEqualTo(UPDATED_SURNAME);
         assertThat(testTeacher.getDegree()).isEqualTo(UPDATED_DEGREE);
         assertThat(testTeacher.getShortName()).isEqualTo(UPDATED_SHORT_NAME);
-
-        // Validate the Teacher in Elasticsearch
-        Teacher teacherEs = teacherSearchRepository.findOne(testTeacher.getId());
-        assertThat(teacherEs).isEqualToComparingFieldByField(testTeacher);
     }
 
     @Test
@@ -298,7 +284,6 @@ public class TeacherResourceIntTest {
     public void deleteTeacher() throws Exception {
         // Initialize the database
         teacherRepository.saveAndFlush(teacher);
-        teacherSearchRepository.save(teacher);
         int databaseSizeBeforeDelete = teacherRepository.findAll().size();
 
         // Get the teacher
@@ -306,31 +291,9 @@ public class TeacherResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
-        // Validate Elasticsearch is empty
-        boolean teacherExistsInEs = teacherSearchRepository.exists(teacher.getId());
-        assertThat(teacherExistsInEs).isFalse();
-
         // Validate the database is empty
         List<Teacher> teacherList = teacherRepository.findAll();
         assertThat(teacherList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void searchTeacher() throws Exception {
-        // Initialize the database
-        teacherRepository.saveAndFlush(teacher);
-        teacherSearchRepository.save(teacher);
-
-        // Search the teacher
-        restTeacherMockMvc.perform(get("/api/_search/teachers?query=id:" + teacher.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(teacher.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME.toString())))
-            .andExpect(jsonPath("$.[*].degree").value(hasItem(DEFAULT_DEGREE.toString())))
-            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME.toString())));
     }
 
     @Test

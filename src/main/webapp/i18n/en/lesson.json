@@ -4,8 +4,7 @@
             "home": {
                 "title": "Lessons",
                 "createLabel": "Create a new Lesson",
-                "createOrEditLabel": "Create or edit a Lesson",
-                "search": "Search for Lesson"
+                "createOrEditLabel": "Create or edit a Lesson"
             },
             "created": "A new Lesson is created with identifier {{ param }}",
             "updated": "A Lesson is updated with identifier {{ param }}",

@@ -5,7 +5,6 @@ import com.patres.timetable.TimetableApp;
 import com.patres.timetable.domain.Subject;
 import com.patres.timetable.repository.SubjectRepository;
 import com.patres.timetable.service.SubjectService;
-import com.patres.timetable.repository.search.SubjectSearchRepository;
 import com.patres.timetable.service.dto.SubjectDTO;
 import com.patres.timetable.service.mapper.SubjectMapper;
 import com.patres.timetable.web.rest.errors.ExceptionTranslator;
@@ -63,9 +62,6 @@ public class SubjectResourceIntTest {
     private SubjectService subjectService;
 
     @Autowired
-    private SubjectSearchRepository subjectSearchRepository;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -108,7 +104,6 @@ public class SubjectResourceIntTest {
 
     @Before
     public void initTest() {
-        subjectSearchRepository.deleteAll();
         subject = createEntity(em);
     }
 
@@ -132,10 +127,6 @@ public class SubjectResourceIntTest {
         assertThat(testSubject.getShortName()).isEqualTo(DEFAULT_SHORT_NAME);
         assertThat(testSubject.getColorBackground()).isEqualTo(DEFAULT_COLOR_BACKGROUND);
         assertThat(testSubject.getColorText()).isEqualTo(DEFAULT_COLOR_TEXT);
-
-        // Validate the Subject in Elasticsearch
-        Subject subjectEs = subjectSearchRepository.findOne(testSubject.getId());
-        assertThat(subjectEs).isEqualToComparingFieldByField(testSubject);
     }
 
     @Test
@@ -224,7 +215,6 @@ public class SubjectResourceIntTest {
     public void updateSubject() throws Exception {
         // Initialize the database
         subjectRepository.saveAndFlush(subject);
-        subjectSearchRepository.save(subject);
         int databaseSizeBeforeUpdate = subjectRepository.findAll().size();
 
         // Update the subject
@@ -249,10 +239,6 @@ public class SubjectResourceIntTest {
         assertThat(testSubject.getShortName()).isEqualTo(UPDATED_SHORT_NAME);
         assertThat(testSubject.getColorBackground()).isEqualTo(UPDATED_COLOR_BACKGROUND);
         assertThat(testSubject.getColorText()).isEqualTo(UPDATED_COLOR_TEXT);
-
-        // Validate the Subject in Elasticsearch
-        Subject subjectEs = subjectSearchRepository.findOne(testSubject.getId());
-        assertThat(subjectEs).isEqualToComparingFieldByField(testSubject);
     }
 
     @Test
@@ -279,7 +265,6 @@ public class SubjectResourceIntTest {
     public void deleteSubject() throws Exception {
         // Initialize the database
         subjectRepository.saveAndFlush(subject);
-        subjectSearchRepository.save(subject);
         int databaseSizeBeforeDelete = subjectRepository.findAll().size();
 
         // Get the subject
@@ -287,31 +272,9 @@ public class SubjectResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
-        // Validate Elasticsearch is empty
-        boolean subjectExistsInEs = subjectSearchRepository.exists(subject.getId());
-        assertThat(subjectExistsInEs).isFalse();
-
         // Validate the database is empty
         List<Subject> subjectList = subjectRepository.findAll();
         assertThat(subjectList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void searchSubject() throws Exception {
-        // Initialize the database
-        subjectRepository.saveAndFlush(subject);
-        subjectSearchRepository.save(subject);
-
-        // Search the subject
-        restSubjectMockMvc.perform(get("/api/_search/subjects?query=id:" + subject.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(subject.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].colorBackground").value(hasItem(DEFAULT_COLOR_BACKGROUND.toString())))
-            .andExpect(jsonPath("$.[*].colorText").value(hasItem(DEFAULT_COLOR_TEXT.toString())));
     }
 
     @Test

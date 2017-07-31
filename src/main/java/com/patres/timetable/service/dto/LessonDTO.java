@@ -18,10 +18,10 @@ public class LessonDTO implements Serializable {
     private String name;
 
     @NotNull
-    private String startTime;
+    private Long startTime;
 
     @NotNull
-    private String endTime;
+    private Long endTime;
 
     private Long divisionId;
 
@@ -43,19 +43,19 @@ public class LessonDTO implements Serializable {
         this.name = name;
     }
 
-    public String getStartTime() {
+    public Long getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Long startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Long getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Long endTime) {
         this.endTime = endTime;
     }
 

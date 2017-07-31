@@ -4,8 +4,7 @@
             "home": {
                 "title": "Properties",
                 "createLabel": "Create a new Properties",
-                "createOrEditLabel": "Create or edit a Properties",
-                "search": "Search for Properties"
+                "createOrEditLabel": "Create or edit a Properties"
             },
             "created": "A new Properties is created with identifier {{ param }}",
             "updated": "A Properties is updated with identifier {{ param }}",

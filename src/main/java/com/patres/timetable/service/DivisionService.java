@@ -2,7 +2,6 @@ package com.patres.timetable.service;
 
 import com.patres.timetable.domain.Division;
 import com.patres.timetable.repository.DivisionRepository;
-import com.patres.timetable.repository.search.DivisionSearchRepository;
 import com.patres.timetable.service.dto.DivisionDTO;
 import com.patres.timetable.service.mapper.DivisionMapper;
 import org.slf4j.Logger;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Division.
@@ -28,12 +25,9 @@ public class DivisionService {
 
     private final DivisionMapper divisionMapper;
 
-    private final DivisionSearchRepository divisionSearchRepository;
-
-    public DivisionService(DivisionRepository divisionRepository, DivisionMapper divisionMapper, DivisionSearchRepository divisionSearchRepository) {
+    public DivisionService(DivisionRepository divisionRepository, DivisionMapper divisionMapper) {
         this.divisionRepository = divisionRepository;
         this.divisionMapper = divisionMapper;
-        this.divisionSearchRepository = divisionSearchRepository;
     }
 
     /**
@@ -46,9 +40,7 @@ public class DivisionService {
         log.debug("Request to save Division : {}", divisionDTO);
         Division division = divisionMapper.toEntity(divisionDTO);
         division = divisionRepository.save(division);
-        DivisionDTO result = divisionMapper.toDto(division);
-        divisionSearchRepository.save(division);
-        return result;
+        return divisionMapper.toDto(division);
     }
 
     /**
@@ -85,20 +77,5 @@ public class DivisionService {
     public void delete(Long id) {
         log.debug("Request to delete Division : {}", id);
         divisionRepository.delete(id);
-        divisionSearchRepository.delete(id);
-    }
-
-    /**
-     * Search for the division corresponding to the query.
-     *
-     *  @param query the query of the search
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true)
-    public Page<DivisionDTO> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of Divisions for query {}", query);
-        Page<Division> result = divisionSearchRepository.search(queryStringQuery(query), pageable);
-        return result.map(divisionMapper::toDto);
     }
 }

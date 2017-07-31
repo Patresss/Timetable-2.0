@@ -22,9 +22,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Teacher.
@@ -102,8 +99,6 @@ public class TeacherResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-
-
     /**
      * GET  /teachers/:id : get the "id" teacher.
      *
@@ -131,22 +126,4 @@ public class TeacherResource {
         teacherService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-
-    /**
-     * SEARCH  /_search/teachers?query=:query : search for the teacher corresponding
-     * to the query.
-     *
-     * @param query the query of the teacher search
-     * @param pageable the pagination information
-     * @return the result of the search
-     */
-    @GetMapping("/_search/teachers")
-    @Timed
-    public ResponseEntity<List<TeacherDTO>> searchTeachers(@RequestParam String query, @ApiParam Pageable pageable) {
-        log.debug("REST request to search for a page of Teachers for query {}", query);
-        Page<TeacherDTO> page = teacherService.search(query, pageable);
-        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/teachers");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
 }

@@ -2,7 +2,6 @@ package com.patres.timetable.service;
 
 import com.patres.timetable.domain.Place;
 import com.patres.timetable.repository.PlaceRepository;
-import com.patres.timetable.repository.search.PlaceSearchRepository;
 import com.patres.timetable.service.dto.PlaceDTO;
 import com.patres.timetable.service.mapper.PlaceMapper;
 import org.slf4j.Logger;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Place.
@@ -28,12 +25,9 @@ public class PlaceService {
 
     private final PlaceMapper placeMapper;
 
-    private final PlaceSearchRepository placeSearchRepository;
-
-    public PlaceService(PlaceRepository placeRepository, PlaceMapper placeMapper, PlaceSearchRepository placeSearchRepository) {
+    public PlaceService(PlaceRepository placeRepository, PlaceMapper placeMapper) {
         this.placeRepository = placeRepository;
         this.placeMapper = placeMapper;
-        this.placeSearchRepository = placeSearchRepository;
     }
 
     /**
@@ -46,9 +40,7 @@ public class PlaceService {
         log.debug("Request to save Place : {}", placeDTO);
         Place place = placeMapper.toEntity(placeDTO);
         place = placeRepository.save(place);
-        PlaceDTO result = placeMapper.toDto(place);
-        placeSearchRepository.save(place);
-        return result;
+        return placeMapper.toDto(place);
     }
 
     /**
@@ -85,20 +77,5 @@ public class PlaceService {
     public void delete(Long id) {
         log.debug("Request to delete Place : {}", id);
         placeRepository.delete(id);
-        placeSearchRepository.delete(id);
-    }
-
-    /**
-     * Search for the place corresponding to the query.
-     *
-     *  @param query the query of the search
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true)
-    public Page<PlaceDTO> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of Places for query {}", query);
-        Page<Place> result = placeSearchRepository.search(queryStringQuery(query), pageable);
-        return result.map(placeMapper::toDto);
     }
 }

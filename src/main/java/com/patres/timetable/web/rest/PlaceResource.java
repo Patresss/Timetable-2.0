@@ -22,9 +22,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Place.
@@ -127,22 +124,4 @@ public class PlaceResource {
         placeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-
-    /**
-     * SEARCH  /_search/places?query=:query : search for the place corresponding
-     * to the query.
-     *
-     * @param query the query of the place search
-     * @param pageable the pagination information
-     * @return the result of the search
-     */
-    @GetMapping("/_search/places")
-    @Timed
-    public ResponseEntity<List<PlaceDTO>> searchPlaces(@RequestParam String query, @ApiParam Pageable pageable) {
-        log.debug("REST request to search for a page of Places for query {}", query);
-        Page<PlaceDTO> page = placeService.search(query, pageable);
-        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/places");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
 }

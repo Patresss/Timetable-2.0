@@ -22,9 +22,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Lesson.
@@ -127,22 +124,4 @@ public class LessonResource {
         lessonService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-
-    /**
-     * SEARCH  /_search/lessons?query=:query : search for the lesson corresponding
-     * to the query.
-     *
-     * @param query the query of the lesson search
-     * @param pageable the pagination information
-     * @return the result of the search
-     */
-    @GetMapping("/_search/lessons")
-    @Timed
-    public ResponseEntity<List<LessonDTO>> searchLessons(@RequestParam String query, @ApiParam Pageable pageable) {
-        log.debug("REST request to search for a page of Lessons for query {}", query);
-        Page<LessonDTO> page = lessonService.search(query, pageable);
-        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/lessons");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
 }

@@ -5,7 +5,6 @@ import com.patres.timetable.TimetableApp;
 import com.patres.timetable.domain.Interval;
 import com.patres.timetable.repository.IntervalRepository;
 import com.patres.timetable.service.IntervalService;
-import com.patres.timetable.repository.search.IntervalSearchRepository;
 import com.patres.timetable.service.dto.IntervalDTO;
 import com.patres.timetable.service.mapper.IntervalMapper;
 import com.patres.timetable.web.rest.errors.ExceptionTranslator;
@@ -62,9 +61,6 @@ public class IntervalResourceIntTest {
     private IntervalService intervalService;
 
     @Autowired
-    private IntervalSearchRepository intervalSearchRepository;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -106,7 +102,6 @@ public class IntervalResourceIntTest {
 
     @Before
     public void initTest() {
-        intervalSearchRepository.deleteAll();
         interval = createEntity(em);
     }
 
@@ -129,10 +124,6 @@ public class IntervalResourceIntTest {
         assertThat(testInterval.isIncluded()).isEqualTo(DEFAULT_INCLUDED);
         assertThat(testInterval.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testInterval.getEndDate()).isEqualTo(DEFAULT_END_DATE);
-
-        // Validate the Interval in Elasticsearch
-        Interval intervalEs = intervalSearchRepository.findOne(testInterval.getId());
-        assertThat(intervalEs).isEqualToComparingFieldByField(testInterval);
     }
 
     @Test
@@ -200,7 +191,6 @@ public class IntervalResourceIntTest {
     public void updateInterval() throws Exception {
         // Initialize the database
         intervalRepository.saveAndFlush(interval);
-        intervalSearchRepository.save(interval);
         int databaseSizeBeforeUpdate = intervalRepository.findAll().size();
 
         // Update the interval
@@ -223,10 +213,6 @@ public class IntervalResourceIntTest {
         assertThat(testInterval.isIncluded()).isEqualTo(UPDATED_INCLUDED);
         assertThat(testInterval.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testInterval.getEndDate()).isEqualTo(UPDATED_END_DATE);
-
-        // Validate the Interval in Elasticsearch
-        Interval intervalEs = intervalSearchRepository.findOne(testInterval.getId());
-        assertThat(intervalEs).isEqualToComparingFieldByField(testInterval);
     }
 
     @Test
@@ -253,7 +239,6 @@ public class IntervalResourceIntTest {
     public void deleteInterval() throws Exception {
         // Initialize the database
         intervalRepository.saveAndFlush(interval);
-        intervalSearchRepository.save(interval);
         int databaseSizeBeforeDelete = intervalRepository.findAll().size();
 
         // Get the interval
@@ -261,30 +246,9 @@ public class IntervalResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
-        // Validate Elasticsearch is empty
-        boolean intervalExistsInEs = intervalSearchRepository.exists(interval.getId());
-        assertThat(intervalExistsInEs).isFalse();
-
         // Validate the database is empty
         List<Interval> intervalList = intervalRepository.findAll();
         assertThat(intervalList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void searchInterval() throws Exception {
-        // Initialize the database
-        intervalRepository.saveAndFlush(interval);
-        intervalSearchRepository.save(interval);
-
-        // Search the interval
-        restIntervalMockMvc.perform(get("/api/_search/intervals?query=id:" + interval.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(interval.getId().intValue())))
-            .andExpect(jsonPath("$.[*].included").value(hasItem(DEFAULT_INCLUDED.booleanValue())))
-            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
 
     @Test

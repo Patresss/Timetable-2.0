@@ -22,7 +22,7 @@
             "fieldType": "LocalDate"
         }
     ],
-    "changelogDate": "20170723115929",
+    "changelogDate": "20170731144143",
     "entityTableName": "interval",
     "dto": "mapstruct",
     "pagination": "pagination",

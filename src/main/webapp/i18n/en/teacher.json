@@ -4,8 +4,7 @@
             "home": {
                 "title": "Teachers",
                 "createLabel": "Create a new Teacher",
-                "createOrEditLabel": "Create or edit a Teacher",
-                "search": "Search for Teacher"
+                "createOrEditLabel": "Create or edit a Teacher"
             },
             "created": "A new Teacher is created with identifier {{ param }}",
             "updated": "A Teacher is updated with identifier {{ param }}",

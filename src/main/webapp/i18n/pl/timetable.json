@@ -4,8 +4,7 @@
             "home": {
                 "title": "Timetables",
                 "createLabel": "Dodaj Timetable",
-                "createOrEditLabel": "Dodaj lub edytuj: Timetable",
-                "search": "Szukaj Timetable"
+                "createOrEditLabel": "Dodaj lub edytuj: Timetable"
             },
             "created": "Utworzono nowy Timetable z identyfikatorem {{ param }}",
             "updated": "Uaktualniono Timetable z identyfikatorem {{ param }}",

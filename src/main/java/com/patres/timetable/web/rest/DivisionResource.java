@@ -22,9 +22,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Division.
@@ -127,22 +124,4 @@ public class DivisionResource {
         divisionService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-
-    /**
-     * SEARCH  /_search/divisions?query=:query : search for the division corresponding
-     * to the query.
-     *
-     * @param query the query of the division search
-     * @param pageable the pagination information
-     * @return the result of the search
-     */
-    @GetMapping("/_search/divisions")
-    @Timed
-    public ResponseEntity<List<DivisionDTO>> searchDivisions(@RequestParam String query, @ApiParam Pageable pageable) {
-        log.debug("REST request to search for a page of Divisions for query {}", query);
-        Page<DivisionDTO> page = divisionService.search(query, pageable);
-        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/divisions");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
 }

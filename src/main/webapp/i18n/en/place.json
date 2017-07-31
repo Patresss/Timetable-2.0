@@ -4,8 +4,7 @@
             "home": {
                 "title": "Places",
                 "createLabel": "Create a new Place",
-                "createOrEditLabel": "Create or edit a Place",
-                "search": "Search for Place"
+                "createOrEditLabel": "Create or edit a Place"
             },
             "created": "A new Place is created with identifier {{ param }}",
             "updated": "A Place is updated with identifier {{ param }}",

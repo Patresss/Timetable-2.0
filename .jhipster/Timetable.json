@@ -123,7 +123,7 @@
             "fieldType": "Boolean"
         }
     ],
-    "changelogDate": "20170723115926",
+    "changelogDate": "20170731144140",
     "entityTableName": "timetable",
     "dto": "mapstruct",
     "pagination": "pagination",

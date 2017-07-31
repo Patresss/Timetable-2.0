@@ -22,9 +22,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Properties.
@@ -127,22 +124,4 @@ public class PropertiesResource {
         propertiesService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-
-    /**
-     * SEARCH  /_search/properties?query=:query : search for the properties corresponding
-     * to the query.
-     *
-     * @param query the query of the properties search
-     * @param pageable the pagination information
-     * @return the result of the search
-     */
-    @GetMapping("/_search/properties")
-    @Timed
-    public ResponseEntity<List<PropertiesDTO>> searchProperties(@RequestParam String query, @ApiParam Pageable pageable) {
-        log.debug("REST request to search for a page of Properties for query {}", query);
-        Page<PropertiesDTO> page = propertiesService.search(query, pageable);
-        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/properties");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
 }

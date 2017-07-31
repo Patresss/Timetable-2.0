@@ -29,7 +29,7 @@
             ]
         }
     ],
-    "changelogDate": "20170723115928",
+    "changelogDate": "20170731144142",
     "entityTableName": "period",
     "dto": "mapstruct",
     "pagination": "pagination",

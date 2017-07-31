@@ -2,7 +2,6 @@ package com.patres.timetable.service;
 
 import com.patres.timetable.domain.Properties;
 import com.patres.timetable.repository.PropertiesRepository;
-import com.patres.timetable.repository.search.PropertiesSearchRepository;
 import com.patres.timetable.service.dto.PropertiesDTO;
 import com.patres.timetable.service.mapper.PropertiesMapper;
 import org.slf4j.Logger;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Properties.
@@ -28,12 +25,9 @@ public class PropertiesService {
 
     private final PropertiesMapper propertiesMapper;
 
-    private final PropertiesSearchRepository propertiesSearchRepository;
-
-    public PropertiesService(PropertiesRepository propertiesRepository, PropertiesMapper propertiesMapper, PropertiesSearchRepository propertiesSearchRepository) {
+    public PropertiesService(PropertiesRepository propertiesRepository, PropertiesMapper propertiesMapper) {
         this.propertiesRepository = propertiesRepository;
         this.propertiesMapper = propertiesMapper;
-        this.propertiesSearchRepository = propertiesSearchRepository;
     }
 
     /**
@@ -46,9 +40,7 @@ public class PropertiesService {
         log.debug("Request to save Properties : {}", propertiesDTO);
         Properties properties = propertiesMapper.toEntity(propertiesDTO);
         properties = propertiesRepository.save(properties);
-        PropertiesDTO result = propertiesMapper.toDto(properties);
-        propertiesSearchRepository.save(properties);
-        return result;
+        return propertiesMapper.toDto(properties);
     }
 
     /**
@@ -85,20 +77,5 @@ public class PropertiesService {
     public void delete(Long id) {
         log.debug("Request to delete Properties : {}", id);
         propertiesRepository.delete(id);
-        propertiesSearchRepository.delete(id);
-    }
-
-    /**
-     * Search for the properties corresponding to the query.
-     *
-     *  @param query the query of the search
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true)
-    public Page<PropertiesDTO> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of Properties for query {}", query);
-        Page<Properties> result = propertiesSearchRepository.search(queryStringQuery(query), pageable);
-        return result.map(propertiesMapper::toDto);
     }
 }

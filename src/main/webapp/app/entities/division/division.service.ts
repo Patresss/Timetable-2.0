@@ -9,7 +9,6 @@ import { ResponseWrapper, createRequestOption } from '../../shared';
 export class DivisionService {
 
     private resourceUrl = 'api/divisions';
-    private resourceSearchUrl = 'api/_search/divisions';
 
     constructor(private http: Http) { }
 
@@ -41,12 +40,6 @@ export class DivisionService {
 
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
-    }
-
-    search(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceSearchUrl, options)
-            .map((res: any) => this.convertResponse(res));
     }
 
     private convertResponse(res: Response): ResponseWrapper {

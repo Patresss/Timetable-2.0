@@ -81,8 +81,8 @@ inSunday Boolean
 
 entity Lesson {
 name String required,
-startTime String required,
-endTime String required,
+startTime Long required,
+endTime Long required,
 }
 
 entity Period {

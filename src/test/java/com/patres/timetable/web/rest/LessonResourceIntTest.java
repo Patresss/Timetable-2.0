@@ -5,7 +5,6 @@ import com.patres.timetable.TimetableApp;
 import com.patres.timetable.domain.Lesson;
 import com.patres.timetable.repository.LessonRepository;
 import com.patres.timetable.service.LessonService;
-import com.patres.timetable.repository.search.LessonSearchRepository;
 import com.patres.timetable.service.dto.LessonDTO;
 import com.patres.timetable.service.mapper.LessonMapper;
 import com.patres.timetable.web.rest.errors.ExceptionTranslator;
@@ -44,11 +43,11 @@ public class LessonResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_START_TIME = "AAAAAAAAAA";
-    private static final String UPDATED_START_TIME = "BBBBBBBBBB";
+    private static final Long DEFAULT_START_TIME = 1L;
+    private static final Long UPDATED_START_TIME = 2L;
 
-    private static final String DEFAULT_END_TIME = "AAAAAAAAAA";
-    private static final String UPDATED_END_TIME = "BBBBBBBBBB";
+    private static final Long DEFAULT_END_TIME = 1L;
+    private static final Long UPDATED_END_TIME = 2L;
 
     @Autowired
     private LessonRepository lessonRepository;
@@ -58,9 +57,6 @@ public class LessonResourceIntTest {
 
     @Autowired
     private LessonService lessonService;
-
-    @Autowired
-    private LessonSearchRepository lessonSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -104,7 +100,6 @@ public class LessonResourceIntTest {
 
     @Before
     public void initTest() {
-        lessonSearchRepository.deleteAll();
         lesson = createEntity(em);
     }
 
@@ -127,10 +122,6 @@ public class LessonResourceIntTest {
         assertThat(testLesson.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testLesson.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testLesson.getEndTime()).isEqualTo(DEFAULT_END_TIME);
-
-        // Validate the Lesson in Elasticsearch
-        Lesson lessonEs = lessonSearchRepository.findOne(testLesson.getId());
-        assertThat(lessonEs).isEqualToComparingFieldByField(testLesson);
     }
 
     @Test
@@ -222,8 +213,8 @@ public class LessonResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(lesson.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
+            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.intValue())))
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.intValue())));
     }
 
     @Test
@@ -238,8 +229,8 @@ public class LessonResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(lesson.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
-            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()));
+            .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.intValue()))
+            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.intValue()));
     }
 
     @Test
@@ -255,7 +246,6 @@ public class LessonResourceIntTest {
     public void updateLesson() throws Exception {
         // Initialize the database
         lessonRepository.saveAndFlush(lesson);
-        lessonSearchRepository.save(lesson);
         int databaseSizeBeforeUpdate = lessonRepository.findAll().size();
 
         // Update the lesson
@@ -278,10 +268,6 @@ public class LessonResourceIntTest {
         assertThat(testLesson.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testLesson.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testLesson.getEndTime()).isEqualTo(UPDATED_END_TIME);
-
-        // Validate the Lesson in Elasticsearch
-        Lesson lessonEs = lessonSearchRepository.findOne(testLesson.getId());
-        assertThat(lessonEs).isEqualToComparingFieldByField(testLesson);
     }
 
     @Test
@@ -308,7 +294,6 @@ public class LessonResourceIntTest {
     public void deleteLesson() throws Exception {
         // Initialize the database
         lessonRepository.saveAndFlush(lesson);
-        lessonSearchRepository.save(lesson);
         int databaseSizeBeforeDelete = lessonRepository.findAll().size();
 
         // Get the lesson
@@ -316,30 +301,9 @@ public class LessonResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
-        // Validate Elasticsearch is empty
-        boolean lessonExistsInEs = lessonSearchRepository.exists(lesson.getId());
-        assertThat(lessonExistsInEs).isFalse();
-
         // Validate the database is empty
         List<Lesson> lessonList = lessonRepository.findAll();
         assertThat(lessonList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void searchLesson() throws Exception {
-        // Initialize the database
-        lessonRepository.saveAndFlush(lesson);
-        lessonSearchRepository.save(lesson);
-
-        // Search the lesson
-        restLessonMockMvc.perform(get("/api/_search/lessons?query=id:" + lesson.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(lesson.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
     }
 
     @Test

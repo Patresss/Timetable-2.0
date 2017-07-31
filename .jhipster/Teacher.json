@@ -60,7 +60,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20170723115923",
+    "changelogDate": "20170731144137",
     "entityTableName": "teacher",
     "dto": "mapstruct",
     "pagination": "pagination",

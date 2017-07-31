@@ -4,8 +4,7 @@
             "home": {
                 "title": "Places",
                 "createLabel": "Dodaj Place",
-                "createOrEditLabel": "Dodaj lub edytuj: Place",
-                "search": "Szukaj Place"
+                "createOrEditLabel": "Dodaj lub edytuj: Place"
             },
             "created": "Utworzono nowy Place z identyfikatorem {{ param }}",
             "updated": "Uaktualniono Place z identyfikatorem {{ param }}",

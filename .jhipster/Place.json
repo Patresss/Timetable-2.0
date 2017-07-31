@@ -63,7 +63,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20170723115925",
+    "changelogDate": "20170731144139",
     "entityTableName": "place",
     "dto": "mapstruct",
     "pagination": "pagination",

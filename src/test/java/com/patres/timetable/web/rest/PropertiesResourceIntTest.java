@@ -5,7 +5,6 @@ import com.patres.timetable.TimetableApp;
 import com.patres.timetable.domain.Properties;
 import com.patres.timetable.repository.PropertiesRepository;
 import com.patres.timetable.service.PropertiesService;
-import com.patres.timetable.repository.search.PropertiesSearchRepository;
 import com.patres.timetable.service.dto.PropertiesDTO;
 import com.patres.timetable.service.mapper.PropertiesMapper;
 import com.patres.timetable.web.rest.errors.ExceptionTranslator;
@@ -57,9 +56,6 @@ public class PropertiesResourceIntTest {
     private PropertiesService propertiesService;
 
     @Autowired
-    private PropertiesSearchRepository propertiesSearchRepository;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -100,7 +96,6 @@ public class PropertiesResourceIntTest {
 
     @Before
     public void initTest() {
-        propertiesSearchRepository.deleteAll();
         properties = createEntity(em);
     }
 
@@ -122,10 +117,6 @@ public class PropertiesResourceIntTest {
         Properties testProperties = propertiesList.get(propertiesList.size() - 1);
         assertThat(testProperties.getPropertyKey()).isEqualTo(DEFAULT_PROPERTY_KEY);
         assertThat(testProperties.getPropertyValue()).isEqualTo(DEFAULT_PROPERTY_VALUE);
-
-        // Validate the Properties in Elasticsearch
-        Properties propertiesEs = propertiesSearchRepository.findOne(testProperties.getId());
-        assertThat(propertiesEs).isEqualToComparingFieldByField(testProperties);
     }
 
     @Test
@@ -210,7 +201,6 @@ public class PropertiesResourceIntTest {
     public void updateProperties() throws Exception {
         // Initialize the database
         propertiesRepository.saveAndFlush(properties);
-        propertiesSearchRepository.save(properties);
         int databaseSizeBeforeUpdate = propertiesRepository.findAll().size();
 
         // Update the properties
@@ -231,10 +221,6 @@ public class PropertiesResourceIntTest {
         Properties testProperties = propertiesList.get(propertiesList.size() - 1);
         assertThat(testProperties.getPropertyKey()).isEqualTo(UPDATED_PROPERTY_KEY);
         assertThat(testProperties.getPropertyValue()).isEqualTo(UPDATED_PROPERTY_VALUE);
-
-        // Validate the Properties in Elasticsearch
-        Properties propertiesEs = propertiesSearchRepository.findOne(testProperties.getId());
-        assertThat(propertiesEs).isEqualToComparingFieldByField(testProperties);
     }
 
     @Test
@@ -261,7 +247,6 @@ public class PropertiesResourceIntTest {
     public void deleteProperties() throws Exception {
         // Initialize the database
         propertiesRepository.saveAndFlush(properties);
-        propertiesSearchRepository.save(properties);
         int databaseSizeBeforeDelete = propertiesRepository.findAll().size();
 
         // Get the properties
@@ -269,29 +254,9 @@ public class PropertiesResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
-        // Validate Elasticsearch is empty
-        boolean propertiesExistsInEs = propertiesSearchRepository.exists(properties.getId());
-        assertThat(propertiesExistsInEs).isFalse();
-
         // Validate the database is empty
         List<Properties> propertiesList = propertiesRepository.findAll();
         assertThat(propertiesList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void searchProperties() throws Exception {
-        // Initialize the database
-        propertiesRepository.saveAndFlush(properties);
-        propertiesSearchRepository.save(properties);
-
-        // Search the properties
-        restPropertiesMockMvc.perform(get("/api/_search/properties?query=id:" + properties.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(properties.getId().intValue())))
-            .andExpect(jsonPath("$.[*].propertyKey").value(hasItem(DEFAULT_PROPERTY_KEY.toString())))
-            .andExpect(jsonPath("$.[*].propertyValue").value(hasItem(DEFAULT_PROPERTY_VALUE.toString())));
     }
 
     @Test

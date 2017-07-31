@@ -4,8 +4,7 @@
             "home": {
                 "title": "Divisions",
                 "createLabel": "Dodaj Division",
-                "createOrEditLabel": "Dodaj lub edytuj: Division",
-                "search": "Szukaj Division"
+                "createOrEditLabel": "Dodaj lub edytuj: Division"
             },
             "created": "Utworzono nowy Division z identyfikatorem {{ param }}",
             "updated": "Uaktualniono Division z identyfikatorem {{ param }}",

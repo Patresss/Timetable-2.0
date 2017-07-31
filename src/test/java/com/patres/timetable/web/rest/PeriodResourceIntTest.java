@@ -5,7 +5,6 @@ import com.patres.timetable.TimetableApp;
 import com.patres.timetable.domain.Period;
 import com.patres.timetable.repository.PeriodRepository;
 import com.patres.timetable.service.PeriodService;
-import com.patres.timetable.repository.search.PeriodSearchRepository;
 import com.patres.timetable.service.dto.PeriodDTO;
 import com.patres.timetable.service.mapper.PeriodMapper;
 import com.patres.timetable.web.rest.errors.ExceptionTranslator;
@@ -54,9 +53,6 @@ public class PeriodResourceIntTest {
     private PeriodService periodService;
 
     @Autowired
-    private PeriodSearchRepository periodSearchRepository;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -96,7 +92,6 @@ public class PeriodResourceIntTest {
 
     @Before
     public void initTest() {
-        periodSearchRepository.deleteAll();
         period = createEntity(em);
     }
 
@@ -117,10 +112,6 @@ public class PeriodResourceIntTest {
         assertThat(periodList).hasSize(databaseSizeBeforeCreate + 1);
         Period testPeriod = periodList.get(periodList.size() - 1);
         assertThat(testPeriod.getName()).isEqualTo(DEFAULT_NAME);
-
-        // Validate the Period in Elasticsearch
-        Period periodEs = periodSearchRepository.findOne(testPeriod.getId());
-        assertThat(periodEs).isEqualToComparingFieldByField(testPeriod);
     }
 
     @Test
@@ -203,7 +194,6 @@ public class PeriodResourceIntTest {
     public void updatePeriod() throws Exception {
         // Initialize the database
         periodRepository.saveAndFlush(period);
-        periodSearchRepository.save(period);
         int databaseSizeBeforeUpdate = periodRepository.findAll().size();
 
         // Update the period
@@ -222,10 +212,6 @@ public class PeriodResourceIntTest {
         assertThat(periodList).hasSize(databaseSizeBeforeUpdate);
         Period testPeriod = periodList.get(periodList.size() - 1);
         assertThat(testPeriod.getName()).isEqualTo(UPDATED_NAME);
-
-        // Validate the Period in Elasticsearch
-        Period periodEs = periodSearchRepository.findOne(testPeriod.getId());
-        assertThat(periodEs).isEqualToComparingFieldByField(testPeriod);
     }
 
     @Test
@@ -252,7 +238,6 @@ public class PeriodResourceIntTest {
     public void deletePeriod() throws Exception {
         // Initialize the database
         periodRepository.saveAndFlush(period);
-        periodSearchRepository.save(period);
         int databaseSizeBeforeDelete = periodRepository.findAll().size();
 
         // Get the period
@@ -260,28 +245,9 @@ public class PeriodResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
-        // Validate Elasticsearch is empty
-        boolean periodExistsInEs = periodSearchRepository.exists(period.getId());
-        assertThat(periodExistsInEs).isFalse();
-
         // Validate the database is empty
         List<Period> periodList = periodRepository.findAll();
         assertThat(periodList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void searchPeriod() throws Exception {
-        // Initialize the database
-        periodRepository.saveAndFlush(period);
-        periodSearchRepository.save(period);
-
-        // Search the period
-        restPeriodMockMvc.perform(get("/api/_search/periods?query=id:" + period.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(period.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
     @Test

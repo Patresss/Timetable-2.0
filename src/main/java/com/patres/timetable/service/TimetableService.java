@@ -2,7 +2,6 @@ package com.patres.timetable.service;
 
 import com.patres.timetable.domain.Timetable;
 import com.patres.timetable.repository.TimetableRepository;
-import com.patres.timetable.repository.search.TimetableSearchRepository;
 import com.patres.timetable.service.dto.TimetableDTO;
 import com.patres.timetable.service.mapper.TimetableMapper;
 import org.slf4j.Logger;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Timetable.
@@ -28,12 +25,9 @@ public class TimetableService {
 
     private final TimetableMapper timetableMapper;
 
-    private final TimetableSearchRepository timetableSearchRepository;
-
-    public TimetableService(TimetableRepository timetableRepository, TimetableMapper timetableMapper, TimetableSearchRepository timetableSearchRepository) {
+    public TimetableService(TimetableRepository timetableRepository, TimetableMapper timetableMapper) {
         this.timetableRepository = timetableRepository;
         this.timetableMapper = timetableMapper;
-        this.timetableSearchRepository = timetableSearchRepository;
     }
 
     /**
@@ -46,9 +40,7 @@ public class TimetableService {
         log.debug("Request to save Timetable : {}", timetableDTO);
         Timetable timetable = timetableMapper.toEntity(timetableDTO);
         timetable = timetableRepository.save(timetable);
-        TimetableDTO result = timetableMapper.toDto(timetable);
-        timetableSearchRepository.save(timetable);
-        return result;
+        return timetableMapper.toDto(timetable);
     }
 
     /**
@@ -85,20 +77,5 @@ public class TimetableService {
     public void delete(Long id) {
         log.debug("Request to delete Timetable : {}", id);
         timetableRepository.delete(id);
-        timetableSearchRepository.delete(id);
-    }
-
-    /**
-     * Search for the timetable corresponding to the query.
-     *
-     *  @param query the query of the search
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true)
-    public Page<TimetableDTO> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of Timetables for query {}", query);
-        Page<Timetable> result = timetableSearchRepository.search(queryStringQuery(query), pageable);
-        return result.map(timetableMapper::toDto);
     }
 }

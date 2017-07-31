@@ -5,7 +5,6 @@ import com.patres.timetable.TimetableApp;
 import com.patres.timetable.domain.Timetable;
 import com.patres.timetable.repository.TimetableRepository;
 import com.patres.timetable.service.TimetableService;
-import com.patres.timetable.repository.search.TimetableSearchRepository;
 import com.patres.timetable.service.dto.TimetableDTO;
 import com.patres.timetable.service.mapper.TimetableMapper;
 import com.patres.timetable.web.rest.errors.ExceptionTranslator;
@@ -111,9 +110,6 @@ public class TimetableResourceIntTest {
     private TimetableService timetableService;
 
     @Autowired
-    private TimetableSearchRepository timetableSearchRepository;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -171,7 +167,6 @@ public class TimetableResourceIntTest {
 
     @Before
     public void initTest() {
-        timetableSearchRepository.deleteAll();
         timetable = createEntity(em);
     }
 
@@ -210,10 +205,6 @@ public class TimetableResourceIntTest {
         assertThat(testTimetable.isInFriday()).isEqualTo(DEFAULT_IN_FRIDAY);
         assertThat(testTimetable.isInSaturday()).isEqualTo(DEFAULT_IN_SATURDAY);
         assertThat(testTimetable.isInSunday()).isEqualTo(DEFAULT_IN_SUNDAY);
-
-        // Validate the Timetable in Elasticsearch
-        Timetable timetableEs = timetableSearchRepository.findOne(testTimetable.getId());
-        assertThat(timetableEs).isEqualToComparingFieldByField(testTimetable);
     }
 
     @Test
@@ -351,7 +342,6 @@ public class TimetableResourceIntTest {
     public void updateTimetable() throws Exception {
         // Initialize the database
         timetableRepository.saveAndFlush(timetable);
-        timetableSearchRepository.save(timetable);
         int databaseSizeBeforeUpdate = timetableRepository.findAll().size();
 
         // Update the timetable
@@ -406,10 +396,6 @@ public class TimetableResourceIntTest {
         assertThat(testTimetable.isInFriday()).isEqualTo(UPDATED_IN_FRIDAY);
         assertThat(testTimetable.isInSaturday()).isEqualTo(UPDATED_IN_SATURDAY);
         assertThat(testTimetable.isInSunday()).isEqualTo(UPDATED_IN_SUNDAY);
-
-        // Validate the Timetable in Elasticsearch
-        Timetable timetableEs = timetableSearchRepository.findOne(testTimetable.getId());
-        assertThat(timetableEs).isEqualToComparingFieldByField(testTimetable);
     }
 
     @Test
@@ -436,7 +422,6 @@ public class TimetableResourceIntTest {
     public void deleteTimetable() throws Exception {
         // Initialize the database
         timetableRepository.saveAndFlush(timetable);
-        timetableSearchRepository.save(timetable);
         int databaseSizeBeforeDelete = timetableRepository.findAll().size();
 
         // Get the timetable
@@ -444,46 +429,9 @@ public class TimetableResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
-        // Validate Elasticsearch is empty
-        boolean timetableExistsInEs = timetableSearchRepository.exists(timetable.getId());
-        assertThat(timetableExistsInEs).isFalse();
-
         // Validate the database is empty
         List<Timetable> timetableList = timetableRepository.findAll();
         assertThat(timetableList).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    @Test
-    @Transactional
-    public void searchTimetable() throws Exception {
-        // Initialize the database
-        timetableRepository.saveAndFlush(timetable);
-        timetableSearchRepository.save(timetable);
-
-        // Search the timetable
-        restTimetableMockMvc.perform(get("/api/_search/timetables?query=id:" + timetable.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(timetable.getId().intValue())))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
-            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.intValue())))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.intValue())))
-            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].everyWeek").value(hasItem(DEFAULT_EVERY_WEEK.intValue())))
-            .andExpect(jsonPath("$.[*].startWithWeek").value(hasItem(DEFAULT_START_WITH_WEEK.intValue())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].colorBackground").value(hasItem(DEFAULT_COLOR_BACKGROUND.toString())))
-            .andExpect(jsonPath("$.[*].colorText").value(hasItem(DEFAULT_COLOR_TEXT.toString())))
-            .andExpect(jsonPath("$.[*].inMonday").value(hasItem(DEFAULT_IN_MONDAY.booleanValue())))
-            .andExpect(jsonPath("$.[*].inTuesday").value(hasItem(DEFAULT_IN_TUESDAY.booleanValue())))
-            .andExpect(jsonPath("$.[*].inWednesday").value(hasItem(DEFAULT_IN_WEDNESDAY.booleanValue())))
-            .andExpect(jsonPath("$.[*].inThursday").value(hasItem(DEFAULT_IN_THURSDAY.booleanValue())))
-            .andExpect(jsonPath("$.[*].inFriday").value(hasItem(DEFAULT_IN_FRIDAY.booleanValue())))
-            .andExpect(jsonPath("$.[*].inSaturday").value(hasItem(DEFAULT_IN_SATURDAY.booleanValue())))
-            .andExpect(jsonPath("$.[*].inSunday").value(hasItem(DEFAULT_IN_SUNDAY.booleanValue())));
     }
 
     @Test

@@ -2,7 +2,6 @@ package com.patres.timetable.service;
 
 import com.patres.timetable.domain.Interval;
 import com.patres.timetable.repository.IntervalRepository;
-import com.patres.timetable.repository.search.IntervalSearchRepository;
 import com.patres.timetable.service.dto.IntervalDTO;
 import com.patres.timetable.service.mapper.IntervalMapper;
 import org.slf4j.Logger;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Interval.
@@ -28,12 +25,9 @@ public class IntervalService {
 
     private final IntervalMapper intervalMapper;
 
-    private final IntervalSearchRepository intervalSearchRepository;
-
-    public IntervalService(IntervalRepository intervalRepository, IntervalMapper intervalMapper, IntervalSearchRepository intervalSearchRepository) {
+    public IntervalService(IntervalRepository intervalRepository, IntervalMapper intervalMapper) {
         this.intervalRepository = intervalRepository;
         this.intervalMapper = intervalMapper;
-        this.intervalSearchRepository = intervalSearchRepository;
     }
 
     /**
@@ -46,9 +40,7 @@ public class IntervalService {
         log.debug("Request to save Interval : {}", intervalDTO);
         Interval interval = intervalMapper.toEntity(intervalDTO);
         interval = intervalRepository.save(interval);
-        IntervalDTO result = intervalMapper.toDto(interval);
-        intervalSearchRepository.save(interval);
-        return result;
+        return intervalMapper.toDto(interval);
     }
 
     /**
@@ -85,20 +77,5 @@ public class IntervalService {
     public void delete(Long id) {
         log.debug("Request to delete Interval : {}", id);
         intervalRepository.delete(id);
-        intervalSearchRepository.delete(id);
-    }
-
-    /**
-     * Search for the interval corresponding to the query.
-     *
-     *  @param query the query of the search
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true)
-    public Page<IntervalDTO> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of Intervals for query {}", query);
-        Page<Interval> result = intervalSearchRepository.search(queryStringQuery(query), pageable);
-        return result.map(intervalMapper::toDto);
     }
 }
