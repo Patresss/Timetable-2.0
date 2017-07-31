@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 /**
  * Service Implementation for managing Teacher.
@@ -58,9 +60,16 @@ public class TeacherService {
 
 
     @Transactional(readOnly = true)
-    public Page<TeacherDTO> findByDivisionInCurrentUser(Pageable pageable) {
+    public Page<TeacherDTO> findByDivision(Pageable pageable, List<Long> divisionsId) {
         log.debug("Request to get all Teachers by current user");
-        return teacherRepository.findByDivisionInCurrentUser(pageable)
+        return teacherRepository.findByDivisionId(pageable, divisionsId)
+            .map(teacherMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<TeacherDTO> findCurrentLogin(Pageable pageable) {
+        log.debug("Request to get all Teachers by current user");
+        return teacherRepository.findCurrentLogin(pageable)
             .map(teacherMapper::toDto);
     }
 

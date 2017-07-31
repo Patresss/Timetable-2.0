@@ -4,11 +4,13 @@ import { Observable } from 'rxjs/Rx';
 
 import { Teacher } from './teacher.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
+import {createRequestOptionWithDivisionsId} from "../../shared/model/request-util";
 
 @Injectable()
 export class TeacherService {
 
     private resourceUrl = 'api/teachers';
+    private resourceByCurrentLoginUrl = 'api/teachers/login';
 
     constructor(private http: Http) { }
 
@@ -31,6 +33,19 @@ export class TeacherService {
             return res.json();
         });
     }
+
+    findByDivision(ids: number[], req?: any): Observable<ResponseWrapper> {
+        return this.http.get(this.resourceUrl, createRequestOptionWithDivisionsId(ids, req))
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    findByCurrentLogin(req?: any): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
+        return this.http.get(this.resourceByCurrentLoginUrl, createRequestOptionWithDivisionsId(req, options))
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+
 
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);

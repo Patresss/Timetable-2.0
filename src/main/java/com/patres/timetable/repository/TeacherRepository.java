@@ -19,8 +19,11 @@ public interface TeacherRepository extends JpaRepository<Teacher,Long> {
     @Query("select distinct teacher from Teacher teacher left join fetch teacher.preferredSubjects")
     List<Teacher> findAllWithEagerRelationships();
 
+    Page<Teacher> findByDivisionId(Pageable pageable, List<Long> divisionsId);
+
     @Query("select distinct teacher from Teacher teacher inner join teacher.division divisions inner join divisions.users user where user.login IN ?#{principal.username}")
-    Page<Teacher> findByDivisionInCurrentUser(Pageable pageable);
+    Page<Teacher> findCurrentLogin(Pageable pageable);
+
 
     @Query("select teacher from Teacher teacher left join fetch teacher.preferredSubjects where teacher.id =:id")
     Teacher findOneWithEagerRelationships(@Param("id") Long id);
