@@ -2,6 +2,7 @@ package com.patres.timetable.service;
 
 import com.patres.timetable.domain.Properties;
 import com.patres.timetable.repository.PropertiesRepository;
+import com.patres.timetable.service.dto.PlaceDTO;
 import com.patres.timetable.service.dto.PropertiesDTO;
 import com.patres.timetable.service.mapper.PropertiesMapper;
 import org.slf4j.Logger;
@@ -11,10 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
-/**
- * Service Implementation for managing Properties.
- */
+
 @Service
 @Transactional
 public class PropertiesService {
@@ -30,12 +30,6 @@ public class PropertiesService {
         this.propertiesMapper = propertiesMapper;
     }
 
-    /**
-     * Save a properties.
-     *
-     * @param propertiesDTO the entity to save
-     * @return the persisted entity
-     */
     public PropertiesDTO save(PropertiesDTO propertiesDTO) {
         log.debug("Request to save Properties : {}", propertiesDTO);
         Properties properties = propertiesMapper.toEntity(propertiesDTO);
@@ -43,12 +37,6 @@ public class PropertiesService {
         return propertiesMapper.toDto(properties);
     }
 
-    /**
-     *  Get all the properties.
-     *
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
     @Transactional(readOnly = true)
     public Page<PropertiesDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Properties");
@@ -56,12 +44,13 @@ public class PropertiesService {
             .map(propertiesMapper::toDto);
     }
 
-    /**
-     *  Get one properties by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
+    @Transactional(readOnly = true)
+    public Page<PropertiesDTO> findByCurrentLogin(Pageable pageable) {
+        log.debug("Request to get Properties by current user");
+        return propertiesRepository.findByCurrentLogin(pageable)
+            .map(propertiesMapper::toDto);
+    }
+
     @Transactional(readOnly = true)
     public PropertiesDTO findOne(Long id) {
         log.debug("Request to get Properties : {}", id);
@@ -69,11 +58,6 @@ public class PropertiesService {
         return propertiesMapper.toDto(properties);
     }
 
-    /**
-     *  Delete the  properties by id.
-     *
-     *  @param id the id of the entity
-     */
     public void delete(Long id) {
         log.debug("Request to delete Properties : {}", id);
         propertiesRepository.delete(id);

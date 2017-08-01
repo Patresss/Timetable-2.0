@@ -2,6 +2,7 @@ package com.patres.timetable.service;
 
 import com.patres.timetable.domain.Place;
 import com.patres.timetable.repository.PlaceRepository;
+import com.patres.timetable.service.dto.PeriodDTO;
 import com.patres.timetable.service.dto.PlaceDTO;
 import com.patres.timetable.service.mapper.PlaceMapper;
 import org.slf4j.Logger;
@@ -11,10 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
-/**
- * Service Implementation for managing Place.
- */
+
 @Service
 @Transactional
 public class PlaceService {
@@ -30,12 +30,6 @@ public class PlaceService {
         this.placeMapper = placeMapper;
     }
 
-    /**
-     * Save a place.
-     *
-     * @param placeDTO the entity to save
-     * @return the persisted entity
-     */
     public PlaceDTO save(PlaceDTO placeDTO) {
         log.debug("Request to save Place : {}", placeDTO);
         Place place = placeMapper.toEntity(placeDTO);
@@ -43,12 +37,6 @@ public class PlaceService {
         return placeMapper.toDto(place);
     }
 
-    /**
-     *  Get all the places.
-     *
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
     @Transactional(readOnly = true)
     public Page<PlaceDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Places");
@@ -56,12 +44,20 @@ public class PlaceService {
             .map(placeMapper::toDto);
     }
 
-    /**
-     *  Get one place by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
+    @Transactional(readOnly = true)
+    public Page<PlaceDTO> findByDivisionsId(Pageable pageable, List<Long> divisionsId) {
+        log.debug("Request to get Place by Divisions id");
+        return placeRepository.findByDivisionId(pageable, divisionsId)
+            .map(placeMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<PlaceDTO> findByCurrentLogin(Pageable pageable) {
+        log.debug("Request to get all Place by current user");
+        return placeRepository.findByCurrentLogin(pageable)
+            .map(placeMapper::toDto);
+    }
+
     @Transactional(readOnly = true)
     public PlaceDTO findOne(Long id) {
         log.debug("Request to get Place : {}", id);
@@ -69,11 +65,6 @@ public class PlaceService {
         return placeMapper.toDto(place);
     }
 
-    /**
-     *  Delete the  place by id.
-     *
-     *  @param id the id of the entity
-     */
     public void delete(Long id) {
         log.debug("Request to delete Place : {}", id);
         placeRepository.delete(id);

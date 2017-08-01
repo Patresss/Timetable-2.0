@@ -2,6 +2,7 @@ package com.patres.timetable.service;
 
 import com.patres.timetable.domain.Subject;
 import com.patres.timetable.repository.SubjectRepository;
+import com.patres.timetable.service.dto.PlaceDTO;
 import com.patres.timetable.service.dto.SubjectDTO;
 import com.patres.timetable.service.mapper.SubjectMapper;
 import org.slf4j.Logger;
@@ -11,10 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
-/**
- * Service Implementation for managing Subject.
- */
+
 @Service
 @Transactional
 public class SubjectService {
@@ -30,12 +30,6 @@ public class SubjectService {
         this.subjectMapper = subjectMapper;
     }
 
-    /**
-     * Save a subject.
-     *
-     * @param subjectDTO the entity to save
-     * @return the persisted entity
-     */
     public SubjectDTO save(SubjectDTO subjectDTO) {
         log.debug("Request to save Subject : {}", subjectDTO);
         Subject subject = subjectMapper.toEntity(subjectDTO);
@@ -43,12 +37,6 @@ public class SubjectService {
         return subjectMapper.toDto(subject);
     }
 
-    /**
-     *  Get all the subjects.
-     *
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
     @Transactional(readOnly = true)
     public Page<SubjectDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Subjects");
@@ -56,12 +44,20 @@ public class SubjectService {
             .map(subjectMapper::toDto);
     }
 
-    /**
-     *  Get one subject by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
+    @Transactional(readOnly = true)
+    public Page<SubjectDTO> findByDivisionsId(Pageable pageable, List<Long> divisionsId) {
+        log.debug("Request to get Subject by Divisions id");
+        return subjectRepository.findByDivisionId(pageable, divisionsId)
+            .map(subjectMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<SubjectDTO> findByCurrentLogin(Pageable pageable) {
+        log.debug("Request to get Subject by current user");
+        return subjectRepository.findByCurrentLogin(pageable)
+            .map(subjectMapper::toDto);
+    }
+
     @Transactional(readOnly = true)
     public SubjectDTO findOne(Long id) {
         log.debug("Request to get Subject : {}", id);
@@ -69,11 +65,6 @@ public class SubjectService {
         return subjectMapper.toDto(subject);
     }
 
-    /**
-     *  Delete the  subject by id.
-     *
-     *  @param id the id of the entity
-     */
     public void delete(Long id) {
         log.debug("Request to delete Subject : {}", id);
         subjectRepository.delete(id);

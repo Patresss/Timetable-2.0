@@ -57,17 +57,17 @@ export class TimetableDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.placeService.query()
+        this.placeService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.places = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.subjectService.query()
+        this.subjectService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.subjects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.teacherService.query()
+        this.teacherService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.teachers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.divisionService.query()
             .subscribe((res: ResponseWrapper) => { this.divisions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.lessonService.query()
+        this.lessonService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.lessons = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.periodService.query()
+        this.periodService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.periods = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 

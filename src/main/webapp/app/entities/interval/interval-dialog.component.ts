@@ -36,7 +36,7 @@ export class IntervalDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.periodService.query()
+        this.periodService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.periods = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 

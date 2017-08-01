@@ -32,12 +32,6 @@ public class TeacherService {
         this.teacherMapper = teacherMapper;
     }
 
-    /**
-     * Save a teacher.
-     *
-     * @param teacherDTO the entity to save
-     * @return the persisted entity
-     */
     public TeacherDTO save(TeacherDTO teacherDTO) {
         log.debug("Request to save Teacher : {}", teacherDTO);
         Teacher teacher = teacherMapper.toEntity(teacherDTO);
@@ -45,12 +39,6 @@ public class TeacherService {
         return teacherMapper.toDto(teacher);
     }
 
-    /**
-     *  Get all the teachers.
-     *
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
     @Transactional(readOnly = true)
     public Page<TeacherDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Teachers");
@@ -58,27 +46,20 @@ public class TeacherService {
             .map(teacherMapper::toDto);
     }
 
-
     @Transactional(readOnly = true)
-    public Page<TeacherDTO> findByDivision(Pageable pageable, List<Long> divisionsId) {
-        log.debug("Request to get all Teachers by current user");
+    public Page<TeacherDTO> findByDivisionsId(Pageable pageable, List<Long> divisionsId) {
+        log.debug("Request to get Teachers by Divisions id");
         return teacherRepository.findByDivisionId(pageable, divisionsId)
             .map(teacherMapper::toDto);
     }
 
     @Transactional(readOnly = true)
-    public Page<TeacherDTO> findCurrentLogin(Pageable pageable) {
+    public Page<TeacherDTO> findByCurrentLogin(Pageable pageable) {
         log.debug("Request to get all Teachers by current user");
-        return teacherRepository.findCurrentLogin(pageable)
+        return teacherRepository.findByCurrentLogin(pageable)
             .map(teacherMapper::toDto);
     }
 
-    /**
-     *  Get one teacher by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
     @Transactional(readOnly = true)
     public TeacherDTO findOne(Long id) {
         log.debug("Request to get Teacher : {}", id);
@@ -86,11 +67,6 @@ public class TeacherService {
         return teacherMapper.toDto(teacher);
     }
 
-    /**
-     *  Delete the  teacher by id.
-     *
-     *  @param id the id of the entity
-     */
     public void delete(Long id) {
         log.debug("Request to delete Teacher : {}", id);
         teacherRepository.delete(id);

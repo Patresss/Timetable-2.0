@@ -2,11 +2,11 @@ package com.patres.timetable.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.patres.timetable.service.PlaceService;
+import com.patres.timetable.service.dto.PlaceDTO;
 import com.patres.timetable.web.rest.util.HeaderUtil;
 import com.patres.timetable.web.rest.util.PaginationUtil;
-import com.patres.timetable.service.dto.PlaceDTO;
-import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -93,6 +92,39 @@ public class PlaceResource {
     public ResponseEntity<List<PlaceDTO>> getAllPlaces(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Places");
         Page<PlaceDTO> page = placeService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/places");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /places/divisions : get the places by divisions id.
+     *
+     * @param divisionsId divisions id
+     * @param pageable    the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of places in body
+     */
+    @GetMapping("/places/divisions")
+    @Timed
+    public ResponseEntity<List<PlaceDTO>> getPlacesByDivisionsId(@ApiParam Pageable pageable, @PathVariable List<Long> divisionsId) {
+        log.debug("REST request to get a page of Places by divisions Id");
+
+        Page<PlaceDTO> page = placeService.findByDivisionsId(pageable, divisionsId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/places");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /places/login : get the places by current login.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of places in body
+     */
+    @GetMapping("/places/login")
+    @Timed
+    public ResponseEntity<List<PlaceDTO>> getPlacesByCurrentLogin(@ApiParam Pageable pageable) {
+        log.debug("REST request to get a page of Places");
+
+        Page<PlaceDTO> page = placeService.findByCurrentLogin(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/places");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

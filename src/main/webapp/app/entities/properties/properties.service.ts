@@ -9,6 +9,8 @@ import { ResponseWrapper, createRequestOption } from '../../shared';
 export class PropertiesService {
 
     private resourceUrl = 'api/properties';
+    private resourceByCurrentLoginUrl = 'api/lessons/login';
+
 
     constructor(private http: Http) { }
 
@@ -30,6 +32,12 @@ export class PropertiesService {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             return res.json();
         });
+    }
+
+    findByCurrentLogin(req?: any): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
+        return this.http.get(this.resourceByCurrentLoginUrl, options)
+            .map((res: Response) => this.convertResponse(res));
     }
 
     query(req?: any): Observable<ResponseWrapper> {

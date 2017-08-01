@@ -11,10 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
-/**
- * Service Implementation for managing Lesson.
- */
+
 @Service
 @Transactional
 public class LessonService {
@@ -30,12 +29,6 @@ public class LessonService {
         this.lessonMapper = lessonMapper;
     }
 
-    /**
-     * Save a lesson.
-     *
-     * @param lessonDTO the entity to save
-     * @return the persisted entity
-     */
     public LessonDTO save(LessonDTO lessonDTO) {
         log.debug("Request to save Lesson : {}", lessonDTO);
         Lesson lesson = lessonMapper.toEntity(lessonDTO);
@@ -43,12 +36,6 @@ public class LessonService {
         return lessonMapper.toDto(lesson);
     }
 
-    /**
-     *  Get all the lessons.
-     *
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
     @Transactional(readOnly = true)
     public Page<LessonDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Lessons");
@@ -56,12 +43,20 @@ public class LessonService {
             .map(lessonMapper::toDto);
     }
 
-    /**
-     *  Get one lesson by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
+    @Transactional(readOnly = true)
+    public Page<LessonDTO> findByDivisionsId(Pageable pageable, List<Long> divisionsId) {
+        log.debug("Request to get Lesson by Divisions id");
+        return lessonRepository.findByDivisionId(pageable, divisionsId)
+            .map(lessonMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<LessonDTO> findByCurrentLogin(Pageable pageable) {
+        log.debug("Request to get all Lesson by current user");
+        return lessonRepository.findByCurrentLogin(pageable)
+            .map(lessonMapper::toDto);
+    }
+
     @Transactional(readOnly = true)
     public LessonDTO findOne(Long id) {
         log.debug("Request to get Lesson : {}", id);
@@ -69,11 +64,6 @@ public class LessonService {
         return lessonMapper.toDto(lesson);
     }
 
-    /**
-     *  Delete the  lesson by id.
-     *
-     *  @param id the id of the entity
-     */
     public void delete(Long id) {
         log.debug("Request to delete Lesson : {}", id);
         lessonRepository.delete(id);

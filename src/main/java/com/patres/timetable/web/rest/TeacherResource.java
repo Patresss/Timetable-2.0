@@ -2,11 +2,11 @@ package com.patres.timetable.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.patres.timetable.service.TeacherService;
+import com.patres.timetable.service.dto.TeacherDTO;
 import com.patres.timetable.web.rest.util.HeaderUtil;
 import com.patres.timetable.web.rest.util.PaginationUtil;
-import com.patres.timetable.service.dto.TeacherDTO;
-import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -90,28 +89,43 @@ public class TeacherResource {
      */
     @GetMapping("/teachers")
     @Timed
-    public ResponseEntity<List<TeacherDTO>> getAllTeachers(@ApiParam Pageable pageable, @PathVariable List<Long> divisionsId) {
+    public ResponseEntity<List<TeacherDTO>> getAllTeachers(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Teachers");
 
-        //  Page<TeacherDTO> page = teacherService.findAll(pageable);
-        // Page<TeacherDTO> page = teacherService.findByDivisionInCurrentUser(pageable);
-        Page<TeacherDTO> page = teacherService.findByDivision(pageable, divisionsId);
+        Page<TeacherDTO> page = teacherService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/teachers");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
-     * GET  /teachers : get all the teachers.
+     * GET  /teachers/divisions : get the teachers by divisions id.
+     *
+     * @param divisionsId divisions id
+     * @param pageable    the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of teachers in body
+     */
+    @GetMapping("/teachers/divisions")
+    @Timed
+    public ResponseEntity<List<TeacherDTO>> getTeachersByDivisionsId(@ApiParam Pageable pageable, @PathVariable List<Long> divisionsId) {
+        log.debug("REST request to get a page of Teachers by divisions Id");
+
+        Page<TeacherDTO> page = teacherService.findByDivisionsId(pageable, divisionsId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/teachers");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /teachers/login : get the teachers by current login.
      *
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of teachers in body
      */
     @GetMapping("/teachers/login")
     @Timed
-    public ResponseEntity<List<TeacherDTO>> getTeachersByLogin(@ApiParam Pageable pageable) {
+    public ResponseEntity<List<TeacherDTO>> getTeachersByCurrentLogin(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Teachers");
 
-        Page<TeacherDTO> page = teacherService.findCurrentLogin(pageable);
+        Page<TeacherDTO> page = teacherService.findByCurrentLogin(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/teachers");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

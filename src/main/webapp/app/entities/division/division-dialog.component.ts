@@ -52,11 +52,11 @@ export class DivisionDialogComponent implements OnInit {
             .subscribe((res: ResponseWrapper) => { this.divisions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.userService.query()
             .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.teacherService.query()
+        this.teacherService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.teachers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.subjectService.query()
+        this.subjectService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.subjects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.placeService.query()
+        this.placeService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.places = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 

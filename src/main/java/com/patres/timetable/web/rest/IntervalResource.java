@@ -2,11 +2,11 @@ package com.patres.timetable.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.patres.timetable.service.IntervalService;
+import com.patres.timetable.service.dto.IntervalDTO;
 import com.patres.timetable.web.rest.util.HeaderUtil;
 import com.patres.timetable.web.rest.util.PaginationUtil;
-import com.patres.timetable.service.dto.IntervalDTO;
-import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 

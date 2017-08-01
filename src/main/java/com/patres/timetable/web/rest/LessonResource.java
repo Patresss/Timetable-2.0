@@ -2,11 +2,11 @@ package com.patres.timetable.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.patres.timetable.service.LessonService;
+import com.patres.timetable.service.dto.LessonDTO;
 import com.patres.timetable.web.rest.util.HeaderUtil;
 import com.patres.timetable.web.rest.util.PaginationUtil;
-import com.patres.timetable.service.dto.LessonDTO;
-import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -30,10 +29,8 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class LessonResource {
 
-    private final Logger log = LoggerFactory.getLogger(LessonResource.class);
-
     private static final String ENTITY_NAME = "lesson";
-
+    private final Logger log = LoggerFactory.getLogger(LessonResource.class);
     private final LessonService lessonService;
 
     public LessonResource(LessonService lessonService) {
@@ -93,6 +90,40 @@ public class LessonResource {
     public ResponseEntity<List<LessonDTO>> getAllLessons(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Lessons");
         Page<LessonDTO> page = lessonService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/lessons");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+
+    /**
+     * GET  /lessons/divisions : get the lessons by divisions id.
+     *
+     * @param divisionsId divisions id
+     * @param pageable    the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of lessons in body
+     */
+    @GetMapping("/lessons/divisions")
+    @Timed
+    public ResponseEntity<List<LessonDTO>> getLessonsByDivisionsId(@ApiParam Pageable pageable, @PathVariable List<Long> divisionsId) {
+        log.debug("REST request to get a page of Lessons by divisions Id");
+
+        Page<LessonDTO> page = lessonService.findByDivisionsId(pageable, divisionsId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/lessons");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /lessons/login : get the lessons by current login.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of lessons in body
+     */
+    @GetMapping("/lessons/login")
+    @Timed
+    public ResponseEntity<List<LessonDTO>> getLessonsByCurrentLogin(@ApiParam Pageable pageable) {
+        log.debug("REST request to get a page of Lessons");
+
+        Page<LessonDTO> page = lessonService.findByCurrentLogin(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/lessons");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

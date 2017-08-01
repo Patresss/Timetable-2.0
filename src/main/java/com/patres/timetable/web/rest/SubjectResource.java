@@ -2,11 +2,11 @@ package com.patres.timetable.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.patres.timetable.service.SubjectService;
+import com.patres.timetable.service.dto.SubjectDTO;
 import com.patres.timetable.web.rest.util.HeaderUtil;
 import com.patres.timetable.web.rest.util.PaginationUtil;
-import com.patres.timetable.service.dto.SubjectDTO;
-import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -93,6 +92,39 @@ public class SubjectResource {
     public ResponseEntity<List<SubjectDTO>> getAllSubjects(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Subjects");
         Page<SubjectDTO> page = subjectService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/subjects");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /subjects/divisions : get all the subjects by divisions id.
+     *
+     * @param divisionsId divisions id
+     * @param pageable    the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of subjects in body
+     */
+    @GetMapping("/subjects/divisions")
+    @Timed
+    public ResponseEntity<List<SubjectDTO>> getSubjectsByDivisionsId(@ApiParam Pageable pageable, @PathVariable List<Long> divisionsId) {
+        log.debug("REST request to get a page of Subjects by divisions Id");
+
+        Page<SubjectDTO> page = subjectService.findByDivisionsId(pageable, divisionsId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/subjects");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /subjects/login : get the subjects by current login.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of subjects in body
+     */
+    @GetMapping("/subjects/login")
+    @Timed
+    public ResponseEntity<List<SubjectDTO>> getSubjectsByCurrentLogin(@ApiParam Pageable pageable) {
+        log.debug("REST request to get a page of Subjects");
+
+        Page<SubjectDTO> page = subjectService.findByCurrentLogin(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/subjects");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

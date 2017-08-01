@@ -2,6 +2,7 @@ package com.patres.timetable.service;
 
 import com.patres.timetable.domain.Period;
 import com.patres.timetable.repository.PeriodRepository;
+import com.patres.timetable.service.dto.LessonDTO;
 import com.patres.timetable.service.dto.PeriodDTO;
 import com.patres.timetable.service.mapper.PeriodMapper;
 import org.slf4j.Logger;
@@ -11,10 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
-/**
- * Service Implementation for managing Period.
- */
+
 @Service
 @Transactional
 public class PeriodService {
@@ -30,12 +30,6 @@ public class PeriodService {
         this.periodMapper = periodMapper;
     }
 
-    /**
-     * Save a period.
-     *
-     * @param periodDTO the entity to save
-     * @return the persisted entity
-     */
     public PeriodDTO save(PeriodDTO periodDTO) {
         log.debug("Request to save Period : {}", periodDTO);
         Period period = periodMapper.toEntity(periodDTO);
@@ -43,12 +37,6 @@ public class PeriodService {
         return periodMapper.toDto(period);
     }
 
-    /**
-     *  Get all the periods.
-     *
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
     @Transactional(readOnly = true)
     public Page<PeriodDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Periods");
@@ -56,12 +44,20 @@ public class PeriodService {
             .map(periodMapper::toDto);
     }
 
-    /**
-     *  Get one period by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
+    @Transactional(readOnly = true)
+    public Page<PeriodDTO> findByDivisionsId(Pageable pageable, List<Long> divisionsId) {
+        log.debug("Request to get Period by Divisions id");
+        return periodRepository.findByDivisionId(pageable, divisionsId)
+            .map(periodMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<PeriodDTO> findByCurrentLogin(Pageable pageable) {
+        log.debug("Request to get all Period by current user");
+        return periodRepository.findByCurrentLogin(pageable)
+            .map(periodMapper::toDto);
+    }
+
     @Transactional(readOnly = true)
     public PeriodDTO findOne(Long id) {
         log.debug("Request to get Period : {}", id);
@@ -69,11 +65,6 @@ public class PeriodService {
         return periodMapper.toDto(period);
     }
 
-    /**
-     *  Delete the  period by id.
-     *
-     *  @param id the id of the entity
-     */
     public void delete(Long id) {
         log.debug("Request to delete Period : {}", id);
         periodRepository.delete(id);

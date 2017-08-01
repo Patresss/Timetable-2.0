@@ -1,17 +1,15 @@
 package com.patres.timetable.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-
 import com.patres.timetable.domain.User;
 import com.patres.timetable.repository.UserRepository;
 import com.patres.timetable.security.SecurityUtils;
 import com.patres.timetable.service.MailService;
 import com.patres.timetable.service.UserService;
 import com.patres.timetable.service.dto.UserDTO;
+import com.patres.timetable.web.rest.util.HeaderUtil;
 import com.patres.timetable.web.rest.vm.KeyAndPasswordVM;
 import com.patres.timetable.web.rest.vm.ManagedUserVM;
-import com.patres.timetable.web.rest.util.HeaderUtil;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.
@@ -43,7 +41,7 @@ public class AccountResource {
     private static final String CHECK_ERROR_MESSAGE = "Incorrect password";
 
     public AccountResource(UserRepository userRepository, UserService userService,
-            MailService mailService) {
+                           MailService mailService) {
 
         this.userRepository = userRepository;
         this.userService = userService;
@@ -57,7 +55,7 @@ public class AccountResource {
      * @return the ResponseEntity with status 201 (Created) if the user is registered or 400 (Bad Request) if the login or email is already in use
      */
     @PostMapping(path = "/register",
-        produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
     public ResponseEntity registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
 
@@ -80,7 +78,7 @@ public class AccountResource {
                     mailService.sendActivationEmail(user);
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
-        );
+            );
     }
 
     /**
@@ -196,8 +194,8 @@ public class AccountResource {
             return new ResponseEntity<>(CHECK_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
         }
         return userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey())
-              .map(user -> new ResponseEntity<String>(HttpStatus.OK))
-              .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+            .map(user -> new ResponseEntity<String>(HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     private boolean checkPasswordLength(String password) {
