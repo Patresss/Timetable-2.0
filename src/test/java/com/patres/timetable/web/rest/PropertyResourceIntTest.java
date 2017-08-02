@@ -106,7 +106,7 @@ public class PropertyResourceIntTest {
 
         // Create the Property
         PropertyDTO propertyDTO = propertyMapper.toDto(property);
-        restPropertiesMockMvc.perform(post("/api/property")
+        restPropertiesMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
             .andExpect(status().isCreated());
@@ -129,7 +129,7 @@ public class PropertyResourceIntTest {
         PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restPropertiesMockMvc.perform(post("/api/property")
+        restPropertiesMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
             .andExpect(status().isBadRequest());
@@ -149,7 +149,7 @@ public class PropertyResourceIntTest {
         // Create the Property, which fails.
         PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
-        restPropertiesMockMvc.perform(post("/api/property")
+        restPropertiesMockMvc.perform(post("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
             .andExpect(status().isBadRequest());
@@ -165,7 +165,7 @@ public class PropertyResourceIntTest {
         propertyRepository.saveAndFlush(property);
 
         // Get all the propertiesList
-        restPropertiesMockMvc.perform(get("/api/property?sort=id,desc"))
+        restPropertiesMockMvc.perform(get("/api/properties?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(property.getId().intValue())))
@@ -180,7 +180,7 @@ public class PropertyResourceIntTest {
         propertyRepository.saveAndFlush(property);
 
         // Get the property
-        restPropertiesMockMvc.perform(get("/api/property/{id}", property.getId()))
+        restPropertiesMockMvc.perform(get("/api/properties/{id}", property.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(property.getId().intValue()))
@@ -192,7 +192,7 @@ public class PropertyResourceIntTest {
     @Transactional
     public void getNonExistingProperties() throws Exception {
         // Get the property
-        restPropertiesMockMvc.perform(get("/api/property/{id}", Long.MAX_VALUE))
+        restPropertiesMockMvc.perform(get("/api/properties/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
     }
 
@@ -210,7 +210,7 @@ public class PropertyResourceIntTest {
             .propertyValue(UPDATED_PROPERTY_VALUE);
         PropertyDTO propertyDTO = propertyMapper.toDto(updatedProperty);
 
-        restPropertiesMockMvc.perform(put("/api/property")
+        restPropertiesMockMvc.perform(put("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
             .andExpect(status().isOk());
@@ -232,7 +232,7 @@ public class PropertyResourceIntTest {
         PropertyDTO propertyDTO = propertyMapper.toDto(property);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
-        restPropertiesMockMvc.perform(put("/api/property")
+        restPropertiesMockMvc.perform(put("/api/properties")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
             .andExpect(status().isCreated());
@@ -250,7 +250,7 @@ public class PropertyResourceIntTest {
         int databaseSizeBeforeDelete = propertyRepository.findAll().size();
 
         // Get the property
-        restPropertiesMockMvc.perform(delete("/api/property/{id}", property.getId())
+        restPropertiesMockMvc.perform(delete("/api/properties/{id}", property.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
