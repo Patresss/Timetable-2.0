@@ -1,0 +1,23 @@
+{
+    "timetableApp": {
+        "property" : {
+            "home": {
+                "title": "Property",
+                "createLabel": "Dodaj Property",
+                "createOrEditLabel": "Dodaj lub edytuj: Property"
+            },
+            "created": "Utworzono nowy Property z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Property z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Property z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Property {{ id }}?"
+            },
+            "detail": {
+                "title": "Property"
+            },
+            "propertyKey": "Property Key",
+            "propertyValue": "Property Value",
+            "division": "Division"
+        }
+    }
+}

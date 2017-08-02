@@ -82,7 +82,7 @@ public class Division implements Serializable {
     @OneToMany(mappedBy = "division")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Properties> divisionProperties = new HashSet<>();
+    private Set<Property> divisionProperties = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -353,28 +353,28 @@ public class Division implements Serializable {
         this.divisionPeriods = periods;
     }
 
-    public Set<Properties> getDivisionProperties() {
+    public Set<Property> getDivisionProperties() {
         return divisionProperties;
     }
 
-    public Division divisionProperties(Set<Properties> properties) {
+    public Division divisionProperties(Set<Property> properties) {
         this.divisionProperties = properties;
         return this;
     }
 
-    public Division addDivisionProperties(Properties properties) {
-        this.divisionProperties.add(properties);
-        properties.setDivision(this);
+    public Division addDivisionProperties(Property property) {
+        this.divisionProperties.add(property);
+        property.setDivision(this);
         return this;
     }
 
-    public Division removeDivisionProperties(Properties properties) {
-        this.divisionProperties.remove(properties);
-        properties.setDivision(null);
+    public Division removeDivisionProperties(Property property) {
+        this.divisionProperties.remove(property);
+        property.setDivision(null);
         return this;
     }
 
-    public void setDivisionProperties(Set<Properties> properties) {
+    public void setDivisionProperties(Set<Property> properties) {
         this.divisionProperties = properties;
     }
 

@@ -57,7 +57,7 @@ public class CacheConfiguration {
             cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".preferredTeachers", jcacheConfiguration);
             cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".preferredSubjects", jcacheConfiguration);
             cm.createCache(com.patres.timetable.domain.Division.class.getName() + ".preferredPlaces", jcacheConfiguration);
-            cm.createCache(com.patres.timetable.domain.Properties.class.getName(), jcacheConfiguration);
+            cm.createCache(com.patres.timetable.domain.Property.class.getName(), jcacheConfiguration);
             cm.createCache(com.patres.timetable.domain.Teacher.class.getName(), jcacheConfiguration);
             cm.createCache(com.patres.timetable.domain.Teacher.class.getName() + ".timetables", jcacheConfiguration);
             cm.createCache(com.patres.timetable.domain.Teacher.class.getName() + ".preferredSubjects", jcacheConfiguration);

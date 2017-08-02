@@ -8,7 +8,7 @@
             "entities": {
                 "main": "Encje",
                 "division": "Division",
-                "properties": "Properties",
+                "property": "Properties",
                 "teacher": "Teacher",
                 "subject": "Subject",
                 "place": "Place",

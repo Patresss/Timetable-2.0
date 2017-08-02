@@ -5,7 +5,7 @@
         "stacktrace": "Stos wywołań",
         "details": {
             "details": "Szczegóły",
-            "properties": "Właściwości",
+            "property": "Właściwości",
             "name": "Nazwa",
             "value": "Wartość",
             "error": "Błąd"

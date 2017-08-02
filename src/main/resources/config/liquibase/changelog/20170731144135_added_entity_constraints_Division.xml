@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Division.
+    -->
+    <changeSet id="20170731144135-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="divisions_id"
+                                 baseTableName="division_parent"
+                                 constraintName="fk_division_parent_divisions_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="division"/>
+        <addForeignKeyConstraint baseColumnNames="parents_id"
+                                 baseTableName="division_parent"
+                                 constraintName="fk_division_parent_parents_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="division"/>
+        
+        <addForeignKeyConstraint baseColumnNames="divisions_id"
+                                 baseTableName="division_user"
+                                 constraintName="fk_division_user_divisions_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="division"/>
+        <addForeignKeyConstraint baseColumnNames="users_id"
+                                 baseTableName="division_user"
+                                 constraintName="fk_division_user_users_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+        
+        <addForeignKeyConstraint baseColumnNames="divisions_id"
+                                 baseTableName="division_preferred_teacher"
+                                 constraintName="fk_division_preferred_teacher_divisions_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="division"/>
+        <addForeignKeyConstraint baseColumnNames="preferred_teachers_id"
+                                 baseTableName="division_preferred_teacher"
+                                 constraintName="fk_division_preferred_teacher_preferred_teachers_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="teacher"/>
+        
+        <addForeignKeyConstraint baseColumnNames="divisions_id"
+                                 baseTableName="division_preferred_subject"
+                                 constraintName="fk_division_preferred_subject_divisions_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="division"/>
+        <addForeignKeyConstraint baseColumnNames="preferred_subjects_id"
+                                 baseTableName="division_preferred_subject"
+                                 constraintName="fk_division_preferred_subject_preferred_subjects_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="subject"/>
+        
+    </changeSet>
+</databaseChangeLog>
