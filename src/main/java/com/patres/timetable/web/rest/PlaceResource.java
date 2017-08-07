@@ -97,7 +97,7 @@ public class PlaceResource {
     }
 
     /**
-     * GET  /places/divisions : get the places by divisions id.
+     * GET  /places/divisions : get the places by Division owners id.
      *
      * @param divisionsId divisions id
      * @param pageable    the pagination information
@@ -106,9 +106,9 @@ public class PlaceResource {
     @GetMapping("/places/divisions")
     @Timed
     public ResponseEntity<List<PlaceDTO>> getPlacesByDivisionsId(@ApiParam Pageable pageable, @PathVariable List<Long> divisionsId) {
-        log.debug("REST request to get a page of Places by divisions Id");
+        log.debug("REST request to get a page of Places by Division owners id");
 
-        Page<PlaceDTO> page = placeService.findByDivisionsId(pageable, divisionsId);
+        Page<PlaceDTO> page = placeService.findByDivisionOwnerId(pageable, divisionsId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/places");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

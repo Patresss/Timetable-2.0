@@ -11,13 +11,13 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {SubjectMapper.class, DivisionMapper.class, TeacherMapper.class, })
 public interface PlaceMapper extends EntityMapper <PlaceDTO, Place> {
 
-    @Mapping(source = "division.id", target = "divisionId")
-    @Mapping(source = "division.name", target = "divisionName")
-    PlaceDTO toDto(Place place); 
+    @Mapping(source = "divisionOwner.id", target = "divisionOwnerId")
+    @Mapping(source = "divisionOwner.name", target = "divisionOwnerName")
+    PlaceDTO toDto(Place place);
     @Mapping(target = "timetables", ignore = true)
 
-    @Mapping(source = "divisionId", target = "division")
-    Place toEntity(PlaceDTO placeDTO); 
+    @Mapping(source = "divisionOwnerId", target = "divisionOwner")
+    Place toEntity(PlaceDTO placeDTO);
     default Place fromId(Long id) {
         if (id == null) {
             return null;

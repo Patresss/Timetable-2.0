@@ -12,10 +12,10 @@
         <dd>
             <span>{{property.propertyValue}}</span>
         </dd>
-        <dt><span jhiTranslate="timetableApp.property.division">Division</span></dt>
+        <dt><span jhiTranslate="timetableApp.property.divisionOwner">Division owner</span></dt>
         <dd>
-            <div *ngIf="property.divisionId">
-                <a [routerLink]="['/division', property.divisionId]">{{property.divisionName}}</a>
+            <div *ngIf="property.divisionOwnerId">
+                <a [routerLink]="['/divisionOwner', property.divisionOwnerId]">{{property.divisionOwnerName}}</a>
             </div>
         </dd>
     </dl>

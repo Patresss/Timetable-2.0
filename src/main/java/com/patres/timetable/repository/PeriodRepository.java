@@ -18,9 +18,9 @@ import java.util.List;
 @Repository
 public interface PeriodRepository extends JpaRepository<Period,Long> {
 
-    Page<Period> findByDivisionId(Pageable pageable, List<Long> divisionsId);
+    Page<Period> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId);
 
-    @Query("select distinct period from Period period inner join period.division divisions inner join divisions.users user where user.login IN ?#{principal.username}")
+    @Query("select distinct period from Period period inner join period.divisionOwner divisions inner join divisions.users user where user.login IN ?#{principal.username}")
     Page<Period> findByCurrentLogin(Pageable pageable);
 
 }

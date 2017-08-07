@@ -45,9 +45,9 @@ public class PlaceService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PlaceDTO> findByDivisionsId(Pageable pageable, List<Long> divisionsId) {
-        log.debug("Request to get Place by Divisions id");
-        return placeRepository.findByDivisionId(pageable, divisionsId)
+    public Page<PlaceDTO> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId) {
+        log.debug("Request to get Place by Division owners id");
+        return placeRepository.findByDivisionOwnerId(pageable, divisionsId)
             .map(placeMapper::toDto);
     }
 

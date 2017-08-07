@@ -40,8 +40,8 @@
         </div>
 
         <div class="form-group">
-            <label jhiTranslate="timetableApp.subject.division" for="field_division">Division</label>
-            <select class="form-control" id="field_division" name="division" [(ngModel)]="subject.divisionId" >
+            <label jhiTranslate="timetableApp.subject.divisionOwner" for="field_division">Division</label>
+            <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="subject.divisionOwnerId" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="divisionOption.id" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
             </select>

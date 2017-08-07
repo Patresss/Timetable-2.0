@@ -69,7 +69,7 @@ public class Place implements Serializable {
     private Set<Teacher> preferredTeachers = new HashSet<>();
 
     @ManyToOne
-    private Division division;
+    private Division divisionOwner;
 
     public Long getId() {
         return id;
@@ -244,17 +244,17 @@ public class Place implements Serializable {
         this.preferredTeachers = teachers;
     }
 
-    public Division getDivision() {
-        return division;
+    public Division getDivisionOwner() {
+        return divisionOwner;
     }
 
-    public Place division(Division division) {
-        this.division = division;
+    public Place divisionOwner(Division divisionOwner) {
+        this.divisionOwner = divisionOwner;
         return this;
     }
 
-    public void setDivision(Division division) {
-        this.division = division;
+    public void setDivisionOwner(Division divisionOwner) {
+        this.divisionOwner = divisionOwner;
     }
 
     @Override

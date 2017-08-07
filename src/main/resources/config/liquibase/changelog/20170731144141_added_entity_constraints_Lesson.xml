@@ -7,10 +7,10 @@
         Added the constraints for entity Lesson.
     -->
     <changeSet id="20170731144141-2" author="jhipster">
-        
-        <addForeignKeyConstraint baseColumnNames="division_id"
+
+        <addForeignKeyConstraint baseColumnNames="division_owner_id"
                                  baseTableName="lesson"
-                                 constraintName="fk_lesson_division_id"
+                                 constraintName="fk_lesson_division_owner_id"
                                  referencedColumnNames="id"
                                  referencedTableName="division"/>
 

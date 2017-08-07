@@ -8,10 +8,10 @@
         <dd>
             <span>{{period.name}}</span>
         </dd>
-        <dt><span jhiTranslate="timetableApp.period.division">Division</span></dt>
+        <dt><span jhiTranslate="timetableApp.period.divisionOwner">Division owner</span></dt>
         <dd>
-            <div *ngIf="period.divisionId">
-                <a [routerLink]="['/division', period.divisionId]">{{period.divisionName}}</a>
+            <div *ngIf="period.divisionOwnerId">
+                <a [routerLink]="['/divisionOwner', period.divisionOwnerId]">{{period.divisionOwnerName}}</a>
             </div>
         </dd>
     </dl>

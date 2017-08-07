@@ -98,7 +98,7 @@ public class TeacherResource {
     }
 
     /**
-     * GET  /teachers/divisions : get the teachers by divisions id.
+     * GET  /teachers/divisions : get the teachers by Division owners id.
      *
      * @param divisionsId divisions id
      * @param pageable    the pagination information
@@ -107,9 +107,9 @@ public class TeacherResource {
     @GetMapping("/teachers/divisions")
     @Timed
     public ResponseEntity<List<TeacherDTO>> getTeachersByDivisionsId(@ApiParam Pageable pageable, @PathVariable List<Long> divisionsId) {
-        log.debug("REST request to get a page of Teachers by divisions Id");
+        log.debug("REST request to get a page of Teachers by Division owners id");
 
-        Page<TeacherDTO> page = teacherService.findByDivisionsId(pageable, divisionsId);
+        Page<TeacherDTO> page = teacherService.findByDivisionOwnerId(pageable, divisionsId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/teachers");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

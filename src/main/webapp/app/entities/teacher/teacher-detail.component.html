@@ -26,10 +26,10 @@
                 <a [routerLink]="['/subject', preferredSubject?.id ]">{{preferredSubject.name}}</a>{{last ? '' : ', '}}
             </span>
         </dd>
-        <dt><span jhiTranslate="timetableApp.teacher.division">Division</span></dt>
+        <dt><span jhiTranslate="timetableApp.teacher.divisionOwner">Division owner</span></dt>
         <dd>
-            <div *ngIf="teacher.divisionId">
-                <a [routerLink]="['/division', teacher.divisionId]">{{teacher.divisionName}}</a>
+            <div *ngIf="teacher.divisionOwnerId">
+                <a [routerLink]="['/divisionOwner', teacher.divisionOwnerId]">{{teacher.divisionOwnerName}}</a>
             </div>
         </dd>
     </dl>

@@ -45,9 +45,9 @@ public class PeriodService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PeriodDTO> findByDivisionsId(Pageable pageable, List<Long> divisionsId) {
-        log.debug("Request to get Period by Divisions id");
-        return periodRepository.findByDivisionId(pageable, divisionsId)
+    public Page<PeriodDTO> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId) {
+        log.debug("Request to get Period by Division owners id");
+        return periodRepository.findByDivisionOwnerId(pageable, divisionsId)
             .map(periodMapper::toDto);
     }
 

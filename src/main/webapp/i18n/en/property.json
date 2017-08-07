@@ -17,7 +17,7 @@
             },
             "propertyKey": "Property Key",
             "propertyValue": "Property Value",
-            "division": "Division"
+            "divisionOwner": "divisionOwner"
         }
     }
 }

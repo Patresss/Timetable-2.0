@@ -41,7 +41,7 @@ public class Period implements Serializable {
     private Set<Timetable> timetables = new HashSet<>();
 
     @ManyToOne
-    private Division division;
+    private Division divisionOwner;
 
     public Long getId() {
         return id;
@@ -114,17 +114,17 @@ public class Period implements Serializable {
         this.timetables = timetables;
     }
 
-    public Division getDivision() {
-        return division;
+    public Division getDivisionOwner() {
+        return divisionOwner;
     }
 
-    public Period division(Division division) {
-        this.division = division;
+    public Period divisionOwner(Division divisionOwner) {
+        this.divisionOwner = divisionOwner;
         return this;
     }
 
-    public void setDivision(Division division) {
-        this.division = division;
+    public void setDivisionOwner(Division divisionOwner) {
+        this.divisionOwner = divisionOwner;
     }
 
     @Override

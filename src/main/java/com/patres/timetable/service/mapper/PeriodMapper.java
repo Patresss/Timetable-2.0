@@ -11,14 +11,14 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {DivisionMapper.class, })
 public interface PeriodMapper extends EntityMapper <PeriodDTO, Period> {
 
-    @Mapping(source = "division.id", target = "divisionId")
-    @Mapping(source = "division.name", target = "divisionName")
-    PeriodDTO toDto(Period period); 
+    @Mapping(source = "divisionOwner.id", target = "divisionOwnerId")
+    @Mapping(source = "divisionOwner.name", target = "divisionOwnerName")
+    PeriodDTO toDto(Period period);
     @Mapping(target = "intervalTimes", ignore = true)
     @Mapping(target = "timetables", ignore = true)
 
-    @Mapping(source = "divisionId", target = "division")
-    Period toEntity(PeriodDTO periodDTO); 
+    @Mapping(source = "divisionOwnerId", target = "divisionOwner")
+    Period toEntity(PeriodDTO periodDTO);
     default Period fromId(Long id) {
         if (id == null) {
             return null;

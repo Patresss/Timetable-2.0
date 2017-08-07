@@ -11,15 +11,15 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {SubjectMapper.class, DivisionMapper.class, })
 public interface TeacherMapper extends EntityMapper <TeacherDTO, Teacher> {
 
-    @Mapping(source = "division.id", target = "divisionId")
-    @Mapping(source = "division.name", target = "divisionName")
-    TeacherDTO toDto(Teacher teacher); 
+    @Mapping(source = "divisionOwner.id", target = "divisionOwnerId")
+    @Mapping(source = "divisionOwner.name", target = "divisionOwnerName")
+    TeacherDTO toDto(Teacher teacher);
     @Mapping(target = "timetables", ignore = true)
 
-    @Mapping(source = "divisionId", target = "division")
+    @Mapping(source = "divisionOwnerId", target = "divisionOwner")
     @Mapping(target = "preferredDivisions", ignore = true)
     @Mapping(target = "preferredPlaces", ignore = true)
-    Teacher toEntity(TeacherDTO teacherDTO); 
+    Teacher toEntity(TeacherDTO teacherDTO);
     default Teacher fromId(Long id) {
         if (id == null) {
             return null;

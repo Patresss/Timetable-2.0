@@ -47,9 +47,9 @@ public class TeacherService {
     }
 
     @Transactional(readOnly = true)
-    public Page<TeacherDTO> findByDivisionsId(Pageable pageable, List<Long> divisionsId) {
-        log.debug("Request to get Teachers by Divisions id");
-        return teacherRepository.findByDivisionId(pageable, divisionsId)
+    public Page<TeacherDTO> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId) {
+        log.debug("Request to get Teachers by Division owners id");
+        return teacherRepository.findByDivisionOwnerId(pageable, divisionsId)
             .map(teacherMapper::toDto);
     }
 

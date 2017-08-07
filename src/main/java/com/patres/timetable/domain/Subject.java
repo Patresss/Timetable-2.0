@@ -45,7 +45,7 @@ public class Subject implements Serializable {
     private Set<Timetable> timetables = new HashSet<>();
 
     @ManyToOne
-    private Division division;
+    private Division divisionOwner;
 
     @ManyToMany(mappedBy = "preferredSubjects")
     @JsonIgnore
@@ -147,17 +147,17 @@ public class Subject implements Serializable {
         this.timetables = timetables;
     }
 
-    public Division getDivision() {
-        return division;
+    public Division getDivisionOwner() {
+        return divisionOwner;
     }
 
-    public Subject division(Division division) {
-        this.division = division;
+    public Subject divisionOwner(Division divisionOwner) {
+        this.divisionOwner = divisionOwner;
         return this;
     }
 
-    public void setDivision(Division division) {
-        this.division = division;
+    public void setDivisionOwner(Division divisionOwner) {
+        this.divisionOwner = divisionOwner;
     }
 
     public Set<Teacher> getPreferredTeachers() {

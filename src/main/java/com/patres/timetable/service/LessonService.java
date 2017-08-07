@@ -44,9 +44,9 @@ public class LessonService {
     }
 
     @Transactional(readOnly = true)
-    public Page<LessonDTO> findByDivisionsId(Pageable pageable, List<Long> divisionsId) {
-        log.debug("Request to get Lesson by Divisions id");
-        return lessonRepository.findByDivisionId(pageable, divisionsId)
+    public Page<LessonDTO> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId) {
+        log.debug("Request to get Lesson by Division owners id");
+        return lessonRepository.findByDivisionOwnerId(pageable, divisionsId)
             .map(lessonMapper::toDto);
     }
 

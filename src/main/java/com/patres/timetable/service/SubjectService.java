@@ -45,9 +45,9 @@ public class SubjectService {
     }
 
     @Transactional(readOnly = true)
-    public Page<SubjectDTO> findByDivisionsId(Pageable pageable, List<Long> divisionsId) {
-        log.debug("Request to get Subject by Divisions id");
-        return subjectRepository.findByDivisionId(pageable, divisionsId)
+    public Page<SubjectDTO> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId) {
+        log.debug("Request to get Subject by Division owners id");
+        return subjectRepository.findByDivisionOwnerId(pageable, divisionsId)
             .map(subjectMapper::toDto);
     }
 

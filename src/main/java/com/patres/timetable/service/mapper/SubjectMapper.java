@@ -11,16 +11,16 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {DivisionMapper.class, })
 public interface SubjectMapper extends EntityMapper <SubjectDTO, Subject> {
 
-    @Mapping(source = "division.id", target = "divisionId")
-    @Mapping(source = "division.name", target = "divisionName")
-    SubjectDTO toDto(Subject subject); 
+    @Mapping(source = "divisionOwner.id", target = "divisionOwnerId")
+    @Mapping(source = "divisionOwner.name", target = "divisionOwnerName")
+    SubjectDTO toDto(Subject subject);
     @Mapping(target = "timetables", ignore = true)
 
-    @Mapping(source = "divisionId", target = "division")
+    @Mapping(source = "divisionOwnerId", target = "divisionOwner")
     @Mapping(target = "preferredTeachers", ignore = true)
     @Mapping(target = "preferredDivisions", ignore = true)
     @Mapping(target = "preferredPlaces", ignore = true)
-    Subject toEntity(SubjectDTO subjectDTO); 
+    Subject toEntity(SubjectDTO subjectDTO);
     default Subject fromId(Long id) {
         if (id == null) {
             return null;

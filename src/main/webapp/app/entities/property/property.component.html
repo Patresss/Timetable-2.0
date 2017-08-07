@@ -19,7 +19,7 @@
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="propertyKey"><span jhiTranslate="timetableApp.property.propertyKey">Property Key</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="propertyValue"><span jhiTranslate="timetableApp.property.propertyValue">Property Value</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="divisionName"><span jhiTranslate="timetableApp.property.division">Division</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="divisionOwnerName"><span jhiTranslate="timetableApp.property.divisionOwner">Division owner</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -29,8 +29,8 @@
                 <td>{{property.propertyKey}}</td>
                 <td>{{property.propertyValue}}</td>
                 <td>
-                    <div *ngIf="property.divisionId">
-                        <a [routerLink]="['../division', property.divisionId  ]" >{{property.divisionName}}</a>
+                    <div *ngIf="property.divisionOwnerId">
+                        <a [routerLink]="['../divisionOwner', property.divisionOwnerId  ]" >{{property.divisionOwnerName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

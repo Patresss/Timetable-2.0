@@ -14,9 +14,9 @@ import java.util.List;
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
-    Page<Teacher> findByDivisionId(Pageable pageable, List<Long> divisionsId);
+    Page<Teacher> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId);
 
-    @Query("select distinct teacher from Teacher teacher inner join teacher.division divisions inner join divisions.users user where user.login IN ?#{principal.username}")
+    @Query("select distinct teacher from Teacher teacher inner join teacher.divisionOwner divisions inner join divisions.users user where user.login IN ?#{principal.username}")
     Page<Teacher> findByCurrentLogin(Pageable pageable);
 
     @Query("select distinct teacher from Teacher teacher left join fetch teacher.preferredSubjects")

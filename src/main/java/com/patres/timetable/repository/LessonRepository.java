@@ -18,8 +18,8 @@ import java.util.List;
 @Repository
 public interface LessonRepository extends JpaRepository<Lesson,Long> {
 
-    Page<Lesson> findByDivisionId(Pageable pageable, List<Long> divisionsId);
+    Page<Lesson> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId);
 
-    @Query("select distinct lesson from Lesson lesson inner join lesson.division divisions inner join divisions.users user where user.login IN ?#{principal.username}")
+    @Query("select distinct lesson from Lesson lesson inner join lesson.divisionOwner divisions inner join divisions.users user where user.login IN ?#{principal.username}")
     Page<Lesson> findByCurrentLogin(Pageable pageable);
 }

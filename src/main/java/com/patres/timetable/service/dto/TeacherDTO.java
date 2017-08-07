@@ -26,9 +26,9 @@ public class TeacherDTO implements Serializable {
 
     private Set<SubjectDTO> preferredSubjects = new HashSet<>();
 
-    private Long divisionId;
+    private Long divisionOwnerId;
 
-    private String divisionName;
+    private String divisionOwnerName;
 
     public Long getId() {
         return id;
@@ -78,20 +78,20 @@ public class TeacherDTO implements Serializable {
         this.preferredSubjects = subjects;
     }
 
-    public Long getDivisionId() {
-        return divisionId;
+    public Long getDivisionOwnerId() {
+        return divisionOwnerId;
     }
 
-    public void setDivisionId(Long divisionId) {
-        this.divisionId = divisionId;
+    public void setDivisionOwnerId(Long divisionOwnerId) {
+        this.divisionOwnerId = divisionOwnerId;
     }
 
-    public String getDivisionName() {
-        return divisionName;
+    public String getDivisionOwnerName() {
+        return divisionOwnerName;
     }
 
-    public void setDivisionName(String divisionName) {
-        this.divisionName = divisionName;
+    public void setDivisionOwnerName(String divisionOwnerName) {
+        this.divisionOwnerName = divisionOwnerName;
     }
 
     @Override

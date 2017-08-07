@@ -3,8 +3,6 @@ package com.patres.timetable.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -23,9 +21,9 @@ public class SubjectDTO implements Serializable {
 
     private String colorText;
 
-    private Long divisionId;
+    private Long divisionOwnerId;
 
-    private String divisionName;
+    private String divisionOwnerName;
 
     public Long getId() {
         return id;
@@ -67,20 +65,20 @@ public class SubjectDTO implements Serializable {
         this.colorText = colorText;
     }
 
-    public Long getDivisionId() {
-        return divisionId;
+    public Long getDivisionOwnerId() {
+        return divisionOwnerId;
     }
 
-    public void setDivisionId(Long divisionId) {
-        this.divisionId = divisionId;
+    public void setDivisionOwnerId(Long divisionOwnerId) {
+        this.divisionOwnerId = divisionOwnerId;
     }
 
-    public String getDivisionName() {
-        return divisionName;
+    public String getDivisionOwnerName() {
+        return divisionOwnerName;
     }
 
-    public void setDivisionName(String divisionName) {
-        this.divisionName = divisionName;
+    public void setDivisionOwnerName(String divisionOwnerName) {
+        this.divisionOwnerName = divisionOwnerName;
     }
 
     @Override

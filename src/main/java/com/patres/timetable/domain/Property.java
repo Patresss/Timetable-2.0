@@ -31,7 +31,7 @@ public class Property implements Serializable {
     private String propertyValue;
 
     @ManyToOne
-    private Division division;
+    private Division divisionOwner;
 
     public Long getId() {
         return id;
@@ -67,17 +67,17 @@ public class Property implements Serializable {
         this.propertyValue = propertyValue;
     }
 
-    public Division getDivision() {
-        return division;
+    public Division getDivisionOwner() {
+        return divisionOwner;
     }
 
-    public Property division(Division division) {
-        this.division = division;
+    public Property divisionOwner(Division divisionOwner) {
+        this.divisionOwner = divisionOwner;
         return this;
     }
 
-    public void setDivision(Division division) {
-        this.division = division;
+    public void setDivisionOwner(Division divisionOwner) {
+        this.divisionOwner = divisionOwner;
     }
 
     @Override

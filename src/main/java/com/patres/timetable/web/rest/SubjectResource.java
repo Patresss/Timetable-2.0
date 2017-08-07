@@ -97,7 +97,7 @@ public class SubjectResource {
     }
 
     /**
-     * GET  /subjects/divisions : get all the subjects by divisions id.
+     * GET  /subjects/divisions : get all the subjects by Division owners id.
      *
      * @param divisionsId divisions id
      * @param pageable    the pagination information
@@ -106,9 +106,9 @@ public class SubjectResource {
     @GetMapping("/subjects/divisions")
     @Timed
     public ResponseEntity<List<SubjectDTO>> getSubjectsByDivisionsId(@ApiParam Pageable pageable, @PathVariable List<Long> divisionsId) {
-        log.debug("REST request to get a page of Subjects by divisions Id");
+        log.debug("REST request to get a page of Subjects by Division owners id");
 
-        Page<SubjectDTO> page = subjectService.findByDivisionsId(pageable, divisionsId);
+        Page<SubjectDTO> page = subjectService.findByDivisionOwnerId(pageable, divisionsId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/subjects");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

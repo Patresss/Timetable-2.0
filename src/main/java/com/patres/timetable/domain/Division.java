@@ -54,32 +54,32 @@ public class Division implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Timetable> timetables = new HashSet<>();
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Place> divisionPlaces = new HashSet<>();
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Teacher> divisionTeachers = new HashSet<>();
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Subject> divisionSubjects = new HashSet<>();
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Lesson> divisionLessons = new HashSet<>();
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Period> divisionPeriods = new HashSet<>();
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Property> divisionProperties = new HashSet<>();
@@ -239,13 +239,13 @@ public class Division implements Serializable {
 
     public Division addDivisionPlace(Place place) {
         this.divisionPlaces.add(place);
-        place.setDivision(this);
+        place.setDivisionOwner(this);
         return this;
     }
 
     public Division removeDivisionPlace(Place place) {
         this.divisionPlaces.remove(place);
-        place.setDivision(null);
+        place.setDivisionOwner(null);
         return this;
     }
 
@@ -264,13 +264,13 @@ public class Division implements Serializable {
 
     public Division addDivisionTeacher(Teacher teacher) {
         this.divisionTeachers.add(teacher);
-        teacher.setDivision(this);
+        teacher.setDivisionOwner(this);
         return this;
     }
 
     public Division removeDivisionTeacher(Teacher teacher) {
         this.divisionTeachers.remove(teacher);
-        teacher.setDivision(null);
+        teacher.setDivisionOwner(null);
         return this;
     }
 
@@ -289,13 +289,13 @@ public class Division implements Serializable {
 
     public Division addDivisionSubject(Subject subject) {
         this.divisionSubjects.add(subject);
-        subject.setDivision(this);
+        subject.setDivisionOwner(this);
         return this;
     }
 
     public Division removeDivisionSubject(Subject subject) {
         this.divisionSubjects.remove(subject);
-        subject.setDivision(null);
+        subject.setDivisionOwner(null);
         return this;
     }
 
@@ -314,13 +314,13 @@ public class Division implements Serializable {
 
     public Division addDivisionLesson(Lesson lesson) {
         this.divisionLessons.add(lesson);
-        lesson.setDivision(this);
+        lesson.setDivisionOwner(this);
         return this;
     }
 
     public Division removeDivisionLesson(Lesson lesson) {
         this.divisionLessons.remove(lesson);
-        lesson.setDivision(null);
+        lesson.setDivisionOwner(null);
         return this;
     }
 
@@ -339,13 +339,13 @@ public class Division implements Serializable {
 
     public Division addDivisionPeriod(Period period) {
         this.divisionPeriods.add(period);
-        period.setDivision(this);
+        period.setDivisionOwner(this);
         return this;
     }
 
     public Division removeDivisionPeriod(Period period) {
         this.divisionPeriods.remove(period);
-        period.setDivision(null);
+        period.setDivisionOwner(null);
         return this;
     }
 
@@ -364,13 +364,13 @@ public class Division implements Serializable {
 
     public Division addDivisionProperties(Property property) {
         this.divisionProperties.add(property);
-        property.setDivision(this);
+        property.setDivisionOwner(this);
         return this;
     }
 
     public Division removeDivisionProperties(Property property) {
         this.divisionProperties.remove(property);
-        property.setDivision(null);
+        property.setDivisionOwner(null);
         return this;
     }
 

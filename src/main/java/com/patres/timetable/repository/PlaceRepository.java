@@ -17,9 +17,9 @@ import java.util.List;
 @Repository
 public interface PlaceRepository extends JpaRepository<Place,Long> {
 
-    Page<Place> findByDivisionId(Pageable pageable, List<Long> divisionsId);
+    Page<Place> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId);
 
-    @Query("select distinct place from Place place inner join place.division divisions inner join divisions.users user where user.login IN ?#{principal.username}")
+    @Query("select distinct place from Place place inner join place.divisionOwner divisions inner join divisions.users user where user.login IN ?#{principal.username}")
     Page<Place> findByCurrentLogin(Pageable pageable);
 
     @Query("select distinct place from Place place left join fetch place.preferredSubjects left join fetch place.preferredDivisions left join fetch place.preferredTeachers")

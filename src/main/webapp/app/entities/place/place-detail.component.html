@@ -33,7 +33,7 @@
         <dt><span jhiTranslate="timetableApp.place.preferredDivision">Preferred Division</span></dt>
         <dd>
             <span *ngFor="let preferredDivision of place.preferredDivisions; let last = last">
-                <a [routerLink]="['/division', preferredDivision?.id ]">{{preferredDivision.name}}</a>{{last ? '' : ', '}}
+                <a [routerLink]="['/divisionOwner', preferredDivision?.id ]">{{preferredDivision.name}}</a>{{last ? '' : ', '}}
             </span>
         </dd>
         <dt><span jhiTranslate="timetableApp.place.preferredTeacher">Preferred Teacher</span></dt>
@@ -42,10 +42,10 @@
                 <a [routerLink]="['/teacher', preferredTeacher?.id ]">{{preferredTeacher.surname}}</a>{{last ? '' : ', '}}
             </span>
         </dd>
-        <dt><span jhiTranslate="timetableApp.place.division">Division</span></dt>
+        <dt><span jhiTranslate="timetableApp.place.divisionOwner">Division owner</span></dt>
         <dd>
-            <div *ngIf="place.divisionId">
-                <a [routerLink]="['/division', place.divisionId]">{{place.divisionName}}</a>
+            <div *ngIf="place.divisionOwnerId">
+                <a [routerLink]="['/divisionOwner', place.divisionOwnerId]">{{place.divisionOwnerName}}</a>
             </div>
         </dd>
     </dl>

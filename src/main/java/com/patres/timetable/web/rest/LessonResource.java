@@ -96,7 +96,7 @@ public class LessonResource {
 
 
     /**
-     * GET  /lessons/divisions : get the lessons by divisions id.
+     * GET  /lessons/divisions : get the lessons by Division owners id.
      *
      * @param divisionsId divisions id
      * @param pageable    the pagination information
@@ -105,9 +105,9 @@ public class LessonResource {
     @GetMapping("/lessons/divisions")
     @Timed
     public ResponseEntity<List<LessonDTO>> getLessonsByDivisionsId(@ApiParam Pageable pageable, @PathVariable List<Long> divisionsId) {
-        log.debug("REST request to get a page of Lessons by divisions Id");
+        log.debug("REST request to get a page of Lessons by Division owners id");
 
-        Page<LessonDTO> page = lessonService.findByDivisionsId(pageable, divisionsId);
+        Page<LessonDTO> page = lessonService.findByDivisionOwnerId(pageable, divisionsId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/lessons");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

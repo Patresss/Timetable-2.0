@@ -11,11 +11,11 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {DivisionMapper.class, })
 public interface PropertyMapper extends EntityMapper <PropertyDTO, Property> {
 
-    @Mapping(source = "division.id", target = "divisionId")
-    @Mapping(source = "division.name", target = "divisionName")
+    @Mapping(source = "divisionOwner.id", target = "divisionOwnerId")
+    @Mapping(source = "divisionOwner.name", target = "divisionOwnerName")
     PropertyDTO toDto(Property property);
 
-    @Mapping(source = "divisionId", target = "division")
+    @Mapping(source = "divisionOwnerId", target = "divisionOwner")
     Property toEntity(PropertyDTO propertyDTO);
     default Property fromId(Long id) {
         if (id == null) {

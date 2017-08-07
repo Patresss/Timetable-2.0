@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
 
-    @Query("select distinct prop from Property prop inner join prop.division divisions inner join divisions.users user where user.login IN ?#{principal.username}")
+    @Query("select distinct prop from Property prop inner join prop.divisionOwner divisions inner join divisions.users user where user.login IN ?#{principal.username}")
     Page<Property> findByCurrentLogin(Pageable pageable);
 
 }

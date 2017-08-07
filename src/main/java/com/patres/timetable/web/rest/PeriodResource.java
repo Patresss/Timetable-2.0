@@ -98,7 +98,7 @@ public class PeriodResource {
 
 
     /**
-     * GET  /periods/divisions : get the periods by divisions id.
+     * GET  /periods/divisions : get the periods by Division owners id.
      *
      * @param divisionsId divisions id
      * @param pageable    the pagination information
@@ -107,9 +107,9 @@ public class PeriodResource {
     @GetMapping("/periods/divisions")
     @Timed
     public ResponseEntity<List<PeriodDTO>> getPeriodsByDivisionsId(@ApiParam Pageable pageable, @PathVariable List<Long> divisionsId) {
-        log.debug("REST request to get a page of Periods by divisions Id");
+        log.debug("REST request to get a page of Periods by Division owners id");
 
-        Page<PeriodDTO> page = periodService.findByDivisionsId(pageable, divisionsId);
+        Page<PeriodDTO> page = periodService.findByDivisionOwnerId(pageable, divisionsId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/periods");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
