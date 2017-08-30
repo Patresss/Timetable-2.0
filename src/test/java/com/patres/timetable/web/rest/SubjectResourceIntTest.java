@@ -311,7 +311,7 @@ public class SubjectResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(subjectMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(subjectMapper.fromId(null)).isNull();
+        assertThat(subjectMapper.fromId(42L, Subject::new).getId()).isEqualTo(42);
+        assertThat(subjectMapper.fromId(null, Subject::new)).isNull();
     }
 }

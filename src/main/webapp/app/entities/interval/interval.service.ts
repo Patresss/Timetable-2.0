@@ -5,11 +5,13 @@ import { JhiDateUtils } from 'ng-jhipster';
 
 import { Interval } from './interval.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
+import {createRequestOptionWithPeriodId} from "../../shared/model/request-util";
 
 @Injectable()
 export class IntervalService {
 
     private resourceUrl = 'api/intervals';
+    private resourcePeriodUrl = 'api/intervals/period';
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
@@ -47,6 +49,11 @@ export class IntervalService {
 
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
+    }
+
+    findByPeriodId(id: number, req?: any): Observable<ResponseWrapper> {
+        return this.http.get(this.resourcePeriodUrl, createRequestOptionWithPeriodId(id, req))
+            .map((res: Response) => this.convertResponse(res));
     }
 
     private convertResponse(res: Response): ResponseWrapper {

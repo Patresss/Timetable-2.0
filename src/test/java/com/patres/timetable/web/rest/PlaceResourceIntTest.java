@@ -320,7 +320,7 @@ public class PlaceResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(placeMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(placeMapper.fromId(null)).isNull();
+        assertThat(placeMapper.fromId(42L, Place::new).getId()).isEqualTo(42);
+        assertThat(placeMapper.fromId(null, Place::new)).isNull();
     }
 }

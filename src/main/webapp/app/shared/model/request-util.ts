@@ -32,3 +32,20 @@ export const createRequestOptionWithDivisionsId = (ids: number[], req?: any): Ba
     }
     return options;
 };
+
+export const createRequestOptionWithPeriodId = (id: number, req?: any): BaseRequestOptions => {
+    const options: BaseRequestOptions = new BaseRequestOptions();
+    if (req) {
+        const params: URLSearchParams = new URLSearchParams();
+        params.set('page', req.page);
+        params.set('size', req.size);
+        if (req.sort) {
+            params.paramsMap.set('sort', req.sort);
+        }
+        params.set('query', req.query);
+        params.set('periodId', id.toString());
+
+        options.params = params;
+    }
+    return options;
+};

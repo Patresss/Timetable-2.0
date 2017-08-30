@@ -17,14 +17,9 @@ import java.util.Objects;
 @Entity
 @Table(name = "period")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Period implements Serializable {
+public class Period extends ApplicationEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    private static final long serialVersionUID = -4976199580753440331L;
 
     @NotNull
     @Column(name = "name", nullable = false)
@@ -42,14 +37,6 @@ public class Period implements Serializable {
 
     @ManyToOne
     private Division divisionOwner;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

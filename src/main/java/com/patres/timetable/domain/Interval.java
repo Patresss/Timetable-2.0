@@ -14,14 +14,9 @@ import java.util.Objects;
 @Entity
 @Table(name = "interval")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Interval implements Serializable {
+public class Interval extends ApplicationEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    private static final long serialVersionUID = 6794788291603472570L;
 
     @Column(name = "included")
     private Boolean included;
@@ -34,14 +29,6 @@ public class Interval implements Serializable {
 
     @ManyToOne
     private Period period;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Boolean isIncluded() {
         return included;

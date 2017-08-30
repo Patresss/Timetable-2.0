@@ -1,20 +1,77 @@
 package com.patres.timetable.service.mapper;
 
+import com.patres.timetable.domain.ApplicationEntity;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
 
-/**
- * Contract for a generic dto to entity mapper.
- @param <D> - DTO type parameter.
- @param <E> - Entity type parameter.
- */
+public abstract class EntityMapper<EntityType extends ApplicationEntity, EntityDtoType> {
 
-public interface EntityMapper <D, E> {
+    public List<EntityType> toEntity(List<EntityDtoType> dtoList) {
+        if (dtoList == null) {
+            return null;
+        }
 
-    public E toEntity(D dto);
+        List<EntityType> list = new ArrayList<>();
+        for (EntityDtoType entityDto : dtoList) {
+            list.add(toEntity(entityDto));
+        }
 
-    public D toDto(E entity);
+        return list;
+    }
 
-    public List <E> toEntity(List<D> dtoList);
+    public List<EntityDtoType> toDto(List<EntityType> entityList) {
+        if (entityList == null) {
+            return null;
+        }
 
-    public List <D> toDto(List<E> entityList);
+        List<EntityDtoType> list = new ArrayList<>();
+        for (EntityType entity : entityList) {
+            list.add(toDto(entity));
+        }
+
+        return list;
+    }
+
+    public EntityType fromId(Long id, Supplier<EntityType> entityTypeSupplier) {
+        if (id == null) {
+            return null;
+        }
+        EntityType entity = entityTypeSupplier.get();
+        entity.setId(id);
+        return entity;
+    }
+
+    public Set<EntityDtoType> entitySetToEntityDTOSet(Set<EntityType> entitySet) {
+        if (entitySet == null) {
+            return null;
+        }
+
+        Set<EntityDtoType> entityDtoTypes = new HashSet<>();
+        for (EntityType entity : entitySet) {
+            entityDtoTypes.add(toDto(entity));
+        }
+
+        return entityDtoTypes;
+    }
+
+    public Set<EntityType> entityDTOSetToEntitySet(Set<EntityDtoType> entityDtoSet) {
+        if (entityDtoSet == null) {
+            return null;
+        }
+
+        Set<EntityType> entitySet = new HashSet<>();
+        for (EntityDtoType entityDto : entityDtoSet) {
+            entitySet.add(toEntity(entityDto));
+        }
+
+        return entitySet;
+    }
+
+    abstract public EntityType toEntity(EntityDtoType entityDto);
+    abstract public EntityDtoType toDto(EntityType entity);
+
 }

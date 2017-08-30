@@ -284,7 +284,7 @@ public class PeriodResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(periodMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(periodMapper.fromId(null)).isNull();
+        assertThat(periodMapper.fromId(42L, Period::new).getId()).isEqualTo(42);
+        assertThat(periodMapper.fromId(null, Period::new)).isNull();
     }
 }

@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
+
 
 /**
  * Service Implementation for managing Interval.
@@ -30,12 +32,6 @@ public class IntervalService {
         this.intervalMapper = intervalMapper;
     }
 
-    /**
-     * Save a interval.
-     *
-     * @param intervalDTO the entity to save
-     * @return the persisted entity
-     */
     public IntervalDTO save(IntervalDTO intervalDTO) {
         log.debug("Request to save Interval : {}", intervalDTO);
         Interval interval = intervalMapper.toEntity(intervalDTO);
@@ -43,12 +39,6 @@ public class IntervalService {
         return intervalMapper.toDto(interval);
     }
 
-    /**
-     *  Get all the intervals.
-     *
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
     @Transactional(readOnly = true)
     public Page<IntervalDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Intervals");
@@ -56,12 +46,14 @@ public class IntervalService {
             .map(intervalMapper::toDto);
     }
 
-    /**
-     *  Get one interval by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
+    @Transactional(readOnly = true)
+    public Page<IntervalDTO> findByPeriodId(Pageable pageable, Long periodId) {
+        log.debug("Request to get Intervals by periodId");
+        return intervalRepository.findByPeriodId(pageable, periodId)
+            .map(intervalMapper::toDto);
+    }
+
+
     @Transactional(readOnly = true)
     public IntervalDTO findOne(Long id) {
         log.debug("Request to get Interval : {}", id);
@@ -69,11 +61,6 @@ public class IntervalService {
         return intervalMapper.toDto(interval);
     }
 
-    /**
-     *  Delete the  interval by id.
-     *
-     *  @param id the id of the entity
-     */
     public void delete(Long id) {
         log.debug("Request to delete Interval : {}", id);
         intervalRepository.delete(id);

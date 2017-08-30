@@ -123,7 +123,7 @@ public class PeriodResource {
     @GetMapping("/periods/login")
     @Timed
     public ResponseEntity<List<PeriodDTO>> getPeriodsByCurrentLogin(@ApiParam Pageable pageable) {
-        log.debug("REST request to get a page of Periods");
+        log.debug("REST request to get a page of Periods by current login");
 
         Page<PeriodDTO> page = periodService.findByCurrentLogin(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/periods");

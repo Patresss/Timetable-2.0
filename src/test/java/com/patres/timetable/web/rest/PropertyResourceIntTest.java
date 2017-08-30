@@ -293,7 +293,7 @@ public class PropertyResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(propertyMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(propertyMapper.fromId(null)).isNull();
+        assertThat(propertyMapper.fromId(42L, Property::new).getId()).isEqualTo(42);
+        assertThat(propertyMapper.fromId(null, Property::new)).isNull();
     }
 }

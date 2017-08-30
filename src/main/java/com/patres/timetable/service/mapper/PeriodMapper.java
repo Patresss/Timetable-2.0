@@ -1,30 +1,58 @@
 package com.patres.timetable.service.mapper;
 
-import com.patres.timetable.domain.*;
+import com.patres.timetable.domain.Division;
+import com.patres.timetable.domain.Interval;
+import com.patres.timetable.domain.Period;
+import com.patres.timetable.service.dto.IntervalDTO;
 import com.patres.timetable.service.dto.PeriodDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.mapstruct.*;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * Mapper for the entity Period and its DTO PeriodDTO.
- */
-@Mapper(componentModel = "spring", uses = {DivisionMapper.class, })
-public interface PeriodMapper extends EntityMapper <PeriodDTO, Period> {
+@Service
+public class PeriodMapper extends EntityMapper<Period, PeriodDTO> {
 
-    @Mapping(source = "divisionOwner.id", target = "divisionOwnerId")
-    @Mapping(source = "divisionOwner.name", target = "divisionOwnerName")
-    PeriodDTO toDto(Period period);
-    @Mapping(target = "intervalTimes", ignore = true)
-    @Mapping(target = "timetables", ignore = true)
 
-    @Mapping(source = "divisionOwnerId", target = "divisionOwner")
-    Period toEntity(PeriodDTO periodDTO);
-    default Period fromId(Long id) {
-        if (id == null) {
+    @Autowired
+    private DivisionMapper divisionMapper;
+    @Autowired
+    private IntervalMapper intervalMapper;
+
+    public Period toEntity(PeriodDTO periodDTO) {
+        if (periodDTO == null) {
             return null;
         }
+
         Period period = new Period();
-        period.setId(id);
+
+        period.setDivisionOwner(divisionMapper.fromId(periodDTO.getDivisionOwnerId(), Division::new));
+        period.setId(periodDTO.getId());
+        period.setName(periodDTO.getName());
+
         return period;
     }
+
+    public PeriodDTO toDto(Period period) {
+        if (period == null) {
+            return null;
+        }
+
+        PeriodDTO periodDTO = new PeriodDTO();
+
+        periodDTO.setDivisionOwnerId(divisionMapper.getDivisionOwnerId(period.getDivisionOwner()));
+        periodDTO.setDivisionOwnerName(divisionMapper.getDivisionOwnerName(period.getDivisionOwner()));
+        periodDTO.setId(period.getId());
+        periodDTO.setName(period.getName());
+        Set<IntervalDTO> intervals = new HashSet<>();
+        for (Interval interval : period.getIntervalTimes()) {
+            intervals.add(intervalMapper.toDto(interval));
+        }
+        periodDTO.setIntervalTimes(intervals);
+
+        return periodDTO;
+    }
+
+
 }

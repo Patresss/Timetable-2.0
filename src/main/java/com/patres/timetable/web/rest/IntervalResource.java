@@ -20,6 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing Interval.
@@ -91,6 +92,20 @@ public class IntervalResource {
     public ResponseEntity<List<IntervalDTO>> getAllIntervals(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Intervals");
         Page<IntervalDTO> page = intervalService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/intervals");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /intervals/period/:id : get the intervals by period.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of intervals in body
+     */
+    @GetMapping("/intervals/period/{id}")
+    @Timed
+    public ResponseEntity<List<IntervalDTO>> getIntervalsByPeriodId(@ApiParam Pageable pageable, @PathVariable Long id) throws URISyntaxException {
+        log.debug("REST request to get a Intervals by period Id");
+        Page<IntervalDTO> page = intervalService.findByPeriodId(pageable, id);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/intervals");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

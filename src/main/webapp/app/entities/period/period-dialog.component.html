@@ -3,35 +3,71 @@
     <div class="modal-header">
         <h4 class="modal-title" id="myPeriodLabel" jhiTranslate="timetableApp.period.home.createOrEditLabel">Create or edit a Period</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;</button>
+                (click)="clear()">&times;
+        </button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" [hidden]="!period.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="period.id" readonly />
+                   [(ngModel)]="period.id" readonly/>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="timetableApp.period.name" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
-                [(ngModel)]="period.name" required />
+                   [(ngModel)]="period.name" required/>
             <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
                 <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
+                       [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
                 </small>
             </div>
         </div>
 
         <div class="form-group">
             <label jhiTranslate="timetableApp.period.divisionOwner" for="field_division">Division owner</label>
-            <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="period.divisionOwnerId" >
+            <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="period.divisionOwnerId" required>
                 <option [ngValue]="null"></option>
                 <option [ngValue]="divisionOption.id" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
             </select>
+            <div [hidden]="!(editForm.controls.divisionOwner?.dirty && editForm.controls.divisionOwner?.invalid)">
+                <small class="form-text text-danger"
+                       [hidden]="!editForm.controls.divisionOwner?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label data-translate="timetableApp.period.intervalTime" for="field_name">Interval time</label>
+            <span>
+            <button type="button" class="btn btn-success btn-xs">
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
+        </span>
+        </div>
+        <div style="clear: both;"></div>
+
+        <div class="form-group inner-block">
+            <div class="row">
+                <div class="col-md-5">
+                    <label class="form-control-label" jhiTranslate="timetableApp.interval.startDate">Start Date</label>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-control-label" jhiTranslate="timetableApp.interval.endDate">End Date</label>
+                </div>
+            </div>
+        </div>
+
+        <div *ngFor="let intervalTime of period.intervalTimes ;trackBy: trackId">
+            <label >Nowy</label>
+
         </div>
     </div>
+
+
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
             <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>

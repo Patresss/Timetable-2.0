@@ -1,28 +1,48 @@
 package com.patres.timetable.service.mapper;
 
-import com.patres.timetable.domain.*;
+import com.patres.timetable.domain.Division;
+import com.patres.timetable.domain.Property;
 import com.patres.timetable.service.dto.PropertyDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.mapstruct.*;
+@Service
+public class PropertyMapper extends EntityMapper<Property, PropertyDTO> {
 
-/**
- * Mapper for the entity Property and its DTO PropertyDTO.
- */
-@Mapper(componentModel = "spring", uses = {DivisionMapper.class, })
-public interface PropertyMapper extends EntityMapper <PropertyDTO, Property> {
+    @Autowired
+    private DivisionMapper divisionMapper;
 
-    @Mapping(source = "divisionOwner.id", target = "divisionOwnerId")
-    @Mapping(source = "divisionOwner.name", target = "divisionOwnerName")
-    PropertyDTO toDto(Property property);
 
-    @Mapping(source = "divisionOwnerId", target = "divisionOwner")
-    Property toEntity(PropertyDTO propertyDTO);
-    default Property fromId(Long id) {
-        if (id == null) {
+    public Property toEntity(PropertyDTO propertyDTO) {
+        if (propertyDTO == null) {
             return null;
         }
+
         Property property = new Property();
-        property.setId(id);
+
+        property.setDivisionOwner(divisionMapper.fromId(propertyDTO.getDivisionOwnerId(), Division::new));
+        property.setId(propertyDTO.getId());
+        property.setPropertyKey(propertyDTO.getPropertyKey());
+        property.setPropertyValue(propertyDTO.getPropertyValue());
+
         return property;
     }
+
+    public PropertyDTO toDto(Property property) {
+        if (property == null) {
+            return null;
+        }
+
+        PropertyDTO propertyDTO = new PropertyDTO();
+
+        propertyDTO.setDivisionOwnerId(divisionMapper.getDivisionOwnerId(property.getDivisionOwner()));
+        propertyDTO.setDivisionOwnerName(divisionMapper.getDivisionOwnerName(property.getDivisionOwner()));
+        propertyDTO.setId(property.getId());
+        propertyDTO.setPropertyKey(property.getPropertyKey());
+        propertyDTO.setPropertyValue(property.getPropertyValue());
+
+        return propertyDTO;
+    }
+
+
 }

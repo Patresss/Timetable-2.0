@@ -32,7 +32,7 @@
                 <td>{{lesson.endTime}}</td>
                 <td>
                     <div *ngIf="lesson.divisionOwnerId">
-                        <a [routerLink]="['../divisionOwner', lesson.divisionOwnerId  ]" >{{lesson.divisionOwnerName}}</a>
+                        <a [routerLink]="['../division', lesson.divisionOwnerId  ]" >{{lesson.divisionOwnerName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

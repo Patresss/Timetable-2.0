@@ -43,14 +43,15 @@ export class PeriodDialogComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = true;
-        if (this.period.id !== undefined) {
-            this.subscribeToSaveResponse(
-                this.periodService.update(this.period));
-        } else {
-            this.subscribeToSaveResponse(
-                this.periodService.create(this.period));
-        }
+        console.log(this.period);
+        // this.isSaving = true;
+        // if (this.period.id !== undefined) {
+        //     this.subscribeToSaveResponse(
+        //         this.periodService.update(this.period));
+        // } else {
+        //     this.subscribeToSaveResponse(
+        //         this.periodService.create(this.period));
+        // }
     }
 
     private subscribeToSaveResponse(result: Observable<Period>) {

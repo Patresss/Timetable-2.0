@@ -17,14 +17,9 @@ import com.patres.timetable.domain.enumeration.EventType;
 @Entity
 @Table(name = "timetable")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Timetable implements Serializable {
+public class Timetable extends ApplicationEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    private static final long serialVersionUID = -2579744673761181702L;
 
     @NotNull
     @Column(name = "title", nullable = false)
@@ -103,14 +98,6 @@ public class Timetable implements Serializable {
 
     @ManyToOne
     private Period period;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;

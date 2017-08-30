@@ -19,14 +19,9 @@ import com.patres.timetable.domain.enumeration.DivisionType;
 @Entity
 @Table(name = "division")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Division implements Serializable {
+public class Division extends ApplicationEntity implements Serializable  {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    private static final long serialVersionUID = 3123439538391666217L;
 
     @NotNull
     @Column(name = "name", nullable = false)
@@ -116,14 +111,6 @@ public class Division implements Serializable {
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Place> preferredPlaces = new HashSet<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

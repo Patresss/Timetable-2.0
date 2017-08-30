@@ -28,7 +28,7 @@
                 <td>{{period.name}}</td>
                 <td>
                     <div *ngIf="period.divisionOwnerId">
-                        <a [routerLink]="['../divisionOwner', period.divisionOwnerId  ]" >{{period.divisionOwnerName}}</a>
+                        <a [routerLink]="['../division', period.divisionOwnerId  ]" >{{period.divisionOwnerName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

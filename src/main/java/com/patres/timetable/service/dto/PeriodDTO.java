@@ -3,7 +3,9 @@ package com.patres.timetable.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the Period entity.
@@ -18,6 +20,8 @@ public class PeriodDTO implements Serializable {
     private Long divisionOwnerId;
 
     private String divisionOwnerName;
+
+    private Set<IntervalDTO> intervalTimes = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -49,6 +53,14 @@ public class PeriodDTO implements Serializable {
 
     public void setDivisionOwnerName(String divisionOwnerName) {
         this.divisionOwnerName = divisionOwnerName;
+    }
+
+    public Set<IntervalDTO> getIntervalTimes() {
+        return intervalTimes;
+    }
+
+    public void setIntervalTimes(Set<IntervalDTO> intervalTimes) {
+        this.intervalTimes = intervalTimes;
     }
 
     @Override

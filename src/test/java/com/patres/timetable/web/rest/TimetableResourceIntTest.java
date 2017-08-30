@@ -468,7 +468,7 @@ public class TimetableResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(timetableMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(timetableMapper.fromId(null)).isNull();
+        assertThat(timetableMapper.fromId(42L, Timetable::new).getId()).isEqualTo(42);
+        assertThat(timetableMapper.fromId(null, Timetable::new)).isNull();
     }
 }

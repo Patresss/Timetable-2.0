@@ -11,7 +11,7 @@
         <dt><span jhiTranslate="timetableApp.period.divisionOwner">Division owner</span></dt>
         <dd>
             <div *ngIf="period.divisionOwnerId">
-                <a [routerLink]="['/divisionOwner', period.divisionOwnerId]">{{period.divisionOwnerName}}</a>
+                <a [routerLink]="['/division', period.divisionOwnerId]">{{period.divisionOwnerName}}</a>
             </div>
         </dd>
     </dl>

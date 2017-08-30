@@ -1,28 +1,70 @@
 package com.patres.timetable.service.mapper;
 
-import com.patres.timetable.domain.*;
+import com.patres.timetable.domain.Interval;
+import com.patres.timetable.domain.Period;
 import com.patres.timetable.service.dto.IntervalDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.mapstruct.*;
+@Service
+public class IntervalMapper extends EntityMapper<Interval, IntervalDTO> {
 
-/**
- * Mapper for the entity Interval and its DTO IntervalDTO.
- */
-@Mapper(componentModel = "spring", uses = {PeriodMapper.class, })
-public interface IntervalMapper extends EntityMapper <IntervalDTO, Interval> {
 
-    @Mapping(source = "period.id", target = "periodId")
-    @Mapping(source = "period.name", target = "periodName")
-    IntervalDTO toDto(Interval interval); 
+    @Autowired
+    private PeriodMapper periodMapper;
 
-    @Mapping(source = "periodId", target = "period")
-    Interval toEntity(IntervalDTO intervalDTO); 
-    default Interval fromId(Long id) {
-        if (id == null) {
+    public Interval toEntity(IntervalDTO intervalDTO) {
+        if (intervalDTO == null) {
             return null;
         }
+
         Interval interval = new Interval();
-        interval.setId(id);
+
+        interval.setPeriod(periodMapper.fromId(intervalDTO.getPeriodId(), Period::new));
+        interval.setId(intervalDTO.getId());
+        interval.setIncluded(intervalDTO.isIncluded());
+        interval.setStartDate(intervalDTO.getStartDate());
+        interval.setEndDate(intervalDTO.getEndDate());
+
         return interval;
+    }
+
+    public IntervalDTO toDto(Interval interval) {
+        if (interval == null) {
+            return null;
+        }
+
+        IntervalDTO intervalDTO = new IntervalDTO();
+
+        intervalDTO.setPeriodId(intervalPeriodId(interval));
+        intervalDTO.setPeriodName(intervalPeriodName(interval));
+        intervalDTO.setId(interval.getId());
+        intervalDTO.setIncluded(interval.isIncluded());
+        intervalDTO.setStartDate(interval.getStartDate());
+        intervalDTO.setEndDate(interval.getEndDate());
+
+        return intervalDTO;
+    }
+
+    private Long intervalPeriodId(Interval interval) {
+        if (interval == null) {
+            return null;
+        }
+        Period period = interval.getPeriod();
+        if (period == null) {
+            return null;
+        }
+        return period.getId();
+    }
+
+    private String intervalPeriodName(Interval interval) {
+        if (interval == null) {
+            return null;
+        }
+        Period period = interval.getPeriod();
+        if (period == null) {
+            return null;
+        }
+        return period.getName();
     }
 }

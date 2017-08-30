@@ -1,29 +1,49 @@
 package com.patres.timetable.service.mapper;
 
-import com.patres.timetable.domain.*;
+import com.patres.timetable.domain.Division;
+import com.patres.timetable.domain.Lesson;
 import com.patres.timetable.service.dto.LessonDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.mapstruct.*;
+@Service
+public class LessonMapper extends EntityMapper<Lesson, LessonDTO> {
 
-/**
- * Mapper for the entity Lesson and its DTO LessonDTO.
- */
-@Mapper(componentModel = "spring", uses = {DivisionMapper.class, })
-public interface LessonMapper extends EntityMapper <LessonDTO, Lesson> {
+    @Autowired
+    private DivisionMapper divisionMapper;
 
-    @Mapping(source = "divisionOwner.id", target = "divisionOwnerId")
-    @Mapping(source = "divisionOwner.name", target = "divisionOwnerName")
-    LessonDTO toDto(Lesson lesson);
-    @Mapping(target = "timetables", ignore = true)
-
-    @Mapping(source = "divisionOwnerId", target = "divisionOwner")
-    Lesson toEntity(LessonDTO lessonDTO);
-    default Lesson fromId(Long id) {
-        if (id == null) {
+    public Lesson toEntity(LessonDTO lessonDTO) {
+        if (lessonDTO == null) {
             return null;
         }
+
         Lesson lesson = new Lesson();
-        lesson.setId(id);
+
+        lesson.setDivisionOwner(divisionMapper.fromId(lessonDTO.getDivisionOwnerId(), Division::new));
+        lesson.setId(lessonDTO.getId());
+        lesson.setName(lessonDTO.getName());
+        lesson.setStartTime(lessonDTO.getStartTime());
+        lesson.setEndTime(lessonDTO.getEndTime());
+
         return lesson;
     }
+
+    public LessonDTO toDto(Lesson lesson) {
+        if (lesson == null) {
+            return null;
+        }
+
+        LessonDTO lessonDTO = new LessonDTO();
+
+        lessonDTO.setDivisionOwnerId(divisionMapper.getDivisionOwnerId(lesson.getDivisionOwner()));
+        lessonDTO.setDivisionOwnerName(divisionMapper.getDivisionOwnerName(lesson.getDivisionOwner()));
+        lessonDTO.setId(lesson.getId());
+        lessonDTO.setName(lesson.getName());
+        lessonDTO.setStartTime(lesson.getStartTime());
+        lessonDTO.setEndTime(lesson.getEndTime());
+
+        return lessonDTO;
+    }
+
+
 }
