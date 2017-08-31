@@ -8,6 +8,11 @@ import {Interval} from '../entities/interval/interval.model';
 @Injectable()
 export class IntervalIncludedFilter implements PipeTransform {
     transform(intervals: Interval[], included: boolean): any {
-        return intervals.filter((interval) => interval.included === included);
+        if (intervals) {
+            return intervals.filter((interval) => interval.included === included);
+        } else {
+            return [];
+        }
+
     }
 }
