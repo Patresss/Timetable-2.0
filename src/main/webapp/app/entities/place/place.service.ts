@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Rx';
 
 import {Place} from './place.model';
 import {createRequestOption, ResponseWrapper} from '../../shared';
-import {createRequestOptionWithDivisionsId} from "../../shared/model/request-util";
+import {createRequestOptionWithDivisionsId} from '../../shared/model/request-util';
 
 @Injectable()
 export class PlaceService {
@@ -45,7 +45,6 @@ export class PlaceService {
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
-
 
     findByDivision(ids: number[], req?: any): Observable<ResponseWrapper> {
         return this.http.get(this.resourceByDivisionsIdUrl, createRequestOptionWithDivisionsId(ids, req))

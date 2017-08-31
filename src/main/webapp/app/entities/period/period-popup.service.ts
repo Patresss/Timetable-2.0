@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Period } from './period.model';
 import { PeriodService } from './period.service';
+import {forEach} from '@angular/router/src/utils/collection';
+import {IntervalPopupService} from '../interval/interval-popup.service';
 
 @Injectable()
 export class PeriodPopupService {
@@ -11,7 +13,8 @@ export class PeriodPopupService {
     constructor(
         private modalService: NgbModal,
         private router: Router,
-        private periodService: PeriodService
+        private periodService: PeriodService,
+        private intervalPopupService: IntervalPopupService
 
     ) {
         this.ngbModalRef = null;
@@ -26,6 +29,9 @@ export class PeriodPopupService {
 
             if (id) {
                 this.periodService.find(id).subscribe((period) => {
+                    period.intervalTimes.forEach((value) => {
+                        this.intervalPopupService.modifyDate(value);
+                    });
                     this.ngbModalRef = this.periodModalRef(component, period);
                     resolve(this.ngbModalRef);
                 });

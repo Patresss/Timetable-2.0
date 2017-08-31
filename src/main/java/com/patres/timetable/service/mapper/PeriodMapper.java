@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -30,6 +31,10 @@ public class PeriodMapper extends EntityMapper<Period, PeriodDTO> {
         period.setDivisionOwner(divisionMapper.fromId(periodDTO.getDivisionOwnerId(), Division::new));
         period.setId(periodDTO.getId());
         period.setName(periodDTO.getName());
+
+        Set<Interval> intervals = intervalMapper.entityDTOSetToEntitySet(periodDTO.getIntervalTimes());
+        intervals.forEach(interval -> interval.setPeriod(period));
+        period.setIntervalTimes(intervals);
 
         return period;
     }

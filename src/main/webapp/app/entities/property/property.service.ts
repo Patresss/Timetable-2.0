@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import {Http, Response} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 
-import { Property } from './property.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+import {Property} from './property.model';
+import {createRequestOption, ResponseWrapper} from '../../shared';
 
 @Injectable()
 export class PropertyService {
@@ -11,8 +11,8 @@ export class PropertyService {
     private resourceUrl = 'api/properties';
     private resourceByCurrentLoginUrl = 'api/properties/login';
 
-
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+    }
 
     create(property: Property): Observable<Property> {
         const copy = this.convert(property);

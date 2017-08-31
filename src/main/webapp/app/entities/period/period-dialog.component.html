@@ -12,6 +12,7 @@
             <label for="id" jhiTranslate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                    [(ngModel)]="period.id" readonly/>
+
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="timetableApp.period.name" for="field_name">Name</label>
@@ -43,14 +44,14 @@
         <div class="form-group">
             <label data-translate="timetableApp.period.intervalTime" for="field_name">Interval time</label>
             <span>
-            <button type="button" class="btn btn-success btn-xs">
-                <i class="glyphicon glyphicon-plus"></i>
+            <button type="button" class="btn btn-success btn-sm" (click)="addIntervalTime(true)">
+                <i class="fa fa-plus"></i>
             </button>
         </span>
         </div>
         <div style="clear: both;"></div>
 
-        <div class="form-group inner-block">
+        <div class="form-group inner-block" [hidden]="!intervalsExists(true)">
             <div class="row">
                 <div class="col-md-5">
                     <label class="form-control-label" jhiTranslate="timetableApp.interval.startDate">Start Date</label>
@@ -59,14 +60,89 @@
                     <label class="form-control-label" jhiTranslate="timetableApp.interval.endDate">End Date</label>
                 </div>
             </div>
+
+
+            <div *ngFor="let intervalTime of period.intervalTimes | intervalIncludedFilter:true ;trackBy: trackId; let i = index;">
+                <div class="row inputed">
+                    <div class="col-lg-5">
+                        <div class="input-group">
+                            <input class="form-control" name="startDate_{{i}}" ngbDatepicker #startDateDp="ngbDatepicker" [(ngModel)]="intervalTime.startDate"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" (click)="startDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="input-group">
+                            <input class="form-control" name="endDate_{{i}}" ngbDatepicker #endDateDp="ngbDatepicker" [(ngModel)]="intervalTime.endDate"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" (click)="endDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <span>
+                            <button type="button" class="btn btn-danger" (click)="removeIntervalTime(intervalTime)"><i class="fa fa-minus"></i></button>
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
 
-        <div *ngFor="let intervalTime of period.intervalTimes ;trackBy: trackId">
-            <label >Nowy</label>
 
+        <div class="form-group">
+            <label data-translate="timetableApp.period.excludedIntervalTime" for="field_name">Excluded interval time</label>
+            <span>
+            <button type="button" class="btn btn-warning btn-sm" (click)="addIntervalTime(false)">
+                <i class="fa fa-plus"></i>
+            </button>
+        </span>
+        </div>
+        <div style="clear: both;"></div>
+
+        <div class="form-group inner-block" [hidden]="!intervalsExists(false)">
+            <div class="row">
+                <div class="col-md-5">
+                    <label class="form-control-label" jhiTranslate="timetableApp.interval.startDate">Start Date</label>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-control-label" jhiTranslate="timetableApp.interval.endDate">End Date</label>
+                </div>
+            </div>
+
+
+            <div *ngFor="let intervalTime of period.intervalTimes | intervalIncludedFilter:false ;trackBy: trackId; let i = index;">
+                <div class="row inputed">
+                    <div class="col-lg-5">
+                        <div class="input-group">
+                            <input class="form-control" name="startDateExcluded_{{i}}" ngbDatepicker #startDateDp="ngbDatepicker" [(ngModel)]="intervalTime.startDate"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" (click)="startDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="input-group">
+                            <input class="form-control" name="endDateExcluded_{{i}}" ngbDatepicker #endDateDp="ngbDatepicker" [(ngModel)]="intervalTime.endDate"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" (click)="endDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <span>
+                            <button type="button" class="btn btn-danger" (click)="removeIntervalTime(intervalTime)"><i class="fa fa-minus"></i></button>
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
     </div>
-
+    </div>
 
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">

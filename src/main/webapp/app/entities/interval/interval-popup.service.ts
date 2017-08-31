@@ -26,20 +26,7 @@ export class IntervalPopupService {
 
             if (id) {
                 this.intervalService.find(id).subscribe((interval) => {
-                    if (interval.startDate) {
-                        interval.startDate = {
-                            year: interval.startDate.getFullYear(),
-                            month: interval.startDate.getMonth() + 1,
-                            day: interval.startDate.getDate()
-                        };
-                    }
-                    if (interval.endDate) {
-                        interval.endDate = {
-                            year: interval.endDate.getFullYear(),
-                            month: interval.endDate.getMonth() + 1,
-                            day: interval.endDate.getDate()
-                        };
-                    }
+                    this.modifyDate(interval);
                     this.ngbModalRef = this.intervalModalRef(component, interval);
                     resolve(this.ngbModalRef);
                 });
@@ -51,6 +38,24 @@ export class IntervalPopupService {
                 }, 0);
             }
         });
+    }
+
+    modifyDate(interval) {
+        if (interval.startDate) {
+            interval.startDate = {
+                year: interval.startDate.getFullYear(),
+                month: interval.startDate.getMonth() + 1,
+                day: interval.startDate.getDate()
+            };
+        }
+        if (interval.endDate) {
+            interval.endDate = {
+                year: interval.endDate.getFullYear(),
+                month: interval.endDate.getMonth() + 1,
+                day: interval.endDate.getDate()
+            };
+        }
+
     }
 
     intervalModalRef(component: Component, interval: Interval): NgbModalRef {

@@ -1,16 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Response } from '@angular/http';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Response} from '@angular/http';
 
-import { Observable } from 'rxjs/Rx';
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import {Observable} from 'rxjs/Rx';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
 
-import { Period } from './period.model';
-import { PeriodPopupService } from './period-popup.service';
-import { PeriodService } from './period.service';
-import { Division, DivisionService } from '../division';
-import { ResponseWrapper } from '../../shared';
+import {Period} from './period.model';
+import {PeriodPopupService} from './period-popup.service';
+import {PeriodService} from './period.service';
+import {Division, DivisionService} from '../division';
+import {ResponseWrapper} from '../../shared';
+import {Interval} from "../interval/interval.model";
 
 @Component({
     selector: 'jhi-period-dialog',
@@ -23,19 +24,19 @@ export class PeriodDialogComponent implements OnInit {
 
     divisions: Division[];
 
-    constructor(
-        public activeModal: NgbActiveModal,
-        private alertService: JhiAlertService,
-        private periodService: PeriodService,
-        private divisionService: DivisionService,
-        private eventManager: JhiEventManager
-    ) {
+    constructor(public activeModal: NgbActiveModal,
+                private alertService: JhiAlertService,
+                private periodService: PeriodService,
+                private divisionService: DivisionService,
+                private eventManager: JhiEventManager) {
     }
 
     ngOnInit() {
         this.isSaving = false;
         this.divisionService.query()
-            .subscribe((res: ResponseWrapper) => { this.divisions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: ResponseWrapper) => {
+                this.divisions = res.json;
+            }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -43,15 +44,37 @@ export class PeriodDialogComponent implements OnInit {
     }
 
     save() {
-        console.log(this.period);
-        // this.isSaving = true;
-        // if (this.period.id !== undefined) {
-        //     this.subscribeToSaveResponse(
-        //         this.periodService.update(this.period));
-        // } else {
-        //     this.subscribeToSaveResponse(
-        //         this.periodService.create(this.period));
-        // }
+        this.isSaving = true;
+        console.log('status: ');
+        if (this.period.id !== undefined) {
+            this.subscribeToSaveResponse(
+                this.periodService.update(this.period));
+        } else {
+            this.subscribeToSaveResponse(
+                this.periodService.create(this.period));
+        }
+    }
+
+    removeIntervalTime(interval: Interval) {
+        let index: number = this.period.intervalTimes.indexOf(interval);
+        if (index !== -1) {
+            this.period.intervalTimes.splice(index, 1);
+        }
+    }
+
+    addIntervalTime(included: boolean) {
+        let interval = new Interval();
+        interval.included = included;
+        this.period.intervalTimes.push(interval);
+    }
+
+    intervalsExists(included: boolean) {
+        for (let interval of this.period.intervalTimes) {
+            if (interval.included === included) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private subscribeToSaveResponse(result: Observable<Period>) {
@@ -60,7 +83,7 @@ export class PeriodDialogComponent implements OnInit {
     }
 
     private onSaveSuccess(result: Period) {
-        this.eventManager.broadcast({ name: 'periodListModification', content: 'OK'});
+        this.eventManager.broadcast({name: 'periodListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -92,14 +115,13 @@ export class PeriodPopupComponent implements OnInit, OnDestroy {
 
     routeSub: any;
 
-    constructor(
-        private route: ActivatedRoute,
-        private periodPopupService: PeriodPopupService
-    ) {}
+    constructor(private route: ActivatedRoute,
+                private periodPopupService: PeriodPopupService) {
+    }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['id'] ) {
+            if (params['id']) {
                 this.periodPopupService
                     .open(PeriodDialogComponent as Component, params['id']);
             } else {

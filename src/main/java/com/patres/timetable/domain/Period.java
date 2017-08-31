@@ -5,11 +5,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Period.
@@ -25,8 +25,7 @@ public class Period extends ApplicationEntity implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "period")
-    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "period")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Interval> intervalTimes = new HashSet<>();
 
@@ -42,17 +41,21 @@ public class Period extends ApplicationEntity implements Serializable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Period name(String name) {
         this.name = name;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Set<Interval> getIntervalTimes() {
         return intervalTimes;
+    }
+
+    public void setIntervalTimes(Set<Interval> intervals) {
+        this.intervalTimes = intervals;
     }
 
     public Period intervalTimes(Set<Interval> intervals) {
@@ -72,12 +75,12 @@ public class Period extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setIntervalTimes(Set<Interval> intervals) {
-        this.intervalTimes = intervals;
-    }
-
     public Set<Timetable> getTimetables() {
         return timetables;
+    }
+
+    public void setTimetables(Set<Timetable> timetables) {
+        this.timetables = timetables;
     }
 
     public Period timetables(Set<Timetable> timetables) {
@@ -97,21 +100,17 @@ public class Period extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setTimetables(Set<Timetable> timetables) {
-        this.timetables = timetables;
-    }
-
     public Division getDivisionOwner() {
         return divisionOwner;
+    }
+
+    public void setDivisionOwner(Division divisionOwner) {
+        this.divisionOwner = divisionOwner;
     }
 
     public Period divisionOwner(Division divisionOwner) {
         this.divisionOwner = divisionOwner;
         return this;
-    }
-
-    public void setDivisionOwner(Division divisionOwner) {
-        this.divisionOwner = divisionOwner;
     }
 
     @Override

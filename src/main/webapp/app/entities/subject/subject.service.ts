@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Rx';
 
 import {Subject} from './subject.model';
 import {createRequestOption, ResponseWrapper} from '../../shared';
-import {createRequestOptionWithDivisionsId} from "../../shared/model/request-util";
+import {createRequestOptionWithDivisionsId} from '../../shared/model/request-util';
 
 @Injectable()
 export class SubjectService {

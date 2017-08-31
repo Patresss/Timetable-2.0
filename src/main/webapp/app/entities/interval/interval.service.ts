@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { JhiDateUtils } from 'ng-jhipster';
+import {Injectable} from '@angular/core';
+import {Http, Response} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import {JhiDateUtils} from 'ng-jhipster';
 
-import { Interval } from './interval.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
-import {createRequestOptionWithPeriodId} from "../../shared/model/request-util";
+import {Interval} from './interval.model';
+import {createRequestOption, ResponseWrapper} from '../../shared';
+import {createRequestOptionWithPeriodId} from '../../shared/model/request-util';
 
 @Injectable()
 export class IntervalService {
@@ -13,7 +13,8 @@ export class IntervalService {
     private resourceUrl = 'api/intervals';
     private resourcePeriodUrl = 'api/intervals/period';
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+    constructor(private http: Http, private dateUtils: JhiDateUtils) {
+    }
 
     create(interval: Interval): Observable<Interval> {
         const copy = this.convert(interval);
@@ -64,19 +65,15 @@ export class IntervalService {
         return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
-    private convertItemFromServer(entity: any) {
-        entity.startDate = this.dateUtils
-            .convertLocalDateFromServer(entity.startDate);
-        entity.endDate = this.dateUtils
-            .convertLocalDateFromServer(entity.endDate);
+    public convertItemFromServer(entity: any) {
+        entity.startDate = this.dateUtils.convertLocalDateFromServer(entity.startDate);
+        entity.endDate = this.dateUtils.convertLocalDateFromServer(entity.endDate);
     }
 
-    private convert(interval: Interval): Interval {
+    public convert(interval: Interval): Interval {
         const copy: Interval = Object.assign({}, interval);
-        copy.startDate = this.dateUtils
-            .convertLocalDateToServer(interval.startDate);
-        copy.endDate = this.dateUtils
-            .convertLocalDateToServer(interval.endDate);
+        copy.startDate = this.dateUtils.convertLocalDateToServer(interval.startDate);
+        copy.endDate = this.dateUtils.convertLocalDateToServer(interval.endDate);
         return copy;
     }
 }
