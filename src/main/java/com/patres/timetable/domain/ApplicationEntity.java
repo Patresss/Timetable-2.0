@@ -22,7 +22,6 @@ public abstract class ApplicationEntity implements Serializable {
         this.id = id;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
