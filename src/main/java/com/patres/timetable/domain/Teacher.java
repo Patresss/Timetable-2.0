@@ -5,19 +5,16 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
-/**
- * A Teacher.
- */
 @Entity
 @Table(name = "teacher")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Teacher extends ApplicationEntity implements Serializable {
+public class Teacher extends AbstractDivisionOwner implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,12 +45,9 @@ public class Teacher extends ApplicationEntity implements Serializable {
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "teacher_preferred_subject",
-               joinColumns = @JoinColumn(name="teachers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="preferred_subjects_id", referencedColumnName="id"))
+        joinColumns = @JoinColumn(name = "teachers_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id"))
     private Set<Subject> preferredSubjects = new HashSet<>();
-
-    @ManyToOne
-    private Division divisionOwner;
 
     @ManyToMany(mappedBy = "preferredTeachers")
     @JsonIgnore
@@ -77,17 +71,21 @@ public class Teacher extends ApplicationEntity implements Serializable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Teacher name(String name) {
         this.name = name;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getSurname() {
         return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public Teacher surname(String surname) {
@@ -95,12 +93,12 @@ public class Teacher extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public String getDegree() {
         return degree;
+    }
+
+    public void setDegree(String degree) {
+        this.degree = degree;
     }
 
     public Teacher degree(String degree) {
@@ -108,12 +106,12 @@ public class Teacher extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
     public String getShortName() {
         return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public Teacher shortName(String shortName) {
@@ -121,12 +119,12 @@ public class Teacher extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
     public Set<Timetable> getTimetables() {
         return timetables;
+    }
+
+    public void setTimetables(Set<Timetable> timetables) {
+        this.timetables = timetables;
     }
 
     public Teacher timetables(Set<Timetable> timetables) {
@@ -146,12 +144,12 @@ public class Teacher extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setTimetables(Set<Timetable> timetables) {
-        this.timetables = timetables;
-    }
-
     public Set<Subject> getPreferredSubjects() {
         return preferredSubjects;
+    }
+
+    public void setPreferredSubjects(Set<Subject> subjects) {
+        this.preferredSubjects = subjects;
     }
 
     public Teacher preferredSubjects(Set<Subject> subjects) {
@@ -171,25 +169,12 @@ public class Teacher extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setPreferredSubjects(Set<Subject> subjects) {
-        this.preferredSubjects = subjects;
-    }
-
-    public Division getDivisionOwner() {
-        return divisionOwner;
-    }
-
-    public Teacher divisionOwner(Division divisionOwner) {
-        this.divisionOwner = divisionOwner;
-        return this;
-    }
-
-    public void setDivisionOwner(Division divisionOwner) {
-        this.divisionOwner = divisionOwner;
-    }
-
     public Set<Division> getPreferredDivisions() {
         return preferredDivisions;
+    }
+
+    public void setPreferredDivisions(Set<Division> divisions) {
+        this.preferredDivisions = divisions;
     }
 
     public Teacher preferredDivisions(Set<Division> divisions) {
@@ -209,12 +194,12 @@ public class Teacher extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setPreferredDivisions(Set<Division> divisions) {
-        this.preferredDivisions = divisions;
-    }
-
     public Set<Place> getPreferredPlaces() {
         return preferredPlaces;
+    }
+
+    public void setPreferredPlaces(Set<Place> places) {
+        this.preferredPlaces = places;
     }
 
     public Teacher preferredPlaces(Set<Place> places) {
@@ -232,10 +217,6 @@ public class Teacher extends ApplicationEntity implements Serializable {
         this.preferredPlaces.remove(place);
         place.getPreferredTeachers().remove(this);
         return this;
-    }
-
-    public void setPreferredPlaces(Set<Place> places) {
-        this.preferredPlaces = places;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.patres.timetable.service;
 
-import com.patres.timetable.domain.ApplicationEntity;
+import com.patres.timetable.domain.AbstractApplicationEntity;
 import com.patres.timetable.service.mapper.EntityMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ import java.lang.reflect.ParameterizedType;
 
 @Service
 @Transactional
-public abstract class EntityService<EntityType extends ApplicationEntity, EntityDtoType, EntityRepositoryType extends JpaRepository<EntityType, Long>> {
+public abstract class EntityService<EntityType extends AbstractApplicationEntity, EntityDtoType, EntityRepositoryType extends JpaRepository<EntityType, Long>> {
 
     private final Logger log = LoggerFactory.getLogger(EntityService.class);
 
@@ -56,6 +56,6 @@ public abstract class EntityService<EntityType extends ApplicationEntity, Entity
     public String getEntityName() {
         // This only works if the subclass directly subclasses this class
         Class<EntityType> entityTypeClass = (Class<EntityType>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        return entityTypeClass.getName();
+        return entityTypeClass.getSimpleName();
     }
 }

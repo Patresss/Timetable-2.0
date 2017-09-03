@@ -17,31 +17,12 @@ import java.util.List;
 
 @Service
 @Transactional
-public class TeacherService extends EntityService<Teacher, TeacherDTO, TeacherRepository> {
+public class TeacherService extends DivisionOwnerService<Teacher, TeacherDTO, TeacherRepository> {
 
     private final Logger log = LoggerFactory.getLogger(EntityService.class);
 
     public TeacherService(TeacherRepository entityRepository, EntityMapper<Teacher, TeacherDTO> entityMapper) {
         super(entityRepository, entityMapper);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<TeacherDTO> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId) {
-        log.debug("Request to get Teachers by Division owners id");
-        return entityRepository.findByDivisionOwnerId(pageable, divisionsId)
-            .map(entityMapper::toDto);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<TeacherDTO> findByCurrentLogin(Pageable pageable) {
-        log.debug("Request to get all Teachers by current user");
-        Page<Teacher> teachers;
-        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-            teachers = entityRepository.findAll(pageable);
-        } else {
-            teachers = entityRepository.findByCurrentLogin(pageable);
-        }
-        return teachers.map(entityMapper::toDto);
     }
 
     @Transactional(readOnly = true)

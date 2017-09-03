@@ -340,7 +340,7 @@ public class LessonResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(lessonMapper.fromId(42L, Lesson::new).getId()).isEqualTo(42);
-        assertThat(lessonMapper.fromId(null, Lesson::new)).isNull();
+        assertThat(lessonMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(lessonMapper.fromId(null)).isNull();
     }
 }

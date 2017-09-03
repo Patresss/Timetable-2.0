@@ -349,7 +349,7 @@ public class DivisionResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(divisionMapper.fromId(42L, Division::new).getId()).isEqualTo(42);
-        assertThat(divisionMapper.fromId(null, Division::new)).isNull();
+        assertThat(divisionMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(divisionMapper.fromId(null)).isNull();
     }
 }

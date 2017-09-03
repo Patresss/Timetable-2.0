@@ -14,18 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class PropertyService extends EntityService<Property, PropertyDTO, PropertyRepository> {
-
-    private final Logger log = LoggerFactory.getLogger(PropertyService.class);
+public class PropertyService extends DivisionOwnerService<Property, PropertyDTO, PropertyRepository> {
 
     public PropertyService(PropertyRepository entityRepository, EntityMapper<Property, PropertyDTO> entityMapper) {
         super(entityRepository, entityMapper);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<PropertyDTO> findByCurrentLogin(Pageable pageable) {
-        log.debug("Request to get Property by current user");
-        return entityRepository.findByCurrentLogin(pageable).map(entityMapper::toDto);
     }
 
 }

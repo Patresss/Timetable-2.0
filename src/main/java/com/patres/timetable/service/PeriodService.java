@@ -15,24 +15,10 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PeriodService extends EntityService<Period, PeriodDTO, PeriodRepository> {
-
-    private final Logger log = LoggerFactory.getLogger(PeriodService.class);
+public class PeriodService extends DivisionOwnerService<Period, PeriodDTO, PeriodRepository> {
 
     public PeriodService(PeriodRepository entityRepository, EntityMapper<Period, PeriodDTO> entityMapper) {
         super(entityRepository, entityMapper);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<PeriodDTO> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId) {
-        log.debug("Request to get Period by Division owners id");
-        return entityRepository.findByDivisionOwnerId(pageable, divisionsId).map(entityMapper::toDto);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<PeriodDTO> findByCurrentLogin(Pageable pageable) {
-        log.debug("Request to get all Period by current user");
-        return entityRepository.findByCurrentLogin(pageable).map(entityMapper::toDto);
     }
 
 }

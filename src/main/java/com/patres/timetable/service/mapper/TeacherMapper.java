@@ -25,7 +25,7 @@ public class TeacherMapper extends EntityMapper<Teacher, TeacherDTO> {
 
         Teacher teacher = new Teacher();
 
-        teacher.setDivisionOwner(divisionMapper.fromId(teacherDTO.getDivisionOwnerId(), Division::new));
+        teacher.setDivisionOwner(divisionMapper.fromId(teacherDTO.getDivisionOwnerId()));
         teacher.setId(teacherDTO.getId());
         teacher.setName(teacherDTO.getName());
         teacher.setSurname(teacherDTO.getSurname());
@@ -61,5 +61,13 @@ public class TeacherMapper extends EntityMapper<Teacher, TeacherDTO> {
         return teacherDTO;
     }
 
+    public Teacher fromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Teacher entity = new Teacher();
+        entity.setId(id);
+        return entity;
+    }
 
 }

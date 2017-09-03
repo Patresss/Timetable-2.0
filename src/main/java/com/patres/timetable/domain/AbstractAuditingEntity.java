@@ -21,7 +21,7 @@ import java.time.Instant;
 @MappedSuperclass
 @Audited
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AbstractAuditingEntity extends ApplicationEntity implements Serializable {
+public abstract class AbstractAuditingEntity extends AbstractApplicationEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

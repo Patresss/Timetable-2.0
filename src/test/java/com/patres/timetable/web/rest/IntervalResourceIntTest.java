@@ -285,7 +285,7 @@ public class IntervalResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(intervalMapper.fromId(42L, Interval::new).getId()).isEqualTo(42);
-        assertThat(intervalMapper.fromId(null, Interval::new)).isNull();
+        assertThat(intervalMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(intervalMapper.fromId(null)).isNull();
     }
 }

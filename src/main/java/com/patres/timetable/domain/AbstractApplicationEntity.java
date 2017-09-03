@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @MappedSuperclass
-public abstract class ApplicationEntity implements Serializable {
+public abstract class AbstractApplicationEntity implements Serializable {
 
     private static final long serialVersionUID = 7296270053887329327L;
 
@@ -30,7 +30,7 @@ public abstract class ApplicationEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ApplicationEntity entity = (ApplicationEntity) o;
+        AbstractApplicationEntity entity = (AbstractApplicationEntity) o;
         if (entity.getId() == null || getId() == null) {
             return false;
         }

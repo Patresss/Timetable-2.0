@@ -28,12 +28,12 @@ public class TimetableMapper extends EntityMapper<Timetable, TimetableDTO> {
 
         Timetable timetable = new Timetable();
 
-        timetable.setDivision(divisionMapper.fromId(timetableDTO.getDivisionId(), Division::new));
-        timetable.setPeriod(periodMapper.fromId(timetableDTO.getPeriodId(), Period::new));
-        timetable.setTeacher(teacherMapper.fromId(timetableDTO.getTeacherId(), Teacher::new));
-        timetable.setSubject(subjectMapper.fromId(timetableDTO.getSubjectId(), Subject::new));
-        timetable.setLesson(lessonMapper.fromId(timetableDTO.getLessonId(), Lesson::new));
-        timetable.setPlace(placeMapper.fromId(timetableDTO.getPlaceId(), Place::new));
+        timetable.setDivision(divisionMapper.fromId(timetableDTO.getDivisionId()));
+        timetable.setPeriod(periodMapper.fromId(timetableDTO.getPeriodId()));
+        timetable.setTeacher(teacherMapper.fromId(timetableDTO.getTeacherId()));
+        timetable.setSubject(subjectMapper.fromId(timetableDTO.getSubjectId()));
+        timetable.setLesson(lessonMapper.fromId(timetableDTO.getLessonId()));
+        timetable.setPlace(placeMapper.fromId(timetableDTO.getPlaceId()));
         timetable.setId(timetableDTO.getId());
         timetable.setTitle(timetableDTO.getTitle());
         timetable.setStartTime(timetableDTO.getStartTime());
@@ -99,6 +99,16 @@ public class TimetableMapper extends EntityMapper<Timetable, TimetableDTO> {
         timetableDTO.setInSunday(timetable.isInSunday());
 
         return timetableDTO;
+    }
+
+
+    public Timetable fromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Timetable entity = new Timetable();
+        entity.setId(id);
+        return entity;
     }
 
     private Long timetablePeriodId(Timetable timetable) {

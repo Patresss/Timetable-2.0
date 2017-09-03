@@ -1,9 +1,6 @@
 package com.patres.timetable.service.mapper;
 
-import com.patres.timetable.domain.Division;
-import com.patres.timetable.domain.Place;
-import com.patres.timetable.domain.Subject;
-import com.patres.timetable.domain.Teacher;
+import com.patres.timetable.domain.*;
 import com.patres.timetable.service.dto.DivisionDTO;
 import com.patres.timetable.service.dto.PlaceDTO;
 import com.patres.timetable.service.dto.SubjectDTO;
@@ -30,7 +27,7 @@ public class PlaceMapper extends EntityMapper<Place, PlaceDTO> {
 
         Place place = new Place();
 
-        place.setDivisionOwner(divisionMapper.fromId(placeDTO.getDivisionOwnerId(), Division::new));
+        place.setDivisionOwner(divisionMapper.fromId(placeDTO.getDivisionOwnerId()));
         place.setId(placeDTO.getId());
         place.setName(placeDTO.getName());
         place.setNumberOfSeats(placeDTO.getNumberOfSeats());
@@ -73,5 +70,15 @@ public class PlaceMapper extends EntityMapper<Place, PlaceDTO> {
 
         return placeDTO;
     }
+
+    public Place fromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Place entity = new Place();
+        entity.setId(id);
+        return entity;
+    }
+
 
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.function.Supplier;
 
 @Service
 public class DivisionMapper extends EntityMapper<Division, DivisionDTO> {
@@ -73,6 +74,15 @@ public class DivisionMapper extends EntityMapper<Division, DivisionDTO> {
         divisionDTO.setPreferredSubjects(subjectDtoSet);
 
         return divisionDTO;
+    }
+
+    public Division fromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Division entity = new Division();
+        entity.setId(id);
+        return entity;
     }
 
     public Long getDivisionOwnerId(Division divisionOwner) {

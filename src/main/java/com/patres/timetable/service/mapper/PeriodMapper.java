@@ -2,6 +2,7 @@ package com.patres.timetable.service.mapper;
 
 import com.patres.timetable.domain.Division;
 import com.patres.timetable.domain.Interval;
+import com.patres.timetable.domain.Lesson;
 import com.patres.timetable.domain.Period;
 import com.patres.timetable.service.dto.IntervalDTO;
 import com.patres.timetable.service.dto.PeriodDTO;
@@ -28,7 +29,7 @@ public class PeriodMapper extends EntityMapper<Period, PeriodDTO> {
 
         Period period = new Period();
 
-        period.setDivisionOwner(divisionMapper.fromId(periodDTO.getDivisionOwnerId(), Division::new));
+        period.setDivisionOwner(divisionMapper.fromId(periodDTO.getDivisionOwnerId()));
         period.setId(periodDTO.getId());
         period.setName(periodDTO.getName());
 
@@ -57,6 +58,15 @@ public class PeriodMapper extends EntityMapper<Period, PeriodDTO> {
         periodDTO.setIntervalTimes(intervals);
 
         return periodDTO;
+    }
+
+    public Period fromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Period entity = new Period();
+        entity.setId(id);
+        return entity;
     }
 
 

@@ -15,24 +15,10 @@ import java.util.List;
 
 @Service
 @Transactional
-public class SubjectService extends EntityService<Subject, SubjectDTO, SubjectRepository> {
-
-    private final Logger log = LoggerFactory.getLogger(SubjectService.class);
+public class SubjectService extends DivisionOwnerService<Subject, SubjectDTO, SubjectRepository> {
 
     public SubjectService(SubjectRepository entityRepository, EntityMapper<Subject, SubjectDTO> entityMapper) {
         super(entityRepository, entityMapper);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<SubjectDTO> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId) {
-        log.debug("Request to get Subject by Division owners id");
-        return entityRepository.findByDivisionOwnerId(pageable, divisionsId).map(entityMapper::toDto);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<SubjectDTO> findByCurrentLogin(Pageable pageable) {
-        log.debug("Request to get Subject by current user");
-        return entityRepository.findByCurrentLogin(pageable).map(entityMapper::toDto);
     }
 
 }

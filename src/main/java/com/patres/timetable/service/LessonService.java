@@ -16,24 +16,10 @@ import java.util.List;
 
 @Service
 @Transactional
-public class LessonService extends EntityService<Lesson, LessonDTO, LessonRepository> {
-
-    private final Logger log = LoggerFactory.getLogger(LessonService.class);
+public class LessonService extends DivisionOwnerService<Lesson, LessonDTO, LessonRepository> {
 
     public LessonService(LessonRepository entityRepository, EntityMapper<Lesson, LessonDTO> entityMapper) {
         super(entityRepository, entityMapper);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<LessonDTO> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId) {
-        log.debug("Request to get Lesson by Division owners id");
-        return entityRepository.findByDivisionOwnerId(pageable, divisionsId).map(entityMapper::toDto);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<LessonDTO> findByCurrentLogin(Pageable pageable) {
-        log.debug("Request to get all Lesson by current user");
-        return entityRepository.findByCurrentLogin(pageable).map(entityMapper::toDto);
     }
 
 }

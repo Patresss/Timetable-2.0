@@ -50,7 +50,7 @@ currentAccount: any;
     }
 
     loadAll() {
-        this.lessonService.query({
+        this.lessonService.findByCurrentLogin({
             page: this.page - 1,
             size: this.itemsPerPage,
             sort: this.sort()}).subscribe(

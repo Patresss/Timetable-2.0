@@ -11,13 +11,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * A Period.
- */
 @Entity
 @Table(name = "period")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Period extends ApplicationEntity implements Serializable {
+public class Period extends AbstractDivisionOwner implements Serializable {
 
     private static final long serialVersionUID = -4976199580753440331L;
 
@@ -33,9 +30,6 @@ public class Period extends ApplicationEntity implements Serializable {
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Timetable> timetables = new HashSet<>();
-
-    @ManyToOne
-    private Division divisionOwner;
 
     public String getName() {
         return name;
@@ -97,19 +91,6 @@ public class Period extends ApplicationEntity implements Serializable {
     public Period removeTimetable(Timetable timetable) {
         this.timetables.remove(timetable);
         timetable.setPeriod(null);
-        return this;
-    }
-
-    public Division getDivisionOwner() {
-        return divisionOwner;
-    }
-
-    public void setDivisionOwner(Division divisionOwner) {
-        this.divisionOwner = divisionOwner;
-    }
-
-    public Period divisionOwner(Division divisionOwner) {
-        this.divisionOwner = divisionOwner;
         return this;
     }
 

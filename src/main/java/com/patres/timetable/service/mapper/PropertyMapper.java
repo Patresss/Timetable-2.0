@@ -1,6 +1,7 @@
 package com.patres.timetable.service.mapper;
 
 import com.patres.timetable.domain.Division;
+import com.patres.timetable.domain.Place;
 import com.patres.timetable.domain.Property;
 import com.patres.timetable.service.dto.PropertyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class PropertyMapper extends EntityMapper<Property, PropertyDTO> {
 
         Property property = new Property();
 
-        property.setDivisionOwner(divisionMapper.fromId(propertyDTO.getDivisionOwnerId(), Division::new));
+        property.setDivisionOwner(divisionMapper.fromId(propertyDTO.getDivisionOwnerId()));
         property.setId(propertyDTO.getId());
         property.setPropertyKey(propertyDTO.getPropertyKey());
         property.setPropertyValue(propertyDTO.getPropertyValue());
@@ -44,5 +45,13 @@ public class PropertyMapper extends EntityMapper<Property, PropertyDTO> {
         return propertyDTO;
     }
 
+    public Property fromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Property entity = new Property();
+        entity.setId(id);
+        return entity;
+    }
 
 }

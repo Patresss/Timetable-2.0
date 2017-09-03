@@ -10,18 +10,8 @@ import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
 
-
-/**
- * Spring Data JPA repository for the Subject entity.
- */
 @SuppressWarnings("unused")
 @Repository
-public interface SubjectRepository extends JpaRepository<Subject,Long> {
-
-    Page<Subject> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId);
-
-    @Query("select distinct subject from Subject subject inner join subject.divisionOwner divisions inner join divisions.users user where user.login IN ?#{principal.username}")
-    Page<Subject> findByCurrentLogin(Pageable pageable);
-
+public interface SubjectRepository extends DivisionOwnerRepository<Subject> {
 
 }

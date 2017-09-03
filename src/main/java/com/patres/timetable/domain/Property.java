@@ -3,18 +3,17 @@ package com.patres.timetable.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * A Property.
- */
 @Entity
 @Table(name = "property")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Property extends ApplicationEntity implements Serializable {
+public class Property extends AbstractDivisionOwner implements Serializable {
 
     private static final long serialVersionUID = 3166015179341462218L;
 
@@ -25,11 +24,12 @@ public class Property extends ApplicationEntity implements Serializable {
     @Column(name = "property_value")
     private String propertyValue;
 
-    @ManyToOne
-    private Division divisionOwner;
-
     public String getPropertyKey() {
         return propertyKey;
+    }
+
+    public void setPropertyKey(String propertyKey) {
+        this.propertyKey = propertyKey;
     }
 
     public Property propertyKey(String propertyKey) {
@@ -37,34 +37,17 @@ public class Property extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setPropertyKey(String propertyKey) {
-        this.propertyKey = propertyKey;
-    }
-
     public String getPropertyValue() {
         return propertyValue;
-    }
-
-    public Property propertyValue(String propertyValue) {
-        this.propertyValue = propertyValue;
-        return this;
     }
 
     public void setPropertyValue(String propertyValue) {
         this.propertyValue = propertyValue;
     }
 
-    public Division getDivisionOwner() {
-        return divisionOwner;
-    }
-
-    public Property divisionOwner(Division divisionOwner) {
-        this.divisionOwner = divisionOwner;
+    public Property propertyValue(String propertyValue) {
+        this.propertyValue = propertyValue;
         return this;
-    }
-
-    public void setDivisionOwner(Division divisionOwner) {
-        this.divisionOwner = divisionOwner;
     }
 
     @Override

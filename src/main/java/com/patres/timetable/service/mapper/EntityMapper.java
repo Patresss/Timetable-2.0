@@ -1,14 +1,13 @@
 package com.patres.timetable.service.mapper;
 
-import com.patres.timetable.domain.ApplicationEntity;
+import com.patres.timetable.domain.AbstractApplicationEntity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Supplier;
 
-public abstract class EntityMapper<EntityType extends ApplicationEntity, EntityDtoType> {
+public abstract class EntityMapper<EntityType extends AbstractApplicationEntity, EntityDtoType> {
 
     public List<EntityType> toEntity(List<EntityDtoType> dtoList) {
         if (dtoList == null) {
@@ -36,14 +35,6 @@ public abstract class EntityMapper<EntityType extends ApplicationEntity, EntityD
         return list;
     }
 
-    public EntityType fromId(Long id, Supplier<EntityType> entityTypeSupplier) {
-        if (id == null) {
-            return null;
-        }
-        EntityType entity = entityTypeSupplier.get();
-        entity.setId(id);
-        return entity;
-    }
 
     public Set<EntityDtoType> entitySetToEntityDTOSet(Set<EntityType> entitySet) {
         if (entitySet == null) {
@@ -72,6 +63,9 @@ public abstract class EntityMapper<EntityType extends ApplicationEntity, EntityD
     }
 
     abstract public EntityType toEntity(EntityDtoType entityDto);
+
     abstract public EntityDtoType toDto(EntityType entity);
+
+    abstract public EntityType fromId(Long id);
 
 }

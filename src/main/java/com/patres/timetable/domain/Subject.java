@@ -5,19 +5,16 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
-/**
- * A Subject.
- */
 @Entity
 @Table(name = "subject")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Subject extends ApplicationEntity implements Serializable {
+public class Subject extends AbstractDivisionOwner implements Serializable {
 
     private static final long serialVersionUID = 2588786756261194426L;
 
@@ -39,9 +36,6 @@ public class Subject extends ApplicationEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Timetable> timetables = new HashSet<>();
 
-    @ManyToOne
-    private Division divisionOwner;
-
     @ManyToMany(mappedBy = "preferredSubjects")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -61,17 +55,21 @@ public class Subject extends ApplicationEntity implements Serializable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Subject name(String name) {
         this.name = name;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getShortName() {
         return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public Subject shortName(String shortName) {
@@ -79,12 +77,12 @@ public class Subject extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
     public String getColorBackground() {
         return colorBackground;
+    }
+
+    public void setColorBackground(String colorBackground) {
+        this.colorBackground = colorBackground;
     }
 
     public Subject colorBackground(String colorBackground) {
@@ -92,12 +90,12 @@ public class Subject extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setColorBackground(String colorBackground) {
-        this.colorBackground = colorBackground;
-    }
-
     public String getColorText() {
         return colorText;
+    }
+
+    public void setColorText(String colorText) {
+        this.colorText = colorText;
     }
 
     public Subject colorText(String colorText) {
@@ -105,12 +103,12 @@ public class Subject extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setColorText(String colorText) {
-        this.colorText = colorText;
-    }
-
     public Set<Timetable> getTimetables() {
         return timetables;
+    }
+
+    public void setTimetables(Set<Timetable> timetables) {
+        this.timetables = timetables;
     }
 
     public Subject timetables(Set<Timetable> timetables) {
@@ -130,25 +128,12 @@ public class Subject extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setTimetables(Set<Timetable> timetables) {
-        this.timetables = timetables;
-    }
-
-    public Division getDivisionOwner() {
-        return divisionOwner;
-    }
-
-    public Subject divisionOwner(Division divisionOwner) {
-        this.divisionOwner = divisionOwner;
-        return this;
-    }
-
-    public void setDivisionOwner(Division divisionOwner) {
-        this.divisionOwner = divisionOwner;
-    }
-
     public Set<Teacher> getPreferredTeachers() {
         return preferredTeachers;
+    }
+
+    public void setPreferredTeachers(Set<Teacher> teachers) {
+        this.preferredTeachers = teachers;
     }
 
     public Subject preferredTeachers(Set<Teacher> teachers) {
@@ -168,12 +153,12 @@ public class Subject extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setPreferredTeachers(Set<Teacher> teachers) {
-        this.preferredTeachers = teachers;
-    }
-
     public Set<Division> getPreferredDivisions() {
         return preferredDivisions;
+    }
+
+    public void setPreferredDivisions(Set<Division> divisions) {
+        this.preferredDivisions = divisions;
     }
 
     public Subject preferredDivisions(Set<Division> divisions) {
@@ -193,12 +178,12 @@ public class Subject extends ApplicationEntity implements Serializable {
         return this;
     }
 
-    public void setPreferredDivisions(Set<Division> divisions) {
-        this.preferredDivisions = divisions;
-    }
-
     public Set<Place> getPreferredPlaces() {
         return preferredPlaces;
+    }
+
+    public void setPreferredPlaces(Set<Place> places) {
+        this.preferredPlaces = places;
     }
 
     public Subject preferredPlaces(Set<Place> places) {
@@ -216,10 +201,6 @@ public class Subject extends ApplicationEntity implements Serializable {
         this.preferredPlaces.remove(place);
         place.getPreferredSubjects().remove(this);
         return this;
-    }
-
-    public void setPreferredPlaces(Set<Place> places) {
-        this.preferredPlaces = places;
     }
 
     @Override

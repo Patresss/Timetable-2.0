@@ -1,6 +1,7 @@
 package com.patres.timetable.service.mapper;
 
 import com.patres.timetable.domain.Division;
+import com.patres.timetable.domain.Property;
 import com.patres.timetable.domain.Subject;
 import com.patres.timetable.service.dto.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class SubjectMapper extends EntityMapper<Subject, SubjectDTO> {
 
         Subject subject = new Subject();
 
-        subject.setDivisionOwner(divisionMapper.fromId(subjectDTO.getDivisionOwnerId(), Division::new));
+        subject.setDivisionOwner(divisionMapper.fromId(subjectDTO.getDivisionOwnerId()));
         subject.setId(subjectDTO.getId());
         subject.setName(subjectDTO.getName());
         subject.setShortName(subjectDTO.getShortName());
@@ -46,6 +47,15 @@ public class SubjectMapper extends EntityMapper<Subject, SubjectDTO> {
         subjectDTO.setColorText(subject.getColorText());
 
         return subjectDTO;
+    }
+
+    public Subject fromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Subject entity = new Subject();
+        entity.setId(id);
+        return entity;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.patres.timetable.service.mapper;
 
 import com.patres.timetable.domain.Division;
+import com.patres.timetable.domain.Interval;
 import com.patres.timetable.domain.Lesson;
 import com.patres.timetable.service.dto.LessonDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class LessonMapper extends EntityMapper<Lesson, LessonDTO> {
 
         Lesson lesson = new Lesson();
 
-        lesson.setDivisionOwner(divisionMapper.fromId(lessonDTO.getDivisionOwnerId(), Division::new));
+        lesson.setDivisionOwner(divisionMapper.fromId(lessonDTO.getDivisionOwnerId()));
         lesson.setId(lessonDTO.getId());
         lesson.setName(lessonDTO.getName());
         lesson.setStartTime(lessonDTO.getStartTime());
@@ -43,6 +44,15 @@ public class LessonMapper extends EntityMapper<Lesson, LessonDTO> {
         lessonDTO.setEndTime(lesson.getEndTime());
 
         return lessonDTO;
+    }
+
+    public Lesson fromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Lesson entity = new Lesson();
+        entity.setId(id);
+        return entity;
     }
 
 

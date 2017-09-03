@@ -16,24 +16,12 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PlaceService extends EntityService<Place, PlaceDTO, PlaceRepository> {
+public class PlaceService extends DivisionOwnerService<Place, PlaceDTO, PlaceRepository> {
 
     private final Logger log = LoggerFactory.getLogger(PlaceService.class);
 
     public PlaceService(PlaceRepository entityRepository, EntityMapper<Place, PlaceDTO> entityMapper) {
         super(entityRepository, entityMapper);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<PlaceDTO> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId) {
-        log.debug("Request to get Place by Division owners id");
-        return entityRepository.findByDivisionOwnerId(pageable, divisionsId).map(entityMapper::toDto);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<PlaceDTO> findByCurrentLogin(Pageable pageable) {
-        log.debug("Request to get all Place by current user");
-        return entityRepository.findByCurrentLogin(pageable).map(entityMapper::toDto);
     }
 
     @Transactional(readOnly = true)

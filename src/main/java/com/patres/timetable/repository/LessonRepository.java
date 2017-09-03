@@ -10,16 +10,8 @@ import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
 
-
-/**
- * Spring Data JPA repository for the Lesson entity.
- */
 @SuppressWarnings("unused")
 @Repository
-public interface LessonRepository extends JpaRepository<Lesson,Long> {
+public interface LessonRepository extends DivisionOwnerRepository<Lesson> {
 
-    Page<Lesson> findByDivisionOwnerId(Pageable pageable, List<Long> divisionsId);
-
-    @Query("select distinct lesson from Lesson lesson inner join lesson.divisionOwner divisions inner join divisions.users user where user.login IN ?#{principal.username}")
-    Page<Lesson> findByCurrentLogin(Pageable pageable);
 }
