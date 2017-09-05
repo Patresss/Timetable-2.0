@@ -12,7 +12,7 @@ public abstract class AbstractApplicationEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    protected Long id;
+    private Long id;
 
     public Long getId() {
         return id;

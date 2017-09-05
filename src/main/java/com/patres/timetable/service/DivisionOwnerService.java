@@ -4,6 +4,7 @@ import com.patres.timetable.domain.AbstractDivisionOwner;
 import com.patres.timetable.repository.DivisionOwnerRepository;
 import com.patres.timetable.security.AuthoritiesConstants;
 import com.patres.timetable.security.SecurityUtils;
+import com.patres.timetable.service.dto.AbstractDivisionOwnerDTO;
 import com.patres.timetable.service.mapper.EntityMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public abstract class DivisionOwnerService<EntityType extends AbstractDivisionOwner, EntityDtoType, EntityRepositoryType extends DivisionOwnerRepository<EntityType>> extends EntityService<EntityType, EntityDtoType, EntityRepositoryType> {
+public abstract class DivisionOwnerService<EntityType extends AbstractDivisionOwner, EntityDtoType extends AbstractDivisionOwnerDTO, EntityRepositoryType extends DivisionOwnerRepository<EntityType>> extends EntityService<EntityType, EntityDtoType, EntityRepositoryType> {
 
     private final Logger log = LoggerFactory.getLogger(DivisionOwnerService.class);
 
@@ -37,10 +38,10 @@ public abstract class DivisionOwnerService<EntityType extends AbstractDivisionOw
     @Transactional(readOnly = true)
     public Page<EntityDtoType> findByCurrentLogin(Pageable pageable) {
         log.debug("Request to get all {} by current user", getEntityName());
-        if(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
             log.debug("Return {} for user with role {} ", getEntityName(), AuthoritiesConstants.ADMIN);
             return entityRepository.findAll(pageable).map(entityMapper::toDto);
-        } else if(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN)) {
+        } else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN)) {
             log.debug("Return {} for user with role {} ", getEntityName(), AuthoritiesConstants.SCHOOL_ADMIN);
             return entityRepository.findByCurrentLogin(pageable).map(entityMapper::toDto);
         } else {
@@ -55,6 +56,40 @@ public abstract class DivisionOwnerService<EntityType extends AbstractDivisionOw
         // This only works if the subclass directly subclasses this class
         Class<EntityType> entityTypeClass = (Class<EntityType>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         return entityTypeClass.getSimpleName();
+    }
+
+    public boolean hasPriviligeToAddEntity(AbstractDivisionOwnerDTO entityDto) {
+        if(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            return true;
+        } else if(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN)) {
+            Long divisionOwnerId = entityDto.getDivisionOwnerId();
+            return entityRepository.userHasPrivilegeToAddEntity(divisionOwnerId);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean hasPriviligeToModifyEntity(AbstractDivisionOwnerDTO entityDto) {
+        if(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            return true;
+        } else if(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN)) {
+            Long entityId = entityDto.getId();
+            Long divisionOwnerId = entityDto.getDivisionOwnerId();
+            return entityRepository.userHasPrivilegeToModifyEntity(entityId, divisionOwnerId);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean hasPriviligeToDeleteEntity(Long entityId) {
+        if(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            return true;
+        } else if(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN)) {
+            return entityRepository.userHasPrivilegeToDeleteEntity(entityId);
+        } else {
+            return false;
+        }
+
     }
 
 }

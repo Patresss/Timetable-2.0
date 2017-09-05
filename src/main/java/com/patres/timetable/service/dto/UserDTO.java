@@ -13,12 +13,7 @@ import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * A DTO representing a user, with his authorities.
- */
-public class UserDTO {
-
-    private Long id;
+public class UserDTO extends AbstractApplicationEntityDTO {
 
     @NotBlank
     @Pattern(regexp = Constants.LOGIN_REGEX)
@@ -70,7 +65,7 @@ public class UserDTO {
         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
         Set<String> authorities) {
 
-        this.id = id;
+        setId(id);
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -83,14 +78,6 @@ public class UserDTO {
         this.lastModifiedBy = lastModifiedBy;
         this.lastModifiedDate = lastModifiedDate;
         this.authorities = authorities;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getLogin() {

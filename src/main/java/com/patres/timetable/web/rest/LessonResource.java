@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -45,12 +47,14 @@ public class LessonResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/lessons")
+    @PreAuthorize("@lessonService.hasPriviligeToAddEntity(#lessonDTO)")
     @Timed
     public ResponseEntity<LessonDTO> createLesson(@Valid @RequestBody LessonDTO lessonDTO) throws URISyntaxException {
         log.debug("REST request to save Lesson : {}", lessonDTO);
         if (lessonDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new lesson cannot already have an ID")).body(null);
         }
+
         LessonDTO result = lessonService.save(lessonDTO);
         return ResponseEntity.created(new URI("/api/lessons/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -67,6 +71,7 @@ public class LessonResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/lessons")
+    @PreAuthorize("@lessonService.hasPriviligeToModifyEntity(#lessonDTO)")
     @Timed
     public ResponseEntity<LessonDTO> updateLesson(@Valid @RequestBody LessonDTO lessonDTO) throws URISyntaxException {
         log.debug("REST request to update Lesson : {}", lessonDTO);
@@ -148,6 +153,7 @@ public class LessonResource {
      * @param id the id of the lessonDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    @PreAuthorize("@lessonService.hasPriviligeToDeleteEntity(#id)")
     @DeleteMapping("/lessons/{id}")
     @Timed
     public ResponseEntity<Void> deleteLesson(@PathVariable Long id) {

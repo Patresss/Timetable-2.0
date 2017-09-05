@@ -9,12 +9,7 @@ import java.util.Set;
 import java.util.Objects;
 import com.patres.timetable.domain.enumeration.EventType;
 
-/**
- * A DTO for the Timetable entity.
- */
-public class TimetableDTO implements Serializable {
-
-    private Long id;
+public class TimetableDTO extends AbstractApplicationEntityDTO implements Serializable {
 
     @NotNull
     private String title;
@@ -79,14 +74,6 @@ public class TimetableDTO implements Serializable {
     private Long periodId;
 
     private String periodName;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;

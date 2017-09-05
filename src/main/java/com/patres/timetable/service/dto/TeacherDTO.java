@@ -7,12 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
-/**
- * A DTO for the Teacher entity.
- */
-public class TeacherDTO implements Serializable {
-
-    private Long id;
+public class TeacherDTO extends AbstractDivisionOwnerDTO implements Serializable {
 
     @NotNull
     private String name;
@@ -25,18 +20,6 @@ public class TeacherDTO implements Serializable {
     private String shortName;
 
     private Set<SubjectDTO> preferredSubjects = new HashSet<>();
-
-    private Long divisionOwnerId;
-
-    private String divisionOwnerName;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -76,43 +59,6 @@ public class TeacherDTO implements Serializable {
 
     public void setPreferredSubjects(Set<SubjectDTO> subjects) {
         this.preferredSubjects = subjects;
-    }
-
-    public Long getDivisionOwnerId() {
-        return divisionOwnerId;
-    }
-
-    public void setDivisionOwnerId(Long divisionOwnerId) {
-        this.divisionOwnerId = divisionOwnerId;
-    }
-
-    public String getDivisionOwnerName() {
-        return divisionOwnerName;
-    }
-
-    public void setDivisionOwnerName(String divisionOwnerName) {
-        this.divisionOwnerName = divisionOwnerName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        TeacherDTO teacherDTO = (TeacherDTO) o;
-        if(teacherDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), teacherDTO.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
     }
 
     @Override

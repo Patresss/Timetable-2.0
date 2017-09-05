@@ -22,4 +22,5 @@ public class LessonService extends DivisionOwnerService<Lesson, LessonDTO, Lesso
         super(entityRepository, entityMapper);
     }
 
+
 }

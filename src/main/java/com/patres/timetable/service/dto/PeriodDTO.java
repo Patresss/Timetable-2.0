@@ -7,29 +7,12 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * A DTO for the Period entity.
- */
-public class PeriodDTO implements Serializable {
-
-    private Long id;
+public class PeriodDTO extends AbstractDivisionOwnerDTO implements Serializable {
 
     @NotNull
     private String name;
 
-    private Long divisionOwnerId;
-
-    private String divisionOwnerName;
-
     private Set<IntervalDTO> intervalTimes = new HashSet<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -39,49 +22,12 @@ public class PeriodDTO implements Serializable {
         this.name = name;
     }
 
-    public Long getDivisionOwnerId() {
-        return divisionOwnerId;
-    }
-
-    public void setDivisionOwnerId(Long divisionOwnerId) {
-        this.divisionOwnerId = divisionOwnerId;
-    }
-
-    public String getDivisionOwnerName() {
-        return divisionOwnerName;
-    }
-
-    public void setDivisionOwnerName(String divisionOwnerName) {
-        this.divisionOwnerName = divisionOwnerName;
-    }
-
     public Set<IntervalDTO> getIntervalTimes() {
         return intervalTimes;
     }
 
     public void setIntervalTimes(Set<IntervalDTO> intervalTimes) {
         this.intervalTimes = intervalTimes;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        PeriodDTO periodDTO = (PeriodDTO) o;
-        if(periodDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), periodDTO.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
     }
 
     @Override

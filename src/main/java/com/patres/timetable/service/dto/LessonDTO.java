@@ -5,12 +5,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * A DTO for the Lesson entity.
- */
-public class LessonDTO implements Serializable {
-
-    private Long id;
+public class LessonDTO extends AbstractDivisionOwnerDTO implements Serializable {
 
     @NotNull
     private String name;
@@ -20,18 +15,6 @@ public class LessonDTO implements Serializable {
 
     @NotNull
     private Long endTime;
-
-    private Long divisionOwnerId;
-
-    private String divisionOwnerName;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -57,42 +40,6 @@ public class LessonDTO implements Serializable {
         this.endTime = endTime;
     }
 
-    public Long getDivisionOwnerId() {
-        return divisionOwnerId;
-    }
-
-    public void setDivisionOwnerId(Long divisionOwnerId) {
-        this.divisionOwnerId = divisionOwnerId;
-    }
-
-    public String getDivisionOwnerName() {
-        return divisionOwnerName;
-    }
-
-    public void setDivisionOwnerName(String divisionOwnerName) {
-        this.divisionOwnerName = divisionOwnerName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        LessonDTO lessonDTO = (LessonDTO) o;
-        if(lessonDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), lessonDTO.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
 
     @Override
     public String toString() {
