@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,6 +47,7 @@ public class PeriodResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new periodDTO, or with status 400 (Bad Request) if the period has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @PreAuthorize("@periodService.hasPriviligeToAddEntity(#periodDTO)")
     @PostMapping("/periods")
     @Timed
     public ResponseEntity<PeriodDTO> createPeriod(@Valid @RequestBody PeriodDTO periodDTO) throws URISyntaxException {
@@ -68,6 +70,7 @@ public class PeriodResource {
      * or with status 500 (Internal Server Error) if the periodDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @PreAuthorize("@periodService.hasPriviligeToModifyEntity(#periodDTO)")
     @PutMapping("/periods")
     @Timed
     public ResponseEntity<PeriodDTO> updatePeriod(@Valid @RequestBody PeriodDTO periodDTO) throws URISyntaxException {
@@ -150,6 +153,7 @@ public class PeriodResource {
      * @param id the id of the periodDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    @PreAuthorize("@periodService.hasPriviligeToDeleteEntity(#id)")
     @DeleteMapping("/periods/{id}")
     @Timed
     public ResponseEntity<Void> deletePeriod(@PathVariable Long id) {

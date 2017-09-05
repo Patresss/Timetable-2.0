@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,6 +47,7 @@ public class SubjectResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new subjectDTO, or with status 400 (Bad Request) if the subject has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @PreAuthorize("@subjectService.hasPriviligeToAddEntity(#subjectDTO)")
     @PostMapping("/subjects")
     @Timed
     public ResponseEntity<SubjectDTO> createSubject(@Valid @RequestBody SubjectDTO subjectDTO) throws URISyntaxException {
@@ -68,6 +70,7 @@ public class SubjectResource {
      * or with status 500 (Internal Server Error) if the subjectDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @PreAuthorize("@subjectService.hasPriviligeToModifyEntity(#subjectDTO)")
     @PutMapping("/subjects")
     @Timed
     public ResponseEntity<SubjectDTO> updateSubject(@Valid @RequestBody SubjectDTO subjectDTO) throws URISyntaxException {
@@ -149,6 +152,7 @@ public class SubjectResource {
      * @param id the id of the subjectDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    @PreAuthorize("@subjectService.hasPriviligeToDeleteEntity(#id)")
     @DeleteMapping("/subjects/{id}")
     @Timed
     public ResponseEntity<Void> deleteSubject(@PathVariable Long id) {

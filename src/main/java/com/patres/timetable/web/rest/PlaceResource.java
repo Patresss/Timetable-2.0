@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,6 +47,7 @@ public class PlaceResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new placeDTO, or with status 400 (Bad Request) if the place has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @PreAuthorize("@placeService.hasPriviligeToAddEntity(#placeDTO)")
     @PostMapping("/places")
     @Timed
     public ResponseEntity<PlaceDTO> createPlace(@Valid @RequestBody PlaceDTO placeDTO) throws URISyntaxException {
@@ -68,6 +70,7 @@ public class PlaceResource {
      * or with status 500 (Internal Server Error) if the placeDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @PreAuthorize("@placeService.hasPriviligeToModifyEntity(#placeDTO)")
     @PutMapping("/places")
     @Timed
     public ResponseEntity<PlaceDTO> updatePlace(@Valid @RequestBody PlaceDTO placeDTO) throws URISyntaxException {
@@ -149,6 +152,7 @@ public class PlaceResource {
      * @param id the id of the placeDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    @PreAuthorize("@placeService.hasPriviligeToDeleteEntity(#id)")
     @DeleteMapping("/places/{id}")
     @Timed
     public ResponseEntity<Void> deletePlace(@PathVariable Long id) {

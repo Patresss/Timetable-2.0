@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,6 +47,7 @@ public class TeacherResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new teacherDTO, or with status 400 (Bad Request) if the teacher has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @PreAuthorize("@teacherService.hasPriviligeToAddEntity(#teacherDTO)")
     @PostMapping("/teachers")
     @Timed
     public ResponseEntity<TeacherDTO> createTeacher(@Valid @RequestBody TeacherDTO teacherDTO) throws URISyntaxException {
@@ -68,6 +70,7 @@ public class TeacherResource {
      * or with status 500 (Internal Server Error) if the teacherDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @PreAuthorize("@teacherService.hasPriviligeToModifyEntity(#teacherDTO)")
     @PutMapping("/teachers")
     @Timed
     public ResponseEntity<TeacherDTO> updateTeacher(@Valid @RequestBody TeacherDTO teacherDTO) throws URISyntaxException {
@@ -150,6 +153,7 @@ public class TeacherResource {
      * @param id the id of the teacherDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    @PreAuthorize("@teacherService.hasPriviligeToDeleteEntity(#id)")
     @DeleteMapping("/teachers/{id}")
     @Timed
     public ResponseEntity<Void> deleteTeacher(@PathVariable Long id) {

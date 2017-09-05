@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,6 +47,7 @@ public class PropertyResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new propertyDTO, or with status 400 (Bad Request) if the property has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @PreAuthorize("@propertyService.hasPriviligeToAddEntity(#propertyDTO)")
     @PostMapping("/properties")
     @Timed
     public ResponseEntity<PropertyDTO> createProperty(@Valid @RequestBody PropertyDTO propertyDTO) throws URISyntaxException {
@@ -68,6 +70,7 @@ public class PropertyResource {
      * or with status 500 (Internal Server Error) if the propertyDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    @PreAuthorize("@propertyService.hasPriviligeToModifyEntity(#propertyDTO)")
     @PutMapping("/properties")
     @Timed
     public ResponseEntity<PropertyDTO> updateProperty(@Valid @RequestBody PropertyDTO propertyDTO) throws URISyntaxException {
@@ -132,6 +135,7 @@ public class PropertyResource {
      * @param id the id of the propertiesDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    @PreAuthorize("@propertyService.hasPriviligeToDeleteEntity(#id)")
     @DeleteMapping("/properties/{id}")
     @Timed
     public ResponseEntity<Void> deleteProperty(@PathVariable Long id) {
