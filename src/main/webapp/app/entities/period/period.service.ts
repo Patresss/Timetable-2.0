@@ -19,18 +19,14 @@ export class PeriodService {
     create(period: Period): Observable<Period> {
         const copy = this.convert(period);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            this.convertInterval(jsonResponse);
-            return jsonResponse;
+            return res.json();
         });
     }
 
     update(period: Period): Observable<Period> {
         const copy = this.convert(period);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            this.convertInterval(jsonResponse);
-            return jsonResponse;
+            return res.json();
         });
     }
 
@@ -79,6 +75,7 @@ export class PeriodService {
 
     private convert(period: Period): Period {
         const copy: Period = Object.assign({}, period);
+        copy.intervalTimes = Object.assign([], period.intervalTimes);
         if (copy.intervalTimes != null) {
             for (let i = 0; i < copy.intervalTimes.length; i++) {
                 copy.intervalTimes[i] = this.intervalService.convert(copy.intervalTimes[i]);

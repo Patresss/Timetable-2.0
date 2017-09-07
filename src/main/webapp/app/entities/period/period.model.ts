@@ -1,5 +1,5 @@
 import { BaseEntity } from './../../shared';
-import {Interval} from "../interval/interval.model";
+import {Interval} from '../interval/interval.model';
 
 export class Period implements BaseEntity {
     constructor(
