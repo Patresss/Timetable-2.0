@@ -18,9 +18,6 @@ public interface DivisionOwnerRepository<EntityType extends AbstractDivisionOwne
 
     @Query("select distinct entity from #{#entityName} entity inner join entity.divisionOwner divisions inner join divisions.users user where user.login IN ?#{principal.username}")
     Page<EntityType> findByCurrentLogin(Pageable pageable);
-//
-//    @Query("select division from Division division inner join division.users where user.login IN ?#{principal.username}")
-//    boolean currentLoginHasPriviligeToEntity(Long entityId);
 
     @Query("select CASE WHEN count(division) > 0 THEN true ELSE false END from Division division inner join division.users user on user.login IN ?#{principal.username} WHERE :newDivisionOwner = division.id")
     boolean userHasPrivilegeToAddEntity(@Param("newDivisionOwner") Long newDivisionOwner);
