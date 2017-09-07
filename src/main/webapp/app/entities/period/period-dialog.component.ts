@@ -11,7 +11,7 @@ import {PeriodPopupService} from './period-popup.service';
 import {PeriodService} from './period.service';
 import {Division, DivisionService} from '../division';
 import {ResponseWrapper} from '../../shared';
-import {Interval} from "../interval/interval.model";
+import {Interval} from '../interval/interval.model';
 
 @Component({
     selector: 'jhi-period-dialog',
