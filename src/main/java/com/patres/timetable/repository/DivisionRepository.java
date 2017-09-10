@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
 
-/**
- * Spring Data JPA repository for the Division entity.
- */
 @SuppressWarnings("unused")
 @Repository
 public interface DivisionRepository extends JpaRepository<Division,Long> {
