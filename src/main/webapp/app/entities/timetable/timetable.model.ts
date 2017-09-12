@@ -1,6 +1,6 @@
 import { BaseEntity } from './../../shared';
 
-const enum EventType {
+export const enum EventType {
     'LESSON',
     'SUBSTITUTION',
     'SPECIAL'

@@ -155,7 +155,7 @@ public class DivisionResourceIntTest {
             .content(TestUtil.convertObjectToJsonBytes(divisionDTO)))
             .andExpect(status().isBadRequest());
 
-        // Validate the Alice in the database
+        // Validate the Division in the database
         List<Division> divisionList = divisionRepository.findAll();
         assertThat(divisionList).hasSize(databaseSizeBeforeCreate);
     }

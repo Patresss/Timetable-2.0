@@ -36,9 +36,9 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="timetableApp.division.divisionType" for="field_divisionType">Division Type</label>
             <select class="form-control" name="divisionType" [(ngModel)]="division.divisionType" id="field_divisionType"  required>
-                <option value="SCHOOL" jhiTranslate="timetableApp.DivisionType.SCHOOL">SCHOOL</option>
-                <option value="CLASS" jhiTranslate="timetableApp.DivisionType.CLASS">CLASS</option>
-                <option value="SUBGROUP" jhiTranslate="timetableApp.DivisionType.SUBGROUP">SUBGROUP</option>
+                <option value="SCHOOL">{{'timetableApp.DivisionType.SCHOOL' | translate}}</option>
+                <option value="CLASS">{{'timetableApp.DivisionType.CLASS' | translate}}</option>
+                <option value="SUBGROUP">{{'timetableApp.DivisionType.SUBGROUP' | translate}}</option>
             </select>
             <div [hidden]="!(editForm.controls.divisionType?.dirty && editForm.controls.divisionType?.invalid)">
                 <small class="form-text text-danger"

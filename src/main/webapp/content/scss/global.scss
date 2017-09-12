@@ -1,3 +1,4 @@
+@import 'bootstrap-variables';
 
 /* ==============================================================
 Bootstrap tweaks
@@ -201,3 +202,13 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+.inner-block {
+    padding-left: 30px;
+}
+
+.inputed {
+    margin-bottom: 15px;
+}
+
+

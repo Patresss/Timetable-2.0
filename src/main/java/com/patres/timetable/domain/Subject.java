@@ -5,26 +5,18 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
-/**
- * A Subject.
- */
 @Entity
 @Table(name = "subject")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Subject implements Serializable {
+public class Subject extends AbstractDivisionOwner implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    private static final long serialVersionUID = 2588786756261194426L;
 
     @NotNull
     @Column(name = "name", nullable = false)
@@ -44,9 +36,6 @@ public class Subject implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Timetable> timetables = new HashSet<>();
 
-    @ManyToOne
-    private Division division;
-
     @ManyToMany(mappedBy = "preferredSubjects")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -62,16 +51,12 @@ public class Subject implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Place> preferredPlaces = new HashSet<>();
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Subject name(String name) {
@@ -79,12 +64,12 @@ public class Subject implements Serializable {
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getShortName() {
         return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public Subject shortName(String shortName) {
@@ -92,12 +77,12 @@ public class Subject implements Serializable {
         return this;
     }
 
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
     public String getColorBackground() {
         return colorBackground;
+    }
+
+    public void setColorBackground(String colorBackground) {
+        this.colorBackground = colorBackground;
     }
 
     public Subject colorBackground(String colorBackground) {
@@ -105,12 +90,12 @@ public class Subject implements Serializable {
         return this;
     }
 
-    public void setColorBackground(String colorBackground) {
-        this.colorBackground = colorBackground;
-    }
-
     public String getColorText() {
         return colorText;
+    }
+
+    public void setColorText(String colorText) {
+        this.colorText = colorText;
     }
 
     public Subject colorText(String colorText) {
@@ -118,12 +103,12 @@ public class Subject implements Serializable {
         return this;
     }
 
-    public void setColorText(String colorText) {
-        this.colorText = colorText;
-    }
-
     public Set<Timetable> getTimetables() {
         return timetables;
+    }
+
+    public void setTimetables(Set<Timetable> timetables) {
+        this.timetables = timetables;
     }
 
     public Subject timetables(Set<Timetable> timetables) {
@@ -143,25 +128,12 @@ public class Subject implements Serializable {
         return this;
     }
 
-    public void setTimetables(Set<Timetable> timetables) {
-        this.timetables = timetables;
-    }
-
-    public Division getDivision() {
-        return division;
-    }
-
-    public Subject division(Division division) {
-        this.division = division;
-        return this;
-    }
-
-    public void setDivision(Division division) {
-        this.division = division;
-    }
-
     public Set<Teacher> getPreferredTeachers() {
         return preferredTeachers;
+    }
+
+    public void setPreferredTeachers(Set<Teacher> teachers) {
+        this.preferredTeachers = teachers;
     }
 
     public Subject preferredTeachers(Set<Teacher> teachers) {
@@ -181,12 +153,12 @@ public class Subject implements Serializable {
         return this;
     }
 
-    public void setPreferredTeachers(Set<Teacher> teachers) {
-        this.preferredTeachers = teachers;
-    }
-
     public Set<Division> getPreferredDivisions() {
         return preferredDivisions;
+    }
+
+    public void setPreferredDivisions(Set<Division> divisions) {
+        this.preferredDivisions = divisions;
     }
 
     public Subject preferredDivisions(Set<Division> divisions) {
@@ -206,12 +178,12 @@ public class Subject implements Serializable {
         return this;
     }
 
-    public void setPreferredDivisions(Set<Division> divisions) {
-        this.preferredDivisions = divisions;
-    }
-
     public Set<Place> getPreferredPlaces() {
         return preferredPlaces;
+    }
+
+    public void setPreferredPlaces(Set<Place> places) {
+        this.preferredPlaces = places;
     }
 
     public Subject preferredPlaces(Set<Place> places) {
@@ -229,10 +201,6 @@ public class Subject implements Serializable {
         this.preferredPlaces.remove(place);
         place.getPreferredSubjects().remove(this);
         return this;
-    }
-
-    public void setPreferredPlaces(Set<Place> places) {
-        this.preferredPlaces = places;
     }
 
     @Override

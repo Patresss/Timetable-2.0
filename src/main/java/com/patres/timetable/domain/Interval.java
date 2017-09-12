@@ -3,25 +3,20 @@ package com.patres.timetable.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-/**
- * A Interval.
- */
 @Entity
 @Table(name = "interval")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Interval implements Serializable {
+public class Interval extends AbstractApplicationEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    private static final long serialVersionUID = 6794788291603472570L;
 
     @Column(name = "included")
     private Boolean included;
@@ -34,14 +29,6 @@ public class Interval implements Serializable {
 
     @ManyToOne
     private Period period;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Boolean isIncluded() {
         return included;
@@ -60,17 +47,21 @@ public class Interval implements Serializable {
         return startDate;
     }
 
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
     public Interval startDate(LocalDate startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
     public LocalDate getEndDate() {
         return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public Interval endDate(LocalDate endDate) {
@@ -78,21 +69,17 @@ public class Interval implements Serializable {
         return this;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
     public Period getPeriod() {
         return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
     }
 
     public Interval period(Period period) {
         this.period = period;
         return this;
-    }
-
-    public void setPeriod(Period period) {
-        this.period = period;
     }
 
     @Override

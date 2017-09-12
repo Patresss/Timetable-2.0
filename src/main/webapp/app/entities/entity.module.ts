@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { TimetableDivisionModule } from './division/division.module';
-import { TimetablePropertiesModule } from './properties/properties.module';
+import { TimetablePropertiesModule } from './property/property.module';
 import { TimetableTeacherModule } from './teacher/teacher.module';
 import { TimetableSubjectModule } from './subject/subject.module';
 import { TimetablePlaceModule } from './place/place.module';

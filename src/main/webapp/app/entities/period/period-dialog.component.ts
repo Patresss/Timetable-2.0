@@ -11,6 +11,7 @@ import { PeriodPopupService } from './period-popup.service';
 import { PeriodService } from './period.service';
 import { Division, DivisionService } from '../division';
 import { ResponseWrapper } from '../../shared';
+import {Interval} from '../interval/interval.model';
 
 @Component({
     selector: 'jhi-period-dialog',
@@ -44,6 +45,7 @@ export class PeriodDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        console.log('status: ');
         if (this.period.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.periodService.update(this.period));
@@ -53,9 +55,31 @@ export class PeriodDialogComponent implements OnInit {
         }
     }
 
+    removeIntervalTime(interval: Interval) {
+        let index: number = this.period.intervalTimes.indexOf(interval);
+        if (index !== -1) {
+            this.period.intervalTimes.splice(index, 1);
+        }
+    }
+
+    addIntervalTime(included: boolean) {
+        let interval = new Interval();
+        interval.included = included;
+        this.period.intervalTimes.push(interval);
+    }
+
+    intervalsExists(included: boolean) {
+        for (let interval of this.period.intervalTimes) {
+            if (interval.included === included) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private subscribeToSaveResponse(result: Observable<Period>) {
         result.subscribe((res: Period) =>
-            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError());
     }
 
     private onSaveSuccess(result: Period) {
@@ -64,17 +88,11 @@ export class PeriodDialogComponent implements OnInit {
         this.activeModal.dismiss(result);
     }
 
-    private onSaveError(error) {
-        try {
-            error.json();
-        } catch (exception) {
-            error.message = error.text();
-        }
+    private onSaveError() {
         this.isSaving = false;
-        this.onError(error);
     }
 
-    private onError(error) {
+    private onError(error: any) {
         this.alertService.error(error.message, null, null);
     }
 

@@ -7,12 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
-/**
- * A DTO for the Interval entity.
- */
-public class IntervalDTO implements Serializable {
-
-    private Long id;
+public class IntervalDTO extends AbstractApplicationEntityDTO implements Serializable {
 
     private Boolean included;
 
@@ -23,14 +18,6 @@ public class IntervalDTO implements Serializable {
     private Long periodId;
 
     private String periodName;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Boolean isIncluded() {
         return included;
@@ -70,27 +57,6 @@ public class IntervalDTO implements Serializable {
 
     public void setPeriodName(String periodName) {
         this.periodName = periodName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        IntervalDTO intervalDTO = (IntervalDTO) o;
-        if(intervalDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), intervalDTO.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
     }
 
     @Override

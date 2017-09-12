@@ -2,7 +2,9 @@ package com.patres.timetable.web.rest;
 
 import com.patres.timetable.TimetableApp;
 
+import com.patres.timetable.domain.Division;
 import com.patres.timetable.domain.Subject;
+import com.patres.timetable.repository.DivisionRepository;
 import com.patres.timetable.repository.SubjectRepository;
 import com.patres.timetable.service.SubjectService;
 import com.patres.timetable.service.dto.SubjectDTO;
@@ -56,6 +58,9 @@ public class SubjectResourceIntTest {
     private SubjectRepository subjectRepository;
 
     @Autowired
+    private DivisionRepository divisionRepository;
+
+    @Autowired
     private SubjectMapper subjectMapper;
 
     @Autowired
@@ -105,6 +110,9 @@ public class SubjectResourceIntTest {
     @Before
     public void initTest() {
         subject = createEntity(em);
+        Division divisionOwner = DivisionResourceIntTest.createEntity(em);
+        divisionRepository.saveAndFlush(divisionOwner);
+        subject.setDivisionOwner(divisionOwner);
     }
 
     @Test

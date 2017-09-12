@@ -33,7 +33,7 @@ export const lessonRoute: Routes = [
             'pagingParams': LessonResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.lesson.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -41,7 +41,7 @@ export const lessonRoute: Routes = [
         path: 'lesson/:id',
         component: LessonDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.lesson.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -53,7 +53,7 @@ export const lessonPopupRoute: Routes = [
         path: 'lesson-new',
         component: LessonPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.lesson.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const lessonPopupRoute: Routes = [
         path: 'lesson/:id/edit',
         component: LessonPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.lesson.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -73,7 +73,7 @@ export const lessonPopupRoute: Routes = [
         path: 'lesson/:id/delete',
         component: LessonDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.lesson.home.title'
         },
         canActivate: [UserRouteAccessService],

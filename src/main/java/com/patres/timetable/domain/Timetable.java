@@ -1,30 +1,21 @@
 package com.patres.timetable.domain;
 
+import com.patres.timetable.domain.enumeration.EventType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import com.patres.timetable.domain.enumeration.EventType;
-
-/**
- * A Timetable.
- */
 @Entity
 @Table(name = "timetable")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Timetable implements Serializable {
+public class Timetable extends AbstractApplicationEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    private static final long serialVersionUID = -2579744673761181702L;
 
     @NotNull
     @Column(name = "title", nullable = false)
@@ -104,16 +95,12 @@ public class Timetable implements Serializable {
     @ManyToOne
     private Period period;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Timetable title(String title) {
@@ -121,12 +108,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public Long getStartTime() {
         return startTime;
+    }
+
+    public void setStartTime(Long startTime) {
+        this.startTime = startTime;
     }
 
     public Timetable startTime(Long startTime) {
@@ -134,12 +121,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setStartTime(Long startTime) {
-        this.startTime = startTime;
-    }
-
     public Long getEndTime() {
         return endTime;
+    }
+
+    public void setEndTime(Long endTime) {
+        this.endTime = endTime;
     }
 
     public Timetable endTime(Long endTime) {
@@ -147,12 +134,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setEndTime(Long endTime) {
-        this.endTime = endTime;
-    }
-
     public LocalDate getStartDate() {
         return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public Timetable startDate(LocalDate startDate) {
@@ -160,12 +147,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
     public LocalDate getEndDate() {
         return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public Timetable endDate(LocalDate endDate) {
@@ -173,12 +160,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
     public LocalDate getDate() {
         return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Timetable date(LocalDate date) {
@@ -186,12 +173,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     public EventType getType() {
         return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
     }
 
     public Timetable type(EventType type) {
@@ -199,12 +186,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setType(EventType type) {
-        this.type = type;
-    }
-
     public Long getEveryWeek() {
         return everyWeek;
+    }
+
+    public void setEveryWeek(Long everyWeek) {
+        this.everyWeek = everyWeek;
     }
 
     public Timetable everyWeek(Long everyWeek) {
@@ -212,12 +199,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setEveryWeek(Long everyWeek) {
-        this.everyWeek = everyWeek;
-    }
-
     public Long getStartWithWeek() {
         return startWithWeek;
+    }
+
+    public void setStartWithWeek(Long startWithWeek) {
+        this.startWithWeek = startWithWeek;
     }
 
     public Timetable startWithWeek(Long startWithWeek) {
@@ -225,12 +212,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setStartWithWeek(Long startWithWeek) {
-        this.startWithWeek = startWithWeek;
-    }
-
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Timetable description(String description) {
@@ -238,12 +225,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getColorBackground() {
         return colorBackground;
+    }
+
+    public void setColorBackground(String colorBackground) {
+        this.colorBackground = colorBackground;
     }
 
     public Timetable colorBackground(String colorBackground) {
@@ -251,21 +238,17 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setColorBackground(String colorBackground) {
-        this.colorBackground = colorBackground;
-    }
-
     public String getColorText() {
         return colorText;
+    }
+
+    public void setColorText(String colorText) {
+        this.colorText = colorText;
     }
 
     public Timetable colorText(String colorText) {
         this.colorText = colorText;
         return this;
-    }
-
-    public void setColorText(String colorText) {
-        this.colorText = colorText;
     }
 
     public Boolean isInMonday() {
@@ -363,17 +346,21 @@ public class Timetable implements Serializable {
         return place;
     }
 
+    public void setPlace(Place place) {
+        this.place = place;
+    }
+
     public Timetable place(Place place) {
         this.place = place;
         return this;
     }
 
-    public void setPlace(Place place) {
-        this.place = place;
-    }
-
     public Subject getSubject() {
         return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public Timetable subject(Subject subject) {
@@ -381,12 +368,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
     public Teacher getTeacher() {
         return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public Timetable teacher(Teacher teacher) {
@@ -394,12 +381,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
     public Division getDivision() {
         return division;
+    }
+
+    public void setDivision(Division division) {
+        this.division = division;
     }
 
     public Timetable division(Division division) {
@@ -407,12 +394,12 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setDivision(Division division) {
-        this.division = division;
-    }
-
     public Lesson getLesson() {
         return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
     }
 
     public Timetable lesson(Lesson lesson) {
@@ -420,21 +407,17 @@ public class Timetable implements Serializable {
         return this;
     }
 
-    public void setLesson(Lesson lesson) {
-        this.lesson = lesson;
-    }
-
     public Period getPeriod() {
         return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
     }
 
     public Timetable period(Period period) {
         this.period = period;
         return this;
-    }
-
-    public void setPeriod(Period period) {
-        this.period = period;
     }
 
     @Override

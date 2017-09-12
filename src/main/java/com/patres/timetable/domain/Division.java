@@ -1,32 +1,23 @@
 package com.patres.timetable.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.patres.timetable.domain.enumeration.DivisionType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
-import com.patres.timetable.domain.enumeration.DivisionType;
-
-/**
- * A Division.
- */
 @Entity
 @Table(name = "division")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Division implements Serializable {
+public class Division extends AbstractApplicationEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    private static final long serialVersionUID = 3123439538391666217L;
 
     @NotNull
     @Column(name = "name", nullable = false)
@@ -54,62 +45,62 @@ public class Division implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Timetable> timetables = new HashSet<>();
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Place> divisionPlaces = new HashSet<>();
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Teacher> divisionTeachers = new HashSet<>();
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Subject> divisionSubjects = new HashSet<>();
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Lesson> divisionLessons = new HashSet<>();
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Period> divisionPeriods = new HashSet<>();
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Properties> divisionProperties = new HashSet<>();
+    private Set<Property> divisionProperties = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "division_parent",
-               joinColumns = @JoinColumn(name="divisions_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="parents_id", referencedColumnName="id"))
+        joinColumns = @JoinColumn(name = "divisions_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "parents_id", referencedColumnName = "id"))
     private Set<Division> parents = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "division_user",
-               joinColumns = @JoinColumn(name="divisions_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="id"))
+        joinColumns = @JoinColumn(name = "divisions_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"))
     private Set<User> users = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "division_preferred_teacher",
-               joinColumns = @JoinColumn(name="divisions_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="preferred_teachers_id", referencedColumnName="id"))
+        joinColumns = @JoinColumn(name = "divisions_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "preferred_teachers_id", referencedColumnName = "id"))
     private Set<Teacher> preferredTeachers = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "division_preferred_subject",
-               joinColumns = @JoinColumn(name="divisions_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="preferred_subjects_id", referencedColumnName="id"))
+        joinColumns = @JoinColumn(name = "divisions_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id"))
     private Set<Subject> preferredSubjects = new HashSet<>();
 
     @ManyToMany(mappedBy = "preferredDivisions")
@@ -117,16 +108,12 @@ public class Division implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Place> preferredPlaces = new HashSet<>();
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Division name(String name) {
@@ -134,12 +121,12 @@ public class Division implements Serializable {
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getShortName() {
         return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public Division shortName(String shortName) {
@@ -147,12 +134,12 @@ public class Division implements Serializable {
         return this;
     }
 
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
     public Long getNumberOfPeople() {
         return numberOfPeople;
+    }
+
+    public void setNumberOfPeople(Long numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
     }
 
     public Division numberOfPeople(Long numberOfPeople) {
@@ -160,12 +147,12 @@ public class Division implements Serializable {
         return this;
     }
 
-    public void setNumberOfPeople(Long numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
-    }
-
     public DivisionType getDivisionType() {
         return divisionType;
+    }
+
+    public void setDivisionType(DivisionType divisionType) {
+        this.divisionType = divisionType;
     }
 
     public Division divisionType(DivisionType divisionType) {
@@ -173,12 +160,12 @@ public class Division implements Serializable {
         return this;
     }
 
-    public void setDivisionType(DivisionType divisionType) {
-        this.divisionType = divisionType;
-    }
-
     public String getColorBackground() {
         return colorBackground;
+    }
+
+    public void setColorBackground(String colorBackground) {
+        this.colorBackground = colorBackground;
     }
 
     public Division colorBackground(String colorBackground) {
@@ -186,12 +173,12 @@ public class Division implements Serializable {
         return this;
     }
 
-    public void setColorBackground(String colorBackground) {
-        this.colorBackground = colorBackground;
-    }
-
     public String getColorText() {
         return colorText;
+    }
+
+    public void setColorText(String colorText) {
+        this.colorText = colorText;
     }
 
     public Division colorText(String colorText) {
@@ -199,12 +186,12 @@ public class Division implements Serializable {
         return this;
     }
 
-    public void setColorText(String colorText) {
-        this.colorText = colorText;
-    }
-
     public Set<Timetable> getTimetables() {
         return timetables;
+    }
+
+    public void setTimetables(Set<Timetable> timetables) {
+        this.timetables = timetables;
     }
 
     public Division timetables(Set<Timetable> timetables) {
@@ -224,12 +211,12 @@ public class Division implements Serializable {
         return this;
     }
 
-    public void setTimetables(Set<Timetable> timetables) {
-        this.timetables = timetables;
-    }
-
     public Set<Place> getDivisionPlaces() {
         return divisionPlaces;
+    }
+
+    public void setDivisionPlaces(Set<Place> places) {
+        this.divisionPlaces = places;
     }
 
     public Division divisionPlaces(Set<Place> places) {
@@ -239,22 +226,22 @@ public class Division implements Serializable {
 
     public Division addDivisionPlace(Place place) {
         this.divisionPlaces.add(place);
-        place.setDivision(this);
+        place.setDivisionOwner(this);
         return this;
     }
 
     public Division removeDivisionPlace(Place place) {
         this.divisionPlaces.remove(place);
-        place.setDivision(null);
+        place.setDivisionOwner(null);
         return this;
-    }
-
-    public void setDivisionPlaces(Set<Place> places) {
-        this.divisionPlaces = places;
     }
 
     public Set<Teacher> getDivisionTeachers() {
         return divisionTeachers;
+    }
+
+    public void setDivisionTeachers(Set<Teacher> teachers) {
+        this.divisionTeachers = teachers;
     }
 
     public Division divisionTeachers(Set<Teacher> teachers) {
@@ -264,22 +251,22 @@ public class Division implements Serializable {
 
     public Division addDivisionTeacher(Teacher teacher) {
         this.divisionTeachers.add(teacher);
-        teacher.setDivision(this);
+        teacher.setDivisionOwner(this);
         return this;
     }
 
     public Division removeDivisionTeacher(Teacher teacher) {
         this.divisionTeachers.remove(teacher);
-        teacher.setDivision(null);
+        teacher.setDivisionOwner(null);
         return this;
-    }
-
-    public void setDivisionTeachers(Set<Teacher> teachers) {
-        this.divisionTeachers = teachers;
     }
 
     public Set<Subject> getDivisionSubjects() {
         return divisionSubjects;
+    }
+
+    public void setDivisionSubjects(Set<Subject> subjects) {
+        this.divisionSubjects = subjects;
     }
 
     public Division divisionSubjects(Set<Subject> subjects) {
@@ -289,22 +276,22 @@ public class Division implements Serializable {
 
     public Division addDivisionSubject(Subject subject) {
         this.divisionSubjects.add(subject);
-        subject.setDivision(this);
+        subject.setDivisionOwner(this);
         return this;
     }
 
     public Division removeDivisionSubject(Subject subject) {
         this.divisionSubjects.remove(subject);
-        subject.setDivision(null);
+        subject.setDivisionOwner(null);
         return this;
-    }
-
-    public void setDivisionSubjects(Set<Subject> subjects) {
-        this.divisionSubjects = subjects;
     }
 
     public Set<Lesson> getDivisionLessons() {
         return divisionLessons;
+    }
+
+    public void setDivisionLessons(Set<Lesson> lessons) {
+        this.divisionLessons = lessons;
     }
 
     public Division divisionLessons(Set<Lesson> lessons) {
@@ -314,22 +301,22 @@ public class Division implements Serializable {
 
     public Division addDivisionLesson(Lesson lesson) {
         this.divisionLessons.add(lesson);
-        lesson.setDivision(this);
+        lesson.setDivisionOwner(this);
         return this;
     }
 
     public Division removeDivisionLesson(Lesson lesson) {
         this.divisionLessons.remove(lesson);
-        lesson.setDivision(null);
+        lesson.setDivisionOwner(null);
         return this;
-    }
-
-    public void setDivisionLessons(Set<Lesson> lessons) {
-        this.divisionLessons = lessons;
     }
 
     public Set<Period> getDivisionPeriods() {
         return divisionPeriods;
+    }
+
+    public void setDivisionPeriods(Set<Period> periods) {
+        this.divisionPeriods = periods;
     }
 
     public Division divisionPeriods(Set<Period> periods) {
@@ -339,47 +326,47 @@ public class Division implements Serializable {
 
     public Division addDivisionPeriod(Period period) {
         this.divisionPeriods.add(period);
-        period.setDivision(this);
+        period.setDivisionOwner(this);
         return this;
     }
 
     public Division removeDivisionPeriod(Period period) {
         this.divisionPeriods.remove(period);
-        period.setDivision(null);
+        period.setDivisionOwner(null);
         return this;
     }
 
-    public void setDivisionPeriods(Set<Period> periods) {
-        this.divisionPeriods = periods;
-    }
-
-    public Set<Properties> getDivisionProperties() {
+    public Set<Property> getDivisionProperties() {
         return divisionProperties;
     }
 
-    public Division divisionProperties(Set<Properties> properties) {
+    public void setDivisionProperties(Set<Property> properties) {
+        this.divisionProperties = properties;
+    }
+
+    public Division divisionProperties(Set<Property> properties) {
         this.divisionProperties = properties;
         return this;
     }
 
-    public Division addDivisionProperties(Properties properties) {
-        this.divisionProperties.add(properties);
-        properties.setDivision(this);
+    public Division addDivisionProperties(Property property) {
+        this.divisionProperties.add(property);
+        property.setDivisionOwner(this);
         return this;
     }
 
-    public Division removeDivisionProperties(Properties properties) {
-        this.divisionProperties.remove(properties);
-        properties.setDivision(null);
+    public Division removeDivisionProperties(Property property) {
+        this.divisionProperties.remove(property);
+        property.setDivisionOwner(null);
         return this;
-    }
-
-    public void setDivisionProperties(Set<Properties> properties) {
-        this.divisionProperties = properties;
     }
 
     public Set<Division> getParents() {
         return parents;
+    }
+
+    public void setParents(Set<Division> divisions) {
+        this.parents = divisions;
     }
 
     public Division parents(Set<Division> divisions) {
@@ -397,12 +384,12 @@ public class Division implements Serializable {
         return this;
     }
 
-    public void setParents(Set<Division> divisions) {
-        this.parents = divisions;
-    }
-
     public Set<User> getUsers() {
         return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     public Division users(Set<User> users) {
@@ -422,12 +409,12 @@ public class Division implements Serializable {
         return this;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
     public Set<Teacher> getPreferredTeachers() {
         return preferredTeachers;
+    }
+
+    public void setPreferredTeachers(Set<Teacher> teachers) {
+        this.preferredTeachers = teachers;
     }
 
     public Division preferredTeachers(Set<Teacher> teachers) {
@@ -447,12 +434,12 @@ public class Division implements Serializable {
         return this;
     }
 
-    public void setPreferredTeachers(Set<Teacher> teachers) {
-        this.preferredTeachers = teachers;
-    }
-
     public Set<Subject> getPreferredSubjects() {
         return preferredSubjects;
+    }
+
+    public void setPreferredSubjects(Set<Subject> subjects) {
+        this.preferredSubjects = subjects;
     }
 
     public Division preferredSubjects(Set<Subject> subjects) {
@@ -472,12 +459,12 @@ public class Division implements Serializable {
         return this;
     }
 
-    public void setPreferredSubjects(Set<Subject> subjects) {
-        this.preferredSubjects = subjects;
-    }
-
     public Set<Place> getPreferredPlaces() {
         return preferredPlaces;
+    }
+
+    public void setPreferredPlaces(Set<Place> places) {
+        this.preferredPlaces = places;
     }
 
     public Division preferredPlaces(Set<Place> places) {
@@ -495,10 +482,6 @@ public class Division implements Serializable {
         this.preferredPlaces.remove(place);
         place.getPreferredDivisions().remove(this);
         return this;
-    }
-
-    public void setPreferredPlaces(Set<Place> places) {
-        this.preferredPlaces = places;
     }
 
     @Override

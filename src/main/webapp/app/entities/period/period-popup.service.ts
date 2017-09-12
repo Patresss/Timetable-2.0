@@ -26,6 +26,9 @@ export class PeriodPopupService {
 
             if (id) {
                 this.periodService.find(id).subscribe((period) => {
+                    period.intervalTimes.forEach((value) => {
+                        this.modifyDate(value);
+                    });
                     this.ngbModalRef = this.periodModalRef(component, period);
                     resolve(this.ngbModalRef);
                 });
@@ -50,5 +53,23 @@ export class PeriodPopupService {
             this.ngbModalRef = null;
         });
         return modalRef;
+    }
+
+    modifyDate(interval) {
+        if (interval.startDate) {
+            interval.startDate = {
+                year: interval.startDate.getFullYear(),
+                month: interval.startDate.getMonth() + 1,
+                day: interval.startDate.getDate()
+            };
+        }
+        if (interval.endDate) {
+            interval.endDate = {
+                year: interval.endDate.getFullYear(),
+                month: interval.endDate.getMonth() + 1,
+                day: interval.endDate.getDate()
+            };
+        }
+
     }
 }

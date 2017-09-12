@@ -33,7 +33,7 @@ export const timetableRoute: Routes = [
             'pagingParams': TimetableResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.timetable.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -41,7 +41,7 @@ export const timetableRoute: Routes = [
         path: 'timetable/:id',
         component: TimetableDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.timetable.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -53,7 +53,7 @@ export const timetablePopupRoute: Routes = [
         path: 'timetable-new',
         component: TimetablePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.timetable.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const timetablePopupRoute: Routes = [
         path: 'timetable/:id/edit',
         component: TimetablePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.timetable.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -73,7 +73,7 @@ export const timetablePopupRoute: Routes = [
         path: 'timetable/:id/delete',
         component: TimetableDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.timetable.home.title'
         },
         canActivate: [UserRouteAccessService],

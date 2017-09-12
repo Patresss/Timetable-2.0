@@ -2,7 +2,9 @@ package com.patres.timetable.web.rest;
 
 import com.patres.timetable.TimetableApp;
 
+import com.patres.timetable.domain.Division;
 import com.patres.timetable.domain.Period;
+import com.patres.timetable.repository.DivisionRepository;
 import com.patres.timetable.repository.PeriodRepository;
 import com.patres.timetable.service.PeriodService;
 import com.patres.timetable.service.dto.PeriodDTO;
@@ -45,6 +47,9 @@ public class PeriodResourceIntTest {
 
     @Autowired
     private PeriodRepository periodRepository;
+
+    @Autowired
+    private DivisionRepository divisionRepository;
 
     @Autowired
     private PeriodMapper periodMapper;
@@ -93,6 +98,9 @@ public class PeriodResourceIntTest {
     @Before
     public void initTest() {
         period = createEntity(em);
+        Division divisionOwner = DivisionResourceIntTest.createEntity(em);
+        divisionRepository.saveAndFlush(divisionOwner);
+        period.setDivisionOwner(divisionOwner);
     }
 
     @Test

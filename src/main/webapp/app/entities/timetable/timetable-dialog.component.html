@@ -66,9 +66,9 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="timetableApp.timetable.type" for="field_type">Type</label>
             <select class="form-control" name="type" [(ngModel)]="timetable.type" id="field_type"  required>
-                <option value="LESSON" jhiTranslate="timetableApp.EventType.LESSON">LESSON</option>
-                <option value="SUBSTITUTION" jhiTranslate="timetableApp.EventType.SUBSTITUTION">SUBSTITUTION</option>
-                <option value="SPECIAL" jhiTranslate="timetableApp.EventType.SPECIAL">SPECIAL</option>
+                <option value="LESSON">{{'timetableApp.EventType.LESSON' | translate}}</option>
+                <option value="SUBSTITUTION">{{'timetableApp.EventType.SUBSTITUTION' | translate}}</option>
+                <option value="SPECIAL">{{'timetableApp.EventType.SPECIAL' | translate}}</option>
             </select>
             <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
                 <small class="form-text text-danger"

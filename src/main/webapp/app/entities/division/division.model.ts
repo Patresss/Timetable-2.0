@@ -1,6 +1,6 @@
 import { BaseEntity, User } from './../../shared';
 
-const enum DivisionType {
+export const enum DivisionType {
     'SCHOOL',
     'CLASS',
     'SUBGROUP'

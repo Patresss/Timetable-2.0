@@ -8,12 +8,7 @@ import java.util.Set;
 import java.util.Objects;
 import com.patres.timetable.domain.enumeration.DivisionType;
 
-/**
- * A DTO for the Division entity.
- */
-public class DivisionDTO implements Serializable {
-
-    private Long id;
+public class DivisionDTO extends AbstractApplicationEntityDTO implements Serializable {
 
     @NotNull
     private String name;
@@ -36,14 +31,6 @@ public class DivisionDTO implements Serializable {
     private Set<TeacherDTO> preferredTeachers = new HashSet<>();
 
     private Set<SubjectDTO> preferredSubjects = new HashSet<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -125,26 +112,6 @@ public class DivisionDTO implements Serializable {
         this.preferredSubjects = subjects;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        DivisionDTO divisionDTO = (DivisionDTO) o;
-        if(divisionDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), divisionDTO.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
 
     @Override
     public String toString() {

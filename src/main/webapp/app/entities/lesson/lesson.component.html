@@ -20,7 +20,7 @@
             <th jhiSortBy="name"><span jhiTranslate="timetableApp.lesson.name">Name</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="startTime"><span jhiTranslate="timetableApp.lesson.startTime">Start Time</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="endTime"><span jhiTranslate="timetableApp.lesson.endTime">End Time</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="divisionName"><span jhiTranslate="timetableApp.lesson.division">Division</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="divisionOwnerName"><span jhiTranslate="timetableApp.lesson.divisionOwner">Division owner</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -31,8 +31,8 @@
                 <td>{{lesson.startTime}}</td>
                 <td>{{lesson.endTime}}</td>
                 <td>
-                    <div *ngIf="lesson.divisionId">
-                        <a [routerLink]="['../division', lesson.divisionId  ]" >{{lesson.divisionName}}</a>
+                    <div *ngIf="lesson.divisionOwnerId">
+                        <a [routerLink]="['../division', lesson.divisionOwnerId  ]" >{{lesson.divisionOwnerName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

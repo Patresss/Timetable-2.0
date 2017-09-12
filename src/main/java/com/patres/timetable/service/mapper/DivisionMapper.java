@@ -1,31 +1,103 @@
 package com.patres.timetable.service.mapper;
 
-import com.patres.timetable.domain.*;
+import com.patres.timetable.domain.Division;
+import com.patres.timetable.domain.Subject;
+import com.patres.timetable.domain.Teacher;
+import com.patres.timetable.domain.User;
 import com.patres.timetable.service.dto.DivisionDTO;
+import com.patres.timetable.service.dto.SubjectDTO;
+import com.patres.timetable.service.dto.TeacherDTO;
+import com.patres.timetable.service.dto.UserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.mapstruct.*;
+import java.util.Set;
+import java.util.function.Supplier;
 
-/**
- * Mapper for the entity Division and its DTO DivisionDTO.
- */
-@Mapper(componentModel = "spring", uses = {UserMapper.class, TeacherMapper.class, SubjectMapper.class, })
-public interface DivisionMapper extends EntityMapper <DivisionDTO, Division> {
-    
-    @Mapping(target = "timetables", ignore = true)
-    @Mapping(target = "divisionPlaces", ignore = true)
-    @Mapping(target = "divisionTeachers", ignore = true)
-    @Mapping(target = "divisionSubjects", ignore = true)
-    @Mapping(target = "divisionLessons", ignore = true)
-    @Mapping(target = "divisionPeriods", ignore = true)
-    @Mapping(target = "divisionProperties", ignore = true)
-    @Mapping(target = "preferredPlaces", ignore = true)
-    Division toEntity(DivisionDTO divisionDTO); 
-    default Division fromId(Long id) {
+@Service
+public class DivisionMapper extends EntityMapper<Division, DivisionDTO> {
+
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private TeacherMapper teacherMapper;
+    @Autowired
+    private SubjectMapper subjectMapper;
+
+    public Division toEntity(DivisionDTO divisionDTO) {
+        if (divisionDTO == null) {
+            return null;
+        }
+
+        Division division = new Division();
+        division.setId(divisionDTO.getId());
+        division.setName(divisionDTO.getName());
+        division.setShortName(divisionDTO.getShortName());
+        division.setNumberOfPeople(divisionDTO.getNumberOfPeople());
+        division.setDivisionType(divisionDTO.getDivisionType());
+        division.setColorBackground(divisionDTO.getColorBackground());
+        division.setColorText(divisionDTO.getColorText());
+
+        Set<Division> divisionSet = entityDTOSetToEntitySet(divisionDTO.getParents());
+        division.setParents(divisionSet);
+        Set<User> userSet = userMapper.userDTOSetToUserSet(divisionDTO.getUsers());
+        division.setUsers(userSet);
+        Set<Teacher> teacherSet = teacherMapper.entityDTOSetToEntitySet(divisionDTO.getPreferredTeachers());
+        division.setPreferredTeachers(teacherSet);
+        Set<Subject> subjectSet = subjectMapper.entityDTOSetToEntitySet(divisionDTO.getPreferredSubjects());
+        division.setPreferredSubjects(subjectSet);
+
+        return division;
+    }
+
+    public DivisionDTO toDto(Division entity) {
+        if (entity == null) {
+            return null;
+        }
+
+        DivisionDTO divisionDTO = new DivisionDTO();
+        divisionDTO.setId(entity.getId());
+        divisionDTO.setName(entity.getName());
+        divisionDTO.setShortName(entity.getShortName());
+        divisionDTO.setNumberOfPeople(entity.getNumberOfPeople());
+        divisionDTO.setDivisionType(entity.getDivisionType());
+        divisionDTO.setColorBackground(entity.getColorBackground());
+        divisionDTO.setColorText(entity.getColorText());
+
+        Set<DivisionDTO> divisionDtoSet = entitySetToEntityDTOSet(entity.getParents());
+        divisionDTO.setParents(divisionDtoSet);
+        Set<UserDTO> userDtoSet = userMapper.userSetToUserDTOSet(entity.getUsers());
+        divisionDTO.setUsers(userDtoSet);
+        Set<TeacherDTO> teacherDtoSet = teacherMapper.entitySetToEntityDTOSet(entity.getPreferredTeachers());
+        divisionDTO.setPreferredTeachers(teacherDtoSet);
+        Set<SubjectDTO> subjectDtoSet = subjectMapper.entitySetToEntityDTOSet(entity.getPreferredSubjects());
+        divisionDTO.setPreferredSubjects(subjectDtoSet);
+
+        return divisionDTO;
+    }
+
+    public Division fromId(Long id) {
         if (id == null) {
             return null;
         }
-        Division division = new Division();
-        division.setId(id);
-        return division;
+        Division entity = new Division();
+        entity.setId(id);
+        return entity;
     }
+
+    public Long getDivisionOwnerId(Division divisionOwner) {
+        if (divisionOwner == null) {
+            return null;
+        }
+        return divisionOwner.getId();
+    }
+
+    public String getDivisionOwnerName(Division divisionOwner) {
+        if (divisionOwner == null) {
+            return null;
+        }
+        return divisionOwner.getName();
+    }
+
+
 }

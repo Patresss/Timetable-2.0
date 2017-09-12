@@ -4,7 +4,7 @@
         "filter": "Filtruj (po prefiksie)",
         "table": {
             "prefix": "Prefiks",
-            "properties": "Właściwości"
+            "property": "Właściwości"
         }
     }
 }

@@ -33,7 +33,7 @@ export const divisionRoute: Routes = [
             'pagingParams': DivisionResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.division.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -41,7 +41,7 @@ export const divisionRoute: Routes = [
         path: 'division/:id',
         component: DivisionDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.division.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -53,7 +53,7 @@ export const divisionPopupRoute: Routes = [
         path: 'division-new',
         component: DivisionPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.division.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const divisionPopupRoute: Routes = [
         path: 'division/:id/edit',
         component: DivisionPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.division.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -73,7 +73,7 @@ export const divisionPopupRoute: Routes = [
         path: 'division/:id/delete',
         component: DivisionDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.division.home.title'
         },
         canActivate: [UserRouteAccessService],

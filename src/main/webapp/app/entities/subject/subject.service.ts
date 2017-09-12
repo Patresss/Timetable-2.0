@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { SERVER_API_URL } from '../../app.constants';
 
 import { Subject } from './subject.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
+import {createRequestOptionWithDivisionsId} from '../../shared/model/request-util';
 
 @Injectable()
 export class SubjectService {
 
-    private resourceUrl = 'api/subjects';
+    private resourceUrl = SERVER_API_URL + 'api/subjects';
+    private resourceByCurrentLoginUrl = SERVER_API_URL + 'api/subjects/login';
+    private resourceByDivisionsIdUrl = SERVER_API_URL + 'api/subjects/divisions';
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+    }
 
     create(subject: Subject): Observable<Subject> {
         const copy = this.convert(subject);
@@ -40,6 +45,17 @@ export class SubjectService {
 
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
+    }
+
+    findByDivision(ids: number[], req?: any): Observable<ResponseWrapper> {
+        return this.http.get(this.resourceByDivisionsIdUrl, createRequestOptionWithDivisionsId(ids, req))
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    findByCurrentLogin(req?: any): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
+        return this.http.get(this.resourceByCurrentLoginUrl, options)
+            .map((res: Response) => this.convertResponse(res));
     }
 
     private convertResponse(res: Response): ResponseWrapper {

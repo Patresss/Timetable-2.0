@@ -42,11 +42,11 @@ export class PlaceDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.subjectService.query()
+        this.subjectService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.subjects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.divisionService.query()
             .subscribe((res: ResponseWrapper) => { this.divisions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.teacherService.query()
+        this.teacherService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.teachers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
@@ -67,7 +67,7 @@ export class PlaceDialogComponent implements OnInit {
 
     private subscribeToSaveResponse(result: Observable<Place>) {
         result.subscribe((res: Place) =>
-            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError());
     }
 
     private onSaveSuccess(result: Place) {
@@ -76,17 +76,11 @@ export class PlaceDialogComponent implements OnInit {
         this.activeModal.dismiss(result);
     }
 
-    private onSaveError(error) {
-        try {
-            error.json();
-        } catch (exception) {
-            error.message = error.text();
-        }
+    private onSaveError() {
         this.isSaving = false;
-        this.onError(error);
     }
 
-    private onError(error) {
+    private onError(error: any) {
         this.alertService.error(error.message, null, null);
     }
 

@@ -44,9 +44,9 @@ export class SubjectDialogComponent implements OnInit {
         this.isSaving = false;
         this.divisionService.query()
             .subscribe((res: ResponseWrapper) => { this.divisions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.teacherService.query()
+        this.teacherService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.teachers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.placeService.query()
+        this.placeService.findByCurrentLogin()
             .subscribe((res: ResponseWrapper) => { this.places = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
@@ -67,7 +67,7 @@ export class SubjectDialogComponent implements OnInit {
 
     private subscribeToSaveResponse(result: Observable<Subject>) {
         result.subscribe((res: Subject) =>
-            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError());
     }
 
     private onSaveSuccess(result: Subject) {
@@ -76,17 +76,11 @@ export class SubjectDialogComponent implements OnInit {
         this.activeModal.dismiss(result);
     }
 
-    private onSaveError(error) {
-        try {
-            error.json();
-        } catch (exception) {
-            error.message = error.text();
-        }
+    private onSaveError() {
         this.isSaving = false;
-        this.onError(error);
     }
 
-    private onError(error) {
+    private onError(error: any) {
         this.alertService.error(error.message, null, null);
     }
 

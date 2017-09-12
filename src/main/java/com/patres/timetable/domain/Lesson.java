@@ -4,27 +4,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
-/**
- * A Lesson.
- */
 @Entity
 @Table(name = "lesson")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Lesson implements Serializable {
+public class Lesson extends AbstractDivisionOwner implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    private static final long serialVersionUID = 4799792346923193761L;
 
     @NotNull
     @Column(name = "name", nullable = false)
@@ -43,19 +38,12 @@ public class Lesson implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Timetable> timetables = new HashSet<>();
 
-    @ManyToOne
-    private Division division;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Lesson name(String name) {
@@ -63,12 +51,12 @@ public class Lesson implements Serializable {
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Long getStartTime() {
         return startTime;
+    }
+
+    public void setStartTime(Long startTime) {
+        this.startTime = startTime;
     }
 
     public Lesson startTime(Long startTime) {
@@ -76,12 +64,12 @@ public class Lesson implements Serializable {
         return this;
     }
 
-    public void setStartTime(Long startTime) {
-        this.startTime = startTime;
-    }
-
     public Long getEndTime() {
         return endTime;
+    }
+
+    public void setEndTime(Long endTime) {
+        this.endTime = endTime;
     }
 
     public Lesson endTime(Long endTime) {
@@ -89,12 +77,12 @@ public class Lesson implements Serializable {
         return this;
     }
 
-    public void setEndTime(Long endTime) {
-        this.endTime = endTime;
-    }
-
     public Set<Timetable> getTimetables() {
         return timetables;
+    }
+
+    public void setTimetables(Set<Timetable> timetables) {
+        this.timetables = timetables;
     }
 
     public Lesson timetables(Set<Timetable> timetables) {
@@ -112,23 +100,6 @@ public class Lesson implements Serializable {
         this.timetables.remove(timetable);
         timetable.setLesson(null);
         return this;
-    }
-
-    public void setTimetables(Set<Timetable> timetables) {
-        this.timetables = timetables;
-    }
-
-    public Division getDivision() {
-        return division;
-    }
-
-    public Lesson division(Division division) {
-        this.division = division;
-        return this;
-    }
-
-    public void setDivision(Division division) {
-        this.division = division;
     }
 
     @Override

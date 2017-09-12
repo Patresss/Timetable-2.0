@@ -7,7 +7,7 @@
         Added the constraints for entity Place.
     -->
     <changeSet id="20170731144139-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="places_id"
                                  baseTableName="place_preferred_subject"
                                  constraintName="fk_place_preferred_subject_places_id"
@@ -18,7 +18,7 @@
                                  constraintName="fk_place_preferred_subject_preferred_subjects_id"
                                  referencedColumnNames="id"
                                  referencedTableName="subject"/>
-        
+
         <addForeignKeyConstraint baseColumnNames="places_id"
                                  baseTableName="place_preferred_division"
                                  constraintName="fk_place_preferred_division_places_id"
@@ -29,7 +29,7 @@
                                  constraintName="fk_place_preferred_division_preferred_divisions_id"
                                  referencedColumnNames="id"
                                  referencedTableName="division"/>
-        
+
         <addForeignKeyConstraint baseColumnNames="places_id"
                                  baseTableName="place_preferred_teacher"
                                  constraintName="fk_place_preferred_teacher_places_id"
@@ -40,10 +40,10 @@
                                  constraintName="fk_place_preferred_teacher_preferred_teachers_id"
                                  referencedColumnNames="id"
                                  referencedTableName="teacher"/>
-        
-        <addForeignKeyConstraint baseColumnNames="division_id"
+
+        <addForeignKeyConstraint baseColumnNames="division_owner_id"
                                  baseTableName="place"
-                                 constraintName="fk_place_division_id"
+                                 constraintName="fk_place_division_owner_id"
                                  referencedColumnNames="id"
                                  referencedTableName="division"/>
 

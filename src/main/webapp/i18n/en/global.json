@@ -4,11 +4,12 @@
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
+            "plan": "Plan",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entities",
                 "division": "Division",
-                "properties": "Properties",
+                "property": "Properties",
                 "teacher": "Teacher",
                 "subject": "Subject",
                 "place": "Place",
@@ -135,7 +136,8 @@
         "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
         "userexists": "Login name already used!",
         "emailexists": "Email is already in use!",
-        "idexists": "A new {{ entityName }} cannot already have an ID"
+        "idexists": "A new {{ entityName }} cannot already have an ID",
+        "accessDenied": "Access denied"
     },
     "footer": "This is your footer"
 }

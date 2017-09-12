@@ -1,16 +1,17 @@
 package com.patres.timetable.repository;
 
 import com.patres.timetable.domain.Lesson;
+import com.patres.timetable.domain.Teacher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 
+import java.util.List;
 
-/**
- * Spring Data JPA repository for the Lesson entity.
- */
 @SuppressWarnings("unused")
 @Repository
-public interface LessonRepository extends JpaRepository<Lesson,Long> {
-    
+public interface LessonRepository extends DivisionOwnerRepository<Lesson> {
+
 }

@@ -2,7 +2,9 @@ package com.patres.timetable.web.rest;
 
 import com.patres.timetable.TimetableApp;
 
+import com.patres.timetable.domain.Division;
 import com.patres.timetable.domain.Place;
+import com.patres.timetable.repository.DivisionRepository;
 import com.patres.timetable.repository.PlaceRepository;
 import com.patres.timetable.service.PlaceService;
 import com.patres.timetable.service.dto.PlaceDTO;
@@ -59,6 +61,9 @@ public class PlaceResourceIntTest {
     private PlaceRepository placeRepository;
 
     @Autowired
+    private DivisionRepository divisionRepository;
+
+    @Autowired
     private PlaceMapper placeMapper;
 
     @Autowired
@@ -109,6 +114,9 @@ public class PlaceResourceIntTest {
     @Before
     public void initTest() {
         place = createEntity(em);
+        Division divisionOwner = DivisionResourceIntTest.createEntity(em);
+        divisionRepository.saveAndFlush(divisionOwner);
+        place.setDivisionOwner(divisionOwner);
     }
 
     @Test

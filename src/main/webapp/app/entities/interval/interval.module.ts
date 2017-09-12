@@ -4,21 +4,9 @@ import { RouterModule } from '@angular/router';
 import { TimetableSharedModule } from '../../shared';
 import {
     IntervalService,
-    IntervalPopupService,
-    IntervalComponent,
-    IntervalDetailComponent,
-    IntervalDialogComponent,
-    IntervalPopupComponent,
-    IntervalDeletePopupComponent,
-    IntervalDeleteDialogComponent,
-    intervalRoute,
-    intervalPopupRoute,
-    IntervalResolvePagingParams,
 } from './';
 
 const ENTITY_STATES = [
-    ...intervalRoute,
-    ...intervalPopupRoute,
 ];
 
 @NgModule({
@@ -27,24 +15,11 @@ const ENTITY_STATES = [
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
-        IntervalComponent,
-        IntervalDetailComponent,
-        IntervalDialogComponent,
-        IntervalDeleteDialogComponent,
-        IntervalPopupComponent,
-        IntervalDeletePopupComponent,
     ],
     entryComponents: [
-        IntervalComponent,
-        IntervalDialogComponent,
-        IntervalPopupComponent,
-        IntervalDeleteDialogComponent,
-        IntervalDeletePopupComponent,
     ],
     providers: [
         IntervalService,
-        IntervalPopupService,
-        IntervalResolvePagingParams,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

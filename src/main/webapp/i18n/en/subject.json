@@ -20,7 +20,7 @@
             "colorBackground": "Color Background",
             "colorText": "Color Text",
             "timetable": "Timetable",
-            "division": "Division",
+            "divisionOwner": "divisionOwner",
             "preferredTeacher": "Preferred Teacher",
             "preferredDivision": "Preferred Division",
             "preferredPlace": "Preferred Place"

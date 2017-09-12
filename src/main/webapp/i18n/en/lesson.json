@@ -19,7 +19,7 @@
             "startTime": "Start Time",
             "endTime": "End Time",
             "timetable": "Timetable",
-            "division": "Division"
+            "divisionOwner": "divisionOwner"
         }
     }
 }

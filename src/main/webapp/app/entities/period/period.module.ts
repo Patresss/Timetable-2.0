@@ -15,6 +15,7 @@ import {
     periodPopupRoute,
     PeriodResolvePagingParams,
 } from './';
+import {IntervalIncludedFilter} from '../../shared/interval-filter.pipe';
 
 const ENTITY_STATES = [
     ...periodRoute,
@@ -33,6 +34,7 @@ const ENTITY_STATES = [
         PeriodDeleteDialogComponent,
         PeriodPopupComponent,
         PeriodDeletePopupComponent,
+        IntervalIncludedFilter
     ],
     entryComponents: [
         PeriodComponent,

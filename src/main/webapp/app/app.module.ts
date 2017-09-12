@@ -12,6 +12,7 @@ import { TimetableEntityModule } from './entities/entity.module';
 
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
+import { TimetablePlanModule } from './plan/plan.module';
 
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 
@@ -36,6 +37,7 @@ import {
         TimetableAdminModule,
         TimetableAccountModule,
         TimetableEntityModule,
+        TimetablePlanModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

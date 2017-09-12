@@ -7,12 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
-/**
- * A DTO for the Place entity.
- */
-public class PlaceDTO implements Serializable {
-
-    private Long id;
+public class PlaceDTO extends AbstractDivisionOwnerDTO implements Serializable {
 
     @NotNull
     private String name;
@@ -30,18 +25,6 @@ public class PlaceDTO implements Serializable {
     private Set<DivisionDTO> preferredDivisions = new HashSet<>();
 
     private Set<TeacherDTO> preferredTeachers = new HashSet<>();
-
-    private Long divisionId;
-
-    private String divisionName;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -105,43 +88,6 @@ public class PlaceDTO implements Serializable {
 
     public void setPreferredTeachers(Set<TeacherDTO> teachers) {
         this.preferredTeachers = teachers;
-    }
-
-    public Long getDivisionId() {
-        return divisionId;
-    }
-
-    public void setDivisionId(Long divisionId) {
-        this.divisionId = divisionId;
-    }
-
-    public String getDivisionName() {
-        return divisionName;
-    }
-
-    public void setDivisionName(String divisionName) {
-        this.divisionName = divisionName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        PlaceDTO placeDTO = (PlaceDTO) o;
-        if(placeDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), placeDTO.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
     }
 
     @Override

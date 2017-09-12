@@ -22,7 +22,7 @@
             <th jhiSortBy="shortName"><span jhiTranslate="timetableApp.place.shortName">Short Name</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="colorBackground"><span jhiTranslate="timetableApp.place.colorBackground">Color Background</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="colorText"><span jhiTranslate="timetableApp.place.colorText">Color Text</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="divisionName"><span jhiTranslate="timetableApp.place.division">Division</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="divisionOwnerName"><span jhiTranslate="timetableApp.place.divisionOwner">Division owner</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -35,8 +35,8 @@
                 <td>{{place.colorBackground}}</td>
                 <td>{{place.colorText}}</td>
                 <td>
-                    <div *ngIf="place.divisionId">
-                        <a [routerLink]="['../division', place.divisionId  ]" >{{place.divisionName}}</a>
+                    <div *ngIf="place.divisionOwnerId">
+                        <a [routerLink]="['../division', place.divisionOwnerId  ]" >{{place.divisionOwnerName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

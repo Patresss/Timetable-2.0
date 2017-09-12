@@ -5,26 +5,18 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
-/**
- * A Place.
- */
 @Entity
 @Table(name = "place")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Place implements Serializable {
+public class Place extends AbstractDivisionOwner implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    private static final long serialVersionUID = -3150823818715595718L;
 
     @NotNull
     @Column(name = "name", nullable = false)
@@ -50,37 +42,30 @@ public class Place implements Serializable {
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "place_preferred_subject",
-               joinColumns = @JoinColumn(name="places_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="preferred_subjects_id", referencedColumnName="id"))
+        joinColumns = @JoinColumn(name = "places_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id"))
     private Set<Subject> preferredSubjects = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "place_preferred_division",
-               joinColumns = @JoinColumn(name="places_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="preferred_divisions_id", referencedColumnName="id"))
+        joinColumns = @JoinColumn(name = "places_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "preferred_divisions_id", referencedColumnName = "id"))
     private Set<Division> preferredDivisions = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "place_preferred_teacher",
-               joinColumns = @JoinColumn(name="places_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="preferred_teachers_id", referencedColumnName="id"))
+        joinColumns = @JoinColumn(name = "places_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "preferred_teachers_id", referencedColumnName = "id"))
     private Set<Teacher> preferredTeachers = new HashSet<>();
-
-    @ManyToOne
-    private Division division;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Place name(String name) {
@@ -88,12 +73,12 @@ public class Place implements Serializable {
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Long getNumberOfSeats() {
         return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(Long numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
     }
 
     public Place numberOfSeats(Long numberOfSeats) {
@@ -101,12 +86,12 @@ public class Place implements Serializable {
         return this;
     }
 
-    public void setNumberOfSeats(Long numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
-    }
-
     public String getShortName() {
         return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public Place shortName(String shortName) {
@@ -114,12 +99,12 @@ public class Place implements Serializable {
         return this;
     }
 
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
     public String getColorBackground() {
         return colorBackground;
+    }
+
+    public void setColorBackground(String colorBackground) {
+        this.colorBackground = colorBackground;
     }
 
     public Place colorBackground(String colorBackground) {
@@ -127,12 +112,12 @@ public class Place implements Serializable {
         return this;
     }
 
-    public void setColorBackground(String colorBackground) {
-        this.colorBackground = colorBackground;
-    }
-
     public String getColorText() {
         return colorText;
+    }
+
+    public void setColorText(String colorText) {
+        this.colorText = colorText;
     }
 
     public Place colorText(String colorText) {
@@ -140,12 +125,12 @@ public class Place implements Serializable {
         return this;
     }
 
-    public void setColorText(String colorText) {
-        this.colorText = colorText;
-    }
-
     public Set<Timetable> getTimetables() {
         return timetables;
+    }
+
+    public void setTimetables(Set<Timetable> timetables) {
+        this.timetables = timetables;
     }
 
     public Place timetables(Set<Timetable> timetables) {
@@ -165,12 +150,12 @@ public class Place implements Serializable {
         return this;
     }
 
-    public void setTimetables(Set<Timetable> timetables) {
-        this.timetables = timetables;
-    }
-
     public Set<Subject> getPreferredSubjects() {
         return preferredSubjects;
+    }
+
+    public void setPreferredSubjects(Set<Subject> subjects) {
+        this.preferredSubjects = subjects;
     }
 
     public Place preferredSubjects(Set<Subject> subjects) {
@@ -190,12 +175,12 @@ public class Place implements Serializable {
         return this;
     }
 
-    public void setPreferredSubjects(Set<Subject> subjects) {
-        this.preferredSubjects = subjects;
-    }
-
     public Set<Division> getPreferredDivisions() {
         return preferredDivisions;
+    }
+
+    public void setPreferredDivisions(Set<Division> divisions) {
+        this.preferredDivisions = divisions;
     }
 
     public Place preferredDivisions(Set<Division> divisions) {
@@ -215,12 +200,12 @@ public class Place implements Serializable {
         return this;
     }
 
-    public void setPreferredDivisions(Set<Division> divisions) {
-        this.preferredDivisions = divisions;
-    }
-
     public Set<Teacher> getPreferredTeachers() {
         return preferredTeachers;
+    }
+
+    public void setPreferredTeachers(Set<Teacher> teachers) {
+        this.preferredTeachers = teachers;
     }
 
     public Place preferredTeachers(Set<Teacher> teachers) {
@@ -238,23 +223,6 @@ public class Place implements Serializable {
         this.preferredTeachers.remove(teacher);
         teacher.getPreferredPlaces().remove(this);
         return this;
-    }
-
-    public void setPreferredTeachers(Set<Teacher> teachers) {
-        this.preferredTeachers = teachers;
-    }
-
-    public Division getDivision() {
-        return division;
-    }
-
-    public Place division(Division division) {
-        this.division = division;
-        return this;
-    }
-
-    public void setDivision(Division division) {
-        this.division = division;
     }
 
     @Override

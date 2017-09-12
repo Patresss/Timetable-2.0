@@ -1,20 +1,71 @@
 package com.patres.timetable.service.mapper;
 
+import com.patres.timetable.domain.AbstractApplicationEntity;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-/**
- * Contract for a generic dto to entity mapper.
- @param <D> - DTO type parameter.
- @param <E> - Entity type parameter.
- */
+public abstract class EntityMapper<EntityType extends AbstractApplicationEntity, EntityDtoType> {
 
-public interface EntityMapper <D, E> {
+    public List<EntityType> toEntity(List<EntityDtoType> dtoList) {
+        if (dtoList == null) {
+            return null;
+        }
 
-    public E toEntity(D dto);
+        List<EntityType> list = new ArrayList<>();
+        for (EntityDtoType entityDto : dtoList) {
+            list.add(toEntity(entityDto));
+        }
 
-    public D toDto(E entity);
+        return list;
+    }
 
-    public List <E> toEntity(List<D> dtoList);
+    public List<EntityDtoType> toDto(List<EntityType> entityList) {
+        if (entityList == null) {
+            return null;
+        }
 
-    public List <D> toDto(List<E> entityList);
+        List<EntityDtoType> list = new ArrayList<>();
+        for (EntityType entity : entityList) {
+            list.add(toDto(entity));
+        }
+
+        return list;
+    }
+
+
+    public Set<EntityDtoType> entitySetToEntityDTOSet(Set<EntityType> entitySet) {
+        if (entitySet == null) {
+            return null;
+        }
+
+        Set<EntityDtoType> entityDtoTypes = new HashSet<>();
+        for (EntityType entity : entitySet) {
+            entityDtoTypes.add(toDto(entity));
+        }
+
+        return entityDtoTypes;
+    }
+
+    public Set<EntityType> entityDTOSetToEntitySet(Set<EntityDtoType> entityDtoSet) {
+        if (entityDtoSet == null) {
+            return null;
+        }
+
+        Set<EntityType> entitySet = new HashSet<>();
+        for (EntityDtoType entityDto : entityDtoSet) {
+            entitySet.add(toEntity(entityDto));
+        }
+
+        return entitySet;
+    }
+
+    abstract public EntityType toEntity(EntityDtoType entityDto);
+
+    abstract public EntityDtoType toDto(EntityType entity);
+
+    abstract public EntityType fromId(Long id);
+
 }
