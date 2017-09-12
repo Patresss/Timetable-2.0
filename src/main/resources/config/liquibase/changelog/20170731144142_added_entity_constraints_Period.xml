@@ -7,10 +7,10 @@
         Added the constraints for entity Period.
     -->
     <changeSet id="20170731144142-2" author="jhipster">
-
-        <addForeignKeyConstraint baseColumnNames="division_owner_id"
+        
+        <addForeignKeyConstraint baseColumnNames="division_id"
                                  baseTableName="period"
-                                 constraintName="fk_period_division_owner_id"
+                                 constraintName="fk_period_division_id"
                                  referencedColumnNames="id"
                                  referencedTableName="division"/>
 

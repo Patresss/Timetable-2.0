@@ -66,32 +66,6 @@ public class UserMapper {
         return user;
     }
 
-    public Set<UserDTO> userSetToUserDTOSet(Set<User> userSet) {
-        if (userSet == null) {
-            return null;
-        }
-
-        Set<UserDTO> userDtoSet = new HashSet<>();
-        for (User user : userSet) {
-            userDtoSet.add(userToUserDTO(user));
-        }
-
-        return userDtoSet;
-    }
-
-    public Set<User> userDTOSetToUserSet(Set<UserDTO> userDtoSet) {
-        if (userDtoSet == null) {
-            return null;
-        }
-
-        Set<User> userSet = new HashSet<>();
-        for (UserDTO userDTO : userDtoSet) {
-            userSet.add(userDTOToUser(userDTO));
-        }
-
-        return userSet;
-    }
-
     public Set<Authority> authoritiesFromStrings(Set<String> strings) {
         return strings.stream().map(string -> {
             Authority auth = new Authority();

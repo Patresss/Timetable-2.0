@@ -1,21 +1,30 @@
 package com.patres.timetable.domain;
 
-import com.patres.timetable.domain.enumeration.EventType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.patres.timetable.domain.enumeration.EventType;
+
+/**
+ * A Timetable.
+ */
 @Entity
 @Table(name = "timetable")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Timetable extends AbstractApplicationEntity implements Serializable {
+public class Timetable implements Serializable {
 
-    private static final long serialVersionUID = -2579744673761181702L;
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
 
     @NotNull
     @Column(name = "title", nullable = false)
@@ -95,12 +104,16 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
     @ManyToOne
     private Period period;
 
-    public String getTitle() {
-        return title;
+    public Long getId() {
+        return id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public Timetable title(String title) {
@@ -108,12 +121,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public Long getStartTime() {
-        return startTime;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setStartTime(Long startTime) {
-        this.startTime = startTime;
+    public Long getStartTime() {
+        return startTime;
     }
 
     public Timetable startTime(Long startTime) {
@@ -121,12 +134,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public Long getEndTime() {
-        return endTime;
+    public void setStartTime(Long startTime) {
+        this.startTime = startTime;
     }
 
-    public void setEndTime(Long endTime) {
-        this.endTime = endTime;
+    public Long getEndTime() {
+        return endTime;
     }
 
     public Timetable endTime(Long endTime) {
@@ -134,12 +147,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public void setEndTime(Long endTime) {
+        this.endTime = endTime;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
     public Timetable startDate(LocalDate startDate) {
@@ -147,12 +160,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
     public Timetable endDate(LocalDate endDate) {
@@ -160,12 +173,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public LocalDate getDate() {
+        return date;
     }
 
     public Timetable date(LocalDate date) {
@@ -173,12 +186,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public EventType getType() {
-        return type;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public void setType(EventType type) {
-        this.type = type;
+    public EventType getType() {
+        return type;
     }
 
     public Timetable type(EventType type) {
@@ -186,12 +199,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public Long getEveryWeek() {
-        return everyWeek;
+    public void setType(EventType type) {
+        this.type = type;
     }
 
-    public void setEveryWeek(Long everyWeek) {
-        this.everyWeek = everyWeek;
+    public Long getEveryWeek() {
+        return everyWeek;
     }
 
     public Timetable everyWeek(Long everyWeek) {
@@ -199,12 +212,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public Long getStartWithWeek() {
-        return startWithWeek;
+    public void setEveryWeek(Long everyWeek) {
+        this.everyWeek = everyWeek;
     }
 
-    public void setStartWithWeek(Long startWithWeek) {
-        this.startWithWeek = startWithWeek;
+    public Long getStartWithWeek() {
+        return startWithWeek;
     }
 
     public Timetable startWithWeek(Long startWithWeek) {
@@ -212,12 +225,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public String getDescription() {
-        return description;
+    public void setStartWithWeek(Long startWithWeek) {
+        this.startWithWeek = startWithWeek;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getDescription() {
+        return description;
     }
 
     public Timetable description(String description) {
@@ -225,12 +238,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public String getColorBackground() {
-        return colorBackground;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setColorBackground(String colorBackground) {
-        this.colorBackground = colorBackground;
+    public String getColorBackground() {
+        return colorBackground;
     }
 
     public Timetable colorBackground(String colorBackground) {
@@ -238,17 +251,21 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public String getColorText() {
-        return colorText;
+    public void setColorBackground(String colorBackground) {
+        this.colorBackground = colorBackground;
     }
 
-    public void setColorText(String colorText) {
-        this.colorText = colorText;
+    public String getColorText() {
+        return colorText;
     }
 
     public Timetable colorText(String colorText) {
         this.colorText = colorText;
         return this;
+    }
+
+    public void setColorText(String colorText) {
+        this.colorText = colorText;
     }
 
     public Boolean isInMonday() {
@@ -346,21 +363,17 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return place;
     }
 
-    public void setPlace(Place place) {
-        this.place = place;
-    }
-
     public Timetable place(Place place) {
         this.place = place;
         return this;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public void setPlace(Place place) {
+        this.place = place;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public Subject getSubject() {
+        return subject;
     }
 
     public Timetable subject(Subject subject) {
@@ -368,12 +381,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
     public Timetable teacher(Teacher teacher) {
@@ -381,12 +394,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public Division getDivision() {
-        return division;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
-    public void setDivision(Division division) {
-        this.division = division;
+    public Division getDivision() {
+        return division;
     }
 
     public Timetable division(Division division) {
@@ -394,12 +407,12 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public Lesson getLesson() {
-        return lesson;
+    public void setDivision(Division division) {
+        this.division = division;
     }
 
-    public void setLesson(Lesson lesson) {
-        this.lesson = lesson;
+    public Lesson getLesson() {
+        return lesson;
     }
 
     public Timetable lesson(Lesson lesson) {
@@ -407,17 +420,21 @@ public class Timetable extends AbstractApplicationEntity implements Serializable
         return this;
     }
 
-    public Period getPeriod() {
-        return period;
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
     }
 
-    public void setPeriod(Period period) {
-        this.period = period;
+    public Period getPeriod() {
+        return period;
     }
 
     public Timetable period(Period period) {
         this.period = period;
         return this;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
     }
 
     @Override

@@ -50,7 +50,7 @@ currentAccount: any;
     }
 
     loadAll() {
-        this.periodService.findByCurrentLogin({
+        this.periodService.query({
             page: this.page - 1,
             size: this.itemsPerPage,
             sort: this.sort()}).subscribe(

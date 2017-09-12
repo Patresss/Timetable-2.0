@@ -3,9 +3,16 @@ package com.patres.timetable.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
-public class LessonDTO extends AbstractDivisionOwnerDTO implements Serializable {
+/**
+ * A DTO for the Lesson entity.
+ */
+public class LessonDTO implements Serializable {
+
+    private Long id;
 
     @NotNull
     private String name;
@@ -15,6 +22,18 @@ public class LessonDTO extends AbstractDivisionOwnerDTO implements Serializable 
 
     @NotNull
     private Long endTime;
+
+    private Long divisionId;
+
+    private String divisionName;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -40,6 +59,42 @@ public class LessonDTO extends AbstractDivisionOwnerDTO implements Serializable 
         this.endTime = endTime;
     }
 
+    public Long getDivisionId() {
+        return divisionId;
+    }
+
+    public void setDivisionId(Long divisionId) {
+        this.divisionId = divisionId;
+    }
+
+    public String getDivisionName() {
+        return divisionName;
+    }
+
+    public void setDivisionName(String divisionName) {
+        this.divisionName = divisionName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        LessonDTO lessonDTO = (LessonDTO) o;
+        if(lessonDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), lessonDTO.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
 
     @Override
     public String toString() {

@@ -33,7 +33,7 @@ export const periodRoute: Routes = [
             'pagingParams': PeriodResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.period.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -41,7 +41,7 @@ export const periodRoute: Routes = [
         path: 'period/:id',
         component: PeriodDetailComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.period.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -53,7 +53,7 @@ export const periodPopupRoute: Routes = [
         path: 'period-new',
         component: PeriodPopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.period.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const periodPopupRoute: Routes = [
         path: 'period/:id/edit',
         component: PeriodPopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.period.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -73,7 +73,7 @@ export const periodPopupRoute: Routes = [
         path: 'period/:id/delete',
         component: PeriodDeletePopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.period.home.title'
         },
         canActivate: [UserRouteAccessService],

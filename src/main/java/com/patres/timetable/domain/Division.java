@@ -1,23 +1,32 @@
 package com.patres.timetable.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.patres.timetable.domain.enumeration.DivisionType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+import java.util.Objects;
 
+import com.patres.timetable.domain.enumeration.DivisionType;
+
+/**
+ * A Division.
+ */
 @Entity
 @Table(name = "division")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Division extends AbstractApplicationEntity implements Serializable {
+public class Division implements Serializable {
 
-    private static final long serialVersionUID = 3123439538391666217L;
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
 
     @NotNull
     @Column(name = "name", nullable = false)
@@ -45,62 +54,62 @@ public class Division extends AbstractApplicationEntity implements Serializable 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Timetable> timetables = new HashSet<>();
 
-    @OneToMany(mappedBy = "divisionOwner")
+    @OneToMany(mappedBy = "division")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Place> divisionPlaces = new HashSet<>();
 
-    @OneToMany(mappedBy = "divisionOwner")
+    @OneToMany(mappedBy = "division")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Teacher> divisionTeachers = new HashSet<>();
 
-    @OneToMany(mappedBy = "divisionOwner")
+    @OneToMany(mappedBy = "division")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Subject> divisionSubjects = new HashSet<>();
 
-    @OneToMany(mappedBy = "divisionOwner")
+    @OneToMany(mappedBy = "division")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Lesson> divisionLessons = new HashSet<>();
 
-    @OneToMany(mappedBy = "divisionOwner")
+    @OneToMany(mappedBy = "division")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Period> divisionPeriods = new HashSet<>();
 
-    @OneToMany(mappedBy = "divisionOwner")
+    @OneToMany(mappedBy = "division")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Property> divisionProperties = new HashSet<>();
+    private Set<Properties> divisionProperties = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "division_parent",
-        joinColumns = @JoinColumn(name = "divisions_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "parents_id", referencedColumnName = "id"))
+               joinColumns = @JoinColumn(name="divisions_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="parents_id", referencedColumnName="id"))
     private Set<Division> parents = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "division_user",
-        joinColumns = @JoinColumn(name = "divisions_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"))
+               joinColumns = @JoinColumn(name="divisions_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="id"))
     private Set<User> users = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "division_preferred_teacher",
-        joinColumns = @JoinColumn(name = "divisions_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "preferred_teachers_id", referencedColumnName = "id"))
+               joinColumns = @JoinColumn(name="divisions_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="preferred_teachers_id", referencedColumnName="id"))
     private Set<Teacher> preferredTeachers = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "division_preferred_subject",
-        joinColumns = @JoinColumn(name = "divisions_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id"))
+               joinColumns = @JoinColumn(name="divisions_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="preferred_subjects_id", referencedColumnName="id"))
     private Set<Subject> preferredSubjects = new HashSet<>();
 
     @ManyToMany(mappedBy = "preferredDivisions")
@@ -108,12 +117,16 @@ public class Division extends AbstractApplicationEntity implements Serializable 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Place> preferredPlaces = new HashSet<>();
 
-    public String getName() {
-        return name;
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Division name(String name) {
@@ -121,12 +134,12 @@ public class Division extends AbstractApplicationEntity implements Serializable 
         return this;
     }
 
-    public String getShortName() {
-        return shortName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
+    public String getShortName() {
+        return shortName;
     }
 
     public Division shortName(String shortName) {
@@ -134,12 +147,12 @@ public class Division extends AbstractApplicationEntity implements Serializable 
         return this;
     }
 
-    public Long getNumberOfPeople() {
-        return numberOfPeople;
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
-    public void setNumberOfPeople(Long numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
+    public Long getNumberOfPeople() {
+        return numberOfPeople;
     }
 
     public Division numberOfPeople(Long numberOfPeople) {
@@ -147,12 +160,12 @@ public class Division extends AbstractApplicationEntity implements Serializable 
         return this;
     }
 
-    public DivisionType getDivisionType() {
-        return divisionType;
+    public void setNumberOfPeople(Long numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
     }
 
-    public void setDivisionType(DivisionType divisionType) {
-        this.divisionType = divisionType;
+    public DivisionType getDivisionType() {
+        return divisionType;
     }
 
     public Division divisionType(DivisionType divisionType) {
@@ -160,12 +173,12 @@ public class Division extends AbstractApplicationEntity implements Serializable 
         return this;
     }
 
-    public String getColorBackground() {
-        return colorBackground;
+    public void setDivisionType(DivisionType divisionType) {
+        this.divisionType = divisionType;
     }
 
-    public void setColorBackground(String colorBackground) {
-        this.colorBackground = colorBackground;
+    public String getColorBackground() {
+        return colorBackground;
     }
 
     public Division colorBackground(String colorBackground) {
@@ -173,12 +186,12 @@ public class Division extends AbstractApplicationEntity implements Serializable 
         return this;
     }
 
-    public String getColorText() {
-        return colorText;
+    public void setColorBackground(String colorBackground) {
+        this.colorBackground = colorBackground;
     }
 
-    public void setColorText(String colorText) {
-        this.colorText = colorText;
+    public String getColorText() {
+        return colorText;
     }
 
     public Division colorText(String colorText) {
@@ -186,12 +199,12 @@ public class Division extends AbstractApplicationEntity implements Serializable 
         return this;
     }
 
-    public Set<Timetable> getTimetables() {
-        return timetables;
+    public void setColorText(String colorText) {
+        this.colorText = colorText;
     }
 
-    public void setTimetables(Set<Timetable> timetables) {
-        this.timetables = timetables;
+    public Set<Timetable> getTimetables() {
+        return timetables;
     }
 
     public Division timetables(Set<Timetable> timetables) {
@@ -211,12 +224,12 @@ public class Division extends AbstractApplicationEntity implements Serializable 
         return this;
     }
 
-    public Set<Place> getDivisionPlaces() {
-        return divisionPlaces;
+    public void setTimetables(Set<Timetable> timetables) {
+        this.timetables = timetables;
     }
 
-    public void setDivisionPlaces(Set<Place> places) {
-        this.divisionPlaces = places;
+    public Set<Place> getDivisionPlaces() {
+        return divisionPlaces;
     }
 
     public Division divisionPlaces(Set<Place> places) {
@@ -226,22 +239,22 @@ public class Division extends AbstractApplicationEntity implements Serializable 
 
     public Division addDivisionPlace(Place place) {
         this.divisionPlaces.add(place);
-        place.setDivisionOwner(this);
+        place.setDivision(this);
         return this;
     }
 
     public Division removeDivisionPlace(Place place) {
         this.divisionPlaces.remove(place);
-        place.setDivisionOwner(null);
+        place.setDivision(null);
         return this;
+    }
+
+    public void setDivisionPlaces(Set<Place> places) {
+        this.divisionPlaces = places;
     }
 
     public Set<Teacher> getDivisionTeachers() {
         return divisionTeachers;
-    }
-
-    public void setDivisionTeachers(Set<Teacher> teachers) {
-        this.divisionTeachers = teachers;
     }
 
     public Division divisionTeachers(Set<Teacher> teachers) {
@@ -251,22 +264,22 @@ public class Division extends AbstractApplicationEntity implements Serializable 
 
     public Division addDivisionTeacher(Teacher teacher) {
         this.divisionTeachers.add(teacher);
-        teacher.setDivisionOwner(this);
+        teacher.setDivision(this);
         return this;
     }
 
     public Division removeDivisionTeacher(Teacher teacher) {
         this.divisionTeachers.remove(teacher);
-        teacher.setDivisionOwner(null);
+        teacher.setDivision(null);
         return this;
+    }
+
+    public void setDivisionTeachers(Set<Teacher> teachers) {
+        this.divisionTeachers = teachers;
     }
 
     public Set<Subject> getDivisionSubjects() {
         return divisionSubjects;
-    }
-
-    public void setDivisionSubjects(Set<Subject> subjects) {
-        this.divisionSubjects = subjects;
     }
 
     public Division divisionSubjects(Set<Subject> subjects) {
@@ -276,22 +289,22 @@ public class Division extends AbstractApplicationEntity implements Serializable 
 
     public Division addDivisionSubject(Subject subject) {
         this.divisionSubjects.add(subject);
-        subject.setDivisionOwner(this);
+        subject.setDivision(this);
         return this;
     }
 
     public Division removeDivisionSubject(Subject subject) {
         this.divisionSubjects.remove(subject);
-        subject.setDivisionOwner(null);
+        subject.setDivision(null);
         return this;
+    }
+
+    public void setDivisionSubjects(Set<Subject> subjects) {
+        this.divisionSubjects = subjects;
     }
 
     public Set<Lesson> getDivisionLessons() {
         return divisionLessons;
-    }
-
-    public void setDivisionLessons(Set<Lesson> lessons) {
-        this.divisionLessons = lessons;
     }
 
     public Division divisionLessons(Set<Lesson> lessons) {
@@ -301,22 +314,22 @@ public class Division extends AbstractApplicationEntity implements Serializable 
 
     public Division addDivisionLesson(Lesson lesson) {
         this.divisionLessons.add(lesson);
-        lesson.setDivisionOwner(this);
+        lesson.setDivision(this);
         return this;
     }
 
     public Division removeDivisionLesson(Lesson lesson) {
         this.divisionLessons.remove(lesson);
-        lesson.setDivisionOwner(null);
+        lesson.setDivision(null);
         return this;
+    }
+
+    public void setDivisionLessons(Set<Lesson> lessons) {
+        this.divisionLessons = lessons;
     }
 
     public Set<Period> getDivisionPeriods() {
         return divisionPeriods;
-    }
-
-    public void setDivisionPeriods(Set<Period> periods) {
-        this.divisionPeriods = periods;
     }
 
     public Division divisionPeriods(Set<Period> periods) {
@@ -326,47 +339,47 @@ public class Division extends AbstractApplicationEntity implements Serializable 
 
     public Division addDivisionPeriod(Period period) {
         this.divisionPeriods.add(period);
-        period.setDivisionOwner(this);
+        period.setDivision(this);
         return this;
     }
 
     public Division removeDivisionPeriod(Period period) {
         this.divisionPeriods.remove(period);
-        period.setDivisionOwner(null);
+        period.setDivision(null);
         return this;
     }
 
-    public Set<Property> getDivisionProperties() {
+    public void setDivisionPeriods(Set<Period> periods) {
+        this.divisionPeriods = periods;
+    }
+
+    public Set<Properties> getDivisionProperties() {
         return divisionProperties;
     }
 
-    public void setDivisionProperties(Set<Property> properties) {
-        this.divisionProperties = properties;
-    }
-
-    public Division divisionProperties(Set<Property> properties) {
+    public Division divisionProperties(Set<Properties> properties) {
         this.divisionProperties = properties;
         return this;
     }
 
-    public Division addDivisionProperties(Property property) {
-        this.divisionProperties.add(property);
-        property.setDivisionOwner(this);
+    public Division addDivisionProperties(Properties properties) {
+        this.divisionProperties.add(properties);
+        properties.setDivision(this);
         return this;
     }
 
-    public Division removeDivisionProperties(Property property) {
-        this.divisionProperties.remove(property);
-        property.setDivisionOwner(null);
+    public Division removeDivisionProperties(Properties properties) {
+        this.divisionProperties.remove(properties);
+        properties.setDivision(null);
         return this;
+    }
+
+    public void setDivisionProperties(Set<Properties> properties) {
+        this.divisionProperties = properties;
     }
 
     public Set<Division> getParents() {
         return parents;
-    }
-
-    public void setParents(Set<Division> divisions) {
-        this.parents = divisions;
     }
 
     public Division parents(Set<Division> divisions) {
@@ -384,12 +397,12 @@ public class Division extends AbstractApplicationEntity implements Serializable 
         return this;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public void setParents(Set<Division> divisions) {
+        this.parents = divisions;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public Set<User> getUsers() {
+        return users;
     }
 
     public Division users(Set<User> users) {
@@ -409,12 +422,12 @@ public class Division extends AbstractApplicationEntity implements Serializable 
         return this;
     }
 
-    public Set<Teacher> getPreferredTeachers() {
-        return preferredTeachers;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
-    public void setPreferredTeachers(Set<Teacher> teachers) {
-        this.preferredTeachers = teachers;
+    public Set<Teacher> getPreferredTeachers() {
+        return preferredTeachers;
     }
 
     public Division preferredTeachers(Set<Teacher> teachers) {
@@ -434,12 +447,12 @@ public class Division extends AbstractApplicationEntity implements Serializable 
         return this;
     }
 
-    public Set<Subject> getPreferredSubjects() {
-        return preferredSubjects;
+    public void setPreferredTeachers(Set<Teacher> teachers) {
+        this.preferredTeachers = teachers;
     }
 
-    public void setPreferredSubjects(Set<Subject> subjects) {
-        this.preferredSubjects = subjects;
+    public Set<Subject> getPreferredSubjects() {
+        return preferredSubjects;
     }
 
     public Division preferredSubjects(Set<Subject> subjects) {
@@ -459,12 +472,12 @@ public class Division extends AbstractApplicationEntity implements Serializable 
         return this;
     }
 
-    public Set<Place> getPreferredPlaces() {
-        return preferredPlaces;
+    public void setPreferredSubjects(Set<Subject> subjects) {
+        this.preferredSubjects = subjects;
     }
 
-    public void setPreferredPlaces(Set<Place> places) {
-        this.preferredPlaces = places;
+    public Set<Place> getPreferredPlaces() {
+        return preferredPlaces;
     }
 
     public Division preferredPlaces(Set<Place> places) {
@@ -482,6 +495,10 @@ public class Division extends AbstractApplicationEntity implements Serializable 
         this.preferredPlaces.remove(place);
         place.getPreferredDivisions().remove(this);
         return this;
+    }
+
+    public void setPreferredPlaces(Set<Place> places) {
+        this.preferredPlaces = places;
     }
 
     @Override

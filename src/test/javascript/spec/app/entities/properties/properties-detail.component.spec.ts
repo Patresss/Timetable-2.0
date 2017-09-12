@@ -7,21 +7,21 @@ import { Observable } from 'rxjs/Rx';
 import { JhiDateUtils, JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 import { TimetableTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { PropertyDetailComponent } from '../../../../../../main/webapp/app/entities/property/property-detail.component';
-import { PropertyService } from '../../../../../../main/webapp/app/entities/property/property.service';
-import { Property } from '../../../../../../main/webapp/app/entities/property/property.model';
+import { PropertiesDetailComponent } from '../../../../../../main/webapp/app/entities/properties/properties-detail.component';
+import { PropertiesService } from '../../../../../../main/webapp/app/entities/properties/properties.service';
+import { Properties } from '../../../../../../main/webapp/app/entities/properties/properties.model';
 
 describe('Component Tests', () => {
 
-    describe('Property Management Detail Component', () => {
-        let comp: PropertyDetailComponent;
-        let fixture: ComponentFixture<PropertyDetailComponent>;
-        let service: PropertyService;
+    describe('Properties Management Detail Component', () => {
+        let comp: PropertiesDetailComponent;
+        let fixture: ComponentFixture<PropertiesDetailComponent>;
+        let service: PropertiesService;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [TimetableTestModule],
-                declarations: [PropertyDetailComponent],
+                declarations: [PropertiesDetailComponent],
                 providers: [
                     JhiDateUtils,
                     JhiDataUtils,
@@ -30,31 +30,31 @@ describe('Component Tests', () => {
                         provide: ActivatedRoute,
                         useValue: new MockActivatedRoute({id: 123})
                     },
-                    PropertyService,
+                    PropertiesService,
                     JhiEventManager
                 ]
-            }).overrideTemplate(PropertyDetailComponent, '')
+            }).overrideTemplate(PropertiesDetailComponent, '')
             .compileComponents();
         }));
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(PropertyDetailComponent);
+            fixture = TestBed.createComponent(PropertiesDetailComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(PropertyService);
+            service = fixture.debugElement.injector.get(PropertiesService);
         });
 
         describe('OnInit', () => {
             it('Should call load all on init', () => {
             // GIVEN
 
-            spyOn(service, 'find').and.returnValue(Observable.of(new Property(10)));
+            spyOn(service, 'find').and.returnValue(Observable.of(new Properties(10)));
 
             // WHEN
             comp.ngOnInit();
 
             // THEN
             expect(service.find).toHaveBeenCalledWith(123);
-            expect(comp.property).toEqual(jasmine.objectContaining({id: 10}));
+            expect(comp.properties).toEqual(jasmine.objectContaining({id: 10}));
             });
         });
     });

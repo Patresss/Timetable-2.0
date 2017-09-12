@@ -7,10 +7,10 @@
         Added the constraints for entity Subject.
     -->
     <changeSet id="20170731144138-2" author="jhipster">
-
-        <addForeignKeyConstraint baseColumnNames="division_owner_id"
+        
+        <addForeignKeyConstraint baseColumnNames="division_id"
                                  baseTableName="subject"
-                                 constraintName="fk_subject_division_owner_id"
+                                 constraintName="fk_subject_division_id"
                                  referencedColumnNames="id"
                                  referencedTableName="division"/>
 

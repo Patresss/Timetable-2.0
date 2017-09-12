@@ -2,11 +2,11 @@ package com.patres.timetable.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.patres.timetable.service.PeriodService;
-import com.patres.timetable.service.dto.PeriodDTO;
 import com.patres.timetable.web.rest.util.HeaderUtil;
 import com.patres.timetable.web.rest.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import com.patres.timetable.service.dto.PeriodDTO;
 import io.swagger.annotations.ApiParam;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -14,12 +14,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +47,6 @@ public class PeriodResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new periodDTO, or with status 400 (Bad Request) if the period has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PreAuthorize("@periodService.hasPriviligeToAddEntity(#periodDTO)")
     @PostMapping("/periods")
     @Timed
     public ResponseEntity<PeriodDTO> createPeriod(@Valid @RequestBody PeriodDTO periodDTO) throws URISyntaxException {
@@ -70,7 +69,6 @@ public class PeriodResource {
      * or with status 500 (Internal Server Error) if the periodDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PreAuthorize("@periodService.hasPriviligeToModifyEntity(#periodDTO)")
     @PutMapping("/periods")
     @Timed
     public ResponseEntity<PeriodDTO> updatePeriod(@Valid @RequestBody PeriodDTO periodDTO) throws URISyntaxException {
@@ -99,40 +97,6 @@ public class PeriodResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-
-    /**
-     * GET  /periods/divisions : get the periods by Division owners id.
-     *
-     * @param divisionsId divisions id
-     * @param pageable    the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of periods in body
-     */
-    @GetMapping("/periods/divisions")
-    @Timed
-    public ResponseEntity<List<PeriodDTO>> getPeriodsByDivisionsId(@ApiParam Pageable pageable, @PathVariable List<Long> divisionsId) {
-        log.debug("REST request to get a page of Periods by Division owners id");
-
-        Page<PeriodDTO> page = periodService.findByDivisionOwnerId(pageable, divisionsId);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/periods");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
-    /**
-     * GET  /periods/login : get the periods by current login.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of periods in body
-     */
-    @GetMapping("/periods/login")
-    @Timed
-    public ResponseEntity<List<PeriodDTO>> getPeriodsByCurrentLogin(@ApiParam Pageable pageable) {
-        log.debug("REST request to get a page of Periods by current login");
-
-        Page<PeriodDTO> page = periodService.findByCurrentLogin(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/periods");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
     /**
      * GET  /periods/:id : get the "id" period.
      *
@@ -153,7 +117,6 @@ public class PeriodResource {
      * @param id the id of the periodDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @PreAuthorize("@periodService.hasPriviligeToDeleteEntity(#id)")
     @DeleteMapping("/periods/{id}")
     @Timed
     public ResponseEntity<Void> deletePeriod(@PathVariable Long id) {

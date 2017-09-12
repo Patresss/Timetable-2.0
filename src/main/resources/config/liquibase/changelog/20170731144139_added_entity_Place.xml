@@ -41,13 +41,13 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="division_owner_id" type="bigint">
+            <column name="division_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-
+        
         <createTable tableName="place_preferred_subject">
             <column name="preferred_subjects_id" type="bigint">
                 <constraints nullable="false"/>
@@ -58,7 +58,7 @@
         </createTable>
 
         <addPrimaryKey columnNames="places_id, preferred_subjects_id" tableName="place_preferred_subject"/>
-
+        
         <createTable tableName="place_preferred_division">
             <column name="preferred_divisions_id" type="bigint">
                 <constraints nullable="false"/>
@@ -69,7 +69,7 @@
         </createTable>
 
         <addPrimaryKey columnNames="places_id, preferred_divisions_id" tableName="place_preferred_division"/>
-
+        
         <createTable tableName="place_preferred_teacher">
             <column name="preferred_teachers_id" type="bigint">
                 <constraints nullable="false"/>
@@ -80,6 +80,6 @@
         </createTable>
 
         <addPrimaryKey columnNames="places_id, preferred_teachers_id" tableName="place_preferred_teacher"/>
-
+        
     </changeSet>
 </databaseChangeLog>

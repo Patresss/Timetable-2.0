@@ -4,12 +4,11 @@
         "browsehappy": "Używasz <strong>przestarzałej</strong> przeglądarki. Proszę <a href=\"http://browsehappy.com/\">uaktualnij swoją przeglądarkę</a> aby poprawić wrażenia z użytkowania tej aplikacji.",
         "menu": {
             "home": "Strona domowa",
-            "plan": "Plan",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Encje",
                 "division": "Division",
-                "property": "Properties",
+                "properties": "Properties",
                 "teacher": "Teacher",
                 "subject": "Subject",
                 "place": "Place",
@@ -136,8 +135,7 @@
         "Size": "Wartość {{fieldName}} nie spełnia wymagań co do długości!",
         "userexists": "Użytkownik o takiej nazwie już istnieje!",
         "emailexists": "Użytkownik z takim adresem email już istnieje!",
-        "idexists": "Nowy {{entityName}} nie może jeszcze mieć przypisanego ID",
-        "accessDenied": "Access denied"
+        "idexists": "Nowy {{entityName}} nie może jeszcze mieć przypisanego ID"
     },
     "footer": "To jest stopka"
 }

@@ -19,10 +19,6 @@
             "intervalTime": "Interval Time",
             "timetable": "Timetable",
             "division": "Division"
-        },
-        "interval" : {
-            "startDate": "Start date",
-            "endDate": "End date"
         }
     }
 }

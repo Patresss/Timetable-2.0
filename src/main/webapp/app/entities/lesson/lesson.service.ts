@@ -1,20 +1,16 @@
-import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 
-import {Lesson} from './lesson.model';
-import {createRequestOption, ResponseWrapper} from '../../shared';
-import {createRequestOptionWithDivisionsId} from '../../shared/model/request-util';
+import { Lesson } from './lesson.model';
+import { ResponseWrapper, createRequestOption } from '../../shared';
 
 @Injectable()
 export class LessonService {
 
     private resourceUrl = 'api/lessons';
-    private resourceByCurrentLoginUrl = 'api/lessons/login';
-    private resourceByDivisionsIdUrl = 'api/lessons/divisions';
 
-    constructor(private http: Http) {
-    }
+    constructor(private http: Http) { }
 
     create(lesson: Lesson): Observable<Lesson> {
         const copy = this.convert(lesson);
@@ -44,17 +40,6 @@ export class LessonService {
 
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
-    }
-
-    findByDivision(ids: number[], req?: any): Observable<ResponseWrapper> {
-        return this.http.get(this.resourceByDivisionsIdUrl, createRequestOptionWithDivisionsId(ids, req))
-            .map((res: Response) => this.convertResponse(res));
-    }
-
-    findByCurrentLogin(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceByCurrentLoginUrl, options)
-            .map((res: Response) => this.convertResponse(res));
     }
 
     private convertResponse(res: Response): ResponseWrapper {

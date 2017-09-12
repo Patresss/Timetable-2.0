@@ -33,7 +33,7 @@ export const placeRoute: Routes = [
             'pagingParams': PlaceResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.place.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -41,7 +41,7 @@ export const placeRoute: Routes = [
         path: 'place/:id',
         component: PlaceDetailComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.place.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -53,7 +53,7 @@ export const placePopupRoute: Routes = [
         path: 'place-new',
         component: PlacePopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.place.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const placePopupRoute: Routes = [
         path: 'place/:id/edit',
         component: PlacePopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.place.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -73,7 +73,7 @@ export const placePopupRoute: Routes = [
         path: 'place/:id/delete',
         component: PlaceDeletePopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.place.home.title'
         },
         canActivate: [UserRouteAccessService],

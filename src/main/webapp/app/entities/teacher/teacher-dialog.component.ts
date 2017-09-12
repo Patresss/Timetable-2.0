@@ -42,11 +42,11 @@ export class TeacherDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.subjectService.findByCurrentLogin()
+        this.subjectService.query()
             .subscribe((res: ResponseWrapper) => { this.subjects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.divisionService.query()
             .subscribe((res: ResponseWrapper) => { this.divisions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.placeService.findByCurrentLogin()
+        this.placeService.query()
             .subscribe((res: ResponseWrapper) => { this.places = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 

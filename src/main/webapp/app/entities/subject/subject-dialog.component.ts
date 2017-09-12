@@ -44,9 +44,9 @@ export class SubjectDialogComponent implements OnInit {
         this.isSaving = false;
         this.divisionService.query()
             .subscribe((res: ResponseWrapper) => { this.divisions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.teacherService.findByCurrentLogin()
+        this.teacherService.query()
             .subscribe((res: ResponseWrapper) => { this.teachers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.placeService.findByCurrentLogin()
+        this.placeService.query()
             .subscribe((res: ResponseWrapper) => { this.places = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 

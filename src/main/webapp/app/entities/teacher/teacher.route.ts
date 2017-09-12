@@ -33,7 +33,7 @@ export const teacherRoute: Routes = [
             'pagingParams': TeacherResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.teacher.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -41,7 +41,7 @@ export const teacherRoute: Routes = [
         path: 'teacher/:id',
         component: TeacherDetailComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.teacher.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -53,7 +53,7 @@ export const teacherPopupRoute: Routes = [
         path: 'teacher-new',
         component: TeacherPopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.teacher.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const teacherPopupRoute: Routes = [
         path: 'teacher/:id/edit',
         component: TeacherPopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.teacher.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -73,7 +73,7 @@ export const teacherPopupRoute: Routes = [
         path: 'teacher/:id/delete',
         component: TeacherDeletePopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.teacher.home.title'
         },
         canActivate: [UserRouteAccessService],

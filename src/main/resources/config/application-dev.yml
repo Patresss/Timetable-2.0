@@ -34,9 +34,9 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://localhost:5432/timetable
-        username: postgres
-        password: pass
+        url: jdbc:postgresql://localhost:5432/Timetable
+        username: Timetable
+        password:
     jpa:
         database-platform: io.github.jhipster.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL
@@ -47,7 +47,6 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
             hibernate.cache.region.factory_class: io.github.jhipster.config.jcache.NoDefaultJCacheRegionFactory
-            hibernate.ddl-auto: create-drop
     mail:
         host: localhost
         port: 25

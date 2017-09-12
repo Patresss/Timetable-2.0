@@ -5,7 +5,7 @@
         "stacktrace": "Stacktrace",
         "details": {
             "details": "Details",
-            "property": "Properties",
+            "properties": "Properties",
             "name": "Name",
             "value": "Value",
             "error": "Error"

@@ -24,7 +24,7 @@
             "preferredSubject": "Preferred Subject",
             "preferredDivision": "Preferred Division",
             "preferredTeacher": "Preferred Teacher",
-            "divisionOwner": "divisionOwner"
+            "division": "Division"
         }
     }
 }

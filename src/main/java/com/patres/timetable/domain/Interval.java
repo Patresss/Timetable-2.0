@@ -3,20 +3,25 @@ package com.patres.timetable.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * A Interval.
+ */
 @Entity
 @Table(name = "interval")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Interval extends AbstractApplicationEntity implements Serializable {
+public class Interval implements Serializable {
 
-    private static final long serialVersionUID = 6794788291603472570L;
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
 
     @Column(name = "included")
     private Boolean included;
@@ -29,6 +34,14 @@ public class Interval extends AbstractApplicationEntity implements Serializable 
 
     @ManyToOne
     private Period period;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Boolean isIncluded() {
         return included;
@@ -47,21 +60,17 @@ public class Interval extends AbstractApplicationEntity implements Serializable 
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
     public Interval startDate(LocalDate startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
     public Interval endDate(LocalDate endDate) {
@@ -69,17 +78,21 @@ public class Interval extends AbstractApplicationEntity implements Serializable 
         return this;
     }
 
-    public Period getPeriod() {
-        return period;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
-    public void setPeriod(Period period) {
-        this.period = period;
+    public Period getPeriod() {
+        return period;
     }
 
     public Interval period(Period period) {
         this.period = period;
         return this;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
     }
 
     @Override

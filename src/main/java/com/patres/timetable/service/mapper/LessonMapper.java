@@ -1,59 +1,29 @@
 package com.patres.timetable.service.mapper;
 
-import com.patres.timetable.domain.Division;
-import com.patres.timetable.domain.Interval;
-import com.patres.timetable.domain.Lesson;
+import com.patres.timetable.domain.*;
 import com.patres.timetable.service.dto.LessonDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class LessonMapper extends EntityMapper<Lesson, LessonDTO> {
+import org.mapstruct.*;
 
-    @Autowired
-    private DivisionMapper divisionMapper;
+/**
+ * Mapper for the entity Lesson and its DTO LessonDTO.
+ */
+@Mapper(componentModel = "spring", uses = {DivisionMapper.class, })
+public interface LessonMapper extends EntityMapper <LessonDTO, Lesson> {
 
-    public Lesson toEntity(LessonDTO lessonDTO) {
-        if (lessonDTO == null) {
-            return null;
-        }
+    @Mapping(source = "division.id", target = "divisionId")
+    @Mapping(source = "division.name", target = "divisionName")
+    LessonDTO toDto(Lesson lesson); 
+    @Mapping(target = "timetables", ignore = true)
 
-        Lesson lesson = new Lesson();
-
-        lesson.setDivisionOwner(divisionMapper.fromId(lessonDTO.getDivisionOwnerId()));
-        lesson.setId(lessonDTO.getId());
-        lesson.setName(lessonDTO.getName());
-        lesson.setStartTime(lessonDTO.getStartTime());
-        lesson.setEndTime(lessonDTO.getEndTime());
-
-        return lesson;
-    }
-
-    public LessonDTO toDto(Lesson lesson) {
-        if (lesson == null) {
-            return null;
-        }
-
-        LessonDTO lessonDTO = new LessonDTO();
-
-        lessonDTO.setDivisionOwnerId(divisionMapper.getDivisionOwnerId(lesson.getDivisionOwner()));
-        lessonDTO.setDivisionOwnerName(divisionMapper.getDivisionOwnerName(lesson.getDivisionOwner()));
-        lessonDTO.setId(lesson.getId());
-        lessonDTO.setName(lesson.getName());
-        lessonDTO.setStartTime(lesson.getStartTime());
-        lessonDTO.setEndTime(lesson.getEndTime());
-
-        return lessonDTO;
-    }
-
-    public Lesson fromId(Long id) {
+    @Mapping(source = "divisionId", target = "division")
+    Lesson toEntity(LessonDTO lessonDTO); 
+    default Lesson fromId(Long id) {
         if (id == null) {
             return null;
         }
-        Lesson entity = new Lesson();
-        entity.setId(id);
-        return entity;
+        Lesson lesson = new Lesson();
+        lesson.setId(id);
+        return lesson;
     }
-
-
 }

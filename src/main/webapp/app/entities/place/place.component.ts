@@ -50,7 +50,7 @@ currentAccount: any;
     }
 
     loadAll() {
-        this.placeService.findByCurrentLogin({
+        this.placeService.query({
             page: this.page - 1,
             size: this.itemsPerPage,
             sort: this.sort()}).subscribe(

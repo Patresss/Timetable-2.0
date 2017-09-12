@@ -5,24 +5,33 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+import java.util.Objects;
 
+/**
+ * A Period.
+ */
 @Entity
 @Table(name = "period")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Period extends AbstractDivisionOwner implements Serializable {
+public class Period implements Serializable {
 
-    private static final long serialVersionUID = -4976199580753440331L;
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
 
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "period")
+    @OneToMany(mappedBy = "period")
+    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Interval> intervalTimes = new HashSet<>();
 
@@ -31,12 +40,19 @@ public class Period extends AbstractDivisionOwner implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Timetable> timetables = new HashSet<>();
 
-    public String getName() {
-        return name;
+    @ManyToOne
+    private Division division;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Period name(String name) {
@@ -44,12 +60,12 @@ public class Period extends AbstractDivisionOwner implements Serializable {
         return this;
     }
 
-    public Set<Interval> getIntervalTimes() {
-        return intervalTimes;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setIntervalTimes(Set<Interval> intervals) {
-        this.intervalTimes = intervals;
+    public Set<Interval> getIntervalTimes() {
+        return intervalTimes;
     }
 
     public Period intervalTimes(Set<Interval> intervals) {
@@ -69,12 +85,12 @@ public class Period extends AbstractDivisionOwner implements Serializable {
         return this;
     }
 
-    public Set<Timetable> getTimetables() {
-        return timetables;
+    public void setIntervalTimes(Set<Interval> intervals) {
+        this.intervalTimes = intervals;
     }
 
-    public void setTimetables(Set<Timetable> timetables) {
-        this.timetables = timetables;
+    public Set<Timetable> getTimetables() {
+        return timetables;
     }
 
     public Period timetables(Set<Timetable> timetables) {
@@ -92,6 +108,23 @@ public class Period extends AbstractDivisionOwner implements Serializable {
         this.timetables.remove(timetable);
         timetable.setPeriod(null);
         return this;
+    }
+
+    public void setTimetables(Set<Timetable> timetables) {
+        this.timetables = timetables;
+    }
+
+    public Division getDivision() {
+        return division;
+    }
+
+    public Period division(Division division) {
+        this.division = division;
+        return this;
+    }
+
+    public void setDivision(Division division) {
+        this.division = division;
     }
 
     @Override

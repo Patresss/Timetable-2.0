@@ -25,12 +25,12 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="division_owner_id" type="bigint">
+            <column name="division_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-
+        
     </changeSet>
 </databaseChangeLog>

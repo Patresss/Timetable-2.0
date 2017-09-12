@@ -18,11 +18,7 @@
             "name": "Name",
             "intervalTime": "Interval Time",
             "timetable": "Timetable",
-            "divisionOwner": "divisionOwner"
-        },
-        "interval" : {
-            "startDate": "Start date",
-            "endDate": "End date"
+            "division": "Division"
         }
     }
 }

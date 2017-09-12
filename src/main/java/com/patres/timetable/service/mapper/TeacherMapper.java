@@ -1,73 +1,31 @@
 package com.patres.timetable.service.mapper;
 
-import com.patres.timetable.domain.Division;
-import com.patres.timetable.domain.Subject;
-import com.patres.timetable.domain.Teacher;
-import com.patres.timetable.service.dto.SubjectDTO;
+import com.patres.timetable.domain.*;
 import com.patres.timetable.service.dto.TeacherDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import org.mapstruct.*;
 
-@Service
-public class TeacherMapper extends EntityMapper<Teacher, TeacherDTO> {
+/**
+ * Mapper for the entity Teacher and its DTO TeacherDTO.
+ */
+@Mapper(componentModel = "spring", uses = {SubjectMapper.class, DivisionMapper.class, })
+public interface TeacherMapper extends EntityMapper <TeacherDTO, Teacher> {
 
-    @Autowired
-    private SubjectMapper subjectMapper;
-    @Autowired
-    private DivisionMapper divisionMapper;
+    @Mapping(source = "division.id", target = "divisionId")
+    @Mapping(source = "division.name", target = "divisionName")
+    TeacherDTO toDto(Teacher teacher); 
+    @Mapping(target = "timetables", ignore = true)
 
-    public Teacher toEntity(TeacherDTO teacherDTO) {
-        if (teacherDTO == null) {
-            return null;
-        }
-
-        Teacher teacher = new Teacher();
-
-        teacher.setDivisionOwner(divisionMapper.fromId(teacherDTO.getDivisionOwnerId()));
-        teacher.setId(teacherDTO.getId());
-        teacher.setName(teacherDTO.getName());
-        teacher.setSurname(teacherDTO.getSurname());
-        teacher.setDegree(teacherDTO.getDegree());
-        teacher.setShortName(teacherDTO.getShortName());
-        Set<Subject> set = subjectMapper.entityDTOSetToEntitySet(teacherDTO.getPreferredSubjects());
-        if (set != null) {
-            teacher.setPreferredSubjects(set);
-        }
-
-        return teacher;
-    }
-
-    public TeacherDTO toDto(Teacher teacher) {
-        if (teacher == null) {
-            return null;
-        }
-
-        TeacherDTO teacherDTO = new TeacherDTO();
-
-        teacherDTO.setDivisionOwnerId(divisionMapper.getDivisionOwnerId(teacher.getDivisionOwner()));
-        teacherDTO.setDivisionOwnerName(divisionMapper.getDivisionOwnerName(teacher.getDivisionOwner()));
-        teacherDTO.setId(teacher.getId());
-        teacherDTO.setName(teacher.getName());
-        teacherDTO.setSurname(teacher.getSurname());
-        teacherDTO.setDegree(teacher.getDegree());
-        teacherDTO.setShortName(teacher.getShortName());
-        Set<SubjectDTO> set = subjectMapper.entitySetToEntityDTOSet(teacher.getPreferredSubjects());
-        if (set != null) {
-            teacherDTO.setPreferredSubjects(set);
-        }
-
-        return teacherDTO;
-    }
-
-    public Teacher fromId(Long id) {
+    @Mapping(source = "divisionId", target = "division")
+    @Mapping(target = "preferredDivisions", ignore = true)
+    @Mapping(target = "preferredPlaces", ignore = true)
+    Teacher toEntity(TeacherDTO teacherDTO); 
+    default Teacher fromId(Long id) {
         if (id == null) {
             return null;
         }
-        Teacher entity = new Teacher();
-        entity.setId(id);
-        return entity;
+        Teacher teacher = new Teacher();
+        teacher.setId(id);
+        return teacher;
     }
-
 }

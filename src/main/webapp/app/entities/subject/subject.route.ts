@@ -33,7 +33,7 @@ export const subjectRoute: Routes = [
             'pagingParams': SubjectResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.subject.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -41,7 +41,7 @@ export const subjectRoute: Routes = [
         path: 'subject/:id',
         component: SubjectDetailComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.subject.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -53,7 +53,7 @@ export const subjectPopupRoute: Routes = [
         path: 'subject-new',
         component: SubjectPopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.subject.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const subjectPopupRoute: Routes = [
         path: 'subject/:id/edit',
         component: SubjectPopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.subject.home.title'
         },
         canActivate: [UserRouteAccessService],
@@ -73,7 +73,7 @@ export const subjectPopupRoute: Routes = [
         path: 'subject/:id/delete',
         component: SubjectDeletePopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'timetableApp.subject.home.title'
         },
         canActivate: [UserRouteAccessService],
