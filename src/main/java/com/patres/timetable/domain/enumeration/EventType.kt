@@ -1,8 +1,8 @@
-package com.patres.timetable.domain.enumeration;
+package com.patres.timetable.domain.enumeration
 
 /**
  * The EventType enumeration.
  */
-public enum EventType {
+enum class EventType {
     LESSON, SUBSTITUTION, SPECIAL
 }

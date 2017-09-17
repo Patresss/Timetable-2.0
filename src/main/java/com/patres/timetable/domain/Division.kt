@@ -1,0 +1,119 @@
+package com.patres.timetable.domain
+
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.patres.timetable.domain.enumeration.DivisionType
+import org.hibernate.annotations.Cache
+import org.hibernate.annotations.CacheConcurrencyStrategy
+import java.io.Serializable
+import java.util.*
+import javax.persistence.*
+import javax.validation.constraints.NotNull
+
+@Entity
+@Table(name = "division")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+data class Division(
+
+    @NotNull
+    @Column(name = "name", nullable = false)
+    var name: String? = null,
+
+    @Column(name = "short_name")
+    var shortName: String? = null,
+
+    @Column(name = "number_of_people")
+    var numberOfPeople: Long? = null,
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "division_type", nullable = false)
+    var divisionType: DivisionType? = null,
+
+    @Column(name = "color_background")
+    var colorBackground: String? = null,
+
+    @Column(name = "color_text")
+    var colorText: String? = null,
+
+    @OneToMany(mappedBy = "division")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    var timetables: MutableSet<Timetable> = HashSet(),
+
+    @OneToMany(mappedBy = "divisionOwner")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    var divisionPlaces: MutableSet<Place> = HashSet(),
+
+    @OneToMany(mappedBy = "divisionOwner")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    var divisionTeachers: MutableSet<Teacher> = HashSet(),
+
+    @OneToMany(mappedBy = "divisionOwner")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    var divisionSubjects: MutableSet<Subject> = HashSet(),
+
+    @OneToMany(mappedBy = "divisionOwner")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    var divisionLessons: MutableSet<Lesson> = HashSet(),
+
+    @OneToMany(mappedBy = "divisionOwner")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    var divisionPeriods: MutableSet<Period> = HashSet(),
+
+    @OneToMany(mappedBy = "divisionOwner")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    var divisionProperties: MutableSet<Property> = HashSet(),
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "division_parent", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "parents_id", referencedColumnName = "id")))
+    var parents: MutableSet<Division> = HashSet(),
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "division_user", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "users_id", referencedColumnName = "id")))
+    var users: MutableSet<User> = HashSet(),
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "division_preferred_teacher", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_teachers_id", referencedColumnName = "id")))
+    var preferredTeachers: MutableSet<Teacher> = HashSet(),
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "division_preferred_subject", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id")))
+    var preferredSubjects: MutableSet<Subject> = HashSet(),
+
+    @ManyToMany(mappedBy = "preferredDivisions")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    var preferredPlaces: MutableSet<Place> = HashSet()
+
+) : AbstractApplicationEntity(), Serializable {
+
+
+    override fun equals(o: Any?): Boolean {
+        if (this === o) {
+            return true
+        }
+        if (o == null || javaClass != o.javaClass) {
+            return false
+        }
+        val division = o as Division?
+        if (division!!.id == null || id == null) {
+            return false
+        }
+        return id == division.id
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hashCode(id)
+    }
+
+}
