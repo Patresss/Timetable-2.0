@@ -20,7 +20,7 @@ class PersistentAuditEvent : Serializable {
     @Column(name = "event_id")
     var id: Long? = null
 
-    @NotNull
+    @get:NotNull
     @Column(nullable = false)
     var principal: String? = null
 

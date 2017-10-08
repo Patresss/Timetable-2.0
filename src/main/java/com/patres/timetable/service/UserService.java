@@ -189,7 +189,7 @@ public class UserService {
                 log.debug("Changed Information for User: {}", user);
                 return user;
             })
-            .map(UserDTO::new);
+            .map( user -> new UserDTO());
     }
 
     public void deleteUser(String login) {
@@ -211,7 +211,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
-        return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
+        return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(user -> new UserDTO());
     }
 
     @Transactional(readOnly = true)

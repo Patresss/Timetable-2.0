@@ -12,9 +12,9 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(name = "division")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-data class Division(
+class Division(
 
-    @NotNull
+    @get:NotNull
     @Column(name = "name", nullable = false)
     var name: String? = null,
 
@@ -24,7 +24,7 @@ data class Division(
     @Column(name = "number_of_people")
     var numberOfPeople: Long? = null,
 
-    @NotNull
+    @get:NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "division_type", nullable = false)
     var divisionType: DivisionType? = null,
@@ -38,62 +38,62 @@ data class Division(
     @OneToMany(mappedBy = "division")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var timetables: MutableSet<Timetable> = HashSet(),
+    var timetables: Set<Timetable> = HashSet(),
 
     @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var divisionPlaces: MutableSet<Place> = HashSet(),
+    var divisionPlaces: Set<Place> = HashSet(),
 
     @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var divisionTeachers: MutableSet<Teacher> = HashSet(),
+    var divisionTeachers: Set<Teacher> = HashSet(),
 
     @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var divisionSubjects: MutableSet<Subject> = HashSet(),
+    var divisionSubjects: Set<Subject> = HashSet(),
 
     @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var divisionLessons: MutableSet<Lesson> = HashSet(),
+    var divisionLessons: Set<Lesson> = HashSet(),
 
     @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var divisionPeriods: MutableSet<Period> = HashSet(),
+    var divisionPeriods: Set<Period> = HashSet(),
 
     @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var divisionProperties: MutableSet<Property> = HashSet(),
+    var divisionProperties: Set<Property> = HashSet(),
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "division_parent", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "parents_id", referencedColumnName = "id")))
-    var parents: MutableSet<Division> = HashSet(),
+    var parents: Set<Division> = HashSet(),
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "division_user", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "users_id", referencedColumnName = "id")))
-    var users: MutableSet<User> = HashSet(),
+    var users: Set<User> = HashSet(),
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "division_preferred_teacher", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_teachers_id", referencedColumnName = "id")))
-    var preferredTeachers: MutableSet<Teacher> = HashSet(),
+    var preferredTeachers: Set<Teacher> = HashSet(),
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "division_preferred_subject", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id")))
-    var preferredSubjects: MutableSet<Subject> = HashSet(),
+    var preferredSubjects: Set<Subject> = HashSet(),
 
     @ManyToMany(mappedBy = "preferredDivisions")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferredPlaces: MutableSet<Place> = HashSet()
+    var preferredPlaces: Set<Place> = HashSet()
 
 ) : AbstractApplicationEntity(), Serializable {
 
@@ -114,6 +114,18 @@ data class Division(
 
     override fun hashCode(): Int {
         return Objects.hashCode(id)
+    }
+
+    override fun toString(): String {
+        return "Division{" +
+            "id= $id" +
+            ", name=' $name" +
+            ", shortName='$shortName" +
+            ", numberOfPeople='$numberOfPeople" +
+            ", divisionType='$divisionType" +
+            ", colorBackground='$colorBackground" +
+            ", colorText='$colorText" +
+            "}"
     }
 
 }

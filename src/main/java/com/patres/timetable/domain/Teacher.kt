@@ -11,13 +11,13 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(name = "teacher")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-data class Teacher(
+class Teacher(
 
-    @NotNull
+    @get:NotNull
     @Column(name = "name", nullable = false)
     var name: String? = null,
 
-    @NotNull
+    @get:NotNull
     @Column(name = "surname", nullable = false)
     var surname: String? = null,
 
@@ -30,22 +30,22 @@ data class Teacher(
     @OneToMany(mappedBy = "teacher")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var timetables: MutableSet<Timetable> = HashSet(),
+    var timetables: Set<Timetable> = HashSet(),
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "teacher_preferred_subject", joinColumns = arrayOf(JoinColumn(name = "teachers_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id")))
-    var preferredSubjects: MutableSet<Subject> = HashSet(),
+    var preferredSubjects: Set<Subject> = HashSet(),
 
     @ManyToMany(mappedBy = "preferredTeachers")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferredDivisions: MutableSet<Division> = HashSet(),
+    var preferredDivisions: Set<Division> = HashSet(),
 
     @ManyToMany(mappedBy = "preferredTeachers")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferredPlaces: MutableSet<Place> = HashSet()
+    var preferredPlaces: Set<Place> = HashSet()
 
 ) : AbstractDivisionOwner(), Serializable {
 

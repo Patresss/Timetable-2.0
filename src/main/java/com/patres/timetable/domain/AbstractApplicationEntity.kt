@@ -26,12 +26,11 @@ abstract class AbstractApplicationEntity : Serializable {
         return id == entity.id
     }
 
-    override public fun hashCode(): Int {
+    override fun hashCode(): Int {
         return Objects.hashCode(id)
     }
 
     companion object {
-
         private const val serialVersionUID = 7296270053887329327L
     }
 

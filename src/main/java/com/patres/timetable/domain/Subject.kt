@@ -11,10 +11,11 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(name = "subject")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-data class Subject(
+class Subject(
 
+    @get:NotNull
     @Column(name = "name", nullable = false)
-    var name: String = "",
+    var name: String? = null,
 
     @Column(name = "short_name")
     var shortName: String? = null,
@@ -28,22 +29,22 @@ data class Subject(
     @OneToMany(mappedBy = "subject")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var timetables: MutableSet<Timetable> = HashSet(),
+    var timetables: Set<Timetable> = HashSet(),
 
     @ManyToMany(mappedBy = "preferredSubjects")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferredTeachers: MutableSet<Teacher> = HashSet(),
+    var preferredTeachers: Set<Teacher> = HashSet(),
 
     @ManyToMany(mappedBy = "preferredSubjects")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferredDivisions: MutableSet<Division> = HashSet(),
+    var preferredDivisions: Set<Division> = HashSet(),
 
     @ManyToMany(mappedBy = "preferredSubjects")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferredPlaces: MutableSet<Place> = HashSet()
+    var preferredPlaces: Set<Place> = HashSet()
 
 ) : AbstractDivisionOwner(), Serializable {
 

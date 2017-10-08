@@ -13,10 +13,10 @@ import javax.persistence.Table
 @Entity
 @Table(name = "interval")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-data class Interval(
+class Interval(
 
     @Column(name = "included")
-    var isIncluded: Boolean? = null,
+    var isIncluded: Boolean = true,
 
     @Column(name = "start_date")
     var startDate: LocalDate? = null,
@@ -46,6 +46,15 @@ data class Interval(
 
     override fun hashCode(): Int {
         return Objects.hashCode(id)
+    }
+
+    override fun toString(): String {
+        return "Interval{" +
+            "id= '$id'" +
+            ", included='$isIncluded" +
+            ", startDate='$startDate'" +
+            ", endDate='$endDate'" +
+            "}"
     }
 
 }

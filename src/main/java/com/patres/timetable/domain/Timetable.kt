@@ -12,9 +12,9 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(name = "timetable")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-data class Timetable(
+class Timetable(
 
-    @NotNull
+    @get:NotNull
     @Column(name = "title", nullable = false)
     var title: String? = null,
 
@@ -33,7 +33,7 @@ data class Timetable(
     @Column(name = "jhi_date")
     var date: LocalDate? = null,
 
-    @NotNull
+    @get:NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "jhi_type", nullable = false)
     var type: EventType? = null,

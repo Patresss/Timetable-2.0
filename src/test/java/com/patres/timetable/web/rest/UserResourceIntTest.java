@@ -147,18 +147,18 @@ public class UserResourceIntTest {
         ManagedUserVM managedUserVM = new ManagedUserVM(
             null,
             DEFAULT_LOGIN,
-            DEFAULT_PASSWORD,
             DEFAULT_FIRSTNAME,
             DEFAULT_LASTNAME,
             DEFAULT_EMAIL,
-            true,
             DEFAULT_IMAGEURL,
+            true,
             DEFAULT_LANGKEY,
             null,
             null,
             null,
             null,
-            authorities);
+            authorities,
+            DEFAULT_PASSWORD);
 
         restUserMockMvc.perform(post("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -187,18 +187,18 @@ public class UserResourceIntTest {
         ManagedUserVM managedUserVM = new ManagedUserVM(
             1L,
             DEFAULT_LOGIN,
-            DEFAULT_PASSWORD,
             DEFAULT_FIRSTNAME,
             DEFAULT_LASTNAME,
             DEFAULT_EMAIL,
-            true,
             DEFAULT_IMAGEURL,
+            true,
             DEFAULT_LANGKEY,
             null,
             null,
             null,
             null,
-            authorities);
+            authorities,
+            DEFAULT_PASSWORD);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restUserMockMvc.perform(post("/api/users")
@@ -223,18 +223,18 @@ public class UserResourceIntTest {
         ManagedUserVM managedUserVM = new ManagedUserVM(
             null,
             DEFAULT_LOGIN, // this login should already be used
-            DEFAULT_PASSWORD,
             DEFAULT_FIRSTNAME,
             DEFAULT_LASTNAME,
             "anothermail@localhost",
-            true,
             DEFAULT_IMAGEURL,
+            true,
             DEFAULT_LANGKEY,
             null,
             null,
             null,
             null,
-            authorities);
+            authorities,
+            DEFAULT_PASSWORD);
 
         // Create the User
         restUserMockMvc.perform(post("/api/users")
@@ -259,18 +259,18 @@ public class UserResourceIntTest {
         ManagedUserVM managedUserVM = new ManagedUserVM(
             null,
             "anotherlogin",
-            DEFAULT_PASSWORD,
             DEFAULT_FIRSTNAME,
             DEFAULT_LASTNAME,
             DEFAULT_EMAIL, // this email should already be used
-            true,
             DEFAULT_IMAGEURL,
+            true,
             DEFAULT_LANGKEY,
             null,
             null,
             null,
             null,
-            authorities);
+            authorities,
+            DEFAULT_PASSWORD);
 
         // Create the User
         restUserMockMvc.perform(post("/api/users")
@@ -342,18 +342,18 @@ public class UserResourceIntTest {
         ManagedUserVM managedUserVM = new ManagedUserVM(
             updatedUser.getId(),
             updatedUser.getLogin(),
-            UPDATED_PASSWORD,
             UPDATED_FIRSTNAME,
             UPDATED_LASTNAME,
             UPDATED_EMAIL,
-            updatedUser.getActivated(),
             UPDATED_IMAGEURL,
+            updatedUser.getActivated(),
             UPDATED_LANGKEY,
             updatedUser.getCreatedBy(),
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
-            authorities);
+            authorities,
+            UPDATED_PASSWORD);
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -386,18 +386,18 @@ public class UserResourceIntTest {
         ManagedUserVM managedUserVM = new ManagedUserVM(
             updatedUser.getId(),
             UPDATED_LOGIN,
-            UPDATED_PASSWORD,
             UPDATED_FIRSTNAME,
             UPDATED_LASTNAME,
             UPDATED_EMAIL,
-            updatedUser.getActivated(),
             UPDATED_IMAGEURL,
+            updatedUser.getActivated(),
             UPDATED_LANGKEY,
             updatedUser.getCreatedBy(),
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
-            authorities);
+            authorities,
+            UPDATED_PASSWORD);
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -441,18 +441,18 @@ public class UserResourceIntTest {
         ManagedUserVM managedUserVM = new ManagedUserVM(
             updatedUser.getId(),
             updatedUser.getLogin(),
-            updatedUser.getPassword(),
             updatedUser.getFirstName(),
             updatedUser.getLastName(),
             "jhipster@localhost",  // this email should already be used by anotherUser
-            updatedUser.getActivated(),
             updatedUser.getImageUrl(),
+            updatedUser.getActivated(),
             updatedUser.getLangKey(),
             updatedUser.getCreatedBy(),
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
-            authorities);
+            authorities,
+            updatedUser.getPassword());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -485,18 +485,18 @@ public class UserResourceIntTest {
         ManagedUserVM managedUserVM = new ManagedUserVM(
             updatedUser.getId(),
             "jhipster", // this login should already be used by anotherUser
-            updatedUser.getPassword(),
             updatedUser.getFirstName(),
             updatedUser.getLastName(),
             updatedUser.getEmail(),
-            updatedUser.getActivated(),
             updatedUser.getImageUrl(),
+            updatedUser.getActivated(),
             updatedUser.getLangKey(),
             updatedUser.getCreatedBy(),
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
-            authorities);
+            authorities,
+            updatedUser.getPassword());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -536,7 +536,6 @@ public class UserResourceIntTest {
     @Test
     @Transactional
     public void testUserEquals() throws Exception {
-        TestUtil.equalsVerifier(User.class);
         User user1 = new User();
         user1.setId(1L);
         User user2 = new User();
@@ -562,8 +561,8 @@ public class UserResourceIntTest {
             DEFAULT_FIRSTNAME,
             DEFAULT_LASTNAME,
             DEFAULT_EMAIL,
-            true,
             DEFAULT_IMAGEURL,
+            true,
             DEFAULT_LANGKEY,
             DEFAULT_LOGIN,
             null,

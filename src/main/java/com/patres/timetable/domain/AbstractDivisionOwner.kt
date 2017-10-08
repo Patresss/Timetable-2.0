@@ -9,7 +9,7 @@ import java.io.Serializable
 abstract class AbstractDivisionOwner : AbstractApplicationEntity(), Serializable {
 
     @ManyToOne
-    @NotNull
+    @get:NotNull
     var divisionOwner: Division? = null
 
     fun divisionOwner(divisionOwner: Division): AbstractDivisionOwner {

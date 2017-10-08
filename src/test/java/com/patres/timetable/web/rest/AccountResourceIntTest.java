@@ -9,6 +9,7 @@ import com.patres.timetable.security.AuthoritiesConstants;
 import com.patres.timetable.service.MailService;
 import com.patres.timetable.service.UserService;
 import com.patres.timetable.service.dto.UserDTO;
+import com.patres.timetable.service.mapper.UserMapper;
 import com.patres.timetable.web.rest.vm.KeyAndPasswordVM;
 import com.patres.timetable.web.rest.vm.ManagedUserVM;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -29,7 +30,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -61,6 +61,9 @@ public class AccountResourceIntTest {
     private UserService userService;
 
     @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -82,10 +85,10 @@ public class AccountResourceIntTest {
         doNothing().when(mockMailService).sendActivationEmail(anyObject());
 
         AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService);
+            new AccountResource(userRepository, userService, userMapper, mockMailService);
 
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService);
+            new AccountResource(userRepository, mockUserService, userMapper, mockMailService);
 
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
@@ -158,18 +161,18 @@ public class AccountResourceIntTest {
         ManagedUserVM validUser = new ManagedUserVM(
             null,                   // id
             "joe",                  // login
-            "password",             // password
             "Joe",                  // firstName
             "Shmoe",                // lastName
             "joe@example.com",      // email
-            true,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            true,                   // activated
             "en",                   // langKey
             null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)));
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)),
+            "password");             // password
 
         restMvc.perform(
             post("/api/register")
@@ -187,18 +190,18 @@ public class AccountResourceIntTest {
         ManagedUserVM invalidUser = new ManagedUserVM(
             null,                   // id
             "funky-log!n",          // login <-- invalid
-            "password",             // password
             "Funky",                // firstName
             "One",                  // lastName
             "funky@example.com",    // email
-            true,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            true,                   // activated
             "en",                   // langKey
             null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)));
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)),
+            "password");// password
 
         restUserMockMvc.perform(
             post("/api/register")
@@ -216,18 +219,18 @@ public class AccountResourceIntTest {
         ManagedUserVM invalidUser = new ManagedUserVM(
             null,               // id
             "bob",              // login
-            "password",         // password
             "Bob",              // firstName
             "Green",            // lastName
             "invalid",          // email <-- invalid
-            true,               // activated
             "http://placehold.it/50x50", //imageUrl
+            true,               // activated
             "en",                   // langKey
             null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)));
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)),
+            "password");         // password
 
         restUserMockMvc.perform(
             post("/api/register")
@@ -245,18 +248,18 @@ public class AccountResourceIntTest {
         ManagedUserVM invalidUser = new ManagedUserVM(
             null,               // id
             "bob",              // login
-            "123",              // password with only 3 digits
             "Bob",              // firstName
             "Green",            // lastName
             "bob@example.com",  // email
-            true,               // activated
             "http://placehold.it/50x50", //imageUrl
+            true,               // activated
             "en",                   // langKey
             null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)));
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)),
+            "123");             // password with only 3 digits
 
         restUserMockMvc.perform(
             post("/api/register")
@@ -274,18 +277,18 @@ public class AccountResourceIntTest {
         ManagedUserVM invalidUser = new ManagedUserVM(
             null,               // id
             "bob",              // login
-            null,               // invalid null password
             "Bob",              // firstName
             "Green",            // lastName
             "bob@example.com",  // email
-            true,               // activated
             "http://placehold.it/50x50", //imageUrl
+            true,               // activated
             "en",                   // langKey
             null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)));
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)),
+            null); // invalid null password
 
         restUserMockMvc.perform(
             post("/api/register")
@@ -304,22 +307,35 @@ public class AccountResourceIntTest {
         ManagedUserVM validUser = new ManagedUserVM(
             null,                   // id
             "alice",                // login
-            "password",             // password
             "Alice",                // firstName
             "Something",            // lastName
             "alice@example.com",    // email
-            true,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            true,                   // activated
             "en",                   // langKey
             null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)));
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)),
+            "password");            // password
 
         // Duplicate login, different email
-        ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), validUser.getLogin(), validUser.getPassword(), validUser.getFirstName(), validUser.getLastName(),
-            "alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities());
+        ManagedUserVM duplicatedUser = new ManagedUserVM(
+            validUser.getId(),
+            validUser.getLogin(),
+            validUser.getFirstName(),
+            validUser.getLastName(),
+            "alicejr@example.com",
+            validUser.getImageUrl(),
+            true,
+            validUser.getLangKey(),
+            validUser.getCreatedBy(),
+            validUser.getCreatedDate(),
+            validUser.getLastModifiedBy(),
+            validUser.getLastModifiedDate(),
+            validUser.getAuthorities(),
+            validUser.getPassword());
 
         // Good user
         restMvc.perform(
@@ -346,22 +362,22 @@ public class AccountResourceIntTest {
         ManagedUserVM validUser = new ManagedUserVM(
             null,                   // id
             "john",                 // login
-            "password",             // password
             "John",                 // firstName
             "Doe",                  // lastName
             "john@example.com",     // email
-            true,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            true,                   // activated
             "en",                   // langKey
             null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)));
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.SCHOOL_ADMIN)),
+            "password");   // password
 
         // Duplicate email, different login
-        ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
-            validUser.getEmail(), true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities());
+        ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), "johnjr", validUser.getLogin(), validUser.getLastName(),
+            validUser.getEmail(), validUser.getImageUrl(),true,  validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities(), validUser.getPassword());
 
         // Good user
         restMvc.perform(
@@ -387,18 +403,18 @@ public class AccountResourceIntTest {
         ManagedUserVM validUser = new ManagedUserVM(
             null,                   // id
             "badguy",               // login
-            "password",             // password
             "Bad",                  // firstName
             "Guy",                  // lastName
             "badguy@example.com",   // email
-            true,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            true,                   // activated
             "en",                   // langKey
             null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)));
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+            "password");// password
 
         restMvc.perform(
             post("/api/register")
@@ -457,8 +473,8 @@ public class AccountResourceIntTest {
             "firstname",                // firstName
             "lastname",                  // lastName
             "save-account@example.com",    // email
-            false,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            false,                   // activated
             "en",                   // langKey
             null,                   // createdBy
             null,                   // createdDate
@@ -502,8 +518,8 @@ public class AccountResourceIntTest {
             "firstname",                // firstName
             "lastname",                  // lastName
             "invalid email",    // email
-            false,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            false,                   // activated
             "en",                   // langKey
             null,                   // createdBy
             null,                   // createdDate
@@ -547,8 +563,8 @@ public class AccountResourceIntTest {
             "firstname",                // firstName
             "lastname",                  // lastName
             "save-existing-email2@example.com",    // email
-            false,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            false,                   // activated
             "en",                   // langKey
             null,                   // createdBy
             null,                   // createdDate
@@ -585,8 +601,8 @@ public class AccountResourceIntTest {
             "firstname",                // firstName
             "lastname",                  // lastName
             "save-existing-email-and-login@example.com",    // email
-            false,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            false,                   // activated
             "en",                   // langKey
             null,                   // createdBy
             null,                   // createdDate
@@ -615,7 +631,7 @@ public class AccountResourceIntTest {
         user.setEmail("change-password@example.com");
         userRepository.saveAndFlush(user);
 
-        restMvc.perform(post("/api/account/change_password").content("new password"))
+        restMvc.perform(post("/api/account/change-password").content("new password"))
             .andExpect(status().isOk());
 
         User updatedUser = userRepository.findOneByLogin("change-password").orElse(null);
@@ -666,7 +682,7 @@ public class AccountResourceIntTest {
         user.setEmail("change-password-empty@example.com");
         userRepository.saveAndFlush(user);
 
-        restMvc.perform(post("/api/account/change_password").content(RandomStringUtils.random(0)))
+        restMvc.perform(post("/api/account/change-password").content(RandomStringUtils.random(0)))
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin("change-password-empty").orElse(null);
@@ -683,7 +699,7 @@ public class AccountResourceIntTest {
         user.setEmail("password-reset@example.com");
         userRepository.saveAndFlush(user);
 
-        restMvc.perform(post("/api/account/reset_password/init")
+        restMvc.perform(post("/api/account/reset-password/init")
             .content("password-reset@example.com"))
             .andExpect(status().isOk());
     }
@@ -691,7 +707,7 @@ public class AccountResourceIntTest {
     @Test
     public void testRequestPasswordResetWrongEmail() throws Exception {
         restMvc.perform(
-            post("/api/account/reset_password/init")
+            post("/api/account/reset-password/init")
                 .content("password-reset-wrong-email@example.com"))
             .andExpect(status().isBadRequest());
     }
@@ -712,7 +728,7 @@ public class AccountResourceIntTest {
         keyAndPassword.setNewPassword("new password");
 
         restMvc.perform(
-            post("/api/account/reset_password/finish")
+            post("/api/account/reset-password/finish")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
             .andExpect(status().isOk());
@@ -737,7 +753,7 @@ public class AccountResourceIntTest {
         keyAndPassword.setNewPassword("foo");
 
         restMvc.perform(
-            post("/api/account/reset_password/finish")
+            post("/api/account/reset-password/finish")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
             .andExpect(status().isBadRequest());
@@ -755,7 +771,7 @@ public class AccountResourceIntTest {
         keyAndPassword.setNewPassword("new password");
 
         restMvc.perform(
-            post("/api/account/reset_password/finish")
+            post("/api/account/reset-password/finish")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
             .andExpect(status().isInternalServerError());

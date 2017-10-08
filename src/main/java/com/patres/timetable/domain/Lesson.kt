@@ -14,24 +14,24 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(name = "lesson")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-data class Lesson(
+class Lesson(
 
-    @NotNull
+    @get:NotNull
     @Column(name = "name", nullable = false)
-    var name: String = "",
+    var name: String? = null,
 
-    @NotNull
+    @get:NotNull
     @Column(name = "start_time", nullable = false)
-    var startTime: Long = 0,
+    var startTime: Long? = null,
 
-    @NotNull
+    @get:NotNull
     @Column(name = "end_time", nullable = false)
-    var endTime: Long = 0,
+    var endTime: Long? = null,
 
     @OneToMany(mappedBy = "lesson")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private var timetables: MutableSet<Timetable> = HashSet()
+    private var timetables: Set<Timetable> = HashSet()
 
 ) : AbstractDivisionOwner(), Serializable {
 

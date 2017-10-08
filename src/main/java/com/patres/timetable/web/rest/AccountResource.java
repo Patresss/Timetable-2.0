@@ -8,6 +8,7 @@ import com.patres.timetable.security.SecurityUtils;
 import com.patres.timetable.service.MailService;
 import com.patres.timetable.service.UserService;
 import com.patres.timetable.service.dto.UserDTO;
+import com.patres.timetable.service.mapper.UserMapper;
 import com.patres.timetable.web.rest.vm.KeyAndPasswordVM;
 import com.patres.timetable.web.rest.vm.ManagedUserVM;
 import com.patres.timetable.web.rest.util.HeaderUtil;
@@ -38,15 +39,18 @@ public class AccountResource {
 
     private final UserService userService;
 
+    private final UserMapper userMapper;
+
     private final MailService mailService;
 
     private static final String CHECK_ERROR_MESSAGE = "Incorrect password";
 
     public AccountResource(UserRepository userRepository, UserService userService,
-            MailService mailService) {
+                           UserMapper userMapper, MailService mailService) {
 
         this.userRepository = userRepository;
         this.userService = userService;
+        this.userMapper = userMapper;
         this.mailService = mailService;
     }
 
@@ -119,7 +123,7 @@ public class AccountResource {
     @Timed
     public ResponseEntity<UserDTO> getAccount() {
         return Optional.ofNullable(userService.getUserWithAuthorities())
-            .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
+            .map(user -> new ResponseEntity<>(userMapper.userToUserDTO(user), HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 

@@ -7,17 +7,20 @@ import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Table
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "property")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-data class Property(
+class Property(
 
+    @get:NotNull
     @Column(name = "property_key", nullable = false)
-    var propertyKey: String = "",
+    var propertyKey: String? = null,
 
+    @get:NotNull
     @Column(name = "property_value")
-    var propertyValue: String = ""
+    var propertyValue: String? = null
 
 ) : AbstractDivisionOwner(), Serializable {
 
