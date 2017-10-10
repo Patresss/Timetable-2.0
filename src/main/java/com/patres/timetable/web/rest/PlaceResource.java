@@ -110,7 +110,6 @@ public class PlaceResource {
     @Timed
     public ResponseEntity<List<PlaceDTO>> getPlacesByDivisionsId(@ApiParam Pageable pageable, @PathVariable List<Long> divisionsId) {
         log.debug("REST request to get a page of Places by Division owners id");
-
         Page<PlaceDTO> page = placeService.findByDivisionOwnerId(pageable, divisionsId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/places");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
@@ -126,7 +125,6 @@ public class PlaceResource {
     @Timed
     public ResponseEntity<List<PlaceDTO>> getPlacesByCurrentLogin(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Places");
-
         Page<PlaceDTO> page = placeService.findByCurrentLogin(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/places");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);

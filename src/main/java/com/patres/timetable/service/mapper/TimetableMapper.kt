@@ -10,24 +10,6 @@ import org.springframework.stereotype.Service
 open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
 
     @Autowired
-    lateinit private var placeMapper: PlaceMapper
-
-    @Autowired
-    lateinit private var subjectMapper: SubjectMapper
-
-    @Autowired
-    lateinit private var teacherMapper: TeacherMapper
-
-    @Autowired
-    lateinit private var divisionMapper: DivisionMapper
-
-    @Autowired
-    lateinit private var lessonMapper: LessonMapper
-
-    @Autowired
-    lateinit private var periodMapper: PeriodMapper
-
-    @Autowired
     lateinit private var divisionRepository: DivisionRepository
 
     @Autowired

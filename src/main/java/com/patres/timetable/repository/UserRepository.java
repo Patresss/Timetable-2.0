@@ -27,7 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findOneWithAuthoritiesById(Long id);
 
     @EntityGraph(attributePaths = "authorities")
-    Optional<User> findOneWithAuthoritiesByLogin(String login);
+    User findOneWithAuthoritiesByLogin(String login);
 
     Page<User> findAllByLoginNot(Pageable pageable, String login);
 }

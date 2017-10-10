@@ -7,40 +7,43 @@ import java.time.Instant
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
-open class UserDTO() : AbstractApplicationEntityDTO() {
+open class UserDTO(
 
     @NotBlank
-    @Pattern(regexp = Constants.LOGIN_REGEX)
-    @Size(min = 1, max = 50)
-    public var login: String? = null
+    @get:Pattern(regexp = Constants.LOGIN_REGEX)
+    @get:Size(min = 1, max = 50)
+    var login: String? = null,
 
-    @Size(max = 50)
-    var firstName: String? = null
+    @get:Size(max = 50)
+    var firstName: String? = null,
 
-    @Size(max = 50)
-    var lastName: String? = null
+    @get:Size(max = 50)
+    var lastName: String? = null,
 
-    @Email
-    @Size(min = 5, max = 100)
-    var email: String? = null
+    @get:Email
+    @get:Size(min = 5, max = 100)
+    var email: String? = null,
 
-    @Size(max = 256)
-    var imageUrl: String? = null
+    @get:Size(max = 256)
+    var imageUrl: String? = null,
 
-    var isActivated: Boolean = false
+    var isActivated: Boolean = false,
 
-    @Size(min = 2, max = 5)
-    var langKey: String? = null
+    @get:Size(min = 2, max = 5)
+    var langKey: String? = null,
 
-    var createdBy: String? = null
+    var createdBy: String? = null,
 
-    var createdDate: Instant? = null
+    var createdDate: Instant? = null,
 
-    var lastModifiedBy: String? = null
+    var lastModifiedBy: String? = null,
 
-    var lastModifiedDate: Instant? = null
+    var lastModifiedDate: Instant? = null,
 
     var authorities: Set<String> = HashSet()
+
+    ) : AbstractApplicationEntityDTO() {
+
 
     constructor(id: Long?) : this() {
         this.id = id

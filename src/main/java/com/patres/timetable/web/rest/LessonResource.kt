@@ -47,7 +47,7 @@ open class LessonResource(private val lessonService: LessonService) {
     @PreAuthorize("@lessonService.hasPriviligeToAddEntity(#lessonDTO)")
     @Timed
     @Throws(URISyntaxException::class)
-    fun createLesson(@Valid @RequestBody lessonDTO: LessonDTO): ResponseEntity<LessonDTO> {
+    open fun createLesson(@Valid @RequestBody lessonDTO: LessonDTO): ResponseEntity<LessonDTO> {
         log.debug("REST request to save Lesson : {}", lessonDTO)
         if (lessonDTO.id != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new lesson cannot already have an ID")).body(null)
@@ -71,7 +71,7 @@ open class LessonResource(private val lessonService: LessonService) {
     @PutMapping("/lessons")
     @Timed
     @Throws(URISyntaxException::class)
-    fun updateLesson(@Valid @RequestBody lessonDTO: LessonDTO): ResponseEntity<LessonDTO> {
+    open fun updateLesson(@Valid @RequestBody lessonDTO: LessonDTO): ResponseEntity<LessonDTO> {
         log.debug("REST request to update Lesson : {}", lessonDTO)
         if (lessonDTO.id == null) {
             return createLesson(lessonDTO)
@@ -90,7 +90,7 @@ open class LessonResource(private val lessonService: LessonService) {
      */
     @GetMapping("/lessons")
     @Timed
-    fun getAllLessons(@ApiParam pageable: Pageable): ResponseEntity<List<LessonDTO>> {
+    open fun getAllLessons(@ApiParam pageable: Pageable): ResponseEntity<List<LessonDTO>> {
         log.debug("REST request to get a page of Lessons")
         val page = lessonService.findAll(pageable)
         val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/lessons")
@@ -107,7 +107,7 @@ open class LessonResource(private val lessonService: LessonService) {
      */
     @GetMapping("/lessons/divisions")
     @Timed
-    fun getLessonsByDivisionsId(@ApiParam pageable: Pageable, @PathVariable divisionsId: List<Long>): ResponseEntity<List<LessonDTO>> {
+    open fun getLessonsByDivisionsId(@ApiParam pageable: Pageable, @PathVariable divisionsId: List<Long>): ResponseEntity<List<LessonDTO>> {
         log.debug("REST request to get a page of Lessons by Division owners id")
 
         val page = lessonService.findByDivisionOwnerId(pageable, divisionsId)
@@ -123,7 +123,7 @@ open class LessonResource(private val lessonService: LessonService) {
      */
     @GetMapping("/lessons/login")
     @Timed
-    fun getLessonsByCurrentLogin(@ApiParam pageable: Pageable): ResponseEntity<List<LessonDTO>> {
+    open fun getLessonsByCurrentLogin(@ApiParam pageable: Pageable): ResponseEntity<List<LessonDTO>> {
         log.debug("REST request to get a page of Lessons")
 
         val page = lessonService.findByCurrentLogin(pageable)
@@ -139,7 +139,7 @@ open class LessonResource(private val lessonService: LessonService) {
      */
     @GetMapping("/lessons/{id}")
     @Timed
-    fun getLesson(@PathVariable id: Long?): ResponseEntity<LessonDTO> {
+    open fun getLesson(@PathVariable id: Long?): ResponseEntity<LessonDTO> {
         log.debug("REST request to get Lesson : {}", id)
         val lessonDTO = lessonService.findOne(id)
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(lessonDTO))
@@ -154,7 +154,7 @@ open class LessonResource(private val lessonService: LessonService) {
     @PreAuthorize("@lessonService.hasPriviligeToDeleteEntity(#id)")
     @DeleteMapping("/lessons/{id}")
     @Timed
-    fun deleteLesson(@PathVariable id: Long?): ResponseEntity<Void> {
+    open fun deleteLesson(@PathVariable id: Long?): ResponseEntity<Void> {
         log.debug("REST request to delete Lesson : {}", id)
         lessonService.delete(id)
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id!!.toString())).build()

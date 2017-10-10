@@ -30,7 +30,7 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
 
         val divisionSet = entityDTOSetToEntitySet(entityDto.parents)
         division.parents = divisionSet
-        val userSet = userMapper.userDTOSetToUserSet(entityDto.users)
+        val userSet = userMapper.entityDTOSetToEntitySet(entityDto.users)
         division.users = userSet
         val teacherSet = teacherMapper.entityDTOSetToEntitySet(entityDto.preferredTeachers)
         division.preferredTeachers = teacherSet
@@ -54,7 +54,7 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
 
         val divisionDtoSet = entitySetToEntityDTOSet(entity.parents)
         divisionDTO.parents = divisionDtoSet
-        val userDtoSet = userMapper.userSetToUserDTOSet(entity.users)
+        val userDtoSet = userMapper.entitySetToEntityDTOSet(entity.users)
         divisionDTO.users = userDtoSet
         val teacherDtoSet = teacherMapper.entitySetToEntityDTOSet(entity.preferredTeachers)
         divisionDTO.preferredTeachers = teacherDtoSet

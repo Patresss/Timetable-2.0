@@ -18,7 +18,6 @@ class Property(
     @Column(name = "property_key", nullable = false)
     var propertyKey: String? = null,
 
-    @get:NotNull
     @Column(name = "property_value")
     var propertyValue: String? = null
 

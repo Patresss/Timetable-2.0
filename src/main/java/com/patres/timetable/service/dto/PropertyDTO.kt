@@ -9,7 +9,6 @@ class PropertyDTO(
     @get:NotNull
     var propertyKey: String? = null,
 
-    @get:NotNull
     var propertyValue: String? = null
 
 ) : AbstractDivisionOwnerDTO(), Serializable
