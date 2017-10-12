@@ -85,8 +85,8 @@ open class UserService(
             }
     }
 
-    open fun createUser(login: String, password: String, firstName: String, lastName: String, email: String,
-                   imageUrl: String, langKey: String): User {
+    open fun createUser(login: String, password: String, firstName: String?, lastName: String?, email: String,
+                   imageUrl: String?, langKey: String?): User {
 
         val newUser = User()
         val authority = authorityRepository.findOne(AuthoritiesConstants.SCHOOL_ADMIN)
@@ -172,7 +172,7 @@ open class UserService(
         user.lastName = userDTO.lastName
         user.email = userDTO.email
         user.imageUrl = userDTO.imageUrl
-        user.activated = userDTO.isActivated
+        user.activated = userDTO.activated
         user.langKey = userDTO.langKey
         user.authorities = emptySet()
         userDTO.authorities

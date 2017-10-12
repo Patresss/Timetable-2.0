@@ -2,7 +2,6 @@ package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.patres.timetable.config.Constants
-import org.apache.commons.lang3.StringUtils
 import org.hibernate.annotations.BatchSize
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
@@ -18,14 +17,16 @@ import javax.validation.constraints.Size
 @Entity
 @Table(name = "jhi_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-class User: AbstractAuditingEntity(), Serializable {
+class User : AbstractAuditingEntity(), Serializable {
 
-    //Lowercase the login before saving it in database TODO
     @get:NotNull
     @get:Pattern(regexp = Constants.LOGIN_REGEX)
     @get:Size(min = 1, max = 50)
     @Column(length = 50, unique = true, nullable = false)
     var login: String? = null
+        set(value) {
+            field = value?.toLowerCase()
+        }
 
     @JsonIgnore
     @get:NotNull
@@ -48,7 +49,7 @@ class User: AbstractAuditingEntity(), Serializable {
 
     @get:NotNull
     @Column(nullable = false)
-    var activated:Boolean = false
+    var activated: Boolean = false
 
     @get:Size(min = 2, max = 5)
     @Column(name = "lang_key", length = 5)
@@ -84,7 +85,6 @@ class User: AbstractAuditingEntity(), Serializable {
     var divisions: Set<Division> = HashSet()
 
 
-
     override fun equals(o: Any?): Boolean {
         if (this === o) {
             return true
@@ -100,8 +100,6 @@ class User: AbstractAuditingEntity(), Serializable {
     override fun hashCode(): Int {
         return Objects.hashCode(id)
     }
-
-
 
 
 }

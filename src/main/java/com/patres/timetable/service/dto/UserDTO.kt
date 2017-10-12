@@ -27,7 +27,7 @@ open class UserDTO(
     @get:Size(max = 256)
     var imageUrl: String? = null,
 
-    var isActivated: Boolean = false,
+    var activated: Boolean = false,
 
     @get:Size(min = 2, max = 5)
     var langKey: String? = null,
@@ -56,7 +56,7 @@ open class UserDTO(
         lastName: String?,
         email: String?,
         imageUrl: String?,
-        isActivated: Boolean,
+        activated: Boolean,
         langKey: String?,
         createdBy: String?,
         createdDate: Instant?,
@@ -70,7 +70,7 @@ open class UserDTO(
         this.lastName = lastName
         this.email = email
         this.imageUrl = imageUrl
-        this.isActivated = isActivated
+        this.activated = activated
         this.langKey = langKey
         this.createdBy = createdBy
         this.createdDate = createdDate

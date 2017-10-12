@@ -18,7 +18,7 @@ open class UserMapper : EntityMapper<User, UserDTO>() {
             lastName = entityDto.lastName
             email = entityDto.email
             imageUrl = entityDto.imageUrl
-            activated = entityDto.isActivated
+            activated = entityDto.activated
             langKey = entityDto.langKey
             authorities = authoritiesFromStrings(entityDto.authorities)
         }
@@ -32,7 +32,7 @@ open class UserMapper : EntityMapper<User, UserDTO>() {
             lastName = entity.lastName,
             email = entity.email,
             imageUrl = entity.imageUrl,
-            isActivated = entity.activated,
+            activated = entity.activated,
             langKey = entity.langKey,
             createdBy = entity.createdBy,
             createdDate = entity.createdDate,

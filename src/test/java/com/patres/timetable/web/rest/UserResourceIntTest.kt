@@ -28,10 +28,7 @@ import org.springframework.transaction.annotation.Transactional
 
 import javax.persistence.EntityManager
 import java.time.Instant
-import java.util.Arrays
 import java.util.HashSet
-import java.util.stream.Collectors
-import java.util.stream.Stream
 
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.hasItem
@@ -69,9 +66,6 @@ open class UserResourceIntTest {
     @Autowired
     private val exceptionTranslator: ExceptionTranslator? = null
 
-    @Autowired
-    private val em: EntityManager? = null
-
     private var restUserMockMvc: MockMvc? = null
 
     private var user: User? = null
@@ -107,18 +101,31 @@ open class UserResourceIntTest {
          * This is a static method, as tests for other entities might also need it,
          * if they test an entity which has a required relationship to the User entity.
          */
-        fun createEntity(em: EntityManager?): User {
-            val user = User()
-            user.login = DEFAULT_LOGIN
-            user.password = RandomStringUtils.random(60)
-            user.activated = true
-            user.email = DEFAULT_EMAIL
-            user.firstName = DEFAULT_FIRSTNAME
-            user.lastName = DEFAULT_LASTNAME
-            user.imageUrl = DEFAULT_IMAGEURL
-            user.langKey = DEFAULT_LANGKEY
-            return user
+        fun createEntity(): User {
+            return User().apply {
+                login = DEFAULT_LOGIN
+                password = RandomStringUtils.random(60)
+                activated = true
+                email = DEFAULT_EMAIL
+                firstName = DEFAULT_FIRSTNAME
+                lastName = DEFAULT_LASTNAME
+                imageUrl = DEFAULT_IMAGEURL
+                langKey = DEFAULT_LANGKEY
+            }
         }
+
+        fun createEntityDto(): UserDTO {
+            return UserDTO().apply {
+                login = DEFAULT_LOGIN
+                activated = true
+                email = DEFAULT_EMAIL
+                firstName = DEFAULT_FIRSTNAME
+                lastName = DEFAULT_LASTNAME
+                imageUrl = DEFAULT_IMAGEURL
+                langKey = DEFAULT_LANGKEY
+            }
+        }
+
     }
 
     @Before
@@ -134,7 +141,7 @@ open class UserResourceIntTest {
 
     @Before
     fun initTest() {
-        user = createEntity(em)
+        user = createEntity()
     }
 
     @Test
@@ -338,7 +345,7 @@ open class UserResourceIntTest {
             lastName = UPDATED_LASTNAME
             email = UPDATED_EMAIL
             imageUrl = UPDATED_IMAGEURL
-            isActivated = updatedUser.activated
+            activated = updatedUser.activated
             langKey = UPDATED_LANGKEY
             createdBy = updatedUser.createdBy
             createdDate = updatedUser.createdDate
@@ -384,7 +391,7 @@ open class UserResourceIntTest {
             lastName = UPDATED_LASTNAME
             email = UPDATED_EMAIL
             imageUrl = UPDATED_IMAGEURL
-            isActivated = updatedUser.activated
+            activated = updatedUser.activated
             langKey = UPDATED_LANGKEY
             createdBy = updatedUser.createdBy
             createdDate = updatedUser.createdDate
@@ -441,7 +448,7 @@ open class UserResourceIntTest {
             lastName = updatedUser.lastName
             email = "jhipster@localhost"
             imageUrl = updatedUser.imageUrl
-            isActivated = updatedUser.activated
+            activated = updatedUser.activated
             langKey = updatedUser.langKey
             createdBy = updatedUser.createdBy
             createdDate = updatedUser.createdDate
@@ -488,7 +495,7 @@ open class UserResourceIntTest {
             lastName = updatedUser.lastName
             email = updatedUser.email
             imageUrl = updatedUser.imageUrl
-            isActivated = updatedUser.activated
+            activated = updatedUser.activated
             langKey = updatedUser.langKey
             createdBy = updatedUser.createdBy
             createdDate = updatedUser.createdDate
@@ -604,7 +611,7 @@ open class UserResourceIntTest {
         assertThat(userDTO.firstName).isEqualTo(DEFAULT_FIRSTNAME)
         assertThat(userDTO.lastName).isEqualTo(DEFAULT_LASTNAME)
         assertThat(userDTO.email).isEqualTo(DEFAULT_EMAIL)
-        assertThat(userDTO.isActivated).isEqualTo(true)
+        assertThat(userDTO.activated).isEqualTo(true)
         assertThat(userDTO.imageUrl).isEqualTo(DEFAULT_IMAGEURL)
         assertThat(userDTO.langKey).isEqualTo(DEFAULT_LANGKEY)
         assertThat(userDTO.createdBy).isEqualTo(DEFAULT_LOGIN)

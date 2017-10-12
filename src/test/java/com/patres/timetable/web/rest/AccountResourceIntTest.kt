@@ -8,15 +8,18 @@ import com.patres.timetable.repository.UserRepository
 import com.patres.timetable.security.AuthoritiesConstants
 import com.patres.timetable.service.MailService
 import com.patres.timetable.service.UserService
-import com.patres.timetable.service.dto.UserDTO
 import com.patres.timetable.service.mapper.UserMapper
 import com.patres.timetable.web.rest.vm.KeyAndPasswordVM
 import com.patres.timetable.web.rest.vm.ManagedUserVM
 import org.apache.commons.lang3.RandomStringUtils
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.doNothing
 import org.mockito.MockitoAnnotations
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -26,22 +29,13 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.transaction.annotation.Transactional
-
-import java.time.Instant
-import java.util.*
-
-import org.assertj.core.api.Assertions.assertThat
-import org.hamcrest.Matchers.hasItem
-import org.mockito.Matchers.anyObject
-import org.mockito.Mockito
-import org.mockito.Mockito.doNothing
-import org.mockito.Mockito.`when`
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.transaction.annotation.Transactional
+import java.time.Instant
+import java.util.*
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = arrayOf(TimetableApp::class))
@@ -66,14 +60,32 @@ open class AccountResourceIntTest {
     lateinit private var httpMessageConverters: Array<HttpMessageConverter<*>>
 
     @Mock
-    private val mockUserService: UserService? = null
+    lateinit private var mockUserService: UserService
 
     @Mock
-    private val mockMailService: MailService? = null
+    lateinit private var mockMailService: MailService
 
-    private var restUserMockMvc: MockMvc? = null
+    lateinit private var restUserMockMvc: MockMvc
 
-    private var restMvc: MockMvc? = null
+    lateinit private var restMvc: MockMvc
+
+    companion object {
+
+        fun createValidAccount(): ManagedUserVM {
+            val user = UserResourceIntTest.createEntity()
+            return ManagedUserVM().apply {
+                login = user.login
+                firstName = user.firstName
+                lastName = user.lastName
+                email = user.email
+                imageUrl = user.imageUrl
+                activated = user.activated
+                langKey = user.langKey
+                authorities = user.authorities.map { it.name }.toSet()
+                password = user.password
+            }
+        }
+    }
 
     // workaround for anyObject() in Kotlin https://stackoverflow.com/questions/30305217/is-it-possible-to-use-mockito-in-kotlin
     private fun <T> anyObject(): T {
@@ -86,358 +98,252 @@ open class AccountResourceIntTest {
         doNothing().`when`<MailService>(mockMailService).sendActivationEmail(anyObject())
 
         val accountResource = AccountResource(userRepository, userService, userMapper, mockMailService)
-
         val accountUserMockResource = AccountResource(userRepository, mockUserService, userMapper, mockMailService)
-
-        this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
-                .setMessageConverters(*httpMessageConverters!!)
-                .build()
+        this.restMvc = MockMvcBuilders.standaloneSetup(accountResource).setMessageConverters(*httpMessageConverters).build()
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(accountUserMockResource).build()
     }
 
     @Test
     @Throws(Exception::class)
-    open fun testNonAuthenticatedUser() {
-        restUserMockMvc!!.perform(get("/api/authenticate")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk)
-                .andExpect(content().string(""))
+    open fun `test non authenticated user`() {
+        restUserMockMvc.perform(get("/api/authenticate")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk)
+            .andExpect(content().string(""))
     }
 
     @Test
     @Throws(Exception::class)
-    open fun testAuthenticatedUser() {
-        restUserMockMvc!!.perform(get("/api/authenticate")
-                .with { request ->
-                    request.remoteUser = "test"
-                    request
-                }
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk)
-                .andExpect(content().string("test"))
+    open fun `test authenticated user`() {
+        restUserMockMvc.perform(get("/api/authenticate")
+            .with { request ->
+                request.remoteUser = "test"
+                request
+            }
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk)
+            .andExpect(content().string("test"))
     }
 
     @Test
     @Throws(Exception::class)
-    open fun testGetExistingAccount() {
+    open fun `test get existing account`() {
         val authorities = HashSet<Authority>()
         val authority = Authority()
         authority.name = AuthoritiesConstants.ADMIN
         authorities.add(authority)
 
-        val user = User()
-        user.login = "test"
-        user.firstName = "john"
-        user.lastName = "doe"
-        user.email = "john.doe@jhipster.com"
-        user.imageUrl = "http://placehold.it/50x50"
-        user.langKey = "en"
-        user.authorities = authorities
-        `when`<User>(mockUserService!!.getUserWithAuthorities()).thenReturn(user)
+        val user = User().apply {
+            login = "test"
+            firstName = "john"
+            lastName = "doe"
+            email = "john.doe@jhipster.com"
+            imageUrl = "http://placehold.it/50x50"
+            langKey = "en"
+            this.authorities = authorities
+        }
 
-        restUserMockMvc!!.perform(get("/api/account")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk)
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.login").value("test"))
-                .andExpect(jsonPath("$.firstName").value("john"))
-                .andExpect(jsonPath("$.lastName").value("doe"))
-                .andExpect(jsonPath("$.email").value("john.doe@jhipster.com"))
-                .andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
-                .andExpect(jsonPath("$.langKey").value("en"))
-                .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN))
+        `when`<User>(mockUserService.getUserWithAuthorities()).thenReturn(user)
+
+        restUserMockMvc.perform(get("/api/account")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.login").value("test"))
+            .andExpect(jsonPath("$.firstName").value("john"))
+            .andExpect(jsonPath("$.lastName").value("doe"))
+            .andExpect(jsonPath("$.email").value("john.doe@jhipster.com"))
+            .andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
+            .andExpect(jsonPath("$.langKey").value("en"))
+            .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN))
     }
 
     @Test
     @Throws(Exception::class)
-    open fun testGetUnknownAccount() {
-        `when`<User>(mockUserService!!.getUserWithAuthorities()).thenReturn(null)
+    open fun `test get unknown account`() {
+        `when`<User>(mockUserService.getUserWithAuthorities()).thenReturn(null)
 
-        restUserMockMvc!!.perform(get("/api/account")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError)
+        restUserMockMvc.perform(get("/api/account")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isInternalServerError)
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testRegisterValid() {
-        val validUser = ManagedUserVM().apply {
-            login = "joe"
-            firstName = "Joe"
-            lastName = "Shmoe"
-            email = "joe@example.com"
-            imageUrl = "http://placehold.it/50x50"
-            isActivated = true
-            langKey = "en"
-            authorities = HashSet(listOf(AuthoritiesConstants.SCHOOL_ADMIN))
-            password = "password"
-        }
+    open fun `test register valid`() {
+        val validUser = createValidAccount()
 
+        restMvc.perform(
+            post("/api/register")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(validUser)))
+            .andExpect(status().isCreated)
 
-        restMvc!!.perform(
-                post("/api/register")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(validUser)))
-                .andExpect(status().isCreated)
-
-        val user = userRepository!!.findOneByLogin("joe")
+        val user = userRepository.findOneByLogin(validUser.login)
         assertThat(user.isPresent).isTrue()
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testRegisterInvalidLogin() {
-        val invalidUser = ManagedUserVM().apply {
+    open fun `test register invalid login`() {
+        val invalidUser = createValidAccount().apply {
             login = "open funky-log!n"
-            firstName = "Joe"
-            lastName = "Shmoe"
-            email = "joe@example.com"
-            imageUrl = "http://placehold.it/50x50"
-            isActivated = true
-            langKey = "en"
-            authorities = HashSet(listOf(AuthoritiesConstants.SCHOOL_ADMIN))
-            password = "password"
         }
 
-        restUserMockMvc!!.perform(
-                post("/api/register")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
-                .andExpect(status().isBadRequest)
+        restUserMockMvc.perform(
+            post("/api/register")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .andExpect(status().isBadRequest)
 
-        val user = userRepository.findOneByEmail("open funky@example.com")
+        val user = userRepository.findOneByEmail(invalidUser.email)
         assertThat(user.isPresent).isFalse()
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testRegisterInvalidEmail() {
-        val invalidUser = ManagedUserVM().apply {
-            login = "bob"
-            firstName = "Joe"
-            lastName = "Shmoe"
+    open fun `test register invalid email`() {
+        val invalidUser = createValidAccount().apply {
             email = "invalid"
-            imageUrl = "http://placehold.it/50x50"
-            isActivated = true
-            langKey = "en"
-            authorities = HashSet(listOf(AuthoritiesConstants.SCHOOL_ADMIN))
-            password = "password"
         }
 
-        restUserMockMvc!!.perform(
-                post("/api/register")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
-                .andExpect(status().isBadRequest)
+        restUserMockMvc.perform(
+            post("/api/register")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .andExpect(status().isBadRequest)
 
-        val user = userRepository!!.findOneByLogin("bob")
+        val user = userRepository.findOneByLogin(invalidUser.login)
         assertThat(user.isPresent).isFalse()
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testRegisterInvalidPassword() {
-        val invalidUser = ManagedUserVM().apply {
-            login = "bob"
-            firstName = "Joe"
-            lastName = "Shmoe"
-            email = "bob@example.com"
-            imageUrl = "http://placehold.it/50x50"
-            isActivated = true
-            langKey = "en"
-            authorities = HashSet(listOf(AuthoritiesConstants.SCHOOL_ADMIN))
+    open fun `test register invalid password`() {
+        val invalidUser = createValidAccount().apply {
             password = "123"
         }
 
-        restUserMockMvc!!.perform(
-                post("/api/register")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
-                .andExpect(status().isBadRequest)
+        restUserMockMvc.perform(
+            post("/api/register")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .andExpect(status().isBadRequest)
 
-        val user = userRepository!!.findOneByLogin("bob")
+        val user = userRepository.findOneByLogin(invalidUser.login)
         assertThat(user.isPresent).isFalse()
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    open  fun testRegisterNullPassword() {
-        val invalidUser = ManagedUserVM().apply {
-            login = "bob"
-            firstName = "Joe"
-            lastName = "Shmoe"
-            email = "bob@example.com"
-            imageUrl = "http://placehold.it/50x50"
-            isActivated = true
-            langKey = "en"
-            authorities = HashSet(listOf(AuthoritiesConstants.SCHOOL_ADMIN))
+    open fun `test register null password`() {
+        val invalidUser = createValidAccount().apply {
+            password = null
         }
 
-        restUserMockMvc!!.perform(
-                post("/api/register")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
-                .andExpect(status().isBadRequest)
+        restUserMockMvc.perform(
+            post("/api/register")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .andExpect(status().isBadRequest)
 
-        val user = userRepository!!.findOneByLogin("bob")
+        val user = userRepository.findOneByLogin(invalidUser.login)
         assertThat(user.isPresent).isFalse()
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testRegisterDuplicateLogin() {
-        // Good
-        val validUser = ManagedUserVM().apply {
-            login = "alice"
-            firstName = "Joe"
-            lastName = "Shmoe"
-            email = "bob@example.com"
-            imageUrl = "http://placehold.it/50x50"
-            isActivated = true
-            langKey = "en"
-            authorities = HashSet(listOf(AuthoritiesConstants.SCHOOL_ADMIN))
-            password = "password"
-        }
-        // Duplicate login, different email
-        val duplicatedUser = ManagedUserVM().apply {
-            id = validUser.id
+    open fun `test register duplicate login`() {
+        val validUser = createValidAccount()
+        val duplicatedUser = createValidAccount().apply {
             login = validUser.login
-            firstName = validUser.firstName
-            lastName = validUser.lastName
             email = "alicejr@example.com"
-            imageUrl = validUser.imageUrl
-            langKey = validUser.langKey
-            createdBy = validUser.createdBy
-            createdDate = validUser.createdDate
-            lastModifiedBy = validUser.lastModifiedBy
-            lastModifiedDate = validUser.lastModifiedDate
-            authorities = validUser.authorities
-            password = validUser.password
         }
 
-        // Good user
-        restMvc!!.perform(
-                post("/api/register")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(validUser)))
-                .andExpect(status().isCreated)
+        restMvc.perform(
+            post("/api/register")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(validUser)))
+            .andExpect(status().isCreated)
 
-        // Duplicate login
-        restMvc!!.perform(
-                post("/api/register")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(duplicatedUser)))
-                .andExpect(status().is4xxClientError)
+        restMvc.perform(
+            post("/api/register")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(duplicatedUser)))
+            .andExpect(status().is4xxClientError)
 
-        val userDup = userRepository!!.findOneByEmail("alicejr@example.com")
+        val userDup = userRepository.findOneByEmail(duplicatedUser.email)
         assertThat(userDup.isPresent).isFalse()
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testRegisterDuplicateEmail() {
-        // Good
-        val validUser = ManagedUserVM().apply {
-            login = "bob"
-            firstName = "Joe"
-            lastName = "Shmoe"
-            email = "bob@example.com"
-            imageUrl = "http://placehold.it/50x50"
-            isActivated = true
-            langKey = "en"
-            authorities = HashSet(listOf(AuthoritiesConstants.SCHOOL_ADMIN))
-            password = "password"
-        }
-        // createdBy
-        // createdDate
-        // lastModifiedBy
-        // password
+    open fun `test register duplicate email`() {
+        val validUser = createValidAccount()
 
-        // Duplicate email, different login
-        val duplicatedUser = ManagedUserVM().apply {
-            id = validUser.id
+        val duplicatedUser = createValidAccount().apply {
             login = "johnjr"
-            firstName = validUser.firstName
-            lastName = validUser.lastName
             email = validUser.email
-            imageUrl = validUser.imageUrl
-            langKey = validUser.langKey
-            createdBy = validUser.createdBy
-            createdDate = validUser.createdDate
-            lastModifiedBy = validUser.lastModifiedBy
-            lastModifiedDate = validUser.lastModifiedDate
-            authorities = validUser.authorities
-            password = validUser.password
         }
-        // Good user
-        restMvc!!.perform(
-                post("/api/register")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(validUser)))
-                .andExpect(status().isCreated)
+        restMvc.perform(
+            post("/api/register")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(validUser)))
+            .andExpect(status().isCreated)
 
-        // Duplicate email
-        restMvc!!.perform(
-                post("/api/register")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(duplicatedUser)))
-                .andExpect(status().is4xxClientError)
+        restMvc.perform(
+            post("/api/register")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(duplicatedUser)))
+            .andExpect(status().is4xxClientError)
 
-        val userDup = userRepository!!.findOneByLogin("johnjr")
+        val userDup = userRepository.findOneByLogin(duplicatedUser.login)
         assertThat(userDup.isPresent).isFalse()
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testRegisterAdminIsIgnored() {
-        val validUser = ManagedUserVM().apply {
-            login = "badguy"
-            firstName = "Joe"
-            lastName = "Shmoe"
-            email = "bob@example.com"
-            imageUrl = "http://placehold.it/50x50"
-            isActivated = true
-            langKey = "en"
+    open fun `test register admin is ignored`() {
+        val validUser = createValidAccount().apply {
             authorities = HashSet(listOf(AuthoritiesConstants.ADMIN))
-            password = "password"
         }
 
-        restMvc!!.perform(
-                post("/api/register")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(validUser)))
-                .andExpect(status().isCreated)
+        restMvc.perform(
+            post("/api/register")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(validUser)))
+            .andExpect(status().isCreated)
 
-        val userDup = userRepository!!.findOneByLogin("badguy")
+        val userDup = userRepository.findOneByLogin(validUser.login)
         assertThat(userDup.isPresent).isTrue()
         assertThat(userDup.get().authorities).hasSize(1)
-                .containsExactly(authorityRepository!!.findOne(AuthoritiesConstants.SCHOOL_ADMIN))
+            .containsExactly(authorityRepository.findOne(AuthoritiesConstants.SCHOOL_ADMIN))
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testActivateAccount() {
+    open fun `test activate account`() {
         val activationKey = "some activation key"
-        var user = User()
-        user.login = "activate-account"
-        user.email = "activate-account@example.com"
-        user.password = RandomStringUtils.random(60)
-        user.activated = false
-        user.activationKey = activationKey
+        var user = UserResourceIntTest.createEntity().apply {
+            login = "activate-account"
+            activated = false
+            this.activationKey = activationKey
 
-        userRepository!!.saveAndFlush(user)
+        }
 
-        restMvc!!.perform(get("/api/activate?key={activationKey}", activationKey))
-                .andExpect(status().isOk)
+        userRepository.saveAndFlush(user)
+
+        restMvc.perform(get("/api/activate?key={activationKey}", activationKey))
+            .andExpect(status().isOk)
 
         user = userRepository.findOneByLogin(user.login).orElse(null)
         assertThat(user.activated).isTrue()
@@ -446,43 +352,28 @@ open class AccountResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testActivateAccountWithWrongKey() {
-        restMvc!!.perform(get("/api/activate?key=wrongActivationKey"))
-                .andExpect(status().isInternalServerError)
+    open fun `test activate account with wrong key`() {
+        restMvc.perform(get("/api/activate?key=wrongActivationKey")).andExpect(status().isInternalServerError)
     }
 
     @Test
     @Transactional
     @WithMockUser("save-account")
     @Throws(Exception::class)
-    open fun testSaveAccount() {
-        val user = User()
-        user.login = "save-account"
-        user.email = "save-account@example.com"
-        user.password = RandomStringUtils.random(60)
-        user.activated = true
+    open fun `test save account`() {
+        val user = UserResourceIntTest.createEntity().apply {
+            login = "save-account"
+        }
 
-        userRepository!!.saveAndFlush(user)
+        userRepository.saveAndFlush(user)
 
-        val userDTO = UserDTO(null, // id
-                "not-used", // login
-                "firstname", // firstName
-                "lastname", // lastName
-                "save-account@example.com", // email
-                "http://placehold.it/50x50", //imageUrl
-                false, // activated
-                "en", null, null, null, null, // lastModifiedDate
-                HashSet(listOf(AuthoritiesConstants.ADMIN))
-        )// langKey
-        // createdBy
-        // createdDate
-        // lastModifiedBy
+        val userDTO = UserResourceIntTest.createEntityDto()
 
-        restMvc!!.perform(
-                post("/api/account")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(userDTO)))
-                .andExpect(status().isOk)
+        restMvc.perform(
+            post("/api/account")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(userDTO)))
+            .andExpect(status().isOk)
 
         val updatedUser = userRepository.findOneByLogin(user.login).orElse(null)
         assertThat(updatedUser.firstName).isEqualTo(userDTO.firstName)
@@ -499,30 +390,26 @@ open class AccountResourceIntTest {
     @Transactional
     @WithMockUser("save-invalid-email")
     @Throws(Exception::class)
-    open fun testSaveInvalidEmail() {
-        val user = User()
-        user.login = "save-invalid-email"
-        user.email = "save-invalid-email@example.com"
-        user.password = RandomStringUtils.random(60)
-        user.activated = true
+    open fun `test save invalid email`() {
+        val user = UserResourceIntTest.createEntity().apply {
+            login = "save-invalid-email"
+            email = "save-invalid-email@example.com"
+            activated = true
+        }
 
         userRepository.saveAndFlush(user)
 
-        val userDTO = UserDTO(null, // id
-                "not-used", // login
-                "firstname", // firstName
-                "lastname", // lastName
-                "invalid email", // email
-                "http://placehold.it/50x50", //imageUrl
-                false, // activated
-                "en", null, null, null, null, // lastModifiedDate
-                HashSet(listOf(AuthoritiesConstants.ADMIN))
-        )
-        restMvc!!.perform(
-                post("/api/account")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(userDTO)))
-                .andExpect(status().isBadRequest)
+        val userDTO = UserResourceIntTest.createEntityDto().apply {
+            login = "not-used"
+            email = "invalid email"
+            activated = false
+        }
+
+        restMvc.perform(
+            post("/api/account")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(userDTO)))
+            .andExpect(status().isBadRequest)
 
         assertThat(userRepository.findOneByEmail("invalid email")).isNotPresent
     }
@@ -531,44 +418,31 @@ open class AccountResourceIntTest {
     @Transactional
     @WithMockUser("save-existing-email")
     @Throws(Exception::class)
-    open fun testSaveExistingEmail() {
-        val user = User()
-        user.login = "save-existing-email"
-        user.email = "save-existing-email@example.com"
-        user.password = RandomStringUtils.random(60)
-        user.activated = true
+    open fun `test save existing email`() {
+        val user = UserResourceIntTest.createEntity().apply {
+            login = "save-existing-email"
+            email = "save-existing-email@example.com"
+        }
+        userRepository.saveAndFlush(user)
 
-        userRepository!!.saveAndFlush(user)
-
-        val anotherUser = User()
-        anotherUser.login = "save-existing-email2"
-        anotherUser.email = "save-existing-email2@example.com"
-        anotherUser.password = RandomStringUtils.random(60)
-        anotherUser.activated = true
-
+        val anotherUser = UserResourceIntTest.createEntity().apply {
+            login = "save-existing-email2"
+            email = "save-existing-email2@example.com"
+        }
         userRepository.saveAndFlush(anotherUser)
 
-        val userDTO = UserDTO(null, // id
-                "not-used", // login
-                "firstname", // firstName
-                "lastname", // lastName
-                "save-existing-email2@example.com", // email
-                "http://placehold.it/50x50", //imageUrl
-                false, // activated
-                "en", null, null, null, null, // lastModifiedDate
-                HashSet(listOf(AuthoritiesConstants.ADMIN))
-        )// langKey
-        // createdBy
-        // createdDate
-        // lastModifiedBy
+        val userDTO = UserResourceIntTest.createEntityDto().apply {
+            email = "save-existing-email2@example.com"
+            activated = false
+            authorities = HashSet(listOf(AuthoritiesConstants.ADMIN))
+        }
+        restMvc.perform(
+            post("/api/account")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(userDTO)))
+            .andExpect(status().isBadRequest)
 
-        restMvc!!.perform(
-                post("/api/account")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(userDTO)))
-                .andExpect(status().isBadRequest)
-
-        val updatedUser = userRepository.findOneByLogin("save-existing-email").orElse(null)
+        val updatedUser = userRepository.findOneByLogin(user.login).orElse(null)
         assertThat(updatedUser.email).isEqualTo("save-existing-email@example.com")
     }
 
@@ -576,70 +450,56 @@ open class AccountResourceIntTest {
     @Transactional
     @WithMockUser("save-existing-email-and-login")
     @Throws(Exception::class)
-    open fun testSaveExistingEmailAndLogin() {
-        val user = User()
-        user.login = "save-existing-email-and-login"
-        user.email = "save-existing-email-and-login@example.com"
-        user.password = RandomStringUtils.random(60)
-        user.activated = true
+    open fun `test save existing email and login`() {
+        val user = UserResourceIntTest.createEntity().apply {
+            login = "save-existing-email-and-login"
+            email = "save-existing-email-and-login@example.com"
+            activated = true
+        }
+        userRepository.saveAndFlush(user)
 
-        userRepository!!.saveAndFlush(user)
+        val userDTO = UserResourceIntTest.createEntityDto().apply {
+            login = "not-used"
+            email = "save-existing-email-and-login@example.com"
+            activated = false
+        }
 
-        val userDTO = UserDTO(null, // id
-                "not-used", // login
-                "firstname", // firstName
-                "lastname", // lastName
-                "save-existing-email-and-login@example.com", // email
-                "http://placehold.it/50x50", //imageUrl
-                false, // activated
-                "en", null, null, null, null, // lastModifiedDate
-                HashSet(listOf(AuthoritiesConstants.ADMIN))
-        )// langKey
-        // createdBy
-        // createdDate
-        // lastModifiedBy
-
-        restMvc!!.perform(
-                post("/api/account")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(userDTO)))
-                .andExpect(status().isOk)
-
-        val updatedUser = userRepository.findOneByLogin("save-existing-email-and-login").orElse(null)
-        assertThat(updatedUser.email).isEqualTo("save-existing-email-and-login@example.com")
+        restMvc.perform(
+            post("/api/account")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(userDTO)))
+            .andExpect(status().isOk)
     }
 
     @Test
     @Transactional
     @WithMockUser("change-password")
     @Throws(Exception::class)
-    open fun testChangePassword() {
-        val user = User()
-        user.password = RandomStringUtils.random(60)
-        user.login = "change-password"
-        user.email = "change-password@example.com"
-        userRepository!!.saveAndFlush(user)
+    open fun `test change password`() {
+        val user = UserResourceIntTest.createEntity().apply {
+            login = "change-password"
+        }
+        userRepository.saveAndFlush(user)
 
-        restMvc!!.perform(post("/api/account/change-password").content("new password"))
-                .andExpect(status().isOk)
+        restMvc.perform(post("/api/account/change-password").content("new password"))
+            .andExpect(status().isOk)
 
         val updatedUser = userRepository.findOneByLogin("change-password").orElse(null)
-        assertThat(passwordEncoder!!.matches("new password", updatedUser.password)).isTrue()
+        assertThat(passwordEncoder.matches("new password", updatedUser.password)).isTrue()
     }
 
     @Test
     @Transactional
     @WithMockUser("change-password-too-small")
     @Throws(Exception::class)
-    open fun testChangePasswordTooSmall() {
-        val user = User()
-        user.password = RandomStringUtils.random(60)
-        user.login = "change-password-too-small"
-        user.email = "change-password-too-small@example.com"
-        userRepository!!.saveAndFlush(user)
+    open fun `test change password too small`() {
+        val user = UserResourceIntTest.createEntity().apply {
+            login = "change-password-too-small"
+        }
+        userRepository.saveAndFlush(user)
 
-        restMvc!!.perform(post("/api/account/change-password").content("new"))
-                .andExpect(status().isBadRequest)
+        restMvc.perform(post("/api/account/change-password").content("new"))
+            .andExpect(status().isBadRequest)
 
         val updatedUser = userRepository.findOneByLogin("change-password-too-small").orElse(null)
         assertThat(updatedUser.password).isEqualTo(user.password)
@@ -649,15 +509,14 @@ open class AccountResourceIntTest {
     @Transactional
     @WithMockUser("change-password-too-long")
     @Throws(Exception::class)
-    open fun testChangePasswordTooLong() {
-        val user = User()
-        user.password = RandomStringUtils.random(60)
-        user.login = "change-password-too-long"
-        user.email = "change-password-too-long@example.com"
-        userRepository!!.saveAndFlush(user)
+    open fun `test change password too long`() {
+        val user = UserResourceIntTest.createEntity().apply {
+            login = "change-password-too-long"
+        }
+        userRepository.saveAndFlush(user)
 
-        restMvc!!.perform(post("/api/account/change-password").content(RandomStringUtils.random(101)))
-                .andExpect(status().isBadRequest)
+        restMvc.perform(post("/api/account/change-password").content(RandomStringUtils.random(101)))
+            .andExpect(status().isBadRequest)
 
         val updatedUser = userRepository.findOneByLogin("change-password-too-long").orElse(null)
         assertThat(updatedUser.password).isEqualTo(user.password)
@@ -667,15 +526,14 @@ open class AccountResourceIntTest {
     @Transactional
     @WithMockUser("change-password-empty")
     @Throws(Exception::class)
-    open fun testChangePasswordEmpty() {
-        val user = User()
-        user.password = RandomStringUtils.random(60)
-        user.login = "change-password-empty"
-        user.email = "change-password-empty@example.com"
-        userRepository!!.saveAndFlush(user)
+    open fun `test change password empty`() {
+        val user = UserResourceIntTest.createEntity().apply {
+            login = "change-password-empty"
+        }
+        userRepository.saveAndFlush(user)
 
-        restMvc!!.perform(post("/api/account/change-password").content(RandomStringUtils.random(0)))
-                .andExpect(status().isBadRequest)
+        restMvc.perform(post("/api/account/change-password").content(RandomStringUtils.random(0)))
+            .andExpect(status().isBadRequest)
 
         val updatedUser = userRepository.findOneByLogin("change-password-empty").orElse(null)
         assertThat(updatedUser.password).isEqualTo(user.password)
@@ -684,93 +542,93 @@ open class AccountResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testRequestPasswordReset() {
-        val user = User()
-        user.password = RandomStringUtils.random(60)
-        user.activated = true
-        user.login = "password-reset"
-        user.email = "password-reset@example.com"
-        userRepository!!.saveAndFlush(user)
+    open fun `test request password reset`() {
+        val user = UserResourceIntTest.createEntity().apply {
+            email = "password-reset@example.com"
+            activated = true
+        }
+        userRepository.saveAndFlush(user)
 
-        restMvc!!.perform(post("/api/account/reset-password/init")
-                .content("password-reset@example.com"))
-                .andExpect(status().isOk)
+        restMvc.perform(post("/api/account/reset-password/init")
+            .content("password-reset@example.com"))
+            .andExpect(status().isOk)
     }
 
     @Test
     @Throws(Exception::class)
-    open fun testRequestPasswordResetWrongEmail() {
-        restMvc!!.perform(
-                post("/api/account/reset-password/init")
-                        .content("password-reset-wrong-email@example.com"))
-                .andExpect(status().isBadRequest)
+    open fun `test request password reset wrong email`() {
+        restMvc.perform(
+            post("/api/account/reset-password/init")
+                .content("password-reset-wrong-email@example.com"))
+            .andExpect(status().isBadRequest)
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testFinishPasswordReset() {
-        val user = User()
-        user.password = RandomStringUtils.random(60)
-        user.login = "finish-password-reset"
-        user.email = "finish-password-reset@example.com"
-        user.resetDate = Instant.now().plusSeconds(60)
-        user.resetKey = "reset key"
-        userRepository!!.saveAndFlush(user)
+    open fun `test finish password reset`() {
+        val user = UserResourceIntTest.createEntity().apply {
+            login = "finish-password-reset"
+            email = "finish-password-reset@example.com"
+            resetDate = Instant.now().plusSeconds(60)
+            resetKey = "reset key"
+        }
+
+        userRepository.saveAndFlush(user)
 
         val keyAndPassword = KeyAndPasswordVM()
         keyAndPassword.key = user.resetKey
         keyAndPassword.newPassword = "new password"
 
-        restMvc!!.perform(
-                post("/api/account/reset-password/finish")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
-                .andExpect(status().isOk)
+        restMvc.perform(
+            post("/api/account/reset-password/finish")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
+            .andExpect(status().isOk)
 
         val updatedUser = userRepository.findOneByLogin(user.login).orElse(null)
-        assertThat(passwordEncoder!!.matches(keyAndPassword.newPassword, updatedUser.password)).isTrue()
+        assertThat(passwordEncoder.matches(keyAndPassword.newPassword, updatedUser.password)).isTrue()
     }
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testFinishPasswordResetTooSmall() {
-        val user = User()
-        user.password = RandomStringUtils.random(60)
-        user.login = "finish-password-reset-too-small"
-        user.email = "finish-password-reset-too-small@example.com"
-        user.resetDate = Instant.now().plusSeconds(60)
-        user.resetKey = "reset key too small"
-        userRepository!!.saveAndFlush(user)
+    open fun `test finish password reset too small`() {
+        val user = UserResourceIntTest.createEntity().apply {
+            login = "finish-password-reset-too-small"
+            email = "finish-password-reset-too-small@example.com"
+            resetDate = Instant.now().plusSeconds(60)
+            resetKey = "reset key too small"
+        }
+        userRepository.saveAndFlush(user)
 
         val keyAndPassword = KeyAndPasswordVM()
         keyAndPassword.key = user.resetKey
         keyAndPassword.newPassword = "foo"
 
-        restMvc!!.perform(
-                post("/api/account/reset-password/finish")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
-                .andExpect(status().isBadRequest)
+        restMvc.perform(
+            post("/api/account/reset-password/finish")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
+            .andExpect(status().isBadRequest)
 
         val updatedUser = userRepository.findOneByLogin(user.login).orElse(null)
-        assertThat(passwordEncoder!!.matches(keyAndPassword.newPassword, updatedUser.password)).isFalse()
+        assertThat(passwordEncoder.matches(keyAndPassword.newPassword, updatedUser.password)).isFalse()
     }
 
 
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun testFinishPasswordResetWrongKey() {
+    open fun `test finish password reset wrong key`() {
         val keyAndPassword = KeyAndPasswordVM()
         keyAndPassword.key = "wrong reset key"
         keyAndPassword.newPassword = "new password"
 
-        restMvc!!.perform(
-                post("/api/account/reset-password/finish")
-                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                        .content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
-                .andExpect(status().isInternalServerError)
+        restMvc.perform(
+            post("/api/account/reset-password/finish")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
+            .andExpect(status().isInternalServerError)
     }
 }
