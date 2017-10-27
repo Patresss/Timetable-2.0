@@ -577,7 +577,7 @@ open class AccountResourceIntTest {
         userRepository.saveAndFlush(user)
 
         val keyAndPassword = KeyAndPasswordVM()
-        keyAndPassword.key = user.resetKey
+        keyAndPassword.key = user.resetKey!!
         keyAndPassword.newPassword = "new password"
 
         restMvc.perform(
@@ -603,7 +603,7 @@ open class AccountResourceIntTest {
         userRepository.saveAndFlush(user)
 
         val keyAndPassword = KeyAndPasswordVM()
-        keyAndPassword.key = user.resetKey
+        keyAndPassword.key = user.resetKey!!
         keyAndPassword.newPassword = "foo"
 
         restMvc.perform(

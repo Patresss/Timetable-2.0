@@ -52,7 +52,7 @@ public class ExceptionTranslatorIntTest {
         mockMvc.perform(get("/test/concurrency-failure"))
             .andExpect(status().isConflict())
             .andExpect(content().contentType(MediaTypes.PROBLEM))
-            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_CONCURRENCY_FAILURE));
+            .andExpect(jsonPath("$.message").value(ErrorConstants.INSTANCE.getERR_CONCURRENCY_FAILURE()));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class ExceptionTranslatorIntTest {
         mockMvc.perform(post("/test/method-argument").content("{}").contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isBadRequest())
             .andExpect(content().contentType(MediaTypes.PROBLEM))
-            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_VALIDATION))
+            .andExpect(jsonPath("$.message").value(ErrorConstants.INSTANCE.getERR_VALIDATION()))
             .andExpect(jsonPath("$.fieldErrors.[0].objectName").value("testDTO"))
             .andExpect(jsonPath("$.fieldErrors.[0].field").value("test"))
             .andExpect(jsonPath("$.fieldErrors.[0].message").value("NotNull"));

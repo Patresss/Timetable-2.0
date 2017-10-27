@@ -41,8 +41,8 @@ open class UserServiceIntTest {
         assertThat(maybeUser != null).isTrue()
 
         assertThat(maybeUser!!.email).isEqualTo("admin@localhost")
-        assertThat(maybeUser!!.resetDate).isNotNull()
-        assertThat(maybeUser!!.resetKey).isNotNull()
+        assertThat(maybeUser.resetDate).isNotNull()
+        assertThat(maybeUser.resetKey).isNotNull()
     }
 
     @Test
@@ -99,8 +99,8 @@ open class UserServiceIntTest {
         val maybeUser = userService.completePasswordReset("johndoe2", user.resetKey!!)
         assertThat(maybeUser != null).isTrue()
         assertThat(maybeUser!!.resetDate).isNull()
-        assertThat(maybeUser!!.resetKey).isNull()
-        assertThat(maybeUser!!.password).isNotEqualTo(oldPassword)
+        assertThat(maybeUser.resetKey).isNull()
+        assertThat(maybeUser.password).isNotEqualTo(oldPassword)
 
         userRepository.delete(user)
     }

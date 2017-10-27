@@ -23,10 +23,10 @@ interface UserRepository : JpaRepository<User, Long> {
     fun findOneByLogin(login: String): User?
 
     @EntityGraph(attributePaths = arrayOf("authorities"))
-    fun findOneWithAuthoritiesById(id: Long?): User
+    fun findOneWithAuthoritiesById(id: Long?): User?
 
     @EntityGraph(attributePaths = arrayOf("authorities"))
-    fun findOneWithAuthoritiesByLogin(login: String): User
+    fun findOneWithAuthoritiesByLogin(login: String): User?
 
     fun findAllByLoginNot(pageable: Pageable, login: String): Page<User>
 }

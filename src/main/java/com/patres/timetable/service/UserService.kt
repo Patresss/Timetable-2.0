@@ -120,11 +120,10 @@ open class UserService(
         } else {
             user.langKey = userDTO.langKey
         }
-        if (userDTO.authorities != null) {
-            val authorities = HashSet<Authority>()
-            userDTO.authorities.forEach { authority -> authorities.add(authorityRepository.findOne(authority)) }
-            user.authorities = authorities
-        }
+        val authorities = HashSet<Authority>()
+        userDTO.authorities.forEach { authority -> authorities.add(authorityRepository.findOne(authority)) }
+        user.authorities = authorities
+
         val encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword())
         user.password = encryptedPassword
         user.resetKey = RandomUtil.generateResetKey()
@@ -212,7 +211,7 @@ open class UserService(
     }
 
     @Transactional(readOnly = true)
-    open fun getUserWithAuthorities(id: Long?): User {
+    open fun getUserWithAuthorities(id: Long?): User? {
         return userRepository.findOneWithAuthoritiesById(id)
     }
 

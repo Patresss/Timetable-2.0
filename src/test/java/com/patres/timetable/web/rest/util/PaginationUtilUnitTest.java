@@ -25,7 +25,7 @@ public class PaginationUtilUnitTest {
         String baseUrl = "/api/_search/example";
         List<String> content = new ArrayList<>();
         Page<String> page = new PageImpl<>(content,new PageRequest(6, 50),400L);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, baseUrl);
+        HttpHeaders headers = PaginationUtil.INSTANCE.generatePaginationHttpHeaders(page, baseUrl);
         List<String> strHeaders = headers.get(HttpHeaders.LINK);
         assertNotNull(strHeaders);
         assertTrue(strHeaders.size() == 1);
