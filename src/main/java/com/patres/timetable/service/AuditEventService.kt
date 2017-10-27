@@ -15,17 +15,17 @@ open class AuditEventService(
     private val persistenceAuditEventRepository: PersistenceAuditEventRepository,
     private val auditEventConverter: AuditEventConverter) {
 
-    fun findAll(pageable: Pageable): Page<AuditEvent> {
+    open fun findAll(pageable: Pageable): Page<AuditEvent> {
         return persistenceAuditEventRepository.findAll(pageable)
             .map { auditEventConverter.convertToAuditEvent(it) }
     }
 
-    fun findByDates(fromDate: Instant, toDate: Instant, pageable: Pageable): Page<AuditEvent> {
+    open fun findByDates(fromDate: Instant, toDate: Instant, pageable: Pageable): Page<AuditEvent> {
         return persistenceAuditEventRepository.findAllByAuditEventDateBetween(fromDate, toDate, pageable)
             .map { auditEventConverter.convertToAuditEvent(it) }
     }
 
-    fun find(id: Long?): AuditEvent? {
+    open fun find(id: Long?): AuditEvent? {
         val entity = persistenceAuditEventRepository.findOne(id)
         return if (entity != null) auditEventConverter.convertToAuditEvent(entity) else null
     }

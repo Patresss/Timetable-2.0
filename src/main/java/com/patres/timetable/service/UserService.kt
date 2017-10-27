@@ -57,7 +57,7 @@ open class UserService(
         user?.apply {
             activated = true
             activationKey = null
-            cacheManager.getCache("users").evict(user.login)
+            cacheManager.getCache(User::class.java.name).evict(user.login)
             log.debug("Activated user: {}", user)
         }
         return user
@@ -71,7 +71,7 @@ open class UserService(
                 password = passwordEncoder.encode(newPassword)
                 resetKey = null
                 resetDate = null
-                cacheManager.getCache("users").evict(user.login)
+                cacheManager.getCache(User::class.java.name).evict(user.login)
         }
         return user
     }
@@ -81,7 +81,7 @@ open class UserService(
         user?.takeIf { user.activated }?.apply {
             resetKey = RandomUtil.generateResetKey()
             resetDate = Instant.now()
-            cacheManager.getCache("users").evict(login)
+            cacheManager.getCache(User::class.java.name).evict(login)
         }
         return user
     }
@@ -157,7 +157,7 @@ open class UserService(
                 user.email = email
                 user.langKey = langKey
                 user.imageUrl = imageUrl
-                cacheManager.getCache("users").evict(user.login)
+                cacheManager.getCache(User::class.java.name).evict(user.login)
                 log.debug("Changed Information for User: {}", user)
             }
         }
@@ -182,7 +182,7 @@ open class UserService(
         userDTO.authorities
             .map { authorityRepository.findOne(it) }
             .forEach { user.authorities.plus(it) }
-        cacheManager.getCache("users").evict(user.login)
+        cacheManager.getCache(User::class.java.name).evict(user.login)
         log.debug("Changed Information for User: {}", user)
         return UserDTO()
     }
@@ -191,7 +191,7 @@ open class UserService(
         val user = userRepository.findOneByLogin(login)
         user.let {
             userRepository.delete(user)
-            cacheManager.getCache("users").evict(login)
+            cacheManager.getCache(User::class.java.name).evict(login)
             log.debug("Deleted User: {}", user)
         }
     }
@@ -203,7 +203,7 @@ open class UserService(
             userFromRepository?.let { user ->
                 val encryptedPassword = passwordEncoder.encode(password)
                 user.password = encryptedPassword
-                cacheManager.getCache("users").evict(user.login)
+                cacheManager.getCache(User::class.java.name).evict(user.login)
                 log.debug("Changed password for User: {}", user)
             }
         }
@@ -237,7 +237,7 @@ open class UserService(
         for (user in users) {
             log.debug("Deleting not activated user {}", user.login)
             userRepository.delete(user)
-            cacheManager.getCache("users").evict(user.login)
+            cacheManager.getCache(User::class.java.name).evict(user.login)
         }
     }
 }
