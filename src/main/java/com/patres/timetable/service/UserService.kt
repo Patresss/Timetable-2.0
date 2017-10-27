@@ -47,42 +47,39 @@ open class UserService(
         return authorityRepository.findAll().stream().map { it.name }.collect(Collectors.toList())
     }
 
-    open fun activateRegistration(key: String): Optional<User> {
+    open fun activateRegistration(key: String): User? {
         log.debug("Activating user for activation key {}", key)
-        return userRepository.findOneByActivationKey(key)
-            .map { user ->
-                // activate given user for the registration key.
-                user.activated = true
-                user.activationKey = null
-                cacheManager.getCache("users").evict(user.login)
-                log.debug("Activated user: {}", user)
-                user
-            }
+        val user = userRepository.findOneByActivationKey(key)
+        user?.apply {
+            activated = true
+            activationKey = null
+            cacheManager.getCache("users").evict(user.login)
+            log.debug("Activated user: {}", user)
+        }
+        return user
     }
 
-    open fun completePasswordReset(newPassword: String, key: String): Optional<User> {
+    open fun completePasswordReset(newPassword: String, key: String): User? {
         log.debug("Reset user password for reset key {}", key)
 
-        return userRepository.findOneByResetKey(key)
-            .filter { user -> user.resetDate!!.isAfter(Instant.now().minusSeconds(86400)) }
-            .map { user ->
-                user.password = passwordEncoder.encode(newPassword)
-                user.resetKey = null
-                user.resetDate = null
+        val user = userRepository.findOneByResetKey(key)
+        user?.takeIf {user.resetDate?.isAfter(Instant.now().minusSeconds(86400)) == true }?.apply {
+                password = passwordEncoder.encode(newPassword)
+                resetKey = null
+                resetDate = null
                 cacheManager.getCache("users").evict(user.login)
-                user
-            }
+        }
+        return user
     }
 
-    open fun requestPasswordReset(mail: String): Optional<User> {
-        return userRepository.findOneByEmail(mail)
-            .filter { it.activated }
-            .map { user ->
-                user.resetKey = RandomUtil.generateResetKey()
-                user.resetDate = Instant.now()
-                cacheManager.getCache("users").evict(user.login)
-                user
-            }
+    open fun requestPasswordReset(mail: String): User? {
+        val user = userRepository.findOneByEmail(mail)
+        user?.takeIf { user.activated }?.apply {
+            resetKey = RandomUtil.generateResetKey()
+            resetDate = Instant.now()
+            cacheManager.getCache("users").evict(login)
+        }
+        return user
     }
 
     open fun createUser(login: String, password: String, firstName: String?, lastName: String?, email: String,
@@ -148,7 +145,8 @@ open class UserService(
      * @param imageUrl image URL of user
      */
     open fun updateUser(firstName: String, lastName: String, email: String, langKey: String, imageUrl: String) {
-        userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent { user ->
+        val user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin())
+        user?.apply {
             user.firstName = firstName
             user.lastName = lastName
             user.email = email
@@ -184,7 +182,8 @@ open class UserService(
     }
 
     open fun deleteUser(login: String) {
-        userRepository.findOneByLogin(login).ifPresent { user ->
+        val user = userRepository.findOneByLogin(login)
+        user.let {
             userRepository.delete(user)
             cacheManager.getCache("users").evict(login)
             log.debug("Deleted User: {}", user)
@@ -192,7 +191,8 @@ open class UserService(
     }
 
     open fun changePassword(password: String) {
-        userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent { user ->
+        val userFromRepository = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin())
+        userFromRepository?.let { user ->
             val encryptedPassword = passwordEncoder.encode(password)
             user.password = encryptedPassword
             cacheManager.getCache("users").evict(user.login)

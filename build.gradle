@@ -48,7 +48,7 @@ version = '0.0.1-SNAPSHOT'
 description = ''
 
 bootRepackage {
-   mainClass = 'com.patres.timetable.TimetableApp'
+   mainClass = 'com.patres.timetable.TimetableAppKt'
 }
 
 war {
@@ -56,7 +56,7 @@ war {
 }
 
 springBoot {
-    mainClass = 'com.patres.timetable.TimetableApp'
+    mainClass = 'com.patres.timetable.TimetableAppKt'
     executable = true
     buildInfo()
 }
@@ -194,6 +194,7 @@ dependencies {
     }
     compile "io.springfox:springfox-bean-validators:${springfox_version}"
     compile "org.postgresql:postgresql"
+    compile "com.h2database:h2"
     compile "org.mapstruct:mapstruct-jdk8:${mapstruct_version}"
     testCompile "org.awaitility:awaitility:${awaitility_version}"
     testCompile "com.jayway.jsonpath:json-path"

@@ -37,11 +37,12 @@ open class UserResource(private val userRepository: UserRepository, private val 
     /**
      * @return a string list of the all of the roles
      */
-    val authorities: List<String>
-        @GetMapping("/users/authorities")
-        @Timed
-        @Secured(AuthoritiesConstants.ADMIN)
-        get() = userService.getAuthorities()
+    @GetMapping("/users/authorities")
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    open fun getAuthorities(): List<String> {
+        return userService.getAuthorities()
+    }
 
     /**
      * POST  /users  : Creates a new user.
@@ -59,19 +60,18 @@ open class UserResource(private val userRepository: UserRepository, private val 
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     @Throws(URISyntaxException::class)
-    fun createUser(@Valid @RequestBody managedUserVM: ManagedUserVM): ResponseEntity<*> {
+    open fun createUser(@Valid @RequestBody managedUserVM: ManagedUserVM): ResponseEntity<*> {
         log.debug("REST request to save User : {}", managedUserVM)
-
         if (managedUserVM.id != null) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new user cannot already have an ID"))
                 .body<Any>(null)
             // Lowercase the user login before comparing with database
-        } else if (userRepository.findOneByLogin(managedUserVM.login!!.toLowerCase()).isPresent) {
+        } else if (managedUserVM.login != null && userRepository.findOneByLogin(managedUserVM.login!!.toLowerCase()) != null) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Login already in use"))
                 .body<Any>(null)
-        } else if (userRepository.findOneByEmail(managedUserVM.email).isPresent) {
+        } else if (managedUserVM.email != null && userRepository.findOneByEmail(managedUserVM.email!!) != null) { //TODO
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use"))
                 .body<Any>(null)
@@ -97,12 +97,12 @@ open class UserResource(private val userRepository: UserRepository, private val 
     @Secured(AuthoritiesConstants.ADMIN)
     open fun updateUser(@Valid @RequestBody managedUserVM: ManagedUserVM): ResponseEntity<UserDTO> {
         log.debug("REST request to update User : {}", managedUserVM)
-        var existingUser = userRepository.findOneByEmail(managedUserVM.email)
-        if (existingUser.isPresent && existingUser.get().id != managedUserVM.id) {
+        var existingUser = userRepository.findOneByEmail(managedUserVM.email!!)
+        if (existingUser != null && existingUser.id != managedUserVM.id) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use")).body(null)
         }
         existingUser = userRepository.findOneByLogin(managedUserVM.login!!.toLowerCase())
-        if (existingUser.isPresent && existingUser.get().id != managedUserVM.id) {
+        if (existingUser != null && existingUser.id != managedUserVM.id) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Login already in use")).body(null)
         }
         val updatedUser = userService.updateUser(managedUserVM)

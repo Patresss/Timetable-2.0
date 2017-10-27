@@ -180,8 +180,8 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(validUser)))
             .andExpect(status().isCreated)
 
-        val user = userRepository.findOneByLogin(validUser.login)
-        assertThat(user.isPresent).isTrue()
+        val user = userRepository.findOneByLogin(validUser.login!!)
+        assertThat(user != null).isTrue()
     }
 
     @Test
@@ -198,8 +198,8 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest)
 
-        val user = userRepository.findOneByEmail(invalidUser.email)
-        assertThat(user.isPresent).isFalse()
+        val user = userRepository.findOneByEmail(invalidUser.email!!)
+        assertThat(user != null).isFalse()
     }
 
     @Test
@@ -216,8 +216,8 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest)
 
-        val user = userRepository.findOneByLogin(invalidUser.login)
-        assertThat(user.isPresent).isFalse()
+        val user = userRepository.findOneByLogin(invalidUser.login!!)
+        assertThat(user != null).isFalse()
     }
 
     @Test
@@ -234,8 +234,8 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest)
 
-        val user = userRepository.findOneByLogin(invalidUser.login)
-        assertThat(user.isPresent).isFalse()
+        val user = userRepository.findOneByLogin(invalidUser.login!!)
+        assertThat(user != null).isFalse()
     }
 
     @Test
@@ -252,8 +252,8 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest)
 
-        val user = userRepository.findOneByLogin(invalidUser.login)
-        assertThat(user.isPresent).isFalse()
+        val user = userRepository.findOneByLogin(invalidUser.login!!)
+        assertThat(user != null).isFalse()
     }
 
     @Test
@@ -278,8 +278,8 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(duplicatedUser)))
             .andExpect(status().is4xxClientError)
 
-        val userDup = userRepository.findOneByEmail(duplicatedUser.email)
-        assertThat(userDup.isPresent).isFalse()
+        val userDup = userRepository.findOneByEmail(duplicatedUser.email!!)
+        assertThat(userDup!= null).isFalse()
     }
 
     @Test
@@ -304,8 +304,8 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(duplicatedUser)))
             .andExpect(status().is4xxClientError)
 
-        val userDup = userRepository.findOneByLogin(duplicatedUser.login)
-        assertThat(userDup.isPresent).isFalse()
+        val userDup = userRepository.findOneByLogin(duplicatedUser.login!!)
+        assertThat(userDup!= null).isFalse()
     }
 
     @Test
@@ -322,9 +322,9 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(validUser)))
             .andExpect(status().isCreated)
 
-        val userDup = userRepository.findOneByLogin(validUser.login)
-        assertThat(userDup.isPresent).isTrue()
-        assertThat(userDup.get().authorities).hasSize(1)
+        val userDup = userRepository.findOneByLogin(validUser.login!!)
+        assertThat(userDup!= null).isTrue()
+        assertThat(userDup?.authorities).hasSize(1)
             .containsExactly(authorityRepository.findOne(AuthoritiesConstants.SCHOOL_ADMIN))
     }
 
@@ -345,7 +345,7 @@ open class AccountResourceIntTest {
         restMvc.perform(get("/api/activate?key={activationKey}", activationKey))
             .andExpect(status().isOk)
 
-        user = userRepository.findOneByLogin(user.login).orElse(null)
+        user = userRepository.findOneByLogin(user.login!!)!!
         assertThat(user.activated).isTrue()
     }
 
@@ -375,8 +375,8 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(userDTO)))
             .andExpect(status().isOk)
 
-        val updatedUser = userRepository.findOneByLogin(user.login).orElse(null)
-        assertThat(updatedUser.firstName).isEqualTo(userDTO.firstName)
+        val updatedUser = userRepository.findOneByLogin(user.login!!)
+        assertThat(updatedUser!!.firstName).isEqualTo(userDTO.firstName)
         assertThat(updatedUser.lastName).isEqualTo(userDTO.lastName)
         assertThat(updatedUser.email).isEqualTo(userDTO.email)
         assertThat(updatedUser.langKey).isEqualTo(userDTO.langKey)
@@ -411,7 +411,7 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(userDTO)))
             .andExpect(status().isBadRequest)
 
-        assertThat(userRepository.findOneByEmail("invalid email")).isNotPresent
+        assertThat(userRepository.findOneByEmail("invalid email") != null)
     }
 
     @Test
@@ -442,8 +442,8 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(userDTO)))
             .andExpect(status().isBadRequest)
 
-        val updatedUser = userRepository.findOneByLogin(user.login).orElse(null)
-        assertThat(updatedUser.email).isEqualTo("save-existing-email@example.com")
+        val updatedUser = userRepository.findOneByLogin(user.login!!)
+        assertThat(updatedUser!!.email).isEqualTo("save-existing-email@example.com")
     }
 
     @Test
@@ -484,8 +484,8 @@ open class AccountResourceIntTest {
         restMvc.perform(post("/api/account/change-password").content("new password"))
             .andExpect(status().isOk)
 
-        val updatedUser = userRepository.findOneByLogin("change-password").orElse(null)
-        assertThat(passwordEncoder.matches("new password", updatedUser.password)).isTrue()
+        val updatedUser = userRepository.findOneByLogin("change-password")
+        assertThat(passwordEncoder.matches("new password", updatedUser?.password)).isTrue()
     }
 
     @Test
@@ -501,8 +501,8 @@ open class AccountResourceIntTest {
         restMvc.perform(post("/api/account/change-password").content("new"))
             .andExpect(status().isBadRequest)
 
-        val updatedUser = userRepository.findOneByLogin("change-password-too-small").orElse(null)
-        assertThat(updatedUser.password).isEqualTo(user.password)
+        val updatedUser = userRepository.findOneByLogin("change-password-too-small")
+        assertThat(updatedUser?.password).isEqualTo(user.password)
     }
 
     @Test
@@ -518,8 +518,8 @@ open class AccountResourceIntTest {
         restMvc.perform(post("/api/account/change-password").content(RandomStringUtils.random(101)))
             .andExpect(status().isBadRequest)
 
-        val updatedUser = userRepository.findOneByLogin("change-password-too-long").orElse(null)
-        assertThat(updatedUser.password).isEqualTo(user.password)
+        val updatedUser = userRepository.findOneByLogin("change-password-too-long")
+        assertThat(updatedUser?.password).isEqualTo(user.password)
     }
 
     @Test
@@ -535,8 +535,8 @@ open class AccountResourceIntTest {
         restMvc.perform(post("/api/account/change-password").content(RandomStringUtils.random(0)))
             .andExpect(status().isBadRequest)
 
-        val updatedUser = userRepository.findOneByLogin("change-password-empty").orElse(null)
-        assertThat(updatedUser.password).isEqualTo(user.password)
+        val updatedUser = userRepository.findOneByLogin("change-password-empty")
+        assertThat(updatedUser?.password).isEqualTo(user.password)
     }
 
     @Test
@@ -586,8 +586,8 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
             .andExpect(status().isOk)
 
-        val updatedUser = userRepository.findOneByLogin(user.login).orElse(null)
-        assertThat(passwordEncoder.matches(keyAndPassword.newPassword, updatedUser.password)).isTrue()
+        val updatedUser = userRepository.findOneByLogin(user.login!!)
+        assertThat(passwordEncoder.matches(keyAndPassword.newPassword, updatedUser?.password)).isTrue()
     }
 
     @Test
@@ -612,8 +612,8 @@ open class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
             .andExpect(status().isBadRequest)
 
-        val updatedUser = userRepository.findOneByLogin(user.login).orElse(null)
-        assertThat(passwordEncoder.matches(keyAndPassword.newPassword, updatedUser.password)).isFalse()
+        val updatedUser = userRepository.findOneByLogin(user.login!!)
+        assertThat(passwordEncoder.matches(keyAndPassword.newPassword, updatedUser?.password)).isFalse()
     }
 
 

@@ -1,7 +1,6 @@
 package com.patres.timetable.web.rest
 
 import com.codahale.metrics.annotation.Timed
-import com.patres.timetable.service.EntityService
 import com.patres.timetable.service.LessonService
 import com.patres.timetable.service.dto.LessonDTO
 import com.patres.timetable.web.rest.util.HeaderUtil
@@ -10,19 +9,15 @@ import io.github.jhipster.web.util.ResponseUtil
 import io.swagger.annotations.ApiParam
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
-
-import javax.validation.Valid
 import java.net.URI
 import java.net.URISyntaxException
-import java.util.Optional
+import java.util.*
+import javax.validation.Valid
 
 /**
  * REST controller for managing Lesson.
@@ -33,7 +28,7 @@ open class LessonResource(private val lessonService: LessonService) {
 
     companion object {
         private val ENTITY_NAME = "lesson"
-        val log = LoggerFactory.getLogger(LessonResource::class.java)
+        val log: Logger = LoggerFactory.getLogger(LessonResource::class.java)
     }
 
     /**
