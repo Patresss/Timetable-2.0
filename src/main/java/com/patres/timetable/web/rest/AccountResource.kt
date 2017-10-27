@@ -119,18 +119,21 @@ open class AccountResource(private val userRepository: UserRepository, private v
     @Timed
     open fun saveAccount(@Valid @RequestBody userDTO: UserDTO): ResponseEntity<*> {
         val userLogin = SecurityUtils.getCurrentUserLogin()
-        val existingUser = userRepository.findOneByEmail(userDTO.email!!)
-        return if (existingUser != null && !existingUser.login!!.equals(userLogin!!, ignoreCase = true)) {
-            ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("user-management", "emailexists", "Email already in use")).body<Any>(null)
-        } else {
-            val userFromRepository = userRepository.findOneByLogin(userLogin!!)
-            if (userFromRepository != null) {
-                userService.updateUser(userDTO.firstName!!, userDTO.lastName!!, userDTO.email!!, userDTO.langKey!!, userDTO.imageUrl!!)
-                return ResponseEntity<UserDTO>(HttpStatus.OK)
+        if(userLogin != null) {
+            val existingUser = userRepository.findOneByEmail(userDTO.email)
+            return if (existingUser != null && !existingUser.login.equals(userLogin, ignoreCase = true)) {
+                ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("user-management", "emailexists", "Email already in use")).body<Any>(null)
             } else {
-                return ResponseEntity<UserDTO>(HttpStatus.INTERNAL_SERVER_ERROR)
+                val userFromRepository = userRepository.findOneByLogin(userLogin)
+                return if (userFromRepository != null) {
+                    userService.updateUser(userDTO.firstName, userDTO.lastName, userDTO.email, userDTO.langKey, userDTO.imageUrl)
+                    ResponseEntity<UserDTO>(HttpStatus.OK)
+                } else {
+                    ResponseEntity<UserDTO>(HttpStatus.INTERNAL_SERVER_ERROR)
+                }
             }
-
+        } else {
+            return ResponseEntity<UserDTO>(HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
@@ -159,9 +162,9 @@ open class AccountResource(private val userRepository: UserRepository, private v
     @PostMapping(path = arrayOf("/account/reset-password/init"), produces = arrayOf(MediaType.TEXT_PLAIN_VALUE))
     @Timed
     open fun requestPasswordReset(@RequestBody mail: String): ResponseEntity<*> {
-        val userFromRepostory = userService.requestPasswordReset(mail)
-        if(userFromRepostory != null) {
-            mailService.sendPasswordResetMail(userFromRepostory)
+        val userFromRepository = userService.requestPasswordReset(mail)
+        if(userFromRepository != null) {
+            mailService.sendPasswordResetMail(userFromRepository)
             return ResponseEntity("email was sent", HttpStatus.OK)
         } else {
             return ResponseEntity("email address not registered", HttpStatus.BAD_REQUEST)

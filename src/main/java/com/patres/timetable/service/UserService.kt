@@ -40,7 +40,11 @@ open class UserService(
 
     @Transactional(readOnly = true)
     open fun getUserWithAuthorities(): User? {
-        return userRepository.findOneWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin())
+        val login = SecurityUtils.getCurrentUserLogin()
+        return when {
+            login != null -> userRepository.findOneWithAuthoritiesByLogin(login)
+            else -> null
+        }
     }
 
     open fun getAuthorities(): List<String> {
@@ -143,16 +147,19 @@ open class UserService(
      * @param langKey language key
      * @param imageUrl image URL of user
      */
-    open fun updateUser(firstName: String, lastName: String, email: String, langKey: String, imageUrl: String) {
-        val user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin())
-        user?.apply {
-            user.firstName = firstName
-            user.lastName = lastName
-            user.email = email
-            user.langKey = langKey
-            user.imageUrl = imageUrl
-            cacheManager.getCache("users").evict(user.login)
-            log.debug("Changed Information for User: {}", user)
+    open fun updateUser(firstName: String?, lastName: String?, email: String?, langKey: String?, imageUrl: String?) {
+        val login = SecurityUtils.getCurrentUserLogin()
+        login?.let {
+            val user = userRepository.findOneByLogin(login)
+            user?.apply {
+                user.firstName = firstName
+                user.lastName = lastName
+                user.email = email
+                user.langKey = langKey
+                user.imageUrl = imageUrl
+                cacheManager.getCache("users").evict(user.login)
+                log.debug("Changed Information for User: {}", user)
+            }
         }
     }
 
@@ -190,12 +197,15 @@ open class UserService(
     }
 
     open fun changePassword(password: String) {
-        val userFromRepository = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin())
-        userFromRepository?.let { user ->
-            val encryptedPassword = passwordEncoder.encode(password)
-            user.password = encryptedPassword
-            cacheManager.getCache("users").evict(user.login)
-            log.debug("Changed password for User: {}", user)
+        val login = SecurityUtils.getCurrentUserLogin()
+        login?.let{
+            val userFromRepository = userRepository.findOneByLogin(login)
+            userFromRepository?.let { user ->
+                val encryptedPassword = passwordEncoder.encode(password)
+                user.password = encryptedPassword
+                cacheManager.getCache("users").evict(user.login)
+                log.debug("Changed password for User: {}", user)
+            }
         }
     }
 
