@@ -62,7 +62,7 @@ open class UserDTO(
         createdDate: Instant?,
         lastModifiedBy: String?,
         lastModifiedDate: Instant?,
-        authorities: Set<String>) : this() {
+        authorities: Set<String>?) : this() {
 
         this.id = id
         this.login = login
@@ -76,7 +76,7 @@ open class UserDTO(
         this.createdDate = createdDate
         this.lastModifiedBy = lastModifiedBy
         this.lastModifiedDate = lastModifiedDate
-        this.authorities = authorities
+        this.authorities = authorities?: HashSet()
     }
 
 }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -34,6 +36,35 @@ class Lesson(
     private var timetables: Set<Timetable> = HashSet()
 
 ) : AbstractDivisionOwner(), Serializable {
+
+    companion object {
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")!!
+    }
+
+    fun getStartTimeHHmmFormatted(): String {
+        return getTimeHHmmFormatted(startTime)
+    }
+
+    fun setStartTimeHHmmFormatted(time: String) {
+        startTime = getSecondsFromString(time)
+    }
+
+    fun getEndTimeHHmmFormatted(): String {
+        return getTimeHHmmFormatted(endTime)
+    }
+
+    fun setEndTimeHHmmFormatted(time: String) {
+        endTime = getSecondsFromString(time)
+    }
+
+    private fun getTimeHHmmFormatted(seconds: Long?): String {
+        seconds?.let { time ->
+            return LocalTime.ofSecondOfDay(time).format(formatter)
+        }
+        return "00:00"
+    }
+
+    private fun getSecondsFromString(time: String) = LocalTime.parse(time).toSecondOfDay().toLong()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

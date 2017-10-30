@@ -128,7 +128,7 @@ open class LessonResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun createLessonWithExistingId() {
+    open fun `create Lesson With Existing Id`() {
         val databaseSizeBeforeCreate = lessonRepository.findAll().size
 
         // Create the Lesson with an existing ID
