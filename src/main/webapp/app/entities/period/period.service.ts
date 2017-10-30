@@ -33,7 +33,9 @@ export class PeriodService {
 
     find(id: number): Observable<Period> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            return res.json();
+            const jsonResponse = res.json();
+            this.convertInterval(jsonResponse);
+            return jsonResponse;
         });
     }
 

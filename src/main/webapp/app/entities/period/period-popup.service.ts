@@ -27,7 +27,7 @@ export class PeriodPopupService {
             if (id) {
                 this.periodService.find(id).subscribe((period) => {
                     period.intervalTimes.forEach((value) => {
-                        this.modifyDate(value);
+                        PeriodPopupService.modifyDate(value);
                     });
                     this.ngbModalRef = this.periodModalRef(component, period);
                     resolve(this.ngbModalRef);
@@ -55,7 +55,7 @@ export class PeriodPopupService {
         return modalRef;
     }
 
-    modifyDate(interval) {
+    static modifyDate(interval) {
         if (interval.startDate) {
             interval.startDate = {
                 year: interval.startDate.getFullYear(),
