@@ -63,6 +63,10 @@ spring:
         locator:
             discovery:
                 enabled: true
+    h2:
+        console:
+            enabled: true
+            path: /h2
 
 liquibase:
     contexts: dev

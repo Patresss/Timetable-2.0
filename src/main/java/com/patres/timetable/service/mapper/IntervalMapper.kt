@@ -18,7 +18,7 @@ open class IntervalMapper : EntityMapper<Interval, IntervalDTO>() {
                 isIncluded = entityDto.isIncluded
                 startDate = entityDto.startDate
                 endDate = entityDto.endDate
-                period = periodRepository.getOne(entityDto.periodId)
+                entityDto.periodId?.let { period = periodRepository.getOne(entityDto.periodId) }
                 id = entityDto.id
             }
     }

@@ -8,6 +8,10 @@ import java.io.Serializable
 @MappedSuperclass
 abstract class AbstractDivisionOwner : AbstractApplicationEntity(), Serializable {
 
+    companion object {
+        private const val serialVersionUID = 8302717018638550091L
+    }
+
     @ManyToOne
     @get:NotNull
     var divisionOwner: Division? = null
@@ -15,11 +19,6 @@ abstract class AbstractDivisionOwner : AbstractApplicationEntity(), Serializable
     fun divisionOwner(divisionOwner: Division): AbstractDivisionOwner {
         this.divisionOwner = divisionOwner
         return this
-    }
-
-    companion object {
-
-        private const val serialVersionUID = 8302717018638550091L
     }
 
 }
