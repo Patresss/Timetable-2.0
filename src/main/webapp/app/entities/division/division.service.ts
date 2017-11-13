@@ -33,6 +33,11 @@ export class DivisionService {
         });
     }
 
+    findByDivisionType(divisionType: String): Observable<ResponseWrapper> {
+        return this.http.get(`${this.resourceUrl}/type/` + divisionType)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)

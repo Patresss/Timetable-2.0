@@ -1,6 +1,7 @@
 package com.patres.timetable.web.rest
 
 import com.codahale.metrics.annotation.Timed
+import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.service.DivisionService
 import com.patres.timetable.service.dto.DivisionDTO
 import com.patres.timetable.web.rest.util.HeaderUtil
@@ -12,11 +13,10 @@ import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-
-import javax.validation.Valid
 import java.net.URI
 import java.net.URISyntaxException
-import java.util.Optional
+import java.util.*
+import javax.validation.Valid
 
 /**
  * REST controller for managing Division.
@@ -48,8 +48,8 @@ open class DivisionResource(private val divisionService: DivisionService) {
         }
         val result = divisionService.save(divisionDTO)
         return ResponseEntity.created(URI("/api/divisions/" + result.id!!))
-                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.id!!.toString()))
-                .body(result)
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.id!!.toString()))
+            .body(result)
     }
 
     /**
@@ -71,8 +71,8 @@ open class DivisionResource(private val divisionService: DivisionService) {
         }
         val result = divisionService.save(divisionDTO)
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, divisionDTO.id!!.toString()))
-                .body(result)
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, divisionDTO.id!!.toString()))
+            .body(result)
     }
 
     /**
@@ -88,6 +88,48 @@ open class DivisionResource(private val divisionService: DivisionService) {
         val page = divisionService.findAll(pageable)
         val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/divisions")
         return ResponseEntity(page.content, headers, HttpStatus.OK)
+    }
+
+    /**
+     * GET  /divisions/type/{type} : get the divisions by type.
+     *
+     * @param divisionType division type
+     * @return the ResponseEntity with status 200 (OK) and the list of divisions in body
+     */
+    @GetMapping("/divisions/type/{divisionType}")
+    @Timed
+    open fun getDivisionsByType(@PathVariable divisionType: DivisionType): ResponseEntity<List<DivisionDTO>> {
+        log.debug("REST request to get a page of Divisions by Type")
+        val divisions = divisionService.findByDivisionType(divisionType)
+        return ResponseEntity(divisions, HttpStatus.OK)
+    }
+
+    /**
+     * GET  /divisions/parent/class/{parentId} : get the divisions class by parent Id
+     *
+     * @param parentId parent Id
+     * @return the ResponseEntity with status 200 (OK) and the list of divisions in body
+     */
+    @GetMapping("/divisions/parent/class/{parentId}")
+    @Timed
+    open fun getClassesByParent(@PathVariable parentId: Long): ResponseEntity<List<DivisionDTO>> {
+        log.debug("REST request to get Classes by parent Id")
+        val divisions = divisionService.findClassesByParentId(parentId)
+        return ResponseEntity(divisions, HttpStatus.OK)
+    }
+
+    /**
+     * GET  /divisions/parent/subgroup/{parentId} : get the divisions subroups by parent Id
+     *
+     * @param parentId parent Id
+     * @return the ResponseEntity with status 200 (OK) and the list of divisions in body
+     */
+    @GetMapping("/divisions/parent/subgroup/{parentId}")
+    @Timed
+    open fun getSubgroupsByParent(@PathVariable parentId: Long): ResponseEntity<List<DivisionDTO>> {
+        log.debug("REST request to get Subgroups by parent Id")
+        val divisions = divisionService.findSubgroupsByParentId(parentId)
+        return ResponseEntity(divisions, HttpStatus.OK)
     }
 
     /**

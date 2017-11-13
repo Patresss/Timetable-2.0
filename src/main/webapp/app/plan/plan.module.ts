@@ -3,6 +3,7 @@ import {RouterModule} from '@angular/router';
 import {planRoute} from './plan.route';
 import {PlanComponent} from './plan.component';
 import {TimetableSharedModule} from '../shared/shared.module';
+import {MultiselectDropdownModule} from 'angular-2-dropdown-multiselect';
 
 const ENTITY_STATES = [
     ...planRoute,
@@ -11,7 +12,8 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         TimetableSharedModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
+        MultiselectDropdownModule
     ],
     declarations: [
         PlanComponent,

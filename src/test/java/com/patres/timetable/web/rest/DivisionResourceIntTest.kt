@@ -9,7 +9,7 @@ import com.patres.timetable.service.dto.DivisionDTO
 import com.patres.timetable.service.mapper.DivisionMapper
 import com.patres.timetable.web.rest.errors.ExceptionTranslator
 import org.assertj.core.api.Assertions.assertThat
-import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,7 +25,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.transaction.annotation.Transactional
-
 
 
 /**
@@ -118,10 +117,11 @@ open class DivisionResourceIntTest {
         division = createEntity()
     }
 
+
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun createDivision() {
+    open fun `Create Division`() {
         val databaseSizeBeforeCreate = divisionRepository.findAll().size
 
         // Create the Division
@@ -146,10 +146,8 @@ open class DivisionResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun createDivisionWithExistingId() {
+    open fun `Create Division With Existing Id`() {
         val databaseSizeBeforeCreate = divisionRepository.findAll().size
-
-        // Create the Division with an existing ID
         division.id = 1L
         val divisionDTO = divisionMapper.toDto(division)
 
@@ -159,7 +157,6 @@ open class DivisionResourceIntTest {
             .content(TestUtil.convertObjectToJsonBytes(divisionDTO)))
             .andExpect(status().isBadRequest)
 
-        // Validate the Division in the database
         val divisionList = divisionRepository.findAll()
         assertThat(divisionList).hasSize(databaseSizeBeforeCreate)
     }
@@ -167,7 +164,7 @@ open class DivisionResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun checkNameIsRequired() {
+    open fun `check Name Is Required`() {
         val databaseSizeBeforeTest = divisionRepository.findAll().size
         // set the field null
         division.name = null
@@ -187,12 +184,10 @@ open class DivisionResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    fun checkDivisionTypeIsRequired() {
+    open fun `Check Division Type is required`() {
         val databaseSizeBeforeTest = divisionRepository.findAll().size
-        // set the field null
         division.divisionType = null
 
-        // Create the Division, which fails.
         val divisionDTO = divisionMapper.toDto(division)
 
         restDivisionMockMvc.perform(post("/api/divisions")
@@ -207,11 +202,9 @@ open class DivisionResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun getAllDivisions() {
-        // Initialize the database
+    open fun `Get all Divisions`() {
         divisionRepository.saveAndFlush<Division>(division)
 
-        // Get all the divisionList
         restDivisionMockMvc.perform(get("/api/divisions?sort=id,desc"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -224,14 +217,106 @@ open class DivisionResourceIntTest {
             .andExpect(jsonPath("$.[*].colorText").value(hasItem(DEFAULT_COLOR_TEXT)))
     }
 
+
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun getDivision() {
-        // Initialize the database
+    open fun `Get all by Division Type`() {
+        val school1 = createEntity().apply { divisionType = DivisionType.SCHOOL }
+        val school2 = createEntity().apply { divisionType = DivisionType.SCHOOL }
+        val class1 = createEntity().apply { divisionType = DivisionType.CLASS }
+        val class2 = createEntity().apply { divisionType = DivisionType.CLASS }
+        val subGroup1 = createEntity().apply { divisionType = DivisionType.SUBGROUP }
+        val subGroup2 = createEntity().apply { divisionType = DivisionType.SUBGROUP }
+
+        divisionRepository.saveAndFlush<Division>(school1)
+        divisionRepository.saveAndFlush<Division>(school2)
+        divisionRepository.saveAndFlush<Division>(class1)
+        divisionRepository.saveAndFlush<Division>(class2)
+        divisionRepository.saveAndFlush<Division>(subGroup1)
+        divisionRepository.saveAndFlush<Division>(subGroup2)
+
+        restDivisionMockMvc.perform(get("/api/divisions/type/{divisionType}", DivisionType.SCHOOL))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.*", hasSize<Int>(2)))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(school1.id?.toInt())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(school2.id?.toInt())))
+
+        restDivisionMockMvc.perform(get("/api/divisions/type/{divisionType}", DivisionType.CLASS))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.*", hasSize<Int>(2)))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(class1.id?.toInt())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(class2.id?.toInt())))
+
+        restDivisionMockMvc.perform(get("/api/divisions/type/{divisionType}", DivisionType.SUBGROUP))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.*", hasSize<Int>(2)))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(subGroup1.id?.toInt())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(subGroup2.id?.toInt())))
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    open fun `Get Classes Division by parentId`() {
+        val school1 = createEntity().apply { divisionType = DivisionType.SCHOOL }
+        val school2 = createEntity().apply { divisionType = DivisionType.SCHOOL; parents = hashSetOf(school1) }
+        val class1 = createEntity().apply { divisionType = DivisionType.CLASS; parents = hashSetOf(school1)}
+        val class2 = createEntity().apply { divisionType = DivisionType.CLASS; parents = hashSetOf(school1)}
+        val class3 = createEntity().apply { divisionType = DivisionType.CLASS; parents = hashSetOf(school2)}
+
+        divisionRepository.saveAndFlush<Division>(school1)
+        divisionRepository.saveAndFlush<Division>(school2)
+        divisionRepository.saveAndFlush<Division>(class1)
+        divisionRepository.saveAndFlush<Division>(class2)
+        divisionRepository.saveAndFlush<Division>(class3)
+
+        restDivisionMockMvc.perform(get("/api/divisions/parent/class/{parentId}", school1.id))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.*", hasSize<Int>(2)))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(class1.id?.toInt())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(class2.id?.toInt())))
+            .andExpect(jsonPath("$.[*].id").value(not(hasItem(class3.id?.toInt()))))
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    open fun `Get Subgroups Division by parentId`() {
+        val class1 = createEntity().apply { divisionType = DivisionType.CLASS}
+        val class2 = createEntity().apply { divisionType = DivisionType.CLASS}
+        val subgroup1 = createEntity().apply { divisionType = DivisionType.SUBGROUP; parents = hashSetOf(class1)}
+        val subgroup2 = createEntity().apply { divisionType = DivisionType.SUBGROUP; parents = hashSetOf(class1)}
+        val subgroup3 = createEntity().apply { divisionType = DivisionType.SUBGROUP; parents = hashSetOf(class2)}
+        val subgroup4 = createEntity().apply { divisionType = DivisionType.SUBGROUP; parents = hashSetOf(subgroup1)}
+
+        divisionRepository.saveAndFlush<Division>(class1)
+        divisionRepository.saveAndFlush<Division>(class2)
+        divisionRepository.saveAndFlush<Division>(subgroup1)
+        divisionRepository.saveAndFlush<Division>(subgroup2)
+        divisionRepository.saveAndFlush<Division>(subgroup3)
+        divisionRepository.saveAndFlush<Division>(subgroup4)
+
+        restDivisionMockMvc.perform(get("/api/divisions/parent/subgroup/{parentId}", class1.id))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.*", hasSize<Int>(2)))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(subgroup1.id?.toInt())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(subgroup2.id?.toInt())))
+            .andExpect(jsonPath("$.[*].id").value(not(hasItem(subgroup3.id?.toInt()))))
+            .andExpect(jsonPath("$.[*].id").value(not(hasItem(subgroup4.id?.toInt()))))
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    open fun `Get Division`() {
         divisionRepository.saveAndFlush<Division>(division)
 
-        // Get the division
         restDivisionMockMvc.perform(get("/api/divisions/{id}", division.id))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -247,8 +332,7 @@ open class DivisionResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun getNonExistingDivision() {
-        // Get the division
+    open fun `Get non existing Division`() {
         restDivisionMockMvc.perform(get("/api/divisions/{id}", java.lang.Long.MAX_VALUE))
             .andExpect(status().isNotFound)
     }
@@ -256,12 +340,10 @@ open class DivisionResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun updateDivision() {
-        // Initialize the database
+    open fun `Update Division`() {
         divisionRepository.saveAndFlush<Division>(division)
         val databaseSizeBeforeUpdate = divisionRepository.findAll().size
 
-        // Update the division
         val updatedDivision = divisionRepository.findOne(division.id)
 
         updatedDivision.name = UPDATED_NAME
@@ -277,7 +359,6 @@ open class DivisionResourceIntTest {
             .content(TestUtil.convertObjectToJsonBytes(divisionDTO)))
             .andExpect(status().isOk)
 
-        // Validate the Division in the database
         val divisionList = divisionRepository.findAll()
         assertThat(divisionList).hasSize(databaseSizeBeforeUpdate)
         val testDivision = divisionList[divisionList.size - 1]
@@ -292,19 +373,16 @@ open class DivisionResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun updateNonExistingDivision() {
+    open fun `Update non existing division`() {
         val databaseSizeBeforeUpdate = divisionRepository.findAll().size
 
-        // Create the Division
         val divisionDTO = divisionMapper.toDto(division)
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
         restDivisionMockMvc.perform(put("/api/divisions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(divisionDTO)))
             .andExpect(status().isCreated)
 
-        // Validate the Division in the database
         val divisionList = divisionRepository.findAll()
         assertThat(divisionList).hasSize(databaseSizeBeforeUpdate + 1)
     }
@@ -312,17 +390,14 @@ open class DivisionResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun deleteDivision() {
-        // Initialize the database
+    open fun `Delete Division`() {
         divisionRepository.saveAndFlush<Division>(division)
         val databaseSizeBeforeDelete = divisionRepository.findAll().size
 
-        // Get the division
         restDivisionMockMvc.perform(delete("/api/divisions/{id}", division.id)
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk)
 
-        // Validate the database is empty
         val divisionList = divisionRepository.findAll()
         assertThat(divisionList).hasSize(databaseSizeBeforeDelete - 1)
     }
@@ -330,7 +405,7 @@ open class DivisionResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun equalsVerifier() {
+    open fun `Equals verifier`() {
         val division1 = createEntity()
         division1.id = 1L
         val division2 = createEntity()
@@ -345,7 +420,7 @@ open class DivisionResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun dtoEqualsVerifier() {
+    open fun `Dto equals Verifier`() {
         val divisionDTO1 = createEntityDto()
         divisionDTO1.id = 1L
         val divisionDTO2 = createEntityDto()
@@ -357,8 +432,6 @@ open class DivisionResourceIntTest {
         divisionDTO1.id = null
         assertThat(divisionDTO1).isNotEqualTo(divisionDTO2)
     }
-
-
 
 
 }
