@@ -49,7 +49,7 @@ abstract class DivisionOwnerService<EntityType : AbstractDivisionOwner, EntityDt
 
     override fun getEntityName(): String? {
         // This only works if the subclass directly subclasses this class
-        val entityTypeClass = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<EntityType>
+        val entityTypeClass = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
         return entityTypeClass.simpleName
     }
 

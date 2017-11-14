@@ -21,7 +21,7 @@ abstract class EntityService<EntityType : AbstractApplicationEntity, EntityDtoTy
 
     // This only works if the subclass directly subclasses this class
     open fun getEntityName(): String? {
-        val entityTypeClass = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<EntityType>
+        val entityTypeClass = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
         return entityTypeClass.simpleName
     }
 

@@ -41,7 +41,7 @@ open class UserJWTController(private val tokenProvider: TokenProvider, private v
         return try {
             val authentication = this.authenticationManager.authenticate(authenticationToken)
             SecurityContextHolder.getContext().authentication = authentication
-            val rememberMe = if (loginVM.isRememberMe == null) false else loginVM.isRememberMe
+            val rememberMe = loginVM.isRememberMe
             val jwt = tokenProvider.createToken(authentication, rememberMe)
             response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt)
             ResponseEntity.ok(JWTToken(jwt))

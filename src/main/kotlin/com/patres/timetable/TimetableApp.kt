@@ -3,7 +3,6 @@ package com.patres.timetable
 import com.patres.timetable.config.ApplicationProperties
 import com.patres.timetable.config.DefaultProfileUtil
 import io.github.jhipster.config.JHipsterConstants
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration

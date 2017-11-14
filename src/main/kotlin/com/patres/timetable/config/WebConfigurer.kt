@@ -41,7 +41,7 @@ open class WebConfigurer(private val env: Environment, private val jHipsterPrope
     @Throws(ServletException::class)
     override fun onStartup(servletContext: ServletContext) {
         if (env.activeProfiles.size != 0) {
-            log.info("Web application configuration, using profiles: {}", *env.activeProfiles as Array<Any>)
+            log.info("Web application configuration, using profiles: {}", *env.activeProfiles as Array<*>)
         }
         val disps = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.ASYNC)
         initMetrics(servletContext, disps)
