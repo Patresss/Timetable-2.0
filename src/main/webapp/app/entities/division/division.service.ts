@@ -38,6 +38,16 @@ export class DivisionService {
             .map((res: Response) => this.convertResponse(res));
     }
 
+    findClassesByParentId(parentId: number): Observable<ResponseWrapper> {
+        return this.http.get(`${this.resourceUrl}/parent/class/` + parentId)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    findSubgroupsByParentId(parentId: number): Observable<ResponseWrapper> {
+        return this.http.get(`${this.resourceUrl}/parent/subgroup/` + parentId)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)

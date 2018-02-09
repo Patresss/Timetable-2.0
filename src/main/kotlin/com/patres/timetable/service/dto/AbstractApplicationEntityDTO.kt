@@ -7,10 +7,6 @@ import java.util.*
 abstract class AbstractApplicationEntityDTO() : Serializable {
     var id: Long? = null
 
-    constructor(id : Long?) : this() {
-        this.id = id
-    }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true

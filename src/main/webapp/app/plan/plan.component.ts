@@ -4,12 +4,11 @@ import {Subscription} from 'rxjs/Rx';
 import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from 'ng-jhipster';
 import {Principal} from '../shared/auth/principal.service';
 import {PaginationConfig} from '../blocks/config/uib-pagination.config';
-import {IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
 import {DivisionService} from '../entities/division/division.service';
 import {ResponseWrapper} from '../shared/model/response-wrapper.model';
 import {Division} from '../entities/division/division.model';
 import {ITEMS_PER_PAGE} from '../shared/constants/pagination.constants';
-
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'jhi-board',
@@ -32,31 +31,44 @@ export class PlanComponent implements OnInit, OnDestroy {
     previousPage: any;
     reverse: any;
 
-    schools: any;
-
-    selectedSchool: number[] = [];
-
-    schoolSelectSettings: IMultiSelectSettings = {
-        enableSearch: true,
-        checkedStyle: 'fontawesome',
-        buttonClasses: 'btn btn-default btn-block',
-        selectionLimit: 1,
-        autoUnselect: true,
+    schoolSelectOption = [];
+    selectedSchool = [];
+    schoolSelectSettings = {
+        singleSelection: true,
+        text: this.translateService.instant('timetableApp.plan.choose.school'),
+        enableSearchFilter: true,
+        classes: 'myclass custom-class'
     };
 
-    schoolSelectTexts: IMultiSelectTexts = {};
+    classSelectOption = [];
+    selectedClass = [];
+    classSelectSettings = {
+        singleSelection: true,
+        text: this.translateService.instant('timetableApp.plan.choose.class'),
+        enableSearchFilter: true,
+        classes: 'myclass custom-class'
+    };
 
-    schoolSelectOption: IMultiSelectOption[] = [];
+    subgroupSelectOption = [];
+    selectedSubgroup = [];
+    subgroupSelectSettings = {
+        singleSelection: true,
+        text: this.translateService.instant('timetableApp.plan.choose.subgroups'),
+        enableSearchFilter: true,
+        classes: 'myclass custom-class'
+    };
 
-    private entityListToSelectList(entityList: Division[]): IMultiSelectOption[] {
-        let selectList: IMultiSelectOption[] = [];
-        entityList.forEach((entity) => {
-            let obj: IMultiSelectOption = {id: entity.id, name: entity.name};
-            selectList.push(obj)
-        });
-        return selectList;
-    }
-
+    typePlanSelectOption = [
+        {'id': 1, 'itemName': this.translateService.instant('timetableApp.plan.type.STUDENT')},
+        {'id': 2, 'itemName': this.translateService.instant('timetableApp.plan.type.TEACHER')},
+        {'id': 3, 'itemName': this.translateService.instant('timetableApp.plan.type.PLACE')}];
+    selectedTypePlan = [];
+    typePlanSelectSettings = {
+        singleSelection: true,
+        text: this.translateService.instant('timetableApp.plan.choose.type-plan'),
+        enableSearchFilter: true,
+        classes: 'myclass custom-class'
+    };
 
     constructor(private parseLinks: JhiParseLinks,
                 private alertService: JhiAlertService,
@@ -66,7 +78,8 @@ export class PlanComponent implements OnInit, OnDestroy {
                 private eventManager: JhiEventManager,
                 private paginationUtil: JhiPaginationUtil,
                 private paginationConfig: PaginationConfig,
-                private divisionService: DivisionService) {
+                private divisionService: DivisionService,
+                private translateService: TranslateService) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             data
@@ -74,18 +87,16 @@ export class PlanComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.divisionService.findByDivisionType("SCHOOL").subscribe(
-            (res: ResponseWrapper) => this.onSuccessSchool(res.json, res.headers),
+        this.divisionService.findByDivisionType('SCHOOL').subscribe(
+            (res: ResponseWrapper) => this.onSuccessSchool(res.json),
             (res: ResponseWrapper) => this.onError(res.json)
         );
     }
-
 
     transition() {
         this.router.navigate(['/plan'], {});
         this.loadAll();
     }
-
 
     ngOnInit() {
         this.loadAll();
@@ -98,13 +109,81 @@ export class PlanComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
     }
 
-    private onSuccessSchool(data, headers) {
-        this.schools = data;
-        this.schoolSelectOption = this.entityListToSelectList(this.schools);
+    private onSuccessSchool(data) {
+        this.schoolSelectOption = this.entityListToSelectList(data);
+    }
+
+    private onSuccessClass(data) {
+        this.classSelectOption = this.entityListToSelectList(data);
+    }
+
+    private onSuccessSubgroup(data) {
+        this.subgroupSelectOption = this.entityListToSelectList(data);
     }
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    private entityListToSelectList(entityList: Division[]) {
+        const selectList = [];
+        entityList.forEach((entity) => {
+            const obj = {id: entity.id, itemName: entity.name};
+            selectList.push(obj)
+        });
+        return selectList;
+    }
+
+// ================================================================
+// School
+// ================================================================
+    onSchoolSelect(item: any) {
+        this.divisionService.findClassesByParentId(item.id).subscribe(
+            (res: ResponseWrapper) => this.onSuccessClass(res.json),
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+    }
+
+    OnSchoolDeSelect(item: any) {
+        this.classSelectOption = [];
+        this.subgroupSelectOption = [];
+        this.selectedClass = [];
+        this.selectedSubgroup = [];
+    }
+
+// ================================================================
+// Class
+// ================================================================
+    onClassSelect(item: any) {
+        this.divisionService.findSubgroupsByParentId(item.id).subscribe(
+            (res: ResponseWrapper) => this.onSuccessSubgroup(res.json),
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+    }
+
+    OnClassDeSelect(item: any) {
+        this.subgroupSelectOption = [];
+        this.selectedSubgroup = [];
+    }
+
+// ================================================================
+// Subgroup
+// ================================================================
+    onSubgroupSelect(item: any) {
+
+    }
+
+    OnSubgroupDeSelect(item: any) {
+    }
+
+// ================================================================
+// Type of Plan
+// ================================================================
+    onTypePlanSelect(item: any) {
+
+    }
+
+    OnSTypePlanDeSelect(item: any) {
     }
 
 }

@@ -1,0 +1,11 @@
+{
+    "timetableApp": {
+        "plan" : {
+            "choose": {
+                "school": "Choose a school",
+                "class": "Choose a class",
+                "subgroups": "Choose divisions"
+            }
+        }
+    }
+}

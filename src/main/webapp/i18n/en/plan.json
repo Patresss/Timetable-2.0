@@ -1,0 +1,18 @@
+{
+    "timetableApp": {
+        "plan" : {
+            "choose": {
+                "school": "Choose a school",
+                "class": "Choose a class",
+                "subgroups": "Choose divisions",
+                "type-plan": "Choose a type of plan"
+            },
+            "type": {
+                "STUDENT": "Student",
+                "TEACHER": "Teacher",
+                "PLACE": "Place"
+            },
+            "type-plan": "Type of plan"
+        }
+    }
+}

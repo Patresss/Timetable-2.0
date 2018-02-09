@@ -14,6 +14,36 @@ import { ResponseWrapper } from '../../shared';
 import {Interval} from '../interval/interval.model';
 
 @Component({
+    selector: 'jhi-period-popup',
+    template: ''
+})
+export class PeriodPopupComponent implements OnInit, OnDestroy {
+
+    routeSub: any;
+
+    constructor(
+        private route: ActivatedRoute,
+        private periodPopupService: PeriodPopupService
+    ) {}
+
+    ngOnInit() {
+        this.routeSub = this.route.params.subscribe((params) => {
+            if ( params['id'] ) {
+                this.periodPopupService
+                    .open(PeriodDialogComponent as Component, params['id']);
+            } else {
+                this.periodPopupService
+                    .open(PeriodDialogComponent as Component);
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        this.routeSub.unsubscribe();
+    }
+}
+
+@Component({
     selector: 'jhi-period-dialog',
     templateUrl: './period-dialog.component.html'
 })
@@ -56,20 +86,20 @@ export class PeriodDialogComponent implements OnInit {
     }
 
     removeIntervalTime(interval: Interval) {
-        let index: number = this.period.intervalTimes.indexOf(interval);
+        const index: number = this.period.intervalTimes.indexOf(interval);
         if (index !== -1) {
             this.period.intervalTimes.splice(index, 1);
         }
     }
 
     addIntervalTime(included: boolean) {
-        let interval = new Interval();
+        const interval = new Interval();
         interval.included = included;
         this.period.intervalTimes.push(interval);
     }
 
     intervalsExists(included: boolean) {
-        for (let interval of this.period.intervalTimes) {
+        for (const interval of this.period.intervalTimes) {
             if (interval.included === included) {
                 return true;
             }
@@ -101,32 +131,4 @@ export class PeriodDialogComponent implements OnInit {
     }
 }
 
-@Component({
-    selector: 'jhi-period-popup',
-    template: ''
-})
-export class PeriodPopupComponent implements OnInit, OnDestroy {
 
-    routeSub: any;
-
-    constructor(
-        private route: ActivatedRoute,
-        private periodPopupService: PeriodPopupService
-    ) {}
-
-    ngOnInit() {
-        this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['id'] ) {
-                this.periodPopupService
-                    .open(PeriodDialogComponent as Component, params['id']);
-            } else {
-                this.periodPopupService
-                    .open(PeriodDialogComponent as Component);
-            }
-        });
-    }
-
-    ngOnDestroy() {
-        this.routeSub.unsubscribe();
-    }
-}
