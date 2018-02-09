@@ -46,7 +46,8 @@ export class PlanComponent implements OnInit, OnDestroy {
         singleSelection: true,
         text: this.translateService.instant('timetableApp.plan.choose.class'),
         enableSearchFilter: true,
-        classes: 'myclass custom-class'
+        classes: 'myclass custom-class',
+        disabled: true
     };
 
     subgroupSelectOption = [];
@@ -55,7 +56,8 @@ export class PlanComponent implements OnInit, OnDestroy {
         singleSelection: true,
         text: this.translateService.instant('timetableApp.plan.choose.subgroups'),
         enableSearchFilter: true,
-        classes: 'myclass custom-class'
+        classes: 'myclass custom-class',
+        disabled: true
     };
 
     typePlanSelectOption = [
@@ -142,13 +144,23 @@ export class PlanComponent implements OnInit, OnDestroy {
             (res: ResponseWrapper) => this.onSuccessClass(res.json),
             (res: ResponseWrapper) => this.onError(res.json)
         );
+
+        if (item != null) {
+            this.classSelectSettings.disabled = false;
+            this.classSelectSettings = Object.assign({}, this.classSelectSettings); // workaround to detect change
+        }
     }
 
-    OnSchoolDeSelect(item: any) {
+    OnSchoolDeSelect() {
         this.classSelectOption = [];
         this.subgroupSelectOption = [];
         this.selectedClass = [];
         this.selectedSubgroup = [];
+
+        this.classSelectSettings.disabled = true;
+        this.classSelectSettings = Object.assign({}, this.classSelectSettings); // workaround to detect change
+        this.subgroupSelectSettings.disabled = true;
+        this.subgroupSelectSettings = Object.assign({}, this.subgroupSelectSettings); // workaround to detect change
     }
 
 // ================================================================
@@ -159,11 +171,19 @@ export class PlanComponent implements OnInit, OnDestroy {
             (res: ResponseWrapper) => this.onSuccessSubgroup(res.json),
             (res: ResponseWrapper) => this.onError(res.json)
         );
+
+        if (item != null) {
+            this.subgroupSelectSettings.disabled = false;
+            this.subgroupSelectSettings = Object.assign({}, this.classSelectSettings); // workaround to detect change
+        }
     }
 
-    OnClassDeSelect(item: any) {
+    OnClassDeSelect() {
         this.subgroupSelectOption = [];
         this.selectedSubgroup = [];
+
+        this.subgroupSelectSettings.disabled = true;
+        this.subgroupSelectSettings = Object.assign({}, this.subgroupSelectSettings); // workaround to detect change
     }
 
 // ================================================================
