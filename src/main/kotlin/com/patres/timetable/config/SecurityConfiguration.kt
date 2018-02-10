@@ -85,6 +85,8 @@ open class SecurityConfiguration(
             .and()
             .authorizeRequests()
             .antMatchers("/api/register").permitAll()
+            .antMatchers("/api/divisions/type/**").permitAll()
+            .antMatchers("/api/divisions/parent/**").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/account/reset-password/init").permitAll()

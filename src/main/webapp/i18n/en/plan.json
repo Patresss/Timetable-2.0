@@ -4,7 +4,7 @@
             "choose": {
                 "school": "Choose a school",
                 "class": "Choose a class",
-                "subgroups": "Choose divisions",
+                "subgroups": "Choose subgroups",
                 "type-plan": "Choose a type of plan"
             },
             "type": {
@@ -12,7 +12,17 @@
                 "TEACHER": "Teacher",
                 "PLACE": "Place"
             },
-            "type-plan": "Type of plan"
+            "type-plan": "Type of plan",
+            "week-day": {
+                "1": "Monday",
+                "2": "Tuesday",
+                "3": "Wednesday",
+                "4": "Thursday",
+                "5": "Friday",
+                "6": "Saturday",
+                "0": "Sunday"
+            },
+            "search": "Szukaj"
         }
     }
 }

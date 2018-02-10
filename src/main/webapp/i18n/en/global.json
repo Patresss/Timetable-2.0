@@ -92,9 +92,13 @@
             "id": "ID"
         },
         "ribbon": {
-            "dev":"Development"
+            "dev": "Development"
         },
-        "item-count": "Showing {{first}} - {{second}} of {{total}} items."
+        "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
+        "search": "Search",
+        "select-all": "Select All",
+        "un-select-all": "Unselect all",
+        "no-data": "No data"
     },
     "entity": {
         "action": {

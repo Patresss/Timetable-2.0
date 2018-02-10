@@ -2,9 +2,25 @@
     "timetableApp": {
         "plan" : {
             "choose": {
-                "school": "Choose a school",
-                "class": "Choose a class",
-                "subgroups": "Choose divisions"
+                "school": "Wybierz szkołę",
+                "class": "Wybierz klasę",
+                "subgroups": "Wybierz podgrupy",
+                "type-plan": "Wybierz typ planu"
+            },
+            "type": {
+                "STUDENT": "Uczeń",
+                "TEACHER": "Nauczyciel",
+                "PLACE": "Miejsce"
+            },
+            "type-plan": "Typ planu",
+            "week-day": {
+                "1": "Poniedziałek",
+                "2": "Tuesday",
+                "3": "Wednesday",
+                "4": "Thursday",
+                "5": "Friday",
+                "6": "Saturday",
+                "0": "Sunday"
             }
         }
     }

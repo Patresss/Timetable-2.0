@@ -35,16 +35,18 @@ export class PlanComponent implements OnInit, OnDestroy {
     selectedSchool = [];
     schoolSelectSettings = {
         singleSelection: true,
-        text: this.translateService.instant('timetableApp.plan.choose.school'),
+        text: 'timetableApp.plan.choose.school',
         enableSearchFilter: true,
         classes: 'myclass custom-class'
     };
+
+
 
     classSelectOption = [];
     selectedClass = [];
     classSelectSettings = {
         singleSelection: true,
-        text: this.translateService.instant('timetableApp.plan.choose.class'),
+        text: 'timetableApp.plan.choose.class',
         enableSearchFilter: true,
         classes: 'myclass custom-class',
         disabled: true
@@ -53,11 +55,12 @@ export class PlanComponent implements OnInit, OnDestroy {
     subgroupSelectOption = [];
     selectedSubgroup = [];
     subgroupSelectSettings = {
-        singleSelection: true,
-        text: this.translateService.instant('timetableApp.plan.choose.subgroups'),
+        singleSelection: false,
+        text: 'timetableApp.plan.choose.subgroups',
         enableSearchFilter: true,
         classes: 'myclass custom-class',
-        disabled: true
+        disabled: true,
+        enableCheckAll: true
     };
 
     typePlanSelectOption = [
@@ -67,10 +70,20 @@ export class PlanComponent implements OnInit, OnDestroy {
     selectedTypePlan = [];
     typePlanSelectSettings = {
         singleSelection: true,
-        text: this.translateService.instant('timetableApp.plan.choose.type-plan'),
+        text: 'timetableApp.plan.choose.type-plan',
         enableSearchFilter: true,
         classes: 'myclass custom-class'
     };
+
+    weekDay = this.loadWeekDays();
+
+
+    numberOfColums = 7;
+    timeArray = [];
+    startHour = 6;
+    endHour = 17;
+    firstColumnWidth = 5.0;
+    columnWidth = (100.0 - this.firstColumnWidth) / 7.0;
 
     constructor(private parseLinks: JhiParseLinks,
                 private alertService: JhiAlertService,
@@ -105,7 +118,7 @@ export class PlanComponent implements OnInit, OnDestroy {
         this.principal.identity().then((account) => {
             this.currentAccount = account;
         });
-
+        this.loadTimeArray();
     }
 
     ngOnDestroy() {
@@ -136,6 +149,14 @@ export class PlanComponent implements OnInit, OnDestroy {
         return selectList;
     }
 
+    private loadTimeArray() {
+        this.timeArray = [];
+        for (let hour = this.startHour; hour <= this.endHour; hour++) {
+            let hourString = hour.toString().length <= 1 ? "0" + hour : hour.toString();
+            this.timeArray.push(hourString + ":00");
+        }
+    }
+
 // ================================================================
 // School
 // ================================================================
@@ -163,6 +184,10 @@ export class PlanComponent implements OnInit, OnDestroy {
         this.subgroupSelectSettings = Object.assign({}, this.subgroupSelectSettings); // workaround to detect change
     }
 
+// ================================================================================================================================
+// Choosers
+// ================================================================================================================================
+
 // ================================================================
 // Class
 // ================================================================
@@ -174,7 +199,7 @@ export class PlanComponent implements OnInit, OnDestroy {
 
         if (item != null) {
             this.subgroupSelectSettings.disabled = false;
-            this.subgroupSelectSettings = Object.assign({}, this.classSelectSettings); // workaround to detect change
+            this.subgroupSelectSettings = Object.assign({}, this.subgroupSelectSettings); // workaround to detect change
         }
     }
 
@@ -204,6 +229,29 @@ export class PlanComponent implements OnInit, OnDestroy {
     }
 
     OnSTypePlanDeSelect(item: any) {
+    }
+
+
+// ================================================================================================================================
+//
+// ================================================================================================================================
+    private loadWeekDays() {
+        let lastMonday = new Date();
+        lastMonday.setDate(lastMonday.getDate() - (lastMonday.getDay() + 6) % 7);
+        let days = [];
+
+        for (let i = 0; i < 7; i++) {
+            let date = new Date(lastMonday);
+            date.setDate(date.getDate() + i);
+            let day = {
+                'name': i,
+                'date': date
+            };
+            days.push(day);
+        }
+
+        console.log(days);
+        return days;
     }
 
 }

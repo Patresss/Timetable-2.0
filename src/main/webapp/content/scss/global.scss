@@ -1,5 +1,20 @@
 @import 'bootstrap-variables';
 
+$primary-text-color: #212121;
+$light-text-color: #FFFFFF;
+$secondary-text-color: #757575;
+$divider-color: #BDBDBD;
+$dark-primary-color: #1976D2;
+$primary-color: #2196F3;
+$light-primary-color: #BBDEFB;
+$accent-color: #FFC107;
+$accent-color-light: #FFECB3;
+$color-accent-bright: rgb(200,200,200);
+$good-color: green;
+
+
+$hour-height: 60px;
+
 /* ==============================================================
 Bootstrap tweaks
 ===============================================================*/
@@ -217,4 +232,51 @@ ui bootstrap tweaks
     margin-bottom: 25px;
 }
 
+.plan {
+
+}
+
+.plan {
+    width: 90%;
+    margin: auto;
+    position: relative;
+
+
+    .header {
+        height: $hour-height * 2.0 !important;
+        border-bottom: 1px solid $color-accent-bright;
+        border-top: 1px solid $color-accent-bright;
+    }
+
+    .header-empty {
+        height: $hour-height * 2.0 !important;
+        border: none;
+    }
+
+    .column {
+        float: left;
+        height: 100%;
+        border-right: 1px solid $color-accent-bright;
+        background-color: white;
+        text-align: center;
+
+        .column-first {
+            width: 10%;
+        }
+    }
+
+    .hour-label {
+        border: none;
+        height: $hour-height;
+        top: -12px;
+        position: relative;
+    }
+
+    .hour {
+        margin: auto;
+        height: $hour-height;
+        border-bottom: 1px solid $color-accent-bright;
+    }
+
+}
 
