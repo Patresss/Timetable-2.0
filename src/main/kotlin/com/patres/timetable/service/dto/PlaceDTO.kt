@@ -22,9 +22,11 @@ class PlaceDTO(
 
     var preferredDivisions: Set<DivisionDTO> = HashSet(),
 
-    var preferredTeachers: Set<TeacherDTO> = HashSet()
+    var preferredTeachers: Set<TeacherDTO> = HashSet(),
 
-) : AbstractDivisionOwnerDTO(), Serializable {
+    divisionOwnerId: Long? = null
+
+) : AbstractDivisionOwnerDTO(divisionOwnerId = divisionOwnerId), Serializable {
 
     override fun toString(): String {
         return "PlaceDTO{" +

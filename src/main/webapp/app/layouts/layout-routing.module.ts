@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { navbarRoute } from '../app.route';
 import { errorRoute } from './';
+import {FillerService} from '../admin/filler/filler.service';
 
 const LAYOUT_ROUTES = [
     navbarRoute,
@@ -15,6 +16,10 @@ const LAYOUT_ROUTES = [
     ],
     exports: [
         RouterModule
+    ],
+    providers: [
+        FillerService
     ]
+
 })
 export class LayoutRoutingModule {}

@@ -33,12 +33,23 @@ class Lesson(
     @OneToMany(mappedBy = "lesson")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private var timetables: Set<Timetable> = HashSet()
+    private var timetables: Set<Timetable> = HashSet(),
 
-) : AbstractDivisionOwner(), Serializable {
+    divisionOwner: Division? = null
+
+) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
 
     companion object {
         val formatter = DateTimeFormatter.ofPattern("HH:mm")!!
+
+        fun getTimeHHmmFormatted(seconds: Long?): String {
+            seconds?.let { time ->
+                return LocalTime.ofSecondOfDay(time).format(formatter)
+            }
+            return "00:00"
+        }
+
+        fun getSecondsFromString(time: String) = LocalTime.parse(time).toSecondOfDay().toLong()
     }
 
     fun getStartTimeHHmmFormatted(): String {
@@ -57,14 +68,6 @@ class Lesson(
         endTime = getSecondsFromString(time)
     }
 
-    private fun getTimeHHmmFormatted(seconds: Long?): String {
-        seconds?.let { time ->
-            return LocalTime.ofSecondOfDay(time).format(formatter)
-        }
-        return "00:00"
-    }
-
-    private fun getSecondsFromString(time: String) = LocalTime.parse(time).toSecondOfDay().toLong()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

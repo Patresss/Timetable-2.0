@@ -10,6 +10,8 @@ class PeriodDTO(
     @get:NotNull
     var name: String? = null,
 
-    var intervalTimes: Set<IntervalDTO> = HashSet()
+    var intervalTimes: Set<IntervalDTO> = HashSet(),
 
-) : AbstractDivisionOwnerDTO(), Serializable
+    divisionOwnerId: Long? = null
+
+) : AbstractDivisionOwnerDTO(divisionOwnerId = divisionOwnerId), Serializable

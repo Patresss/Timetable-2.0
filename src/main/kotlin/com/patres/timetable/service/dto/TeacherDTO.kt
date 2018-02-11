@@ -17,6 +17,8 @@ class TeacherDTO(
 
     var shortName: String? = null,
 
-    var preferredSubjects: Set<SubjectDTO> = HashSet()
+    var preferredSubjects: Set<SubjectDTO> = HashSet(),
 
-) : AbstractDivisionOwnerDTO(), Serializable
+    divisionOwnerId: Long? = null
+
+) : AbstractDivisionOwnerDTO(divisionOwnerId = divisionOwnerId), Serializable

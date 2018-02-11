@@ -13,6 +13,8 @@ class SubjectDTO(
 
     var colorBackground: String? = null,
 
-    var colorText: String? = null
+    var colorText: String? = null,
 
-) : AbstractDivisionOwnerDTO(), Serializable
+    divisionOwnerId: Long? = null
+
+) : AbstractDivisionOwnerDTO(divisionOwnerId = divisionOwnerId), Serializable

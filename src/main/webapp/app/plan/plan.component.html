@@ -56,10 +56,12 @@
                 &nbsp;
             </div>
             <div class="column header" [ngStyle]="{'width': columnWidth + '%'}" *ngFor="let item of weekDay">
-                <span jhiTranslate="timetableApp.plan.week-day.{{item.date.getDay()}}">{{item.name}}</span>
-                <span>
-                    {{item.date.getDate()}}
-                </span>
+                <div class="day-label">
+                    <span>{{item.date.getDate()}}</span>
+                </div>
+                <div class="week-day-label" jhiTranslate="timetableApp.plan.week-day.{{item.date.getDay()}}">
+                    <span>{{item.name}}</span>
+                </div>
             </div>
         </div>
 

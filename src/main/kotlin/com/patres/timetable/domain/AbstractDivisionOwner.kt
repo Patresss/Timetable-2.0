@@ -6,19 +6,10 @@ import javax.validation.constraints.NotNull
 import java.io.Serializable
 
 @MappedSuperclass
-abstract class AbstractDivisionOwner : AbstractApplicationEntity(), Serializable {
-
-    companion object {
-        private const val serialVersionUID = 8302717018638550091L
-    }
+abstract class AbstractDivisionOwner(
 
     @ManyToOne
     @get:NotNull
     var divisionOwner: Division? = null
 
-    fun divisionOwner(divisionOwner: Division): AbstractDivisionOwner {
-        this.divisionOwner = divisionOwner
-        return this
-    }
-
-}
+) : AbstractApplicationEntity()

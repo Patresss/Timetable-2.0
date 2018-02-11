@@ -12,6 +12,8 @@ class LessonDTO(
     var startTime: Long? = null,
 
     @get:NotNull
-    var endTime: Long? = null
+    var endTime: Long? = null,
 
-) : AbstractDivisionOwnerDTO(), Serializable
+    divisionOwnerId: Long? = null
+
+) : AbstractDivisionOwnerDTO(divisionOwnerId = divisionOwnerId), Serializable

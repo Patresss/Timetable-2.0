@@ -7,6 +7,7 @@ import { ProfileService } from '../profiles/profile.service';
 import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from '../../shared';
 
 import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
+import {FillerService} from '../../admin/filler/filler.service';
 
 @Component({
     selector: 'jhi-navbar',
@@ -25,6 +26,7 @@ export class NavbarComponent implements OnInit {
     version: string;
 
     constructor(
+        private fillerService: FillerService,
         private loginService: LoginService,
         private languageService: JhiLanguageService,
         private languageHelper: JhiLanguageHelper,
@@ -76,5 +78,9 @@ export class NavbarComponent implements OnInit {
 
     getImageUrl() {
         return this.isAuthenticated() ? this.principal.getImageUrl() : null;
+    }
+
+    fillDatabase() {
+        this.fillerService.fill().subscribe()
     }
 }
