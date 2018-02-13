@@ -1,6 +1,6 @@
-export { AngularMultiSelect } from './multiselect.component';
-export { ClickOutsideDirective } from './clickOutside';
-export { ListFilterPipe } from './list-filter';
-export { Item } from './menu-item';
-export { TemplateRenderer } from './menu-item';
-export { AngularMultiSelectModule } from './multiselect.component';
+export {AngularMultiSelectComponent} from './multiselect.component';
+export {ClickOutsideDirective} from './click-outside';
+export {ListFilterPipe} from './list-filter';
+export {ItemComponent} from './menu-item';
+export {TemplateRendererComponent} from './menu-item';
+export {AngularMultiSelectModule} from './multiselect.component';

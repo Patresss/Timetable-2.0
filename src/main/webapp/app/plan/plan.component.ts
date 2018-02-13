@@ -9,6 +9,9 @@ import {ResponseWrapper} from '../shared/model/response-wrapper.model';
 import {Division} from '../entities/division/division.model';
 import {ITEMS_PER_PAGE} from '../shared/constants/pagination.constants';
 import {TranslateService} from '@ngx-translate/core';
+import {TimetableService} from '../entities/timetable';
+import {DatePipe} from '@angular/common';
+import {PlanColumn} from './plan-column.model';
 
 @Component({
     selector: 'jhi-board',
@@ -31,6 +34,8 @@ export class PlanComponent implements OnInit, OnDestroy {
     previousPage: any;
     reverse: any;
 
+    timetables = [];
+
     schoolSelectOption = [];
     selectedSchool = [];
     schoolSelectSettings = {
@@ -39,8 +44,6 @@ export class PlanComponent implements OnInit, OnDestroy {
         enableSearchFilter: true,
         classes: 'myclass custom-class'
     };
-
-
 
     classSelectOption = [];
     selectedClass = [];
@@ -77,7 +80,6 @@ export class PlanComponent implements OnInit, OnDestroy {
 
     weekDay = this.loadWeekDays();
 
-
     numberOfColums = 7;
     timeArray = [];
     startHour = 6;
@@ -94,11 +96,10 @@ export class PlanComponent implements OnInit, OnDestroy {
                 private paginationUtil: JhiPaginationUtil,
                 private paginationConfig: PaginationConfig,
                 private divisionService: DivisionService,
+                private timetableService: TimetableService,
                 private translateService: TranslateService) {
         this.itemsPerPage = ITEMS_PER_PAGE;
-        this.routeData = this.activatedRoute.data.subscribe((data) => {
-            data
-        });
+        this.routeData = this.activatedRoute.data.subscribe();
     }
 
     loadAll() {
@@ -152,8 +153,8 @@ export class PlanComponent implements OnInit, OnDestroy {
     private loadTimeArray() {
         this.timeArray = [];
         for (let hour = this.startHour; hour <= this.endHour; hour++) {
-            let hourString = hour.toString().length <= 1 ? "0" + hour : hour.toString();
-            this.timeArray.push(hourString + ":00");
+            const hourString = hour.toString().length <= 1 ? '0' + hour : hour.toString();
+            this.timeArray.push(hourString + ':00');
         }
     }
 
@@ -219,6 +220,23 @@ export class PlanComponent implements OnInit, OnDestroy {
     }
 
     OnSubgroupDeSelect(item: any) {
+        const array = [];
+        array.push(952);
+        const date = new Date();
+        date.setDate(date.getDate() - (date.getDay() + 6) % 7);
+
+        this.timetableService.findByDateAndDivisionList(date, array).subscribe(
+            (res: ResponseWrapper) => this.onSuccessTimetable(res.json),
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+    }
+
+    private onSuccessTimetable(data) {
+        this.timetables = data;
+        this.displayTimetables()
+    }
+
+    private displayTimetables() {
     }
 
 // ================================================================
@@ -228,29 +246,24 @@ export class PlanComponent implements OnInit, OnDestroy {
 
     }
 
-    OnSTypePlanDeSelect(item: any) {
-    }
+    OnTypePlanDeSelect(item: any) {
 
+    }
 
 // ================================================================================================================================
 //
 // ================================================================================================================================
     private loadWeekDays() {
-        let lastMonday = new Date();
+        const lastMonday = new Date();
         lastMonday.setDate(lastMonday.getDate() - (lastMonday.getDay() + 6) % 7);
-        let days = [];
+        const days = [];
 
         for (let i = 0; i < 7; i++) {
-            let date = new Date(lastMonday);
+            const date = new Date(lastMonday);
             date.setDate(date.getDate() + i);
-            let day = {
-                'name': i,
-                'date': date
-            };
-            days.push(day);
+            const column = new PlanColumn(date);
+            days.push(column);
         }
-
-        console.log(days);
         return days;
     }
 

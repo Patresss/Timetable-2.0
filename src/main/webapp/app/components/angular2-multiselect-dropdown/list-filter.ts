@@ -1,6 +1,6 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
-import { ListItem } from './multiselect.model';
+import {ListItem} from './multiselect.model';
 
 @Pipe({
     name: 'listFilter',
@@ -13,16 +13,17 @@ export class ListFilterPipe implements PipeTransform {
         }
         return items.filter((item: any) => this.applyFilter(item, filter));
     }
+
     applyFilter(item: any, filter: any): boolean {
         let found = false;
-        for (var prop in item) {
+        for (const prop in item) {
             if (filter.itemName) {
                 if (item[prop].toString().toLowerCase().indexOf(filter.itemName.toLowerCase()) >= 0) {
                     found = true;
                 }
-            }
-            else
+            } else {
                 found = true;
+            }
         }
         return found;
     }

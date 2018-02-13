@@ -6,7 +6,25 @@ import { PeriodService } from './period.service';
 
 @Injectable()
 export class PeriodPopupService {
+
     private ngbModalRef: NgbModalRef;
+
+    static modifyDate(interval) {
+        if (interval.startDate) {
+            interval.startDate = {
+                year: interval.startDate.getFullYear(),
+                month: interval.startDate.getMonth() + 1,
+                day: interval.startDate.getDate()
+            };
+        }
+        if (interval.endDate) {
+            interval.endDate = {
+                year: interval.endDate.getFullYear(),
+                month: interval.endDate.getMonth() + 1,
+                day: interval.endDate.getDate()
+            };
+        }
+    }
 
     constructor(
         private modalService: NgbModal,
@@ -55,21 +73,4 @@ export class PeriodPopupService {
         return modalRef;
     }
 
-    static modifyDate(interval) {
-        if (interval.startDate) {
-            interval.startDate = {
-                year: interval.startDate.getFullYear(),
-                month: interval.startDate.getMonth() + 1,
-                day: interval.startDate.getDate()
-            };
-        }
-        if (interval.endDate) {
-            interval.endDate = {
-                year: interval.endDate.getFullYear(),
-                month: interval.endDate.getMonth() + 1,
-                day: interval.endDate.getDate()
-            };
-        }
-
-    }
 }

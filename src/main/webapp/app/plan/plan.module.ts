@@ -3,7 +3,6 @@ import {RouterModule} from '@angular/router';
 import {planRoute} from './plan.route';
 import {PlanComponent} from './plan.component';
 import {TimetableSharedModule} from '../shared/shared.module';
-import {PlanColumnComponent} from './plan-column.component';
 import {AngularMultiSelectModule} from '../components/angular2-multiselect-dropdown';
 
 const ENTITY_STATES = [
@@ -18,7 +17,6 @@ const ENTITY_STATES = [
     ],
     declarations: [
         PlanComponent,
-        PlanColumnComponent,
     ],
     entryComponents: [
         PlanComponent,

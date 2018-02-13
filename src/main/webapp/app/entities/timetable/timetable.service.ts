@@ -1,19 +1,21 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
+import {Injectable} from '@angular/core';
+import {Http, Response, URLSearchParams} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import {SERVER_API_URL} from '../../app.constants';
 
-import { JhiDateUtils } from 'ng-jhipster';
+import {JhiDateUtils} from 'ng-jhipster';
 
-import { Timetable } from './timetable.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+import {Timetable} from './timetable.model';
+import {createRequestOption, ResponseWrapper} from '../../shared';
+import {DateObject} from './date-object.model';
 
 @Injectable()
 export class TimetableService {
 
     private resourceUrl = SERVER_API_URL + 'api/timetables';
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+    constructor(private http: Http, private dateUtils: JhiDateUtils) {
+    }
 
     create(timetable: Timetable): Observable<Timetable> {
         const copy = this.convert(timetable);
@@ -41,6 +43,16 @@ export class TimetableService {
         });
     }
 
+    findByDateAndDivisionList(date: Date, divisionIdList: Array<number>): Observable<ResponseWrapper> {
+        const urlSearchParams: URLSearchParams = new URLSearchParams();
+        const dateObj = DateObject.fromDate(date);
+        const dateToServer = this.dateUtils.convertLocalDateToServer(dateObj);
+        urlSearchParams.set('date', dateToServer);
+        urlSearchParams.set('divisionIdList', divisionIdList.toString());
+        const options = {params: urlSearchParams};
+        return this.http.get(`${this.resourceUrl}/divisionList`, options).map((res: Response) => this.convertResponse(res));
+    }
+
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
@@ -60,22 +72,16 @@ export class TimetableService {
     }
 
     private convertItemFromServer(entity: any) {
-        entity.startDate = this.dateUtils
-            .convertLocalDateFromServer(entity.startDate);
-        entity.endDate = this.dateUtils
-            .convertLocalDateFromServer(entity.endDate);
-        entity.date = this.dateUtils
-            .convertLocalDateFromServer(entity.date);
+        entity.startDate = this.dateUtils.convertLocalDateFromServer(entity.startDate);
+        entity.endDate = this.dateUtils.convertLocalDateFromServer(entity.endDate);
+        entity.date = this.dateUtils.convertLocalDateFromServer(entity.date);
     }
 
     private convert(timetable: Timetable): Timetable {
         const copy: Timetable = Object.assign({}, timetable);
-        copy.startDate = this.dateUtils
-            .convertLocalDateToServer(timetable.startDate);
-        copy.endDate = this.dateUtils
-            .convertLocalDateToServer(timetable.endDate);
-        copy.date = this.dateUtils
-            .convertLocalDateToServer(timetable.date);
+        copy.startDate = this.dateUtils.convertLocalDateToServer(timetable.startDate);
+        copy.endDate = this.dateUtils.convertLocalDateToServer(timetable.endDate);
+        copy.date = this.dateUtils.convertLocalDateToServer(timetable.date);
         return copy;
     }
 }

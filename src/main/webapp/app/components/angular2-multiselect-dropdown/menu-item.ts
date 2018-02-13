@@ -1,55 +1,56 @@
-import { Component, OnInit, OnDestroy, NgModule, TemplateRef, AfterContentInit, ContentChild, EmbeddedViewRef, OnChanges, ViewContainerRef, ViewEncapsulation, Input, Output, EventEmitter, ElementRef, AfterViewInit, Pipe, PipeTransform } from '@angular/core';
-import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
-import { CommonModule }       from '@angular/common';
+import {Component, ContentChild, EmbeddedViewRef, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
 
 @Component({
-  selector: 'c-item',
-  template: ``
+    selector: 'jhi-c-item',
+    template: ``
 })
 
-export class Item { 
+export class ItemComponent {
 
     @ContentChild(TemplateRef) template: TemplateRef<any>
-    constructor() {   
+
+    constructor() {
     }
 
 }
 
 @Component({
-  selector: 'c-badge',
-  template: ``
+    selector: 'jhi-c-badge',
+    template: ``
 })
 
-export class Badge { 
+export class BadgeComponent {
 
     @ContentChild(TemplateRef) template: TemplateRef<any>
-    constructor() {   
+
+    constructor() {
     }
 
 }
 
 @Component({
-  selector: 'c-templateRenderer',
-  template: ``
+    selector: 'jhi-c-template-renderer',
+    template: ``
 })
 
-export class TemplateRenderer implements OnInit, OnDestroy { 
+export class TemplateRendererComponent implements OnInit, OnDestroy {
 
-    @Input() data: any
-    @Input() item: any
+    @Input() data: any;
+    @Input() item: any;
     view: EmbeddedViewRef<any>;
 
-    constructor(public viewContainer: ViewContainerRef) {   
+    constructor(public viewContainer: ViewContainerRef) {
     }
+
     ngOnInit() {
         this.view = this.viewContainer.createEmbeddedView(this.data.template, {
             '\$implicit': this.data,
-            'item':this.item
+            'item': this.item
         });
     }
-	
+
     ngOnDestroy() {
-		this.view.destroy();
-	}
+        this.view.destroy();
+    }
 
 }

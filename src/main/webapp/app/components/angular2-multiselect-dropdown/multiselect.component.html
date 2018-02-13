@@ -1,4 +1,4 @@
-<div class="cuppa-dropdown" (clickOutside)="closeDropdown()">
+<div class="cuppa-dropdown" (jhiClickOutside)="closeDropdown()">
     <div class="selected-list">
         <div class="c-btn" (click)="toggleDropdown($event)" [ngClass]="{'disabled': settings.disabled}">
             <span *ngIf="selectedItems?.length == 0" jhiTranslate="{{settings.text}}">{{settings.text}}</span>
@@ -11,7 +11,7 @@
                 <div class="c-token" *ngFor="let item of selectedItems;trackBy: trackByFn;let k = index" [hidden]="k > settings.badgeShowLimit-1">
                     <span *ngIf="!badgeTempl" class="c-label">{{item.itemName}}</span>
                     <span *ngIf="badgeTempl" class="c-label">
-                        <c-templateRenderer [data]="badgeTempl" [item]="item"></c-templateRenderer>
+                        <jhi-c-template-renderer [data]="badgeTempl" [item]="item"></jhi-c-template-renderer>
                     </span>
                     <span class="fa fa-remove" (click)="onItemClick(item,k,$event)"></span>
                 </div>
@@ -44,7 +44,7 @@
             <li *ngFor="let item of data | listFilter:filter; let i = index;" (click)="onItemClick(item,i,$event)" class="pure-checkbox">
             <input *ngIf="settings.showCheckbox" type="checkbox" [checked]="isSelected(item)" [disabled]="settings.limitSelection == selectedItems?.length && !isSelected(item)"/>
             <label></label>
-            <c-templateRenderer [data]="itemTempl" [item]="item"></c-templateRenderer>
+            <jhi-c-template-renderer [data]="itemTempl" [item]="item"></jhi-c-template-renderer>
         </li>
         </span>
         <span *ngIf="!itemTempl && !settings.lazyLoading" >
@@ -57,7 +57,7 @@
             <div [ngStyle]="{'height':totalHeight+'px'}" style="position: relative;">
 
 
-        <li *ngFor="let item of chunkArray | listFilter:filter; let i = index;" (click)="onItemClick(item,i,$event)" style="position: absolute;width: 100%;" class="pure-checkbox" [styleProp]="chunkIndex[i]">
+        <li *ngFor="let item of chunkArray | listFilter:filter; let i = index;" (click)="onItemClick(item,i,$event)" style="position: absolute;width: 100%;" class="pure-checkbox" [jhiStyleProp]="chunkIndex[i]">
             <input *ngIf="settings.showCheckbox" type="checkbox" [checked]="isSelected(item)" [disabled]="settings.limitSelection == selectedItems?.length && !isSelected(item)"/>
             <label>{{item.itemName}}</label>
         </li>
@@ -71,7 +71,7 @@
         <li *ngFor="let item of obj.value | listFilter:filter; let i = index;" (click)="onItemClick(item,i,$event)" class="pure-checkbox">
             <input *ngIf="settings.showCheckbox" type="checkbox" [checked]="isSelected(item)" [disabled]="settings.limitSelection == selectedItems?.length && !isSelected(item)"/>
             <label></label>
-            <c-templateRenderer [data]="itemTempl" [item]="item"></c-templateRenderer>
+            <jhi-c-template-renderer [data]="itemTempl" [item]="item"></jhi-c-template-renderer>
         </li>
         </span>
         <span *ngIf="!itemTempl" >
