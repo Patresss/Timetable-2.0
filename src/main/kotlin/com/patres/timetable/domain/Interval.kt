@@ -16,7 +16,7 @@ import javax.persistence.Table
 class Interval(
 
     @Column(name = "included")
-    var isIncluded: Boolean = true,
+    var included: Boolean = true,
 
     @Column(name = "start_date")
     var startDate: LocalDate? = null,
@@ -51,7 +51,7 @@ class Interval(
     override fun toString(): String {
         return "Interval{" +
             "id= '$id'" +
-            ", included='$isIncluded" +
+            ", included='$included" +
             ", startDate='$startDate'" +
             ", endDate='$endDate'" +
             "}"

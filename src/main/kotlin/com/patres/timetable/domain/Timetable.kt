@@ -39,10 +39,10 @@ class Timetable(
     var type: EventType? = null,
 
     @Column(name = "every_week")
-    var everyWeek: Long? = null,
+    var everyWeek: Long = 1,
 
     @Column(name = "start_with_week")
-    var startWithWeek: Long? = null,
+    var startWithWeek: Long = 1,
 
     @Column(name = "description")
     var description: String? = null,
@@ -54,25 +54,25 @@ class Timetable(
     var colorText: String? = null,
 
     @Column(name = "in_monday")
-    var isInMonday: Boolean? = null,
+    var inMonday: Boolean = false,
 
     @Column(name = "in_tuesday")
-    var isInTuesday: Boolean? = null,
+    var inTuesday: Boolean = false,
 
     @Column(name = "in_wednesday")
-    var isInWednesday: Boolean? = null,
+    var inWednesday: Boolean = false,
 
     @Column(name = "in_thursday")
-    var isInThursday: Boolean? = null,
+    var inThursday: Boolean = false,
 
     @Column(name = "in_friday")
-    var isInFriday: Boolean? = null,
+    var inFriday: Boolean = false,
 
     @Column(name = "in_saturday")
-    var isInSaturday: Boolean? = null,
+    var inSaturday: Boolean = false,
 
     @Column(name = "in_sunday")
-    var isInSunday: Boolean? = null,
+    var inSunday: Boolean = false,
 
     @ManyToOne
     var place: Place? = null,

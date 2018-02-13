@@ -91,24 +91,6 @@ class WebConfigurerTest {
     }
 
     @Test
-    fun testCustomizeServletContainer() {
-        env!!.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION)
-        val container = UndertowEmbeddedServletContainerFactory()
-        webConfigurer!!.customize(container)
-        assertThat(container.mimeMappings.get("abs")).isEqualTo("audio/x-mpeg")
-        assertThat(container.mimeMappings.get("html")).isEqualTo("text/html;charset=utf-8")
-        assertThat(container.mimeMappings.get("json")).isEqualTo("text/html;charset=utf-8")
-        if (container.documentRoot != null) {
-            assertThat(container.documentRoot.path).isEqualTo(FilenameUtils.separatorsToSystem("build/www"))
-        }
-
-        val builder = Undertow.builder()
-        container.builderCustomizers.forEach { c -> c.customize(builder) }
-        val serverOptions = ReflectionTestUtils.getField(builder, "serverOptions") as OptionMap.Builder
-        assertThat(serverOptions.map.get(UndertowOptions.ENABLE_HTTP2)).isNull()
-    }
-
-    @Test
     fun testUndertowHttp2Enabled() {
         props!!.http.setVersion(JHipsterProperties.Http.Version.V_2_0)
         val container = UndertowEmbeddedServletContainerFactory()

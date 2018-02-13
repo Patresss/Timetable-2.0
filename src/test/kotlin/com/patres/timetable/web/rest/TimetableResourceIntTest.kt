@@ -1,15 +1,23 @@
 package com.patres.timetable.web.rest
 
 import com.patres.timetable.TimetableApp
+import com.patres.timetable.domain.Interval
+import com.patres.timetable.domain.Period
 import com.patres.timetable.domain.Timetable
+import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.domain.enumeration.EventType
+import com.patres.timetable.repository.DivisionRepository
+import com.patres.timetable.repository.IntervalRepository
+import com.patres.timetable.repository.PeriodRepository
 import com.patres.timetable.repository.TimetableRepository
 import com.patres.timetable.service.TimetableService
+import com.patres.timetable.service.dto.IntervalDTO
+import com.patres.timetable.service.dto.PeriodDTO
 import com.patres.timetable.service.dto.TimetableDTO
 import com.patres.timetable.service.mapper.TimetableMapper
 import com.patres.timetable.web.rest.errors.ExceptionTranslator
 import org.assertj.core.api.Assertions.assertThat
-import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,24 +47,33 @@ import java.time.ZoneId
 open class TimetableResourceIntTest {
 
     @Autowired
-    lateinit private var timetableRepository: TimetableRepository
+    private lateinit var timetableRepository: TimetableRepository
 
     @Autowired
-    lateinit private var timetableMapper: TimetableMapper
+    private lateinit var divisionRepository: DivisionRepository
 
     @Autowired
-    lateinit private var timetableService: TimetableService
+    private lateinit var periodRepository: PeriodRepository
 
     @Autowired
-    lateinit private var jacksonMessageConverter: MappingJackson2HttpMessageConverter
+    private lateinit var timetableMapper: TimetableMapper
 
     @Autowired
-    lateinit private var pageableArgumentResolver: PageableHandlerMethodArgumentResolver
+    private lateinit var timetableService: TimetableService
 
     @Autowired
-    lateinit private var exceptionTranslator: ExceptionTranslator
+    private lateinit var intervalRepository: IntervalRepository
 
-    lateinit private var restTimetableMockMvc: MockMvc
+    @Autowired
+    private lateinit var jacksonMessageConverter: MappingJackson2HttpMessageConverter
+
+    @Autowired
+    private lateinit var pageableArgumentResolver: PageableHandlerMethodArgumentResolver
+
+    @Autowired
+    private lateinit var exceptionTranslator: ExceptionTranslator
+
+    private lateinit var restTimetableMockMvc: MockMvc
 
     private var timetable: Timetable = createEntity()
 
@@ -70,12 +87,6 @@ open class TimetableResourceIntTest {
 
         private val DEFAULT_END_TIME = 1L
         private val UPDATED_END_TIME = 2L
-
-        private val DEFAULT_START_DATE = LocalDate.ofEpochDay(0L)
-        private val UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault())
-
-        private val DEFAULT_END_DATE = LocalDate.ofEpochDay(0L)
-        private val UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault())
 
         private val DEFAULT_DATE = LocalDate.ofEpochDay(0L)
         private val UPDATED_DATE = LocalDate.now(ZoneId.systemDefault())
@@ -122,60 +133,50 @@ open class TimetableResourceIntTest {
         fun createEntity(): Timetable {
             return Timetable(
                 title = DEFAULT_TITLE,
-                type = DEFAULT_TYPE
-            ).apply {
-                startTime = DEFAULT_START_TIME
-                endTime = DEFAULT_END_TIME
-                startDate = DEFAULT_START_DATE
-                endDate = DEFAULT_END_DATE
-                date = DEFAULT_DATE
-                type = DEFAULT_TYPE
-                everyWeek = DEFAULT_EVERY_WEEK
-                startWithWeek = DEFAULT_START_WITH_WEEK
-                description = DEFAULT_DESCRIPTION
-                colorBackground = DEFAULT_COLOR_BACKGROUND
-                colorText = DEFAULT_COLOR_TEXT
-                isInMonday = DEFAULT_IN_MONDAY
-                isInTuesday = DEFAULT_IN_TUESDAY
-                isInWednesday = DEFAULT_IN_WEDNESDAY
-                isInThursday = DEFAULT_IN_THURSDAY
-                isInFriday = DEFAULT_IN_FRIDAY
-                isInSaturday = DEFAULT_IN_SATURDAY
-                isInSunday = DEFAULT_IN_SUNDAY
-            }
+                type = DEFAULT_TYPE,
+                startTime = DEFAULT_START_TIME,
+                endTime = DEFAULT_END_TIME,
+                date = DEFAULT_DATE,
+                everyWeek = DEFAULT_EVERY_WEEK,
+                startWithWeek = DEFAULT_START_WITH_WEEK,
+                description = DEFAULT_DESCRIPTION,
+                colorBackground = DEFAULT_COLOR_BACKGROUND,
+                colorText = DEFAULT_COLOR_TEXT,
+                inMonday = DEFAULT_IN_MONDAY,
+                inTuesday = DEFAULT_IN_TUESDAY,
+                inWednesday = DEFAULT_IN_WEDNESDAY,
+                inThursday = DEFAULT_IN_THURSDAY,
+                inFriday = DEFAULT_IN_FRIDAY,
+                inSaturday = DEFAULT_IN_SATURDAY,
+                inSunday = DEFAULT_IN_SUNDAY)
         }
 
         fun createEntityDto(): TimetableDTO {
             return TimetableDTO(
                 title = DEFAULT_TITLE,
-                type = DEFAULT_TYPE
-            ).apply {
-                startTime = DEFAULT_START_TIME
-                endTime = DEFAULT_END_TIME
-                startDate = DEFAULT_START_DATE
-                endDate = DEFAULT_END_DATE
-                date = DEFAULT_DATE
-                type = DEFAULT_TYPE
-                everyWeek = DEFAULT_EVERY_WEEK
-                startWithWeek = DEFAULT_START_WITH_WEEK
-                description = DEFAULT_DESCRIPTION
-                colorBackground = DEFAULT_COLOR_BACKGROUND
-                colorText = DEFAULT_COLOR_TEXT
-                isInMonday = DEFAULT_IN_MONDAY
-                isInTuesday = DEFAULT_IN_TUESDAY
-                isInWednesday = DEFAULT_IN_WEDNESDAY
-                isInThursday = DEFAULT_IN_THURSDAY
-                isInFriday = DEFAULT_IN_FRIDAY
-                isInSaturday = DEFAULT_IN_SATURDAY
-                isInSunday = DEFAULT_IN_SUNDAY
-            }
+                type = DEFAULT_TYPE,
+                startTime = DEFAULT_START_TIME,
+                endTime = DEFAULT_END_TIME,
+                date = DEFAULT_DATE,
+                everyWeek = DEFAULT_EVERY_WEEK,
+                startWithWeek = DEFAULT_START_WITH_WEEK,
+                description = DEFAULT_DESCRIPTION,
+                colorBackground = DEFAULT_COLOR_BACKGROUND,
+                colorText = DEFAULT_COLOR_TEXT,
+                inMonday = DEFAULT_IN_MONDAY,
+                inTuesday = DEFAULT_IN_TUESDAY,
+                inWednesday = DEFAULT_IN_WEDNESDAY,
+                inThursday = DEFAULT_IN_THURSDAY,
+                inFriday = DEFAULT_IN_FRIDAY,
+                inSaturday = DEFAULT_IN_SATURDAY,
+                inSunday = DEFAULT_IN_SUNDAY)
         }
     }
 
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        restTimetableMockMvc = initMockMvc(TimetableResource(timetableService))
+        restTimetableMockMvc = initMockMvc(TimetableResource(timetableService, intervalRepository))
     }
 
     private fun initMockMvc(timetableResource: TimetableResource): MockMvc {
@@ -210,8 +211,6 @@ open class TimetableResourceIntTest {
         assertThat(testTimetable.title).isEqualTo(DEFAULT_TITLE)
         assertThat(testTimetable.startTime).isEqualTo(DEFAULT_START_TIME)
         assertThat(testTimetable.endTime).isEqualTo(DEFAULT_END_TIME)
-        assertThat(testTimetable.startDate).isEqualTo(DEFAULT_START_DATE)
-        assertThat(testTimetable.endDate).isEqualTo(DEFAULT_END_DATE)
         assertThat(testTimetable.date).isEqualTo(DEFAULT_DATE)
         assertThat(testTimetable.type).isEqualTo(DEFAULT_TYPE)
         assertThat(testTimetable.everyWeek).isEqualTo(DEFAULT_EVERY_WEEK)
@@ -219,13 +218,13 @@ open class TimetableResourceIntTest {
         assertThat(testTimetable.description).isEqualTo(DEFAULT_DESCRIPTION)
         assertThat(testTimetable.colorBackground).isEqualTo(DEFAULT_COLOR_BACKGROUND)
         assertThat(testTimetable.colorText).isEqualTo(DEFAULT_COLOR_TEXT)
-        assertThat(testTimetable.isInMonday).isEqualTo(DEFAULT_IN_MONDAY)
-        assertThat(testTimetable.isInTuesday).isEqualTo(DEFAULT_IN_TUESDAY)
-        assertThat(testTimetable.isInWednesday).isEqualTo(DEFAULT_IN_WEDNESDAY)
-        assertThat(testTimetable.isInThursday).isEqualTo(DEFAULT_IN_THURSDAY)
-        assertThat(testTimetable.isInFriday).isEqualTo(DEFAULT_IN_FRIDAY)
-        assertThat(testTimetable.isInSaturday).isEqualTo(DEFAULT_IN_SATURDAY)
-        assertThat(testTimetable.isInSunday).isEqualTo(DEFAULT_IN_SUNDAY)
+        assertThat(testTimetable.inMonday).isEqualTo(DEFAULT_IN_MONDAY)
+        assertThat(testTimetable.inTuesday).isEqualTo(DEFAULT_IN_TUESDAY)
+        assertThat(testTimetable.inWednesday).isEqualTo(DEFAULT_IN_WEDNESDAY)
+        assertThat(testTimetable.inThursday).isEqualTo(DEFAULT_IN_THURSDAY)
+        assertThat(testTimetable.inFriday).isEqualTo(DEFAULT_IN_FRIDAY)
+        assertThat(testTimetable.inSaturday).isEqualTo(DEFAULT_IN_SATURDAY)
+        assertThat(testTimetable.inSunday).isEqualTo(DEFAULT_IN_SUNDAY)
     }
 
     @Test
@@ -304,8 +303,6 @@ open class TimetableResourceIntTest {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toInt())))
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toInt())))
-            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].everyWeek").value(hasItem(DEFAULT_EVERY_WEEK.toInt())))
@@ -337,8 +334,6 @@ open class TimetableResourceIntTest {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toInt()))
             .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toInt()))
-            .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
-            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.everyWeek").value(DEFAULT_EVERY_WEEK.toInt()))
@@ -354,6 +349,123 @@ open class TimetableResourceIntTest {
             .andExpect(jsonPath("$.inSaturday").value(DEFAULT_IN_SATURDAY))
             .andExpect(jsonPath("$.inSunday").value(DEFAULT_IN_SUNDAY))
     }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    open fun getTimetableByDateAndDivisionList() {
+        val lo2 = DivisionResourceIntTest.createEntity().apply { divisionType = DivisionType.SCHOOL }
+        divisionRepository.saveAndFlush(lo2)
+
+        val class1 = DivisionResourceIntTest.createEntity().apply {
+            divisionType = DivisionType.CLASS
+            parents = setOf(lo2) }
+        divisionRepository.saveAndFlush(class1)
+
+        val period1 = Period(name = "Semestr zimowy 2016/2017", divisionOwner = lo2)
+        periodRepository.saveAndFlush(period1)
+        val interval = Interval(startDate = LocalDate.parse("2016-09-01"), endDate = LocalDate.parse("2017-02-01"), included = true, period = period1)
+        intervalRepository.saveAndFlush(interval)
+
+
+        val period2 = Period(name = "Semestr letni 2017",  divisionOwner = lo2)
+        periodRepository.saveAndFlush(period2)
+        val interval2 = Interval(startDate = LocalDate.parse("2017-02-02"), endDate = LocalDate.parse("2017-06-30"), included = true, period = period2)
+        intervalRepository.saveAndFlush(interval2)
+
+        val timetableWithPeriod = createEntity().apply {
+            date = null
+            inWednesday = true
+            division = class1
+            period = period1 }
+        timetableRepository.saveAndFlush(timetableWithPeriod)
+
+        val timetableWithWrongPeriod = createEntity().apply {
+            date = null
+            inWednesday = true
+            division = class1
+            period = period2 }
+        timetableRepository.saveAndFlush(timetableWithWrongPeriod)
+
+        val timetableWithDate = createEntity().apply {
+            date = LocalDate.parse("2016-09-07") //Wednesday
+            division = class1
+            period = null }
+        timetableRepository.saveAndFlush(timetableWithDate)
+
+        val timetableWithWrongDate = createEntity().apply {
+            date = LocalDate.parse("2016-09-08")
+            division = class1
+            period = null }
+        timetableRepository.saveAndFlush(timetableWithWrongDate)
+
+
+        val date = "2016-09-07"
+        val divisionIdList = class1.id
+
+        restTimetableMockMvc.perform(get("/api/timetables/divisionList?divisionIdList=$divisionIdList&date=$date"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(timetableWithPeriod.id?.toInt())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(timetableWithDate.id?.toInt())))
+            .andExpect(jsonPath("$.[*].id").value(not(hasItem(timetableWithWrongPeriod.id?.toInt()))))
+            .andExpect(jsonPath("$.[*].id").value(not(hasItem(timetableWithWrongDate.id?.toInt()))))
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    open fun getTimetableByDateAndDivisionListWithEveryWeek() {
+        val lo2 = DivisionResourceIntTest.createEntity().apply { divisionType = DivisionType.SCHOOL }
+        divisionRepository.saveAndFlush(lo2)
+
+        val class1 = DivisionResourceIntTest.createEntity().apply {
+            divisionType = DivisionType.CLASS
+            parents = setOf(lo2) }
+        divisionRepository.saveAndFlush(class1)
+
+        val period1 = Period(name = "Semestr zimowy 2016/2017", divisionOwner = lo2)
+        periodRepository.saveAndFlush(period1)
+        val interval = Interval(startDate = LocalDate.parse("2016-09-01"), endDate = LocalDate.parse("2017-02-01"), included = true, period = period1)
+        intervalRepository.saveAndFlush(interval)
+
+        val timetableWithEvery2WeekStartWith1Week = createEntity().apply {
+            date = null
+            inFriday = true
+            division = class1
+            period = period1
+            everyWeek = 2
+            startWithWeek = 1}
+        timetableRepository.saveAndFlush(timetableWithEvery2WeekStartWith1Week)
+
+        val timetableWithEvery2WeekStartWith2Week = createEntity().apply {
+            date = null
+            inFriday = true
+            division = class1
+            period = period1
+            everyWeek = 2
+            startWithWeek = 2}
+        timetableRepository.saveAndFlush(timetableWithEvery2WeekStartWith2Week)
+
+
+        val date = "2016-09-02"
+        val divisionIdList = class1.id
+
+        restTimetableMockMvc.perform(get("/api/timetables/divisionList?divisionIdList=$divisionIdList&date=$date"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(timetableWithEvery2WeekStartWith1Week.id?.toInt())))
+            .andExpect(jsonPath("$.[*].id").value(not(hasItem(timetableWithEvery2WeekStartWith2Week.id?.toInt()))))
+
+        val dateWeekLater = "2016-09-09"
+
+        restTimetableMockMvc.perform(get("/api/timetables/divisionList?divisionIdList=$divisionIdList&date=$dateWeekLater"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(timetableWithEvery2WeekStartWith2Week.id?.toInt())))
+            .andExpect(jsonPath("$.[*].id").value(not(hasItem(timetableWithEvery2WeekStartWith1Week.id?.toInt()))))
+    }
+
 
     @Test
     @Transactional
@@ -378,8 +490,6 @@ open class TimetableResourceIntTest {
         updatedTimetable.title = UPDATED_TITLE
         updatedTimetable.startTime = UPDATED_START_TIME
         updatedTimetable.endTime = UPDATED_END_TIME
-        updatedTimetable.startDate = UPDATED_START_DATE
-        updatedTimetable.endDate = UPDATED_END_DATE
         updatedTimetable.date = UPDATED_DATE
         updatedTimetable.type = UPDATED_TYPE
         updatedTimetable.everyWeek = UPDATED_EVERY_WEEK
@@ -387,13 +497,13 @@ open class TimetableResourceIntTest {
         updatedTimetable.description = UPDATED_DESCRIPTION
         updatedTimetable.colorBackground = UPDATED_COLOR_BACKGROUND
         updatedTimetable.colorText = UPDATED_COLOR_TEXT
-        updatedTimetable.isInMonday = UPDATED_IN_MONDAY
-        updatedTimetable.isInTuesday = UPDATED_IN_TUESDAY
-        updatedTimetable.isInWednesday = UPDATED_IN_WEDNESDAY
-        updatedTimetable.isInThursday = UPDATED_IN_THURSDAY
-        updatedTimetable.isInFriday = UPDATED_IN_FRIDAY
-        updatedTimetable.isInSaturday = UPDATED_IN_SATURDAY
-        updatedTimetable.isInSunday = UPDATED_IN_SUNDAY
+        updatedTimetable.inMonday = UPDATED_IN_MONDAY
+        updatedTimetable.inTuesday = UPDATED_IN_TUESDAY
+        updatedTimetable.inWednesday = UPDATED_IN_WEDNESDAY
+        updatedTimetable.inThursday = UPDATED_IN_THURSDAY
+        updatedTimetable.inFriday = UPDATED_IN_FRIDAY
+        updatedTimetable.inSaturday = UPDATED_IN_SATURDAY
+        updatedTimetable.inSunday = UPDATED_IN_SUNDAY
         val timetableDTO = timetableMapper.toDto(updatedTimetable)
 
         restTimetableMockMvc.perform(put("/api/timetables")
@@ -408,8 +518,6 @@ open class TimetableResourceIntTest {
         assertThat(testTimetable.title).isEqualTo(UPDATED_TITLE)
         assertThat(testTimetable.startTime).isEqualTo(UPDATED_START_TIME)
         assertThat(testTimetable.endTime).isEqualTo(UPDATED_END_TIME)
-        assertThat(testTimetable.startDate).isEqualTo(UPDATED_START_DATE)
-        assertThat(testTimetable.endDate).isEqualTo(UPDATED_END_DATE)
         assertThat(testTimetable.date).isEqualTo(UPDATED_DATE)
         assertThat(testTimetable.type).isEqualTo(UPDATED_TYPE)
         assertThat(testTimetable.everyWeek).isEqualTo(UPDATED_EVERY_WEEK)
@@ -417,13 +525,13 @@ open class TimetableResourceIntTest {
         assertThat(testTimetable.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testTimetable.colorBackground).isEqualTo(UPDATED_COLOR_BACKGROUND)
         assertThat(testTimetable.colorText).isEqualTo(UPDATED_COLOR_TEXT)
-        assertThat(testTimetable.isInMonday).isEqualTo(UPDATED_IN_MONDAY)
-        assertThat(testTimetable.isInTuesday).isEqualTo(UPDATED_IN_TUESDAY)
-        assertThat(testTimetable.isInWednesday).isEqualTo(UPDATED_IN_WEDNESDAY)
-        assertThat(testTimetable.isInThursday).isEqualTo(UPDATED_IN_THURSDAY)
-        assertThat(testTimetable.isInFriday).isEqualTo(UPDATED_IN_FRIDAY)
-        assertThat(testTimetable.isInSaturday).isEqualTo(UPDATED_IN_SATURDAY)
-        assertThat(testTimetable.isInSunday).isEqualTo(UPDATED_IN_SUNDAY)
+        assertThat(testTimetable.inMonday).isEqualTo(UPDATED_IN_MONDAY)
+        assertThat(testTimetable.inTuesday).isEqualTo(UPDATED_IN_TUESDAY)
+        assertThat(testTimetable.inWednesday).isEqualTo(UPDATED_IN_WEDNESDAY)
+        assertThat(testTimetable.inThursday).isEqualTo(UPDATED_IN_THURSDAY)
+        assertThat(testTimetable.inFriday).isEqualTo(UPDATED_IN_FRIDAY)
+        assertThat(testTimetable.inSaturday).isEqualTo(UPDATED_IN_SATURDAY)
+        assertThat(testTimetable.inSunday).isEqualTo(UPDATED_IN_SUNDAY)
     }
 
     @Test

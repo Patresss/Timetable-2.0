@@ -25,9 +25,9 @@ class TimetableDTO(
     @get:NotNull
     var type: EventType? = null,
 
-    var everyWeek: Long? = null,
+    var everyWeek: Long = 1,
 
-    var startWithWeek: Long? = null,
+    var startWithWeek: Long = 1,
 
     var description: String? = null,
 
@@ -35,19 +35,19 @@ class TimetableDTO(
 
     var colorText: String? = null,
 
-    var isInMonday: Boolean? = null,
+    var inMonday: Boolean = false,
 
-    var isInTuesday: Boolean? = null,
+    var inTuesday: Boolean = false,
 
-    var isInWednesday: Boolean? = null,
+    var inWednesday: Boolean = false,
 
-    var isInThursday: Boolean? = null,
+    var inThursday: Boolean = false,
 
-    var isInFriday: Boolean? = null,
+    var inFriday: Boolean = false,
 
-    var isInSaturday: Boolean? = null,
+    var inSaturday: Boolean = false,
 
-    var isInSunday: Boolean? = null
+    var inSunday: Boolean = false
     ,
     var placeId: Long? = null,
 
@@ -109,13 +109,13 @@ class TimetableDTO(
             ", description='" + description + "'" +
             ", colorBackground='" + colorBackground + "'" +
             ", colorText='" + colorText + "'" +
-            ", inMonday='" + isInMonday + "'" +
-            ", inTuesday='" + isInTuesday + "'" +
-            ", inWednesday='" + isInWednesday + "'" +
-            ", inThursday='" + isInThursday + "'" +
-            ", inFriday='" + isInFriday + "'" +
-            ", inSaturday='" + isInSaturday + "'" +
-            ", inSunday='" + isInSunday + "'" +
+            ", inMonday='" + inMonday + "'" +
+            ", inTuesday='" + inTuesday + "'" +
+            ", inWednesday='" + inWednesday + "'" +
+            ", inThursday='" + inThursday + "'" +
+            ", inFriday='" + inFriday + "'" +
+            ", inSaturday='" + inSaturday + "'" +
+            ", inSunday='" + inSunday + "'" +
             "}"
     }
 }

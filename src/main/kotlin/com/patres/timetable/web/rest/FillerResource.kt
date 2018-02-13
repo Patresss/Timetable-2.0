@@ -206,7 +206,7 @@ open class FillerResource(
         // =====================================================
         // Period Interval
         // =====================================================
-        val interval = IntervalDTO(startDate = LocalDate.parse("2016-09-01"), endDate = LocalDate.parse("2017-02-01"), isIncluded = true)
+        val interval = IntervalDTO(startDate = LocalDate.parse("2016-09-01"), endDate = LocalDate.parse("2017-02-01"), included = true)
         var semestrZimowyPeriod = PeriodDTO(name = "Semestr zimowy 2016/2017", intervalTimes = setOf(interval), divisionOwnerId = lo2.id)
         semestrZimowyPeriod = periodService.save(semestrZimowyPeriod)
 
@@ -373,13 +373,13 @@ open class FillerResource(
             divisionId = division.id,
             periodId = period.id,
             type = type,
-            isInMonday = inMonday,
-            isInTuesday = inTuesday,
-            isInWednesday = inWednesday,
-            isInThursday = inThursday,
-            isInFriday = inFriday,
-            isInSaturday = inSaturday,
-            isInSunday = inSunday
+            inMonday = inMonday,
+            inTuesday = inTuesday,
+            inWednesday = inWednesday,
+            inThursday = inThursday,
+            inFriday = inFriday,
+            inSaturday = inSaturday,
+            inSunday = inSunday
         )
         return timetableService.save(timetable)
     }

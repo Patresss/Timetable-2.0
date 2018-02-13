@@ -26,9 +26,11 @@ class Period(
     @OneToMany(mappedBy = "period")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var timetables: Set<Timetable> = HashSet()
+    var timetables: Set<Timetable> = HashSet(),
 
-) : AbstractDivisionOwner(), Serializable {
+    divisionOwner: Division? = null
+
+) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

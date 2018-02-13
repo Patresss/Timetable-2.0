@@ -1,10 +1,13 @@
 package com.patres.timetable.web.rest
 
 import com.codahale.metrics.annotation.Timed
+import com.patres.timetable.domain.Interval
+import com.patres.timetable.repository.IntervalRepository
 import com.patres.timetable.service.TimetableService
 import com.patres.timetable.service.dto.TimetableDTO
 import com.patres.timetable.web.rest.util.HeaderUtil
 import com.patres.timetable.web.rest.util.PaginationUtil
+import com.patres.timetable.web.rest.util.TimetableDate
 import io.github.jhipster.web.util.ResponseUtil
 import io.swagger.annotations.ApiParam
 import org.slf4j.LoggerFactory
@@ -14,15 +17,21 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.net.URI
 import java.net.URISyntaxException
+import java.time.LocalDate
 import java.util.*
 import javax.validation.Valid
+import kotlin.collections.HashMap
+
 
 /**
  * REST controller for managing Timetable.
  */
 @RestController
 @RequestMapping("/api")
-open class TimetableResource(private val timetableService: TimetableService) {
+open class TimetableResource(
+    private val timetableService: TimetableService,
+    private val intervalRepository: IntervalRepository
+) {
 
     companion object {
         private val log = LoggerFactory.getLogger(TimetableResource::class.java)
@@ -46,8 +55,8 @@ open class TimetableResource(private val timetableService: TimetableService) {
         }
         val result = timetableService.save(timetableDTO)
         return ResponseEntity.created(URI("/api/timetables/" + result.id!!))
-                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.id!!.toString()))
-                .body(result)
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.id!!.toString()))
+            .body(result)
     }
 
     /**
@@ -69,8 +78,8 @@ open class TimetableResource(private val timetableService: TimetableService) {
         }
         val result = timetableService.save(timetableDTO)
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, timetableDTO.id!!.toString()))
-                .body(result)
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, timetableDTO.id!!.toString()))
+            .body(result)
     }
 
     /**
@@ -116,5 +125,36 @@ open class TimetableResource(private val timetableService: TimetableService) {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id!!.toString())).build()
     }
 
+    /**
+     * GET  /timetables/divisionList : get the timetable by dateAndDivisionList
+     *
+     * @param divisionIdList
+     * @param date
+     * @return the ResponseEntity with status 200 (OK) and with body the List of timetableDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/timetables/divisionList", params = arrayOf("divisionIdList", "date"))
+    @Timed
+    open fun getTimetableByDateAndDivisionList(@RequestParam(value = "divisionIdList") divisionIdList: List<Long>, @RequestParam(value = "date") date: String): ResponseEntity<Set<TimetableDTO>> {
+        log.debug("REST request to get Timetable by date: $date Division List: $divisionIdList")
+        val localDate = LocalDate.parse(date)
+        val timetablesDTO = timetableService.findByDivisionListAndDateFromPeriod(localDate, divisionIdList)
+        return getTimetables(localDate, timetablesDTO)
 
+    }
+
+    open fun getTimetables(localDate: LocalDate, timetables: Set<TimetableDTO>): ResponseEntity<Set<TimetableDTO>> {
+        val filteredByWeekDay = timetables.filter { TimetableDate.canAddByWeekDay(localDate, it) }
+
+        val timetablesWithDate = filteredByWeekDay.filter { it.date != null }
+        var timetablesWithPeriod = filteredByWeekDay.filter { it.date == null && it.periodId != null }
+
+        val periodIdIntervalMap = HashMap<Long, Interval>()
+        val periodsId = timetablesWithPeriod.map { it.periodId }.toSet()
+        periodsId.filterNotNull().forEach { periodIdIntervalMap[it] = intervalRepository.findFirstByPeriodIdAndIncludedTrueOrderByStartDate(it) }
+
+        timetablesWithPeriod = timetablesWithPeriod.filter { TimetableDate.canAddByEveryDay(localDate, periodIdIntervalMap[it.periodId]?.startDate, it) }
+
+        val timetableSet = (timetablesWithDate + timetablesWithPeriod).toSet()
+        return ResponseEntity(timetableSet, HttpStatus.OK)
+    }
 }

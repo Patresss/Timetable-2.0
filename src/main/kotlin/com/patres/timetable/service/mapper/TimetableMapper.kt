@@ -61,13 +61,13 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             description = entityDto.description
             colorBackground = entityDto.colorBackground
             colorText = entityDto.colorText
-            isInMonday = entityDto.isInMonday
-            isInTuesday = entityDto.isInTuesday
-            isInWednesday = entityDto.isInWednesday
-            isInThursday = entityDto.isInThursday
-            isInFriday = entityDto.isInFriday
-            isInSaturday = entityDto.isInSaturday
-            isInSunday = entityDto.isInSunday
+            inMonday = entityDto.inMonday
+            inTuesday = entityDto.inTuesday
+            inWednesday = entityDto.inWednesday
+            inThursday = entityDto.inThursday
+            inFriday = entityDto.inFriday
+            inSaturday = entityDto.inSaturday
+            inSunday = entityDto.inSunday
         }
     }
 
@@ -99,13 +99,13 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             description = entity.description
             colorBackground = entity.colorBackground
             colorText = entity.colorText
-            isInMonday = entity.isInMonday
-            isInTuesday = entity.isInTuesday
-            isInWednesday = entity.isInWednesday
-            isInThursday = entity.isInThursday
-            isInFriday = entity.isInFriday
-            isInSaturday = entity.isInSaturday
-            isInSunday = entity.isInSunday
+            inMonday = entity.inMonday
+            inTuesday = entity.inTuesday
+            inWednesday = entity.inWednesday
+            inThursday = entity.inThursday
+            inFriday = entity.inFriday
+            inSaturday = entity.inSaturday
+            inSunday = entity.inSunday
         }
     }
 
