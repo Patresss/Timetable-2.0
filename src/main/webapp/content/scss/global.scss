@@ -238,46 +238,39 @@ ui bootstrap tweaks
 }
 
 .plan {
-    width: 90%;
-    margin: auto;
     position: relative;
+    background: rgba(34,34,34,0.1);
+    color: $light-text-color;
 
     .day-label {
-        text-align: right;
         font-size: 3em;
         margin-right: 5px;
     }
     .week-day-label {
-        text-align: right;
         font-size: 2em;
         margin-right: 5px;
     }
 
     .header {
         height: $hour-height * 2.0 !important;
-        border-bottom: 1px solid $color-accent-bright;
-        border-top: 1px solid $color-accent-bright;
     }
 
     .header-empty {
         height: $hour-height * 2.0 !important;
-        border: none;
     }
 
     .column {
         float: left;
         height: 100%;
-        border-right: 1px solid $color-accent-bright;
-        background-color: white;
         text-align: center;
 
         .column-first {
             width: 10%;
         }
+
     }
 
     .hour-label {
-        border: none;
         height: $hour-height;
         top: -12px;
         position: relative;
@@ -286,8 +279,32 @@ ui bootstrap tweaks
     .hour {
         margin: auto;
         height: $hour-height;
-        border-bottom: 1px solid $color-accent-bright;
+        border: 1px solid $color-accent-bright;
     }
 
 }
 
+.plan-view-body {
+    background: url('https://images.pexels.com/photos/450441/pexels-photo-450441.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb') no-repeat center center fixed;
+    background-size: cover;
+    padding-bottom: 100px;
+    padding-top: 100px;
+}
+
+.plan-blur-background {
+    background: url('https://images.pexels.com/photos/450441/pexels-photo-450441.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb') no-repeat center center fixed;
+    background-size: cover;
+    -webkit-filter: blur(10px);
+    filter: blur(13px);
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+}
+
+.plan-container {
+    position: relative;
+    width: 90%;
+    margin: auto;
+}

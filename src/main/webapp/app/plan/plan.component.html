@@ -1,7 +1,4 @@
-<div>
-    <h2>
-        <span>Plan</span>
-    </h2>
+<div class="plan-view-body">
     <jhi-alert></jhi-alert>
 
     <div class="form-group">
@@ -11,15 +8,15 @@
                 <div class="col-md-4">
                     <label jhiTranslate="timetableApp.division.type.SCHOOL"></label>
                     <jhi-angular2-multiselect [data]="schoolSelectOption" [(ngModel)]="selectedSchool" [settings]="schoolSelectSettings"
-                                          (onSelect)="onSchoolSelect($event)"
-                                          (onDeSelect)="OnSchoolDeSelect($event)">
+                                              (onSelect)="onSchoolSelect($event)"
+                                              (onDeSelect)="OnSchoolDeSelect($event)">
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
                     <label jhiTranslate="timetableApp.division.type.CLASS"></label>
                     <jhi-angular2-multiselect [data]="classSelectOption" [(ngModel)]="selectedClass" [settings]="classSelectSettings"
-                                          (onSelect)="onClassSelect($event)"
-                                          (onDeSelect)="OnClassDeSelect($event)">
+                                              (onSelect)="onClassSelect($event)"
+                                              (onDeSelect)="OnClassDeSelect($event)">
                     </jhi-angular2-multiselect>
                 </div>
                 <div class="col-md-1"></div>
@@ -31,15 +28,15 @@
                 <div class="col-md-4">
                     <label jhiTranslate="timetableApp.division.type.SUBGROUP"></label>
                     <jhi-angular2-multiselect [data]="subgroupSelectOption" [(ngModel)]="selectedSubgroup" [settings]="subgroupSelectSettings"
-                                          (onSelect)="onSubgroupSelect($event)"
-                                          (onDeSelect)="OnSubgroupDeSelect($event)">
+                                              (onSelect)="onSubgroupSelect($event)"
+                                              (onDeSelect)="OnSubgroupDeSelect($event)">
                     </jhi-angular2-multiselect>
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
                     <label jhiTranslate="timetableApp.plan.type-plan"></label>
                     <jhi-angular2-multiselect [data]="typePlanSelectOption" [(ngModel)]="selectedTypePlan" [settings]="typePlanSelectSettings"
-                                          (onSelect)="onTypePlanSelect($event)"
+                                              (onSelect)="onTypePlanSelect($event)"
                     >
                     </jhi-angular2-multiselect>
                 </div>
@@ -49,34 +46,35 @@
         </div>
     </div>
 
-
-    <div id="plan-body" class="plan">
-        <div id="plan-body-header">
-            <div class="column column-first header-empty" [ngStyle]="{'width': firstColumnWidth +'%'}">
-                &nbsp;
-            </div>
-            <div class="column header" [ngStyle]="{'width': columnWidth + '%'}" *ngFor="let item of weekDay">
-                <div class="day-label">
-                    <span>{{item.date.getDate()}}</span>
+    <div class="plan-container">
+        <div class="plan-blur-background"></div>
+        <div class="plan">
+            <div id="plan-body-header">
+                <div class="column column-first header-empty" [ngStyle]="{'width': firstColumnWidth +'%'}">
+                    &nbsp;
                 </div>
-                <div class="week-day-label" jhiTranslate="timetableApp.plan.week-day.{{item.date.getDay()}}">
-                    <span>{{item.name}}</span>
+                <div class="column header" [ngStyle]="{'width': columnWidth + '%'}" *ngFor="let item of weekDay">
+                    <div class="day-label">
+                        <span>{{item.date.getDate()}}</span>
+                    </div>
+                    <div class="week-day-label" jhiTranslate="timetableApp.plan.week-day.{{item.date.getDay()}}">
+                        <span>{{item.name}}</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div style="clear: both;"></div>
+            <div style="clear: both;"></div>
 
-        <div class="column column-first" [ngStyle]="{'width': firstColumnWidth +'%'}">
-            <div class="hour-label" *ngFor="let time of timeArray">
-                {{time}}
+            <div class="column column-first" [ngStyle]="{'width': firstColumnWidth +'%'}">
+                <div class="hour-label" *ngFor="let time of timeArray">
+                    {{time}}
+                </div>
             </div>
-        </div>
-        <div class="column" [ngStyle]="{'width': columnWidth + '%'}" *ngFor="let item of weekDay">
-            <div class="hour" *ngFor="let time of timeArray">
+            <div class="column" [ngStyle]="{'width': columnWidth + '%'}" *ngFor="let item of weekDay">
+                <div class="hour" *ngFor="let time of timeArray">
+                </div>
             </div>
+            <div style="clear: both;"></div>
         </div>
-
     </div>
-
 </div>
