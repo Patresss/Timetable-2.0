@@ -1,6 +1,9 @@
 {
     "timetableApp": {
         "plan" : {
+            "home": {
+                "title": "Plan"
+            },
             "choose": {
                 "school": "Choose a school",
                 "class": "Choose a class",
