@@ -81,6 +81,8 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
     public lastScrolled: any;
     public lastRepaintY: any;
 
+    public styleClass = 'plan-select';
+
     private onTouchedCallback: (_: any) => void = noop;
     private onChangeCallback: (_: any) => void = noop;
 

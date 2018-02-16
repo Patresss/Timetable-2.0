@@ -42,7 +42,7 @@ export class PlanComponent implements OnInit, OnDestroy {
         singleSelection: true,
         text: 'timetableApp.plan.choose.school',
         enableSearchFilter: true,
-        classes: 'myclass custom-class'
+        classes: 'plan-select'
     };
 
     classSelectOption = [];

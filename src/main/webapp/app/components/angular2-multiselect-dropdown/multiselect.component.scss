@@ -2,7 +2,6 @@
 $base-color: #0079FE;
 
 .cuppa-dropdown{
-    position: relative;
 }
 .c-btn{
     display: inline-block;
@@ -25,9 +24,9 @@ $base-color: #0079FE;
         margin: 0px;
         width: calc(100% - 20px);
         .c-token{
-            list-style: none;  
+            list-style: none;
             padding: 0px 5px;
-            background: $base-color; 
+            background: $base-color;
             color: #fff;
             border-radius: 2px;
             margin-right: 4px;
@@ -107,8 +106,8 @@ $base-color: #0079FE;
     }
 }
 .arrow-up {
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-left: 13px solid transparent;
   border-right: 13px solid transparent;
   border-bottom: 15px solid #fff;
@@ -266,3 +265,7 @@ $base-color: #0079FE;
 .list-grp > li {
     padding-left: 15px !important;
 }
+
+
+
+

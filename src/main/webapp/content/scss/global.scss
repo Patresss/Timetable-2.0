@@ -7,12 +7,14 @@ $divider-color: #BDBDBD;
 $dark-primary-color: #1976D2;
 $primary-color: #2196F3;
 $light-primary-color: #BBDEFB;
-$accent-color: #FFC107;
+$accent-color: #C0B283;
 $accent-color-light: #FFECB3;
 $color-accent-bright: rgb(200, 200, 200);
 $good-color: green;
 
 $hour-height: 60px;
+$blur-value: 15px;
+$plan-background: url('https://images.pexels.com/photos/450441/pexels-photo-450441.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb') no-repeat center center fixed;
 
 /* ==============================================================
 Bootstrap tweaks
@@ -234,12 +236,8 @@ ui bootstrap tweaks
 }
 
 .plan {
-
-}
-
-.plan {
     position: relative;
-    background: rgba(34,34,34,0.1);
+    background: rgba(34, 34, 34, 0.1);
     color: $light-text-color;
 
     .day-label {
@@ -285,17 +283,19 @@ ui bootstrap tweaks
 }
 
 .plan-view-body {
-    background: url('https://images.pexels.com/photos/450441/pexels-photo-450441.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb') no-repeat center center fixed;
+    color: $light-text-color;
+    background: $plan-background;
     background-size: cover;
     padding-bottom: 100px;
     padding-top: 100px;
+
 }
 
 .plan-blur-background {
-    background: url('https://images.pexels.com/photos/450441/pexels-photo-450441.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb') no-repeat center center fixed;
+    background: $plan-background;
     background-size: cover;
-    -webkit-filter: blur(10px);
-    filter: blur(13px);
+    -webkit-filter: blur($blur-value);
+    filter: blur($blur-value);
     right: 0;
     top: 0;
     bottom: 0;
@@ -307,4 +307,106 @@ ui bootstrap tweaks
     position: relative;
     width: 90%;
     margin: auto;
+}
+
+.plan-select {
+
+    .c-btn {
+        background: rgba(0, 0, 0, 0.25);
+        color: $light-text-color;
+    }
+
+    .c-btn.disabled {
+        background: rgba(255, 174, 66, 0.2);
+    }
+
+    .c-label {
+        background: rgba(0, 0, 0, 0.0);
+    }
+
+    .select-container {
+        position: relative;
+    }
+
+    .select-blur {
+        background: $plan-background;
+        background-size: cover;
+        -webkit-filter: blur($blur-value);
+        filter: blur($blur-value);
+        right: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+    }
+
+    .list-area {
+        background: transparent;
+        color: $light-text-color;
+    }
+    .list-filter {
+        .fa {
+            color:  $accent-color !important;
+        }
+    }
+
+    .list-filter input {
+        color: $light-text-color;
+        background: transparent;
+    }
+
+    .arrow-up {
+        background: transparent;
+    }
+
+    .dropdown-list {
+        ul {
+            li {
+                color: $light-text-color;
+            }
+            li:hover {
+                background: rgba(255, 255, 255, 0.25) !important;
+
+            }
+        }
+    }
+
+    .pure-checkbox input[type="checkbox"] + label {
+        color: $light-text-color !important;
+    }
+
+    .pure-checkbox input[type="checkbox"] + label:before {
+        border: 2px solid $accent-color !important;
+    }
+
+    .pure-checkbox input[type="checkbox"]:checked + label:before {
+        background: $accent-color !important;
+    }
+
+    .c-list .c-token {
+        background: transparent !important;
+    }
+
+    .list-area-container {
+        position: relative;
+        background: rgba(0, 0, 0, 0.25);
+    }
+
+    .list-area-blur {
+        background: $plan-background;
+        background-size: cover;
+        -webkit-filter: blur($blur-value);
+        filter: blur($blur-value);
+        right: -10px;
+        top: -10px;
+        bottom: -10px;
+        left: -10px;
+        position: absolute;
+        z-index: -1;
+    }
+
+}
+
+.select-label {
+    font-size: 2em;
 }
