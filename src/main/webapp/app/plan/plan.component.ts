@@ -10,7 +10,6 @@ import {Division} from '../entities/division/division.model';
 import {ITEMS_PER_PAGE} from '../shared/constants/pagination.constants';
 import {TranslateService} from '@ngx-translate/core';
 import {TimetableService} from '../entities/timetable';
-import {DatePipe} from '@angular/common';
 import {PlanColumn} from './plan-column.model';
 
 @Component({
@@ -67,9 +66,9 @@ export class PlanComponent implements OnInit, OnDestroy {
     };
 
     typePlanSelectOption = [
-        {'id': 1, 'itemName': this.translateService.instant('timetableApp.plan.type.STUDENT')},
-        {'id': 2, 'itemName': this.translateService.instant('timetableApp.plan.type.TEACHER')},
-        {'id': 3, 'itemName': this.translateService.instant('timetableApp.plan.type.PLACE')}];
+        {'id': 1, 'itemName': '', 'itemTranslate': 'timetableApp.plan.type.STUDENT'},
+        {'id': 2, 'itemName': '', 'itemTranslate': 'timetableApp.plan.type.TEACHER'},
+        {'id': 3, 'itemName': '', 'itemTranslate': 'timetableApp.plan.type.PLACE'}];
     selectedTypePlan = [];
     typePlanSelectSettings = {
         singleSelection: true,

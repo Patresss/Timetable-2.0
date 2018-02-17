@@ -6,18 +6,19 @@
             <div class="row plan-row-choose">
                 <div class="col-md-1"></div>
                 <div class="col-md-4">
-                    <label class="select-label" jhiTranslate="timetableApp.division.type.SCHOOL"></label>
+                    <label class="select-label" jhiTranslate="timetableApp.DivisionType.SCHOOL"></label>
                     <jhi-angular2-multiselect [data]="schoolSelectOption" [(ngModel)]="selectedSchool" [settings]="schoolSelectSettings"
                                               (onSelect)="onSchoolSelect($event)"
                                               (onDeSelect)="OnSchoolDeSelect($event)">
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
-                    <label class="select-label" jhiTranslate="timetableApp.division.type.CLASS"></label>
-                    <jhi-angular2-multiselect [data]="classSelectOption" [(ngModel)]="selectedClass" [settings]="classSelectSettings"
-                                              (onSelect)="onClassSelect($event)"
-                                              (onDeSelect)="OnClassDeSelect($event)">
+                    <label class="select-label" jhiTranslate="timetableApp.plan.type-plan"></label>
+                    <jhi-angular2-multiselect [data]="typePlanSelectOption" [(ngModel)]="selectedTypePlan" [settings]="typePlanSelectSettings"
+                                              (onSelect)="onTypePlanSelect($event)"
+                    >
                     </jhi-angular2-multiselect>
+
                 </div>
                 <div class="col-md-1"></div>
             </div>
@@ -26,18 +27,18 @@
             <div class="row plan-row-choose">
                 <div class="col-md-1"></div>
                 <div class="col-md-4">
-                    <label class="select-label" jhiTranslate="timetableApp.division.type.SUBGROUP"></label>
-                    <jhi-angular2-multiselect [data]="subgroupSelectOption" [(ngModel)]="selectedSubgroup" [settings]="subgroupSelectSettings"
-                                              (onSelect)="onSubgroupSelect($event)"
-                                              (onDeSelect)="OnSubgroupDeSelect($event)">
+                    <label class="select-label" jhiTranslate="timetableApp.DivisionType.CLASS"></label>
+                    <jhi-angular2-multiselect [data]="classSelectOption" [(ngModel)]="selectedClass" [settings]="classSelectSettings"
+                                              (onSelect)="onClassSelect($event)"
+                                              (onDeSelect)="OnClassDeSelect($event)">
                     </jhi-angular2-multiselect>
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
-                    <label class="select-label" jhiTranslate="timetableApp.plan.type-plan"></label>
-                    <jhi-angular2-multiselect [data]="typePlanSelectOption" [(ngModel)]="selectedTypePlan" [settings]="typePlanSelectSettings"
-                                              (onSelect)="onTypePlanSelect($event)"
-                    >
+                    <label class="select-label" jhiTranslate="timetableApp.DivisionType.SUBGROUP"></label>
+                    <jhi-angular2-multiselect [data]="subgroupSelectOption" [(ngModel)]="selectedSubgroup" [settings]="subgroupSelectSettings"
+                                              (onSelect)="onSubgroupSelect($event)"
+                                              (onDeSelect)="OnSubgroupDeSelect($event)">
                     </jhi-angular2-multiselect>
                 </div>
                 <div class="col-md-1"></div>

@@ -15,11 +15,6 @@
             "detail": {
                 "title": "Division"
             },
-            "type": {
-                "SCHOOL": "School",
-                "CLASS": "Class",
-                "SUBGROUP": "Subgroup"
-            },
             "name": "Name",
             "shortName": "Short Name",
             "numberOfPeople": "Number Of People",

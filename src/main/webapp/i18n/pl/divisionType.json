@@ -2,9 +2,9 @@
     "timetableApp": {
         "DivisionType" : {
             "null": "",
-            "SCHOOL": "SCHOOL",
-            "CLASS": "CLASS",
-            "SUBGROUP": "SUBGROUP"
+            "SCHOOL": "Szkoła",
+            "CLASS": "Klasa",
+            "SUBGROUP": "Podgrupa"
         }
     }
 }
