@@ -1,6 +1,6 @@
 export class DateObject {
     static fromDate(date: Date) {
-        return new DateObject(date.getFullYear(), date.getMonth(), date.getDate())
+        return new DateObject(date.getFullYear(), date.getMonth() + 1, date.getDate())
     }
 
     constructor(

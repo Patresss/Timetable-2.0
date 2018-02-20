@@ -8,9 +8,10 @@ import {DivisionService} from '../entities/division/division.service';
 import {ResponseWrapper} from '../shared/model/response-wrapper.model';
 import {Division} from '../entities/division/division.model';
 import {ITEMS_PER_PAGE} from '../shared/constants/pagination.constants';
-import {TranslateService} from '@ngx-translate/core';
-import {TimetableService} from '../entities/timetable';
+import {Timetable, TimetableService} from '../entities/timetable';
 import {PlanColumn} from './plan-column.model';
+import {PlanCell} from './plan-cell.model';
+import {Time} from './time.model';
 
 @Component({
     selector: 'jhi-board',
@@ -32,8 +33,6 @@ export class PlanComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
-
-    timetables = [];
 
     schoolSelectOption = [];
     selectedSchool = [];
@@ -77,14 +76,13 @@ export class PlanComponent implements OnInit, OnDestroy {
         classes: 'myclass custom-class'
     };
 
-    weekDay = this.loadWeekDays();
-
-    numberOfColums = 7;
+    numberOfColumns = 5;
     timeArray = [];
-    startHour = 6;
-    endHour = 17;
+    startHour = new Time('6:00');
+    endHour = new Time('17:00');
     firstColumnWidth = 5.0;
-    columnWidth = (100.0 - this.firstColumnWidth) / 7.0;
+    columnWidth = (100.0 - this.firstColumnWidth) / this.numberOfColumns;
+    planColumns: PlanColumn[]= [];
 
     constructor(private parseLinks: JhiParseLinks,
                 private alertService: JhiAlertService,
@@ -95,13 +93,13 @@ export class PlanComponent implements OnInit, OnDestroy {
                 private paginationUtil: JhiPaginationUtil,
                 private paginationConfig: PaginationConfig,
                 private divisionService: DivisionService,
-                private timetableService: TimetableService,
-                private translateService: TranslateService) {
+                private timetableService: TimetableService) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe();
     }
 
     loadAll() {
+        this.loadEmptyPlanColumns();
         this.divisionService.findByDivisionType('SCHOOL').subscribe(
             (res: ResponseWrapper) => this.onSuccessSchool(res.json),
             (res: ResponseWrapper) => this.onError(res.json)
@@ -151,9 +149,9 @@ export class PlanComponent implements OnInit, OnDestroy {
 
     private loadTimeArray() {
         this.timeArray = [];
-        for (let hour = this.startHour; hour <= this.endHour; hour++) {
-            const hourString = hour.toString().length <= 1 ? '0' + hour : hour.toString();
-            this.timeArray.push(hourString + ':00');
+        for (let hour = this.startHour.hour; hour <= this.endHour.hour; hour++) {
+
+            this.timeArray.push(new Time(hour + ':00'));
         }
     }
 
@@ -187,7 +185,6 @@ export class PlanComponent implements OnInit, OnDestroy {
 // ================================================================================================================================
 // Choosers
 // ================================================================================================================================
-
 // ================================================================
 // Class
 // ================================================================
@@ -201,6 +198,7 @@ export class PlanComponent implements OnInit, OnDestroy {
             this.subgroupSelectSettings.disabled = false;
             this.subgroupSelectSettings = Object.assign({}, this.subgroupSelectSettings); // workaround to detect change
         }
+        this.reloadTimetables();
     }
 
     OnClassDeSelect() {
@@ -209,33 +207,42 @@ export class PlanComponent implements OnInit, OnDestroy {
 
         this.subgroupSelectSettings.disabled = true;
         this.subgroupSelectSettings = Object.assign({}, this.subgroupSelectSettings); // workaround to detect change
+        this.reloadTimetables();
     }
 
 // ================================================================
 // Subgroup
 // ================================================================
     onSubgroupSelect(item: any) {
-
+        this.reloadTimetables();
     }
 
     OnSubgroupDeSelect(item: any) {
-        const array = [];
-        array.push(952);
-        const date = new Date();
-        date.setDate(date.getDate() - (date.getDay() + 6) % 7);
-
-        this.timetableService.findByDateAndDivisionList(date, array).subscribe(
-            (res: ResponseWrapper) => this.onSuccessTimetable(res.json),
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
+        this.reloadTimetables();
     }
 
-    private onSuccessTimetable(data) {
-        this.timetables = data;
-        this.displayTimetables()
+    private onSuccessTimetable(weekDay: PlanColumn, data: Timetable[]) {
+        for (const timetable of data) {
+            weekDay.planCells.push(new PlanCell(timetable, this.startHour, this.endHour))
+        }
     }
 
-    private displayTimetables() {
+    private reloadTimetables() {
+        this.clearPlanColumns();
+        for (const weekDay of this.planColumns) {
+            const array = [];
+            if (this.selectedClass[0]) {
+                array.push(this.selectedClass[0].id);
+                for (const subgroup of this.selectedSubgroup) {
+                    array.push(subgroup.id);
+                }
+            }
+            this.timetableService.findByDateAndDivisionList(weekDay.date, array).subscribe(
+                (res: ResponseWrapper) => this.onSuccessTimetable(weekDay, res.json),
+                (res: ResponseWrapper) => this.onError(res.json)
+            );
+        }
+        console.log(this.planColumns)
     }
 
 // ================================================================
@@ -252,18 +259,24 @@ export class PlanComponent implements OnInit, OnDestroy {
 // ================================================================================================================================
 //
 // ================================================================================================================================
-    private loadWeekDays() {
+    private loadEmptyPlanColumns() {
         const lastMonday = new Date();
         lastMonday.setDate(lastMonday.getDate() - (lastMonday.getDay() + 6) % 7);
         const days = [];
 
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < this.numberOfColumns; i++) {
             const date = new Date(lastMonday);
             date.setDate(date.getDate() + i);
             const column = new PlanColumn(date);
             days.push(column);
         }
-        return days;
+        this.planColumns = days;
+    }
+
+    private clearPlanColumns() {
+        for (const planColumn of this.planColumns) {
+            planColumn.planCells = []
+        }
     }
 
 }

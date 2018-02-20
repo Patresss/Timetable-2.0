@@ -54,7 +54,7 @@
                 <div class="column column-first header-empty" [ngStyle]="{'width': firstColumnWidth +'%'}">
                     &nbsp;
                 </div>
-                <div class="column header" [ngStyle]="{'width': columnWidth + '%'}" *ngFor="let item of weekDay">
+                <div class="column header" [ngStyle]="{'width': columnWidth + '%'}" *ngFor="let item of planColumns">
                     <div class="day-label">
                         <span>{{item.date.getDate()}}</span>
                     </div>
@@ -68,14 +68,21 @@
 
             <div class="column column-first" [ngStyle]="{'width': firstColumnWidth +'%'}">
                 <div class="hour-label" *ngFor="let time of timeArray">
-                    {{time}}
+                    {{time.formattedTime}}
                 </div>
             </div>
-            <div class="column" [ngStyle]="{'width': columnWidth + '%'}" *ngFor="let item of weekDay">
+            <div class="column" [ngStyle]="{'width': columnWidth + '%'}" *ngFor="let item of planColumns">
                 <div class="hour" *ngFor="let time of timeArray">
+                </div>
+                <div class="event-container" *ngFor="let cell of item.planCells" [ngStyle]="{'top': cell.startHeightPercent + '%', 'bottom': cell.endHeightPercent + '%'}">
+                <div class="event-blur-background"></div>
+                    <div class="event" >
+                        {{cell.timetable.subjectName}} ({{cell.timetable.placeName}})
+                    </div>
                 </div>
             </div>
             <div style="clear: both;"></div>
         </div>
     </div>
+
 </div>

@@ -26,7 +26,7 @@ export class JhiMainComponent implements OnInit {
 
     private updateFullPageInfo(event: NavigationEnd) {
         this.fullPage = false;
-        for (let regexp of this.fullPageRegexp) {
+        for (const regexp of this.fullPageRegexp) {
             if (regexp.test(event.url)) {
                 this.fullPage = true;
             } else {

@@ -10,22 +10,22 @@ import org.springframework.stereotype.Service
 open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
 
     @Autowired
-    lateinit private var divisionRepository: DivisionRepository
+    private lateinit var divisionRepository: DivisionRepository
 
     @Autowired
-    lateinit private var periodRepository: PeriodRepository
+    private lateinit var periodRepository: PeriodRepository
 
     @Autowired
-    lateinit private var teacherRepository: TeacherRepository
+    private lateinit var teacherRepository: TeacherRepository
 
     @Autowired
-    lateinit private var subjectRepository: SubjectRepository
+    private lateinit var subjectRepository: SubjectRepository
 
     @Autowired
-    lateinit private var lessonRepository: LessonRepository
+    private lateinit var lessonRepository: LessonRepository
 
     @Autowired
-    lateinit private var placeRepository: PlaceRepository
+    private lateinit var placeRepository: PlaceRepository
 
     override fun toEntity(entityDto: TimetableDTO): Timetable {
         return Timetable(
@@ -51,8 +51,9 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
                 place = placeRepository.getOne(entityDto.placeId)
             }
             id = entityDto.id
-            startTime = entityDto.startTime
-            endTime = entityDto.endTime
+
+            setStartTimeHHmmFormatted(entityDto.startTime ?: "")
+            setEndTimeHHmmFormatted(entityDto.endTime ?: "")
             startDate = entityDto.startDate
             endDate = entityDto.endDate
             date = entityDto.date
@@ -76,6 +77,7 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             title = entity.title,
             type = entity.type
         ).apply {
+            title = entity.title
             periodId = timetablePeriodId(entity)
             placeId = timetablePlaceId(entity)
             divisionName = timetableDivisionName(entity)
@@ -89,8 +91,13 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             placeName = timetablePlaceName(entity)
             subjectName = timetableSubjectName(entity)
             id = entity.id
-            startTime = entity.startTime
-            endTime = entity.endTime
+            if (entity.lesson != null) {
+                startTime = entity.lesson?.getStartTimeHHmmFormatted()
+                endTime = entity.lesson?.getEndTimeHHmmFormatted()
+            } else {
+                startTime = entity.getStartTimeHHmmFormatted()
+                endTime = entity.getEndTimeHHmmFormatted()
+            }
             startDate = entity.startDate
             endDate = entity.endDate
             date = entity.date

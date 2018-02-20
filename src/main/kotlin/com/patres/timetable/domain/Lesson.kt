@@ -39,19 +39,6 @@ class Lesson(
 
 ) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
 
-    companion object {
-        val formatter = DateTimeFormatter.ofPattern("HH:mm")!!
-
-        fun getTimeHHmmFormatted(seconds: Long?): String {
-            seconds?.let { time ->
-                return LocalTime.ofSecondOfDay(time).format(formatter)
-            }
-            return "00:00"
-        }
-
-        fun getSecondsFromString(time: String) = LocalTime.parse(time).toSecondOfDay().toLong()
-    }
-
     fun getStartTimeHHmmFormatted(): String {
         return getTimeHHmmFormatted(startTime)
     }
@@ -67,7 +54,6 @@ class Lesson(
     fun setEndTimeHHmmFormatted(time: String) {
         endTime = getSecondsFromString(time)
     }
-
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

@@ -261,11 +261,39 @@ ui bootstrap tweaks
         float: left;
         height: 100%;
         text-align: center;
+        position: relative;
 
         .column-first {
             width: 10%;
         }
 
+        .event-container {
+            position: absolute;
+            left: 0;
+            right: 5%;
+        }
+
+        .event-blur-background {
+            background: $plan-background;
+            background-size: cover;
+            -webkit-filter: blur($blur-value);
+            filter: blur($blur-value);
+            right: 0;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+        }
+
+        .event {
+            background-color: transparentize($accent-color, .3);
+            border-left: 5px solid $light-text-color;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+        }
     }
 
     .hour-label {
@@ -279,6 +307,8 @@ ui bootstrap tweaks
         height: $hour-height;
         border: 1px solid $color-accent-bright;
     }
+
+
 
 }
 

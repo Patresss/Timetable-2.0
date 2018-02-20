@@ -1,4 +1,5 @@
 import { BaseEntity } from './../../shared';
+import {Time} from '../../plan/time.model';
 
 export const enum EventType {
     'LESSON',
@@ -10,8 +11,8 @@ export class Timetable implements BaseEntity {
     constructor(
         public id?: number,
         public title?: string,
-        public startTime?: number,
-        public endTime?: number,
+        public startTime?: Time,
+        public endTime?: Time,
         public startDate?: any,
         public endDate?: any,
         public date?: any,
@@ -29,11 +30,14 @@ export class Timetable implements BaseEntity {
         public inSaturday?: boolean,
         public inSunday?: boolean,
         public placeId?: number,
+        public placeName?: String,
         public subjectId?: number,
+        public subjectName?: String,
         public teacherId?: number,
         public divisionId?: number,
         public lessonId?: number,
         public periodId?: number,
+
     ) {
         this.inMonday = false;
         this.inTuesday = false;

@@ -94,6 +94,22 @@ class Timetable(
 
 ) : AbstractApplicationEntity(), Serializable {
 
+    fun getStartTimeHHmmFormatted(): String {
+        return getTimeHHmmFormatted(startTime)
+    }
+
+    fun setStartTimeHHmmFormatted(time: String) {
+        startTime = getSecondsFromString(time)
+    }
+
+    fun getEndTimeHHmmFormatted(): String {
+        return getTimeHHmmFormatted(endTime)
+    }
+
+    fun setEndTimeHHmmFormatted(time: String) {
+        endTime = getSecondsFromString(time)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true

@@ -2,10 +2,27 @@ package com.patres.timetable.domain
 
 import javax.persistence.*
 import java.io.Serializable
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Objects
 
 @MappedSuperclass
 abstract class AbstractApplicationEntity : Serializable {
+
+    companion object {
+        private const val serialVersionUID = 7296270053887329327L
+
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")!!
+
+        fun getTimeHHmmFormatted(seconds: Long?): String {
+            seconds?.let { time ->
+                return LocalTime.ofSecondOfDay(time).format(formatter)
+            }
+            return "00:00"
+        }
+
+        fun getSecondsFromString(time: String) = LocalTime.parse(time).toSecondOfDay().toLong()
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
@@ -28,10 +45,6 @@ abstract class AbstractApplicationEntity : Serializable {
 
     override fun hashCode(): Int {
         return Objects.hashCode(id)
-    }
-
-    companion object {
-        private const val serialVersionUID = 7296270053887329327L
     }
 
 }

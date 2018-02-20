@@ -8,6 +8,7 @@ import {JhiDateUtils} from 'ng-jhipster';
 import {Timetable} from './timetable.model';
 import {createRequestOption, ResponseWrapper} from '../../shared';
 import {DateObject} from './date-object.model';
+import {Time} from '../../plan/time.model';
 
 @Injectable()
 export class TimetableService {
@@ -75,6 +76,12 @@ export class TimetableService {
         entity.startDate = this.dateUtils.convertLocalDateFromServer(entity.startDate);
         entity.endDate = this.dateUtils.convertLocalDateFromServer(entity.endDate);
         entity.date = this.dateUtils.convertLocalDateFromServer(entity.date);
+        if (entity.startTime) {
+            entity.startTime = new Time(entity.startTime);
+        }
+        if (entity.endTime) {
+            entity.endTime = new Time(entity.endTime);
+        }
     }
 
     private convert(timetable: Timetable): Timetable {

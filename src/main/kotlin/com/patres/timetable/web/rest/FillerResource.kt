@@ -1,6 +1,7 @@
 package com.patres.timetable.web.rest
 
 import com.codahale.metrics.annotation.Timed
+import com.patres.timetable.domain.AbstractApplicationEntity
 import com.patres.timetable.domain.Lesson
 import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.domain.enumeration.EventType
@@ -337,8 +338,8 @@ open class FillerResource(
 
     private fun createLesson(name: String, startTime: String, endTime: String, divisionOwner: DivisionDTO): LessonDTO {
         val lesson = LessonDTO(name = name, divisionOwnerId = divisionOwner.id).also {
-            it.startTime = Lesson.getSecondsFromString(startTime)
-            it.endTime = Lesson.getSecondsFromString(endTime)
+            it.startTime = AbstractApplicationEntity.getSecondsFromString(startTime)
+            it.endTime = AbstractApplicationEntity.getSecondsFromString(endTime)
         }
         return lessonService.save(lesson)
     }
