@@ -20,7 +20,7 @@ import java.net.UnknownHostException
 import java.util.Arrays
 
 @ComponentScan
-@EnableAutoConfiguration(exclude = arrayOf(MetricFilterAutoConfiguration::class, MetricRepositoryAutoConfiguration::class))
+@EnableAutoConfiguration(exclude = [(MetricFilterAutoConfiguration::class), (MetricRepositoryAutoConfiguration::class)])
 @EnableConfigurationProperties(LiquibaseProperties::class, ApplicationProperties::class)
 @EnableDiscoveryClient
 open class TimetableApp(private val env: Environment) {

@@ -52,8 +52,13 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             }
             id = entityDto.id
 
-            setStartTimeHHmmFormatted(entityDto.startTime ?: "")
-            setEndTimeHHmmFormatted(entityDto.endTime ?: "")
+            entityDto.startTime?.let {
+                setStartTimeHHmmFormatted(it)
+            }
+            entityDto.endTime?.let {
+                setEndTimeHHmmFormatted(it)
+            }
+
             startDate = entityDto.startDate
             endDate = entityDto.endDate
             date = entityDto.date

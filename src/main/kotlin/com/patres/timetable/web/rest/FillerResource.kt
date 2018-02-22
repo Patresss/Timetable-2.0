@@ -222,6 +222,7 @@ open class FillerResource(
         val d1aMon5 = createTimetable( inMonday = true, lesson = l5, subject = religia, teacher = tPiwinski, place = p36, division = class1a, period = semestrZimowyPeriod)
         val d1aMon6 = createTimetable( inMonday = true, lesson = l6, subject = fizyka, teacher = szott, place = p15, division = class1a, period = semestrZimowyPeriod)
         val d1aMon8 = createTimetable( inMonday = true, lesson = l8, subject = historia, teacher = świstak, place = p7, division = class1a, period = semestrZimowyPeriod)
+        val d1aMon9Test = createTimetable( inMonday = true, lesson = l9, subject = historia, teacher = świstak, place = p7, division = class1a, period = semestrZimowyPeriod, everyWeek = 2)
 
         val d1aTue1 = createTimetable( inTuesday = true, lesson = l1, subject = jPolski, teacher = pernal, place = p24, division = class1a, period = semestrZimowyPeriod)
         val d1aTue2 = createTimetable( inTuesday = true, lesson = l2, subject = geografia, teacher = gonet, place = p20, division = class1a, period = semestrZimowyPeriod)
@@ -363,7 +364,8 @@ open class FillerResource(
         inThursday: Boolean = false,
         inFriday: Boolean = false,
         inSaturday: Boolean = false,
-        inSunday: Boolean = false
+        inSunday: Boolean = false,
+        everyWeek: Long = 1
     ): TimetableDTO {
         val timetable = TimetableDTO(
             title = subject.name,
@@ -380,7 +382,8 @@ open class FillerResource(
             inThursday = inThursday,
             inFriday = inFriday,
             inSaturday = inSaturday,
-            inSunday = inSunday
+            inSunday = inSunday,
+            everyWeek = everyWeek
         )
         return timetableService.save(timetable)
     }

@@ -235,7 +235,7 @@ ui bootstrap tweaks
     margin-bottom: 25px;
 }
 
-.plan {
+plan-view-body.plan {
     position: relative;
     background: rgba(34, 34, 34, 0.1);
     color: $light-text-color;
@@ -308,7 +308,60 @@ ui bootstrap tweaks
         border: 1px solid $color-accent-bright;
     }
 
+}
 
+.home-view-body {
+    color: $light-text-color;
+    a {
+        color: $light-text-color;
+    }
+    .home-container {
+        position: relative;
+        text-align: center;
+        margin-top: 100px;
+        background: rgba(0, 0, 0, 0.6);
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+    .home-blur-background {
+        background: $plan-background;
+        background-size: cover;
+        -webkit-filter: blur($blur-value);
+        filter: blur($blur-value);
+        right: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .sign-elements {
+        width: 20%;
+        margin: auto;
+        margin-top: 30px;
+
+        .sign-element-container {
+            position: relative;
+            float: left;
+            text-align: center;
+            width: 40%;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .register-element-container {
+            position: relative;
+            float: right;
+            text-align: center;
+            width: 40%;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+    }
 
 }
 
@@ -318,7 +371,6 @@ ui bootstrap tweaks
     background-size: cover;
     padding-bottom: 100px;
     padding-top: 100px;
-
 }
 
 .plan-blur-background {
@@ -376,7 +428,7 @@ ui bootstrap tweaks
     }
     .list-filter {
         .fa {
-            color:  $accent-color !important;
+            color: $accent-color !important;
         }
     }
 
@@ -439,4 +491,9 @@ ui bootstrap tweaks
 
 .select-label {
     font-size: 2em;
+}
+
+body {
+    background: $plan-background;
+    background-size: cover;
 }
