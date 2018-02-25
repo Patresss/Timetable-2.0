@@ -24,6 +24,20 @@
                 "5": "Piątek",
                 "6": "Sobota",
                 "0": "Niedziela"
+            },
+            "month-with-year": {
+                "1": "Styczeń, {{ year }}",
+                "2": "Luty, {{ year }}",
+                "3": "Marzec, {{ year }}",
+                "4": "Kwiecień, {{ year }}",
+                "5": "Maj, {{ year }}",
+                "6": "Czerwiec, {{ year }}",
+                "7": "Lipiec, {{ year }}",
+                "8": "Sierpień, {{ year }}",
+                "9": "Wrzesień, {{ year }}",
+                "10": "Październik, {{ year }}",
+                "11": "Listopad, {{ year }}",
+                "12": "Grudzień, {{ year }}"
             }
         }
     }

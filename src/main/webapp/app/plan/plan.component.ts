@@ -76,6 +76,8 @@ export class PlanComponent implements OnInit, OnDestroy {
         classes: 'myclass custom-class'
     };
 
+    currentMonday: Date;
+
     numberOfColumns = 5;
     timeArray = [];
     startHour = new Time('6:00');
@@ -99,6 +101,7 @@ export class PlanComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
+        this.loadCurrentMonday();
         this.loadEmptyPlanColumns();
         this.divisionService.findByDivisionType('SCHOOL').subscribe(
             (res: ResponseWrapper) => this.onSuccessSchool(res.json),
@@ -228,6 +231,7 @@ export class PlanComponent implements OnInit, OnDestroy {
     }
 
     private reloadTimetables() {
+        console.log(this.currentMonday);
         this.clearPlanColumns();
         for (const weekDay of this.planColumns) {
             const array = [];
@@ -257,20 +261,54 @@ export class PlanComponent implements OnInit, OnDestroy {
     }
 
 // ================================================================================================================================
+// Date
+// ================================================================================================================================
+    nextWeek() {
+        this.currentMonday = new Date(this.currentMonday.getFullYear(), this.currentMonday.getMonth(), this.currentMonday.getDate() + 7);
+
+        this.loadNewDays();
+        this.reloadTimetables();
+    }
+
+    previousWeek() {
+        this.currentMonday = new Date(this.currentMonday.getFullYear(), this.currentMonday.getMonth(), this.currentMonday.getDate() - 7);
+
+        this.loadNewDays();
+        this.reloadTimetables();
+    }
+
+    currentWeek() {
+        this.loadCurrentMonday();
+
+        this.loadNewDays();
+        this.reloadTimetables();
+    }
+
+// ================================================================================================================================
 //
 // ================================================================================================================================
-    private loadEmptyPlanColumns() {
-        const lastMonday = new Date();
-        lastMonday.setDate(lastMonday.getDate() - (lastMonday.getDay() + 6) % 7);
-        const days = [];
+    private loadCurrentMonday() {
+        this.currentMonday = new Date();
+        this.currentMonday.setDate(this.currentMonday.getDate() - (this.currentMonday.getDay() + 6) % 7);
+    }
 
+    private loadEmptyPlanColumns() {
+        const days = [];
         for (let i = 0; i < this.numberOfColumns; i++) {
-            const date = new Date(lastMonday);
+            const date = new Date(this.currentMonday);
             date.setDate(date.getDate() + i);
             const column = new PlanColumn(date);
             days.push(column);
         }
         this.planColumns = days;
+    }
+
+    private loadNewDays() {
+        this.planColumns.forEach((item, index) => {
+            const date = new Date(this.currentMonday);
+            date.setDate(date.getDate() + index);
+            item.date = date;
+        });
     }
 
     private clearPlanColumns() {

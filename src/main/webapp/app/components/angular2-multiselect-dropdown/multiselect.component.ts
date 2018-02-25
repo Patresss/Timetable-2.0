@@ -37,6 +37,9 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
     data: Array<ListItem>;
 
     @Input()
+    styleClass: String;
+
+    @Input()
     settings: DropdownSettings;
 
     @Output('onSelect')
@@ -81,7 +84,7 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
     public lastScrolled: any;
     public lastRepaintY: any;
 
-    public styleClass = 'plan-select';
+
     public isTranslate = true;
 
     private onTouchedCallback: (_: any) => void = noop;

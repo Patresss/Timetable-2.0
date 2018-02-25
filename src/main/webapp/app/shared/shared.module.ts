@@ -15,6 +15,7 @@ import {
     HasAnyAuthorityDirective,
     JhiLoginModalComponent
 } from './';
+import {GlassComponent} from '../components/glass/glass.component';
 
 @NgModule({
     imports: [
@@ -23,8 +24,9 @@ import {
     ],
     declarations: [
         JhiLoginModalComponent,
-        HasAnyAuthorityDirective
-    ],
+        HasAnyAuthorityDirective,
+        GlassComponent,
+],
     providers: [
         LoginService,
         LoginModalService,
@@ -41,7 +43,8 @@ import {
         TimetableSharedCommonModule,
         JhiLoginModalComponent,
         HasAnyAuthorityDirective,
-        DatePipe
+        DatePipe,
+        GlassComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

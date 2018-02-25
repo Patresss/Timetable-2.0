@@ -231,14 +231,67 @@ ui bootstrap tweaks
 
 //mine
 
+.home-view-body {
+    color: $light-text-color;
+    a {
+        color: $light-text-color;
+    }
+    .home-container {
+        position: relative;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.6);
+        padding-bottom: 10px;
+        padding-top: 10px;
+        width: 100%;
+        margin: 100px auto auto;
+    }
+
+    .sign-elements {
+        width: 20%;
+        margin: auto;
+        margin-top: 30px;
+
+        .sign-element-container {
+            position: relative;
+            float: left;
+            text-align: center;
+            width: 40%;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .register-element-container {
+            position: relative;
+            float: right;
+            text-align: center;
+            width: 40%;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+    }
+
+}
+
 .plan-row-choose {
     margin-bottom: 25px;
 }
 
-.plan {
+.plan-container {
     position: relative;
-    background: rgba(34, 34, 34, 0.1);
+    width: 90%;
     color: $light-text-color;
+    margin: auto;
+}
+.plan {
+    background: rgba(34, 34, 34, 0.1);
+    .plan-button {
+        color: $light-text-color;
+        background: transparent;
+        border: none;
+        border-radius: 50%;
+    }
 
     .day-label {
         font-size: 3em;
@@ -308,6 +361,37 @@ ui bootstrap tweaks
         border: 1px solid $color-accent-bright;
     }
 
+    .month-header {
+        font-size: 4em;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        position: relative;
+
+        .plan-buttons-container {
+            position: absolute;
+        }
+
+        .plan-button {
+            color: $light-text-color;
+            background: transparent;
+            border: none;
+            border-radius: 50%;
+            font-weight: lighter;
+            font-size: 70%;
+            position: relative;
+            top: -7px;
+            margin: -5px;
+        }
+
+        .plan-button.circle {
+            font-size: 50%;
+            top: -10px;
+        }
+        .plan-button:hover {
+            cursor: pointer;
+        }
+    }
+
 
 
 }
@@ -319,24 +403,6 @@ ui bootstrap tweaks
     padding-bottom: 100px;
     padding-top: 100px;
 
-}
-
-.plan-blur-background {
-    background: $plan-background;
-    background-size: cover;
-    -webkit-filter: blur($blur-value);
-    filter: blur($blur-value);
-    right: 0;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    position: absolute;
-}
-
-.plan-container {
-    position: relative;
-    width: 90%;
-    margin: auto;
 }
 
 .plan-select {
@@ -439,4 +505,9 @@ ui bootstrap tweaks
 
 .select-label {
     font-size: 2em;
+}
+
+body {
+    background: $plan-background;
+    background-size: cover;
 }
