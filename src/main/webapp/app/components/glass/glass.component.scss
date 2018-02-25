@@ -1,0 +1,20 @@
+$blur-value: 15px;
+$plan-background: url('https://images.pexels.com/photos/450441/pexels-photo-450441.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb') no-repeat center center fixed;
+
+
+.container {
+  position: relative;
+}
+
+.blur-background {
+  background: $plan-background;
+  background-size: cover;
+  -webkit-filter: blur($blur-value);
+  filter: blur($blur-value);
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+}

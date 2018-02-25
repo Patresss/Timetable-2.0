@@ -1,22 +1,19 @@
 <div class="home-view-body">
 
-    <div class="home-container">
-        <div class="home-blur-background"></div>
-        <div class="home-header">
-            <h1 class="display-4" jhiTranslate="home.title">Welcome to Patres Timetable</h1>
-        </div>
-    </div>
+  <glass class="home-container">
+    <h1 class="display-4" jhiTranslate="home.title">Welcome to Patres Timetable</h1>
+  </glass>
 
-    <div class="sign-elements">
-        <div class="sign-element-container">
-            <div class="element-blur-background"></div>
-            <a class="alert-link" (click)="login()" jhiTranslate="home.sign-in">Sign in</a>
-        </div>
-        <div class="register-element-container">
-            <div class="element-blur-background"></div>
-            <a class="alert-link" routerLink="register" jhiTranslate="home.register">Register</a>
-        </div>
-    </div>
+  <div class="sign-elements">
+    <glass class="sign-element-container">
+      <a class="alert-link" (click)="login()" jhiTranslate="home.sign-in">Sign in</a>
+    </glass>
 
-    <div style="clear: both;"></div>
+    <glass class="register-element-container">
+      <a class="alert-link" routerLink="register" jhiTranslate="home.register">Register</a>
+    </glass>
+  </div>
+
+  <div style="clear: both;"></div>
+
 </div>

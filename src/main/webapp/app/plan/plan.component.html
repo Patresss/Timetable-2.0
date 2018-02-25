@@ -9,7 +9,7 @@
                     <label class="select-label" jhiTranslate="timetableApp.DivisionType.SCHOOL"></label>
                     <jhi-angular2-multiselect [data]="schoolSelectOption" [(ngModel)]="selectedSchool" [settings]="schoolSelectSettings"
                                               (onSelect)="onSchoolSelect($event)"
-                                              (onDeSelect)="OnSchoolDeSelect($event)">
+                                              jhi-angular2-multiselect                       (onDeSelect)="OnSchoolDeSelect($event)">
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
