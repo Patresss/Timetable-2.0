@@ -38,6 +38,7 @@ Generic styles
     padding: 1.5%;
     margin-top: 20px;
     border: none;
+    background-color: transparent;
 }
 
 .error {
@@ -215,6 +216,9 @@ ui bootstrap tweaks
 
 //mine
 
+// ================================================================
+// Home
+// ================================================================
 .home-view-body {
     color: $light-text-color;
     a {
@@ -223,7 +227,7 @@ ui bootstrap tweaks
     .home-container {
         position: relative;
         text-align: center;
-        background: $strong-color-background;
+        background: $dark-3-color-background;
         padding-bottom: 10px;
         padding-top: 10px;
         width: 100%;
@@ -249,6 +253,10 @@ ui bootstrap tweaks
 
 }
 
+// ================================================================
+// Plan
+// ================================================================
+
 .plan-row-choose {
     margin-bottom: 25px;
 }
@@ -260,7 +268,10 @@ ui bootstrap tweaks
     margin: auto;
 }
 .plan {
-    background: rgba(34, 34, 34, 0.1);
+    background: $dark-5-color-background;
+    -moz-box-shadow: 0 0 5px 5px $dark-5-color-background;
+    -webkit-box-shadow: 0 0 5px 5px $dark-5-color-background;
+    box-shadow: 0 0 5px 5px $dark-5-color-background;
     .plan-button {
         color: $light-text-color;
         background: transparent;
@@ -382,7 +393,7 @@ ui bootstrap tweaks
 .plan-select {
 
     .c-btn {
-        background: $medium-color-background;
+        background: $dark-4-color-background;
         color: $light-text-color;
     }
 
@@ -481,15 +492,30 @@ ui bootstrap tweaks
     font-size: 2em;
 }
 
+
+// ================================================================
+// Override
+// ================================================================
 body {
     background: $plan-background;
     background-size: cover;
 }
 
+a {
+    color: $light-text-color;
+}
 
+a:hover {
+    color: $light-text-color;
+}
+
+
+// ================================================================
+// Glass
+// ================================================================
 .glass-button {
-    color: $light-text-color;;
-    background: $strong-color-background;
+    color: $light-text-color;
+    background: $dark-3-color-background;
     text-align: center;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -499,6 +525,7 @@ body {
 }
 .glass-button:hover{
     cursor: pointer;
-    background: $max-color-background;
+    background: $dark-1-color-background;
 }
+
 
