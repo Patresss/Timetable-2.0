@@ -84,7 +84,7 @@ export class PlanComponent implements OnInit, OnDestroy {
     endHour = new Time('17:00');
     firstColumnWidth = 5.0;
     columnWidth = (100.0 - this.firstColumnWidth) / this.numberOfColumns;
-    planColumns: PlanColumn[]= [];
+    planColumns: PlanColumn[] = [];
 
     constructor(private parseLinks: JhiParseLinks,
                 private alertService: JhiAlertService,
@@ -158,59 +158,60 @@ export class PlanComponent implements OnInit, OnDestroy {
         }
     }
 
-// ================================================================
-// School
-// ================================================================
-    onSchoolSelect(item: any) {
-        this.divisionService.findClassesByParentId(item.id).subscribe(
-            (res: ResponseWrapper) => this.onSuccessClass(res.json),
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
-
-        if (item != null) {
-            this.classSelectSettings.disabled = false;
-            this.classSelectSettings = Object.assign({}, this.classSelectSettings); // workaround to detect change
-        }
-    }
-
-    OnSchoolDeSelect() {
-        this.classSelectOption = [];
-        this.subgroupSelectOption = [];
-        this.selectedClass = [];
-        this.selectedSubgroup = [];
-
-        this.classSelectSettings.disabled = true;
-        this.classSelectSettings = Object.assign({}, this.classSelectSettings); // workaround to detect change
-        this.subgroupSelectSettings.disabled = true;
-        this.subgroupSelectSettings = Object.assign({}, this.subgroupSelectSettings); // workaround to detect change
-    }
-
 // ================================================================================================================================
 // Choosers
 // ================================================================================================================================
 // ================================================================
+// School
+// ================================================================
+    onSchoolSelect(item: any) {
+        this.clearClassesSelect();
+        this.divisionService.findClassesByParentId(item.id).subscribe(
+            (res: ResponseWrapper) => this.onSuccessClass(res.json),
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+        this.classSelectSettings.disabled = false;
+        this.classSelectSettings = Object.assign({}, this.classSelectSettings); // workaround to detect change
+        this.reloadTimetables();
+    }
+
+    OnSchoolDeSelect() {
+        this.clearClassesSelect();
+        this.clearSubgroupsSelect();
+        this.classSelectSettings.disabled = true;
+        this.classSelectSettings = Object.assign({}, this.classSelectSettings); // workaround to detect change
+        this.subgroupSelectSettings.disabled = true;
+        this.subgroupSelectSettings = Object.assign({}, this.subgroupSelectSettings); // workaround to detect change
+        this.reloadTimetables();
+    }
+
+// ================================================================
 // Class
 // ================================================================
     onClassSelect(item: any) {
+        this.clearSubgroupsSelect();
         this.divisionService.findSubgroupsByParentId(item.id).subscribe(
             (res: ResponseWrapper) => this.onSuccessSubgroup(res.json),
             (res: ResponseWrapper) => this.onError(res.json)
         );
 
-        if (item != null) {
-            this.subgroupSelectSettings.disabled = false;
-            this.subgroupSelectSettings = Object.assign({}, this.subgroupSelectSettings); // workaround to detect change
-        }
+        this.subgroupSelectSettings.disabled = false;
+        this.subgroupSelectSettings = Object.assign({}, this.subgroupSelectSettings); // workaround to detect change
         this.reloadTimetables();
     }
 
     OnClassDeSelect() {
-        this.subgroupSelectOption = [];
-        this.selectedSubgroup = [];
-
+        this.clearSubgroupsSelect();
         this.subgroupSelectSettings.disabled = true;
         this.subgroupSelectSettings = Object.assign({}, this.subgroupSelectSettings); // workaround to detect change
         this.reloadTimetables();
+    }
+
+
+    private clearClassesSelect() {
+        this.selectedClass = [];
+        this.classSelectOption = [];
+        this.clearSubgroupsSelect();
     }
 
 // ================================================================
@@ -222,6 +223,11 @@ export class PlanComponent implements OnInit, OnDestroy {
 
     OnSubgroupDeSelect(item: any) {
         this.reloadTimetables();
+    }
+
+    private clearSubgroupsSelect() {
+        this.subgroupSelectOption = [];
+        this.selectedSubgroup = [];
     }
 
     private onSuccessTimetable(weekDay: PlanColumn, data: Timetable[]) {
