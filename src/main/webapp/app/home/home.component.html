@@ -1,17 +1,17 @@
 <div class="home-view-body">
 
     <glass contentClass="home-container">
-        <h1 class="display-4" jhiTranslate="home.title">Welcome to Patres Timetable</h1>
+        <h1 class="display-3" jhiTranslate="home.title">Welcome to Patres Timetable</h1>
     </glass>
 
 
     <div class="sign-elements">
         <glass contentClass="sign-element-container">
-            <a class="alert-link" (click)="login()" jhiTranslate="home.sign-in">Sign in</a>
+            <button class="glass-button" (click)="login()" jhiTranslate="home.sign-in">Sign in</button>
         </glass>
 
         <glass contentClass="register-element-container">
-            <a class="alert-link" routerLink="register" jhiTranslate="home.register">Register</a>
+            <button class="glass-button" routerLink="register" jhiTranslate="home.register">Register</button>
         </glass>
     </div>
 

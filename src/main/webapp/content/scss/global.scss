@@ -1,20 +1,5 @@
 @import 'bootstrap-variables';
-
-$primary-text-color: #212121;
-$light-text-color: #FFFFFF;
-$secondary-text-color: #757575;
-$divider-color: #BDBDBD;
-$dark-primary-color: #1976D2;
-$primary-color: #2196F3;
-$light-primary-color: #BBDEFB;
-$accent-color: #C0B283;
-$accent-color-light: #FFECB3;
-$color-accent-bright: rgb(200, 200, 200);
-$good-color: green;
-
-$hour-height: 60px;
-$blur-value: 15px;
-$plan-background: url('https://images.pexels.com/photos/450441/pexels-photo-450441.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb') no-repeat center center fixed;
+@import 'timetable-variables';
 
 /* ==============================================================
 Bootstrap tweaks
@@ -238,7 +223,7 @@ ui bootstrap tweaks
     .home-container {
         position: relative;
         text-align: center;
-        background: rgba(0, 0, 0, 0.6);
+        background: $strong-color-background;
         padding-bottom: 10px;
         padding-top: 10px;
         width: 100%;
@@ -247,27 +232,18 @@ ui bootstrap tweaks
 
     .sign-elements {
         width: 20%;
-        margin: auto;
-        margin-top: 30px;
+        margin: 70px auto auto;
 
         .sign-element-container {
             position: relative;
             float: left;
-            text-align: center;
             width: 40%;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            background: rgba(0, 0, 0, 0.6);
         }
 
         .register-element-container {
             position: relative;
             float: right;
-            text-align: center;
             width: 40%;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            background: rgba(0, 0, 0, 0.6);
         }
     }
 
@@ -406,12 +382,12 @@ ui bootstrap tweaks
 .plan-select {
 
     .c-btn {
-        background: rgba(0, 0, 0, 0.25);
+        background: $medium-color-background;
         color: $light-text-color;
     }
 
     .c-btn.disabled {
-        background: rgba(255, 174, 66, 0.2);
+        background: rgba(255, 0, 0, 0.2);
     }
 
     .c-label {
@@ -509,3 +485,20 @@ body {
     background: $plan-background;
     background-size: cover;
 }
+
+
+.glass-button {
+    color: $light-text-color;;
+    background: $strong-color-background;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+.glass-button:hover{
+    cursor: pointer;
+    background: $max-color-background;
+}
+
