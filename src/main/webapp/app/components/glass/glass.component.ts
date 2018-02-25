@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostBinding, Input, Renderer} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'glass',
