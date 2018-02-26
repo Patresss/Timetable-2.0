@@ -10,5 +10,5 @@ export class GlassComponent {
     title = 'jhi-glass';
 
     @Input()
-    contentClass = 'default-jhi-glass-content';
+    contentClass = 'default-glass-content';
 }
