@@ -41,7 +41,7 @@ open class TeacherResource(private val teacherService: TeacherService) {
      * @return the ResponseEntity with status 201 (Created) and with body the new teacherDTO, or with status 400 (Bad Request) if the teacher has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PreAuthorize("@teacherService.hasPriviligeToAddEntity(#teacherDTO)")
+    @PreAuthorize("@teacherService.hasPrivilegeToAddEntity(#teacherDTO)")
     @PostMapping("/teachers")
     @Timed
     @Throws(URISyntaxException::class)
@@ -65,7 +65,7 @@ open class TeacherResource(private val teacherService: TeacherService) {
      * or with status 500 (Internal Server Error) if the teacherDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PreAuthorize("@teacherService.hasPriviligeToModifyEntity(#teacherDTO)")
+    @PreAuthorize("@teacherService.hasPrivilegeToModifyEntity(#teacherDTO)")
     @PutMapping("/teachers")
     @Timed
     @Throws(URISyntaxException::class)
@@ -149,7 +149,7 @@ open class TeacherResource(private val teacherService: TeacherService) {
      * @param id the id of the teacherDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @PreAuthorize("@teacherService.hasPriviligeToDeleteEntity(#id)")
+    @PreAuthorize("@teacherService.hasPrivilegeToDeleteEntity(#id)")
     @DeleteMapping("/teachers/{id}")
     @Timed
     open fun deleteTeacher(@PathVariable id: Long?): ResponseEntity<Void> {

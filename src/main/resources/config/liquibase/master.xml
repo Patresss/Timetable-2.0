@@ -14,7 +14,9 @@
     <include file="config/liquibase/changelog/20170731144141_added_entity_Lesson.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170731144142_added_entity_Period.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170731144143_added_entity_Interval.xml" relativeToChangelogFile="false"/>
-    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20180226141800_added_entity_CurriculumList.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180226141400_added_entity_Curriculum.xml" relativeToChangelogFile="false"/>
+
     <include file="config/liquibase/changelog/20170731144135_added_entity_constraints_Division.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170731144136_added_entity_constraints_Property.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170731144137_added_entity_constraints_Teacher.xml" relativeToChangelogFile="false"/>
@@ -24,5 +26,6 @@
     <include file="config/liquibase/changelog/20170731144141_added_entity_constraints_Lesson.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170731144142_added_entity_constraints_Period.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170731144143_added_entity_constraints_Interval.xml" relativeToChangelogFile="false"/>
-    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <include file="config/liquibase/changelog/20180226142000_added_entity_constraints_CurriculumList.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180226141600_added_entity_constraints_Curriculum.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

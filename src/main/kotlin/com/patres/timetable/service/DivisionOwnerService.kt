@@ -53,36 +53,34 @@ abstract class DivisionOwnerService<EntityType : AbstractDivisionOwner, EntityDt
         return entityTypeClass.simpleName
     }
 
-    fun hasPriviligeToAddEntity(entityDto: AbstractDivisionOwnerDTO): Boolean {
-        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-            return true
-        } else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN)) {
-            val divisionOwnerId = entityDto.divisionOwnerId
-            return entityRepository.userHasPrivilegeToAddEntity(divisionOwnerId)
-        } else {
-            return false
-        }
-    }
-
-    fun hasPriviligeToModifyEntity(entityDto: AbstractDivisionOwnerDTO): Boolean {
-        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-            return true
-        } else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN)) {
-            val entityId = entityDto.id
-            val divisionOwnerId = entityDto.divisionOwnerId
-            return entityRepository.userHasPrivilegeToModifyEntity(entityId, divisionOwnerId)
-        } else {
-            return false
-        }
-    }
-
-    fun hasPriviligeToDeleteEntity(entityId: Long?): Boolean {
+    fun hasPrivilegeToAddEntity(entityDto: AbstractDivisionOwnerDTO): Boolean {
         return if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
             true
         } else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN)) {
-            entityRepository.userHasPrivilegeToDeleteEntity(entityId)
+            val divisionOwnerId = entityDto.divisionOwnerId
+            entityRepository.userHasPrivilegeToAddEntity(divisionOwnerId)
         } else {
             false
+        }
+    }
+
+    fun hasPrivilegeToModifyEntity(entityDto: AbstractDivisionOwnerDTO): Boolean {
+        return when {
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> true
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> {
+                val entityId = entityDto.id
+                val divisionOwnerId = entityDto.divisionOwnerId
+                entityRepository.userHasPrivilegeToModifyEntity(entityId, divisionOwnerId)
+            }
+            else -> false
+        }
+    }
+
+    fun hasPrivilegeToDeleteEntity(entityId: Long?): Boolean {
+        return when {
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> true
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> entityRepository.userHasPrivilegeToDeleteEntity(entityId)
+            else -> false
         }
 
     }

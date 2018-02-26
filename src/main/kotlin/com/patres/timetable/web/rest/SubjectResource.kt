@@ -37,7 +37,7 @@ open class SubjectResource(private val subjectService: SubjectService) {
      * @return the ResponseEntity with status 201 (Created) and with body the new subjectDTO, or with status 400 (Bad Request) if the subject has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PreAuthorize("@subjectService.hasPriviligeToAddEntity(#subjectDTO)")
+    @PreAuthorize("@subjectService.hasPrivilegeToAddEntity(#subjectDTO)")
     @PostMapping("/subjects")
     @Timed
     @Throws(URISyntaxException::class)
@@ -61,7 +61,7 @@ open class SubjectResource(private val subjectService: SubjectService) {
      * or with status 500 (Internal Server Error) if the subjectDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PreAuthorize("@subjectService.hasPriviligeToModifyEntity(#subjectDTO)")
+    @PreAuthorize("@subjectService.hasPrivilegeToModifyEntity(#subjectDTO)")
     @PutMapping("/subjects")
     @Timed
     @Throws(URISyntaxException::class)
@@ -144,7 +144,7 @@ open class SubjectResource(private val subjectService: SubjectService) {
      * @param id the id of the subjectDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @PreAuthorize("@subjectService.hasPriviligeToDeleteEntity(#id)")
+    @PreAuthorize("@subjectService.hasPrivilegeToDeleteEntity(#id)")
     @DeleteMapping("/subjects/{id}")
     @Timed
     open fun deleteSubject(@PathVariable id: Long?): ResponseEntity<Void> {

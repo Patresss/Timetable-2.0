@@ -39,7 +39,7 @@ open class LessonResource(private val lessonService: LessonService) {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/lessons")
-    @PreAuthorize("@lessonService.hasPriviligeToAddEntity(#lessonDTO)")
+    @PreAuthorize("@lessonService.hasPrivilegeToAddEntity(#lessonDTO)")
     @Timed
     @Throws(URISyntaxException::class)
     open fun createLesson(@Valid @RequestBody lessonDTO: LessonDTO): ResponseEntity<LessonDTO> {
@@ -146,7 +146,7 @@ open class LessonResource(private val lessonService: LessonService) {
      * @param id the id of the lessonDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @PreAuthorize("@lessonService.hasPriviligeToDeleteEntity(#id)")
+    @PreAuthorize("@lessonService.hasPrivilegeToDeleteEntity(#id)")
     @DeleteMapping("/lessons/{id}")
     @Timed
     open fun deleteLesson(@PathVariable id: Long?): ResponseEntity<Void> {

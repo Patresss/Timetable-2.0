@@ -38,7 +38,7 @@ open class PlaceResource(private val placeService: PlaceService) {
      * @return the ResponseEntity with status 201 (Created) and with body the new placeDTO, or with status 400 (Bad Request) if the place has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PreAuthorize("@placeService.hasPriviligeToAddEntity(#placeDTO)")
+    @PreAuthorize("@placeService.hasPrivilegeToAddEntity(#placeDTO)")
     @PostMapping("/places")
     @Timed
     @Throws(URISyntaxException::class)
@@ -62,7 +62,7 @@ open class PlaceResource(private val placeService: PlaceService) {
      * or with status 500 (Internal Server Error) if the placeDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PreAuthorize("@placeService.hasPriviligeToModifyEntity(#placeDTO)")
+    @PreAuthorize("@placeService.hasPrivilegeToModifyEntity(#placeDTO)")
     @PutMapping("/places")
     @Timed
     @Throws(URISyntaxException::class)
@@ -143,7 +143,7 @@ open class PlaceResource(private val placeService: PlaceService) {
      * @param id the id of the placeDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @PreAuthorize("@placeService.hasPriviligeToDeleteEntity(#id)")
+    @PreAuthorize("@placeService.hasPrivilegeToDeleteEntity(#id)")
     @DeleteMapping("/places/{id}")
     @Timed
     open fun deletePlace(@PathVariable id: Long?): ResponseEntity<Void> {

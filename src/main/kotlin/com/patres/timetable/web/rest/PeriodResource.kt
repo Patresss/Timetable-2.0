@@ -38,7 +38,7 @@ open class PeriodResource(private val periodService: PeriodService) {
      * @return the ResponseEntity with status 201 (Created) and with body the new periodDTO, or with status 400 (Bad Request) if the period has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PreAuthorize("@periodService.hasPriviligeToAddEntity(#periodDTO)")
+    @PreAuthorize("@periodService.hasPrivilegeToAddEntity(#periodDTO)")
     @PostMapping("/periods")
     @Timed
     @Throws(URISyntaxException::class)
@@ -62,7 +62,7 @@ open class PeriodResource(private val periodService: PeriodService) {
      * or with status 500 (Internal Server Error) if the periodDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PreAuthorize("@periodService.hasPriviligeToModifyEntity(#periodDTO)")
+    @PreAuthorize("@periodService.hasPrivilegeToModifyEntity(#periodDTO)")
     @PutMapping("/periods")
     @Timed
     @Throws(URISyntaxException::class)
@@ -146,7 +146,7 @@ open class PeriodResource(private val periodService: PeriodService) {
      * @param id the id of the periodDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @PreAuthorize("@periodService.hasPriviligeToDeleteEntity(#id)")
+    @PreAuthorize("@periodService.hasPrivilegeToDeleteEntity(#id)")
     @DeleteMapping("/periods/{id}")
     @Timed
     open fun deletePeriod(@PathVariable id: Long?): ResponseEntity<Void> {

@@ -39,7 +39,7 @@ open class PropertyResource(private val propertyService: PropertyService) {
      * @return the ResponseEntity with status 201 (Created) and with body the new propertyDTO, or with status 400 (Bad Request) if the property has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PreAuthorize("@propertyService.hasPriviligeToAddEntity(#propertyDTO)")
+    @PreAuthorize("@propertyService.hasPrivilegeToAddEntity(#propertyDTO)")
     @PostMapping("/properties")
     @Timed
     @Throws(URISyntaxException::class)
@@ -63,7 +63,7 @@ open class PropertyResource(private val propertyService: PropertyService) {
      * or with status 500 (Internal Server Error) if the propertyDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PreAuthorize("@propertyService.hasPriviligeToModifyEntity(#propertyDTO)")
+    @PreAuthorize("@propertyService.hasPrivilegeToModifyEntity(#propertyDTO)")
     @PutMapping("/properties")
     @Timed
     @Throws(URISyntaxException::class)
@@ -129,7 +129,7 @@ open class PropertyResource(private val propertyService: PropertyService) {
      * @param id the id of the propertiesDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @PreAuthorize("@propertyService.hasPriviligeToDeleteEntity(#id)")
+    @PreAuthorize("@propertyService.hasPrivilegeToDeleteEntity(#id)")
     @DeleteMapping("/properties/{id}")
     @Timed
     open fun deleteProperty(@PathVariable id: Long?): ResponseEntity<Void> {

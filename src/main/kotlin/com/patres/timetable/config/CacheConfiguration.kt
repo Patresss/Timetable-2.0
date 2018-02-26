@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit
 
 @Configuration
 @EnableCaching
-@AutoConfigureAfter(value = *arrayOf(MetricsConfiguration::class))
-@AutoConfigureBefore(value = *arrayOf(WebConfigurer::class, DatabaseConfiguration::class))
+@AutoConfigureAfter(value = [(MetricsConfiguration::class)])
+@AutoConfigureBefore(value = [(WebConfigurer::class), (DatabaseConfiguration::class)])
 open class CacheConfiguration(jHipsterProperties: JHipsterProperties) {
 
     private val jcacheConfiguration: javax.cache.configuration.Configuration<Any, Any>
@@ -75,6 +75,9 @@ open class CacheConfiguration(jHipsterProperties: JHipsterProperties) {
             it.createCache(com.patres.timetable.domain.Period::class.java.name + ".intervalTimes", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Period::class.java.name + ".timetables", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Interval::class.java.name, jcacheConfiguration)
+            it.createCache(com.patres.timetable.domain.CurriculumList::class.java.name, jcacheConfiguration)
+            it.createCache(com.patres.timetable.domain.CurriculumList::class.java.name + ".curriculums", jcacheConfiguration)
+            it.createCache(com.patres.timetable.domain.Curriculum::class.java.name, jcacheConfiguration)
         }
     }
 }
