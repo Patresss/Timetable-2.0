@@ -1,14 +1,14 @@
 import {Component, Input} from '@angular/core';
 
 @Component({
-  selector: 'glass',
-  templateUrl: './glass.component.html',
-  styleUrls: ['./glass.component.scss', '../../layouts/navbar/navbar.scss'],
+    selector: 'jhi-glass',
+    templateUrl: './glass.component.html',
+    styleUrls: ['./glass.component.scss', '../../layouts/navbar/navbar.scss'],
 
 })
 export class GlassComponent {
-  title = 'glass';
+    title = 'jhi-glass';
 
     @Input()
-    contentClass: string = 'default-glass-content';
+    contentClass = 'default-jhi-glass-content';
 }

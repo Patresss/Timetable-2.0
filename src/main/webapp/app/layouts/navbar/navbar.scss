@@ -63,13 +63,13 @@ Logo styles
 ========================================================================== */
 .navbar-brand {
     &.logo {
-        padding: 5px 15px;
+        padding: 5px 5px;
         .logo-img {
             height: 45px;
-            width: 70px;
+            width: 100%;
             display: inline-block;
             vertical-align: middle;
-            background: url("../../../content/images/logo-jhipster.png") no-repeat center center;
+            background: url("../../../content/images/patres-logo.png") no-repeat center center;
             background-size: contain;
         }
     }

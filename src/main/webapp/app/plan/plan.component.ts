@@ -2,12 +2,12 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from 'ng-jhipster';
-import {Principal} from '../shared/auth/principal.service';
+import {Principal} from '../shared';
 import {PaginationConfig} from '../blocks/config/uib-pagination.config';
-import {DivisionService} from '../entities/division/division.service';
-import {ResponseWrapper} from '../shared/model/response-wrapper.model';
-import {Division} from '../entities/division/division.model';
-import {ITEMS_PER_PAGE} from '../shared/constants/pagination.constants';
+import {DivisionService} from '../entities/division';
+import {ResponseWrapper} from '../shared';
+import {Division} from '../entities/division';
+import {ITEMS_PER_PAGE} from '../shared';
 import {Timetable, TimetableService} from '../entities/timetable';
 import {PlanColumn} from './plan-column.model';
 import {PlanCell} from './plan-cell.model';
@@ -206,7 +206,6 @@ export class PlanComponent implements OnInit, OnDestroy {
         this.subgroupSelectSettings = Object.assign({}, this.subgroupSelectSettings); // workaround to detect change
         this.reloadTimetables();
     }
-
 
     private clearClassesSelect() {
         this.selectedClass = [];
