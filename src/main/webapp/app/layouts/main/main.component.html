@@ -3,23 +3,18 @@
     <router-outlet name="navbar"></router-outlet>
 </div>
 <div [ngClass]="{'container-fluid': !fullPage}">
-    <div *ngIf="fullPage; then withFullPage else withoutFullPage"></div>
 
-    <ng-template #withFullPage>
-            <div>
-                <router-outlet></router-outlet>
-                <router-outlet name="popup"></router-outlet>
-            </div>
-    </ng-template>
+    <div *ngIf="fullPage">
+        <router-outlet></router-outlet>
+        <router-outlet name="popup"></router-outlet>
+    </div>
 
-    <ng-template #withoutFullPage>
-        <jhi-glass>
-            <div class='card jh-card'>
-                <router-outlet></router-outlet>
-                <router-outlet name="popup"></router-outlet>
-            </div>
-        </jhi-glass>
-    </ng-template>
+    <jhi-glass *ngIf="!fullPage">
+        <div class='card jh-card'>
+            <router-outlet></router-outlet>
+            <router-outlet name="popup"></router-outlet>
+        </div>
+    </jhi-glass>
 
     <jhi-footer></jhi-footer>
 </div>
