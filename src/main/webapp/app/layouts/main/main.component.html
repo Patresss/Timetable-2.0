@@ -4,17 +4,21 @@
 </div>
 <div [ngClass]="{'container-fluid': !fullPage}">
 
-    <div *ngIf="fullPage">
-        <router-outlet></router-outlet>
-        <router-outlet name="popup"></router-outlet>
-    </div>
+    <router-outlet name="popup"></router-outlet>
 
-    <jhi-glass *ngIf="!fullPage">
-        <div class='card jh-card'>
-            <router-outlet></router-outlet>
-            <router-outlet name="popup"></router-outlet>
-        </div>
-    </jhi-glass>
+    <div *ngIf="fullPage; then fullPageTemplate else glassPageTemplate"></div>
+
+    <ng-template #fullPageTemplate>
+        <router-outlet></router-outlet>
+    </ng-template>
+
+    <ng-template #glassPageTemplate>
+        <jhi-glass>
+            <div class='card jh-card'>
+                <router-outlet></router-outlet>
+            </div>
+        </jhi-glass>
+    </ng-template>
 
     <jhi-footer></jhi-footer>
 </div>

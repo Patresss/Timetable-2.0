@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs/Rx';
+import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from 'ng-jhipster';
 
-import { Place } from './place.model';
-import { PlaceService } from './place.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
-import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import {Place} from './place.model';
+import {PlaceService} from './place.service';
+import {ITEMS_PER_PAGE, Principal, ResponseWrapper} from '../../shared';
+import {PaginationConfig} from '../../blocks/config/uib-pagination.config';
 
 @Component({
     selector: 'jhi-place',
@@ -14,7 +14,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 })
 export class PlaceComponent implements OnInit, OnDestroy {
 
-currentAccount: any;
+    currentAccount: any;
     places: Place[];
     error: any;
     success: any;
@@ -29,17 +29,15 @@ currentAccount: any;
     previousPage: any;
     reverse: any;
 
-    constructor(
-        private placeService: PlaceService,
-        private parseLinks: JhiParseLinks,
-        private alertService: JhiAlertService,
-        private principal: Principal,
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private eventManager: JhiEventManager,
-        private paginationUtil: JhiPaginationUtil,
-        private paginationConfig: PaginationConfig
-    ) {
+    constructor(private placeService: PlaceService,
+                private parseLinks: JhiParseLinks,
+                private alertService: JhiAlertService,
+                private principal: Principal,
+                private activatedRoute: ActivatedRoute,
+                private router: Router,
+                private eventManager: JhiEventManager,
+                private paginationUtil: JhiPaginationUtil,
+                private paginationConfig: PaginationConfig) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
@@ -53,24 +51,28 @@ currentAccount: any;
         this.placeService.findByCurrentLogin({
             page: this.page - 1,
             size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
+            sort: this.sort()
+        }).subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
         );
     }
+
     loadPage(page: number) {
         if (page !== this.previousPage) {
             this.previousPage = page;
             this.transition();
         }
     }
+
     transition() {
-        this.router.navigate(['/place'], {queryParams:
-            {
-                page: this.page,
-                size: this.itemsPerPage,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
+        this.router.navigate(['/place'], {
+            queryParams:
+                {
+                    page: this.page,
+                    size: this.itemsPerPage,
+                    sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+                }
         });
         this.loadAll();
     }
@@ -83,6 +85,7 @@ currentAccount: any;
         }]);
         this.loadAll();
     }
+
     ngOnInit() {
         this.loadAll();
         this.principal.identity().then((account) => {
@@ -92,12 +95,15 @@ currentAccount: any;
     }
 
     ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
+        if (this.eventSubscriber != null) {
+            this.eventManager.destroy(this.eventSubscriber);
+        }
     }
 
     trackId(index: number, item: Place) {
         return item.id;
     }
+
     registerChangeInPlaces() {
         this.eventSubscriber = this.eventManager.subscribe('placeListModification', (response) => this.loadAll());
     }
@@ -117,6 +123,7 @@ currentAccount: any;
         // this.page = pagingParams.page;
         this.places = data;
     }
+
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }

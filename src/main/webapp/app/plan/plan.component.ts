@@ -236,7 +236,6 @@ export class PlanComponent implements OnInit, OnDestroy {
     }
 
     private reloadTimetables() {
-        console.log(this.currentMonday);
         this.clearPlanColumns();
         for (const weekDay of this.planColumns) {
             const array = [];
@@ -251,7 +250,6 @@ export class PlanComponent implements OnInit, OnDestroy {
                 (res: ResponseWrapper) => this.onError(res.json)
             );
         }
-        console.log(this.planColumns)
     }
 
 // ================================================================

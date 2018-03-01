@@ -1,4 +1,4 @@
-import { Route } from '@angular/router';
+import {Route} from '@angular/router';
 
 import { UserRouteAccessService } from '../shared';
 import { HomeComponent } from './';
