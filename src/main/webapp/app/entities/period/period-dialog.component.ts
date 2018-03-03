@@ -74,7 +74,6 @@ export class PeriodDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        console.log('status: ');
         if (this.period.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.periodService.update(this.period));

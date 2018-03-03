@@ -1,0 +1,25 @@
+{
+    "timetableApp": {
+        "curriculum-list" : {
+            "home": {
+                "title": "Curriculum List",
+                "createLabel": "Create a new Curriculum List",
+                "createOrEditLabel": "Create or edit a Curriculum List"
+            },
+            "created": "A new Curriculum List is created with identifier {{ param }}",
+            "updated": "A Curriculum List is updated with identifier {{ param }}",
+            "deleted": "A Curriculum List is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Curriculum List {{ id }}?"
+            },
+            "detail": {
+                "title": "Curriculum List"
+            },
+            "name": "Name",
+            "startTime": "Start Time",
+            "endTime": "End Time",
+            "timetable": "Timetable",
+            "divisionOwner": "Division owner"
+        }
+    }
+}

@@ -32,14 +32,14 @@ open class CurriculumListResource(private val curriculumListService: CurriculumL
     private val log = LoggerFactory.getLogger(CurriculumListResource::class.java)
 
     /**
-     * POST  /curriculumLists : Create a new curriculumList.
+     * POST  /curriculum-listes : Create a new curriculumList.
      *
      * @param curriculumListDTO the curriculumListDTO to create
      * @return the ResponseEntity with status 201 (Created) and with body the new curriculumListDTO, or with status 400 (Bad Request) if the curriculumList has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PreAuthorize("@curriculumListService.hasPrivilegeToAddEntity(#curriculumListDTO)")
-    @PostMapping("/curriculumLists")
+    @PostMapping("/curriculum-listes")
     @Timed
     @Throws(URISyntaxException::class)
     open fun createCurriculumList(@Valid @RequestBody curriculumListDTO: CurriculumListDTO): ResponseEntity<CurriculumListDTO> {
@@ -48,13 +48,13 @@ open class CurriculumListResource(private val curriculumListService: CurriculumL
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new curriculumList cannot already have an ID")).body(null)
         }
         val result = curriculumListService.save(curriculumListDTO)
-        return ResponseEntity.created(URI("/api/curriculumLists/" + result.id!!))
+        return ResponseEntity.created(URI("/api/curriculum-lists/" + result.id!!))
                 .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.id!!.toString()))
                 .body(result)
     }
 
     /**
-     * PUT  /curriculumLists : Updates an existing curriculumList.
+     * PUT  /curriculum-listes : Updates an existing curriculumList.
      *
      * @param curriculumListDTO the curriculumListDTO to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated curriculumListDTO,
@@ -63,7 +63,7 @@ open class CurriculumListResource(private val curriculumListService: CurriculumL
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PreAuthorize("@curriculumListService.hasPrivilegeToModifyEntity(#curriculumListDTO)")
-    @PutMapping("/curriculumLists")
+    @PutMapping("/curriculum-listes")
     @Timed
     @Throws(URISyntaxException::class)
     open fun updateCurriculumList(@Valid @RequestBody curriculumListDTO: CurriculumListDTO): ResponseEntity<CurriculumListDTO> {
@@ -78,61 +78,61 @@ open class CurriculumListResource(private val curriculumListService: CurriculumL
     }
 
     /**
-     * GET  /curriculumLists : get all the curriculumLists.
+     * GET  /curriculum-listes : get all the curriculumLists.
      *
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of curriculumLists in body
      */
-    @GetMapping("/curriculumLists")
+    @GetMapping("/curriculum-listes")
     @Timed
     open fun getAllCurriculumLists(@ApiParam pageable: Pageable): ResponseEntity<List<CurriculumListDTO>> {
         log.debug("REST request to get a page of CurriculumLists")
         val page = curriculumListService.findAll(pageable)
-        val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/curriculumLists")
+        val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/curriculum-lists")
         return ResponseEntity(page.content, headers, HttpStatus.OK)
     }
 
 
     /**
-     * GET  /curriculumLists/divisions : get the curriculumLists by Division owners id.
+     * GET  /curriculum-listes/divisions : get the curriculumLists by Division owners id.
      *
      * @param divisionsId divisions id
      * @param pageable    the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of curriculumLists in body
      */
-    @GetMapping("/curriculumLists/divisions")
+    @GetMapping("/curriculum-listes/divisions")
     @Timed
     open fun getCurriculumListsByDivisionsId(@ApiParam pageable: Pageable, @PathVariable divisionsId: List<Long>): ResponseEntity<List<CurriculumListDTO>> {
         log.debug("REST request to get a page of CurriculumLists by Division owners id")
 
         val page = curriculumListService.findByDivisionOwnerId(pageable, divisionsId)
-        val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/curriculumLists")
+        val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/curriculum-lists")
         return ResponseEntity(page.content, headers, HttpStatus.OK)
     }
 
     /**
-     * GET  /curriculumLists/login : get the curriculumLists by current login.
+     * GET  /curriculum-listes/login : get the curriculumLists by current login.
      *
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of curriculumLists in body
      */
-    @GetMapping("/curriculumLists/login")
+    @GetMapping("/curriculum-listes/login")
     @Timed
     open fun getCurriculumListsByCurrentLogin(@ApiParam pageable: Pageable): ResponseEntity<List<CurriculumListDTO>> {
         log.debug("REST request to get a page of CurriculumLists by current login")
 
         val page = curriculumListService.findByCurrentLogin(pageable)
-        val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/curriculumLists")
+        val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/curriculum-lists")
         return ResponseEntity(page.content, headers, HttpStatus.OK)
     }
 
     /**
-     * GET  /curriculumLists/:id : get the "id" curriculumList.
+     * GET  /curriculum-listes/:id : get the "id" curriculumList.
      *
      * @param id the id of the curriculumListDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the curriculumListDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/curriculumLists/{id}")
+    @GetMapping("/curriculum-listes/{id}")
     @Timed
     open fun getCurriculumList(@PathVariable id: Long?): ResponseEntity<CurriculumListDTO> {
         log.debug("REST request to get CurriculumList : {}", id)
@@ -141,13 +141,13 @@ open class CurriculumListResource(private val curriculumListService: CurriculumL
     }
 
     /**
-     * DELETE  /curriculumLists/:id : delete the "id" curriculumList.
+     * DELETE  /curriculum-listes/:id : delete the "id" curriculumList.
      *
      * @param id the id of the curriculumListDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @PreAuthorize("@curriculumListService.hasPrivilegeToDeleteEntity(#id)")
-    @DeleteMapping("/curriculumLists/{id}")
+    @DeleteMapping("/curriculum-listes/{id}")
     @Timed
     open fun deleteCurriculumList(@PathVariable id: Long?): ResponseEntity<Void> {
         log.debug("REST request to delete CurriculumList : {}", id)

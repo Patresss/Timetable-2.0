@@ -21,7 +21,7 @@
             "shortName": "Short Name",
             "timetable": "Timetable",
             "preferredSubject": "Preferred Subject",
-            "divisionOwner": "divisionOwner",
+            "divisionOwner": "Division owner",
             "preferredDivision": "Preferred Division",
             "preferredPlace": "Preferred Place"
         }

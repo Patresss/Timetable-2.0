@@ -1,0 +1,102 @@
+<div *ngIf="curriculumList">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+        <div>
+            <h4 class="modal-title" id="myCurriculumListLabel" jhiTranslate="timetableApp.curriculum-list.home.createOrEditLabel">Create or edit a CurriculumList</h4>
+        </div>
+        <div>
+            <jhi-alert-error></jhi-alert-error>
+            <div class="form-group" [hidden]="!curriculumList.id">
+                <label for="id" jhiTranslate="global.field.id">ID</label>
+                <input type="text" class="form-control" id="id" name="id"
+                       [(ngModel)]="curriculumList.id" readonly/>
+
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.curriculum-list.name" for="field_name">Name</label>
+                <input type="text" class="form-control" name="name" id="field_name"
+                       [(ngModel)]="curriculumList.name" required/>
+                <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label jhiTranslate="timetableApp.curriculum-list.divisionOwner" for="field_division">Division owner</label>
+                <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="curriculumList.divisionOwnerId" required>
+                    <option [ngValue]="null"></option>
+                    <option [ngValue]="divisionOption.id" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
+                </select>
+                <div [hidden]="!(editForm.controls.divisionOwner?.dirty && editForm.controls.divisionOwner?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.divisionOwner?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label data-translate="timetableApp.curriculum-list.curriculumTime" for="field_name">Curriculum time</label>
+                <span>
+            <button type="button" class="btn btn-success btn-sm" (click)="addCurriculumTime(true)">
+                <i class="fa fa-plus"></i>
+            </button>
+        </span>
+            </div>
+            <div style="clear: both;"></div>
+
+            <div class="form-group inner-block">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label class="form-control-label" jhiTranslate="timetableApp.curriculum.startDate">Start Date</label>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-control-label" jhiTranslate="timetableApp.curriculum.endDate">End Date</label>
+                    </div>
+                </div>
+
+
+                <div *ngFor="let curriculumTime of curriculumList.curriculums ;trackBy: trackId; let i = index;">
+                    <div class="row inputed">
+                        <div class="col-lg-5">
+                            <div class="input-group">
+                                <input class="form-control" name="startDate_{{i}}" ngbDatepicker #startDateDp="ngbDatepicker" [(ngModel)]="curriculumTime.startDate"/>
+                                <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" (click)="startDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="input-group">
+                                <input class="form-control" name="endDate_{{i}}" ngbDatepicker #endDateDp="ngbDatepicker" [(ngModel)]="curriculumTime.endDate"/>
+                                <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" (click)="endDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                        <span>
+                            <button type="button" class="btn btn-danger" (click)="removeCurriculumTime(curriculumTime)"><i class="fa fa-minus"></i></button>
+                        </span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+                <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+            <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
+        </div>
+    </form>
+
+</div>
