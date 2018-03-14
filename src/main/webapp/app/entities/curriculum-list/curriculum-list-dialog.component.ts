@@ -63,7 +63,16 @@ export class CurriculumListDialogComponent implements OnInit, OnDestroy {
     private eventSubscriber: Subscription;
     isSaving: boolean;
 
-    divisions: Division[];
+    divisions: Division[] = [];
+
+    divisionSelectOption = [];
+    selectedDivision = [];
+    divisionSelectSettings = {
+        singleSelection: true,
+        text: 'timetableApp.plan.choose.school',
+        enableSearchFilter: true,
+        classes: 'plan-select'
+    };
 
     constructor(private alertService: JhiAlertService,
                 private divisionService: DivisionService,
@@ -80,6 +89,7 @@ export class CurriculumListDialogComponent implements OnInit, OnDestroy {
         this.divisionService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.divisions = res.json;
+                this.divisionSelectOption = this.entityListToSelectList(this.divisions);
             }, (res: ResponseWrapper) => this.onError(res.json));
         this.registerChangeInCurriculumLists();
     }
@@ -153,6 +163,24 @@ export class CurriculumListDialogComponent implements OnInit, OnDestroy {
 
     trackDivisionById(index: number, item: Division) {
         return item.id;
+    }
+
+    onDivisionSelect(item: any) {
+        console.log(item);
+    }
+    OnDivisionDeSelect(item: any) {
+        console.log(item);
+    }
+
+
+    // TODO refctoring in plan is this same
+    private entityListToSelectList(entityList: Division[]) {
+        const selectList = [];
+        entityList.forEach((entity) => {
+            const obj = {id: entity.id, itemName: entity.name};
+            selectList.push(obj)
+        });
+        return selectList;
     }
 
 }

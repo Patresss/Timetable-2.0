@@ -528,4 +528,14 @@ a:hover {
     background: $dark-1-color-background;
 }
 
+.glass-input.form-control {
+    background: $accent-2-color-background;
+    color: $light-text-color;
+}
+
+.glass-input-container {
+    background: transparent;
+    color: $light-text-color;
+}
+
 

@@ -9,6 +9,7 @@ import {CurriculumListDeleteDialogComponent, CurriculumListDeletePopupComponent}
 import {CurriculumListService} from './curriculum-list.service';
 import {CurriculumListPopupService} from './curriculum-list-popup.service';
 import {curriculumListPopupRoute, CurriculumListResolvePagingParams, curriculumListRoute} from './curriculum-list.route';
+import {AngularMultiSelectModule} from '../../components/angular2-multiselect-dropdown';
 
 const ENTITY_STATES = [
     ...curriculumListRoute,
@@ -18,7 +19,8 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         TimetableSharedModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
+        AngularMultiSelectModule
     ],
     declarations: [
         CurriculumListComponent,

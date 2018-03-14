@@ -5,9 +5,10 @@ export class CurriculumList implements BaseEntity {
     constructor(public id?: number,
                 public name?: string,
                 public curriculums: Curriculum[] = [],
-                public divisionId?: number,
+                public divisionOwnerId?: number,
                 public startDate?: any,
                 public endDate?: any,
-                public periodId?: number) {
+                public periodId?: number,
+                public skills = []) {
     }
 }
