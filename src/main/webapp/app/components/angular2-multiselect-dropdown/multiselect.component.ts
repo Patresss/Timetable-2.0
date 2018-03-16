@@ -26,7 +26,7 @@ const noop = () => {
     selector: 'jhi-angular2-multiselect',
     templateUrl: './multiselect.component.html',
     /* tslint:disable:use-host-property-decorator */
-    host: {'[class]': 'defaultSettings.classes'},
+    host: {'[class]': 'styleClass'},
     styleUrls: ['./multiselect.component.scss'],
     providers: [DROPDOWN_CONTROL_VALUE_ACCESSOR, DROPDOWN_CONTROL_VALIDATION]
 })
@@ -37,7 +37,7 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
     data: Array<ListItem>;
 
     @Input()
-    styleClass: String;
+    styleClass: String = '';
 
     @Input()
     settings: DropdownSettings;

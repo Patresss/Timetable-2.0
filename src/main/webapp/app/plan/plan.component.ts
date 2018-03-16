@@ -39,8 +39,7 @@ export class PlanComponent implements OnInit, OnDestroy {
     schoolSelectSettings = {
         singleSelection: true,
         text: 'timetableApp.plan.choose.school',
-        enableSearchFilter: true,
-        classes: 'plan-select'
+        enableSearchFilter: true
     };
 
     classSelectOption = [];
@@ -49,7 +48,6 @@ export class PlanComponent implements OnInit, OnDestroy {
         singleSelection: true,
         text: 'timetableApp.plan.choose.class',
         enableSearchFilter: true,
-        classes: 'myclass custom-class',
         disabled: true
     };
 
@@ -59,7 +57,6 @@ export class PlanComponent implements OnInit, OnDestroy {
         singleSelection: false,
         text: 'timetableApp.plan.choose.subgroups',
         enableSearchFilter: true,
-        classes: 'myclass custom-class',
         disabled: true,
         enableCheckAll: true
     };
@@ -72,8 +69,7 @@ export class PlanComponent implements OnInit, OnDestroy {
     typePlanSelectSettings = {
         singleSelection: true,
         text: 'timetableApp.plan.choose.type-plan',
-        enableSearchFilter: true,
-        classes: 'myclass custom-class'
+        enableSearchFilter: true
     };
 
     currentMonday: Date;
@@ -233,6 +229,7 @@ export class PlanComponent implements OnInit, OnDestroy {
         for (const timetable of data) {
             weekDay.planCells.push(new PlanCell(timetable, this.startHour, this.endHour))
         }
+        weekDay.calculatePosition();
     }
 
     private reloadTimetables() {

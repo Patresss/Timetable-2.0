@@ -6,11 +6,17 @@ export class PlanCell {
     startHeightPercent: number;
     endHeightPercent: number;
 
+    startWidthPercent: number;
+    endWidthPercent: number;
+
+    fixedPosition = false;
+    neighbours: PlanCell[] = [];
+
     constructor(public timetable: Timetable,
                 private startHour: Time,
                 private endHour: Time) {
         this.startHeightPercent = this.getPercent(timetable.startTime);
-        this.endHeightPercent = 100.0 - this.getPercent(timetable.endTime);
+        this.endHeightPercent = this.getPercent(timetable.endTime);
     }
 
     private getPercent(time: Time) {

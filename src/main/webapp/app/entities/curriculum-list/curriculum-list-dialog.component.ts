@@ -172,7 +172,6 @@ export class CurriculumListDialogComponent implements OnInit, OnDestroy {
         console.log(item);
     }
 
-
     // TODO refctoring in plan is this same
     private entityListToSelectList(entityList: Division[]) {
         const selectList = [];
