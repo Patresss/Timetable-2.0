@@ -37,8 +37,8 @@
                 <div class="col-md-4">
                     <label class="select-label" jhiTranslate="timetableApp.DivisionType.SUBGROUP"></label>
                     <jhi-angular2-multiselect [data]="subgroupSelectOption" [(ngModel)]="selectedSubgroup" [settings]="subgroupSelectSettings"
-                                              (onSelect)="onSubgroupSelect($event)"
-                                              (onDeSelect)="OnSubgroupDeSelect($event)"
+                                              (onSelect)="onSubgroupSelect($event)" (onSelectAll)="onSubgroupSelect($event)" (onDeSelectAll)="onSubgroupSelect($event)"
+                                              (onDeSelect)="onSubgroupSelect($event)"
                                               styleClass="plan-select">
                     </jhi-angular2-multiselect>
                 </div>

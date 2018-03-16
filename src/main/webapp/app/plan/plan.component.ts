@@ -216,10 +216,6 @@ export class PlanComponent implements OnInit, OnDestroy {
         this.reloadTimetables();
     }
 
-    OnSubgroupDeSelect(item: any) {
-        this.reloadTimetables();
-    }
-
     private clearSubgroupsSelect() {
         this.subgroupSelectOption = [];
         this.selectedSubgroup = [];
