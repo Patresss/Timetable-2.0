@@ -7,6 +7,15 @@ import java.util.HashSet
 
 abstract class EntityMapper<EntityType : AbstractApplicationEntity, EntityDtoType> {
 
+    companion object {
+        private const val SHORT_NAME_MAX_LENGTH = 3
+        fun getShortName(fullName: String?): String {
+            val nameWithoutWhitespaces = fullName?.replace("\\s".toRegex(), "")?: ""
+            val maxChar = if (nameWithoutWhitespaces.length < SHORT_NAME_MAX_LENGTH) nameWithoutWhitespaces.length else SHORT_NAME_MAX_LENGTH
+            return nameWithoutWhitespaces.substring(0, maxChar).toUpperCase()
+        }
+    }
+
     fun toEntity(dtoList: List<EntityDtoType>?): List<EntityType> {
         if (dtoList == null) {
             return ArrayList()

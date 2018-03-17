@@ -14,12 +14,12 @@ open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
     lateinit var divisionMapper: DivisionMapper
 
     @Autowired
-    lateinit private var divisionRepository: DivisionRepository
+    private lateinit var divisionRepository: DivisionRepository
 
     override fun toEntity(entityDto: SubjectDTO): Subject {
         return Subject(
-            name = entityDto.name)
-            .apply {
+            name = entityDto.name
+        ).apply {
                 divisionOwner = divisionRepository.getOne(entityDto.divisionOwnerId)
                 id = entityDto.id
                 shortName = entityDto.shortName
@@ -31,15 +31,16 @@ open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
     override fun toDto(entity: Subject): SubjectDTO {
         return SubjectDTO(
             name = entity.name
-        )
-            .apply {
+        ).apply {
                 divisionOwnerId = divisionMapper.getDivisionOwnerId(entity.divisionOwner)
                 divisionOwnerName = divisionMapper.getDivisionOwnerName(entity.divisionOwner)
                 id = entity.id
-                shortName = entity.shortName
+                shortName = if (entity.shortName != null) entity.shortName else getShortName(name)
                 colorBackground = entity.colorBackground
                 colorText = entity.colorText
             }
     }
+
+
 
 }

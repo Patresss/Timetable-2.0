@@ -57,6 +57,8 @@ class TimetableDTO(
 
     var subjectName: String? = null,
 
+    var subjectShortName: String? = null,
+
     var teacherId: Long? = null,
 
     var teacherSurname: String? = null,

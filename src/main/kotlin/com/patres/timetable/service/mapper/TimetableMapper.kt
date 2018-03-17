@@ -95,6 +95,7 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             divisionId = timetableDivisionId(entity)
             placeName = timetablePlaceName(entity)
             subjectName = timetableSubjectName(entity)
+            subjectShortName = timetableSubjectShortName(entity)
             id = entity.id
             if (entity.lesson != null) {
                 startTime = entity.lesson?.getStartTimeHHmmFormatted()
@@ -215,6 +216,14 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
         }
         val subject = timetable.subject ?: return null
         return subject.name
+    }
+
+    private fun timetableSubjectShortName(timetable: Timetable?): String? {
+        if (timetable == null) {
+            return null
+        }
+        val subject = timetable.subject ?: return null
+        return if (subject.shortName != null) subject.shortName else getShortName(subject.name)
     }
 
 }

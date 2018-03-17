@@ -113,7 +113,7 @@
                 <div class="event-container" *ngFor="let cell of item.planCells" [ngStyle]="{'top': cell.startHeightPercent + '%', 'bottom': 100.0 - cell.endHeightPercent + '%', 'left': cell.startWidthPercent + '%', 'right': 100.0 - cell.endWidthPercent + '%'}">
                     <div class="event-blur-background"></div>
                     <div class="event">
-                        {{cell.timetable.subjectName}} ({{cell.timetable.placeName}})
+                        {{cell.timetable.subjectShortName}} ({{cell.timetable.placeName}})
                     </div>
                 </div>
             </div>

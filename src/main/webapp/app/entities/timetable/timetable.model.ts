@@ -32,6 +32,7 @@ export class Timetable implements BaseEntity {
                 public placeName?: String,
                 public subjectId?: number,
                 public subjectName?: String,
+                public subjectShortName?: String,
                 public teacherId?: number,
                 public divisionId?: number,
                 public lessonId?: number,
