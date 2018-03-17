@@ -410,7 +410,7 @@ open class TimetableResourceIntTest {
         val date = "2016-09-07"
         val divisionIdList = class1.id
 
-        restTimetableMockMvc.perform(get("/api/timetables/divisionList?divisionIdList=$divisionIdList&date=$date"))
+        restTimetableMockMvc.perform(get("/api/timetables/division-list?divisionIdList=$divisionIdList&date=$date"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(timetableWithPeriod.id?.toInt())))
@@ -461,7 +461,7 @@ open class TimetableResourceIntTest {
         val date = "2016-09-02"
         val divisionIdList = class1.id
 
-        restTimetableMockMvc.perform(get("/api/timetables/divisionList?divisionIdList=$divisionIdList&date=$date"))
+        restTimetableMockMvc.perform(get("/api/timetables/division-list?divisionIdList=$divisionIdList&date=$date"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(timetableWithEvery2WeekStartWith1Week.id?.toInt())))
@@ -469,7 +469,7 @@ open class TimetableResourceIntTest {
 
         val dateWeekLater = "2016-09-09"
 
-        restTimetableMockMvc.perform(get("/api/timetables/divisionList?divisionIdList=$divisionIdList&date=$dateWeekLater"))
+        restTimetableMockMvc.perform(get("/api/timetables/division-list?divisionIdList=$divisionIdList&date=$dateWeekLater"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(timetableWithEvery2WeekStartWith2Week.id?.toInt())))

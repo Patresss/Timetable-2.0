@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull
 
 class TeacherDTO(
 
+
     @get:NotNull
     var name: String? = null,
 
@@ -16,6 +17,8 @@ class TeacherDTO(
     var degree: String? = null,
 
     var shortName: String? = null,
+
+    var fullName: String? = null,
 
     var preferredSubjects: Set<SubjectDTO> = HashSet(),
 

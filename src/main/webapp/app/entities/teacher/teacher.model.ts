@@ -7,6 +7,7 @@ export class Teacher implements BaseEntity {
         public surname?: string,
         public degree?: string,
         public shortName?: string,
+        public fullName?: string,
         public timetables?: BaseEntity[],
         public preferredSubjects?: BaseEntity[],
         public divisionId?: number,

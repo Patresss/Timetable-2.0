@@ -1,5 +1,5 @@
-import {Time} from './time.model';
 import {Timetable} from '../entities/timetable';
+import {Time} from '../util/time.model';
 
 export class PlanCell {
 

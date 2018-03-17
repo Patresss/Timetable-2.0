@@ -8,7 +8,9 @@
                 "school": "Choose a school",
                 "class": "Choose a class",
                 "subgroups": "Choose subgroups",
-                "type-plan": "Choose a type of plan"
+                "type-plan": "Choose a type of plan",
+                "teacher": "Choose a teacher",
+                "place": "Choose a place"
             },
             "type": {
                 "STUDENT": "Student",

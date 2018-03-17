@@ -267,6 +267,11 @@ ui bootstrap tweaks
     color: $light-text-color;
     margin: auto;
 }
+
+.plan-selectors {
+    min-height: 250px;
+}
+
 .plan {
     background: $dark-5-color-background;
     -moz-box-shadow: 0 0 5px 5px $dark-5-color-background;

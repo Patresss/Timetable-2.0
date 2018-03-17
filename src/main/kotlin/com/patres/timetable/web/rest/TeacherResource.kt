@@ -105,9 +105,8 @@ open class TeacherResource(private val teacherService: TeacherService) {
      */
     @GetMapping("/teachers/divisions")
     @Timed
-    open fun getTeachersByDivisionsId(@ApiParam pageable: Pageable, @PathVariable divisionsId: List<Long>): ResponseEntity<List<TeacherDTO>> {
+    open fun getTeachersByDivisionsId(@ApiParam pageable: Pageable, @RequestParam divisionsId: List<Long>): ResponseEntity<List<TeacherDTO>> {
         log.debug("REST request to get a page of Teachers by Division owners id")
-
         val page = teacherService.findByDivisionOwnerId(pageable, divisionsId)
         val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/teachers")
         return ResponseEntity(page.content, headers, HttpStatus.OK)

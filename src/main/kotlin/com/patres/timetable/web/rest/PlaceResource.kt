@@ -101,7 +101,7 @@ open class PlaceResource(private val placeService: PlaceService) {
      */
     @GetMapping("/places/divisions")
     @Timed
-    open fun getPlacesByDivisionsId(@ApiParam pageable: Pageable, @PathVariable divisionsId: List<Long>): ResponseEntity<List<PlaceDTO>> {
+    open fun getPlacesByDivisionsId(@ApiParam pageable: Pageable, @RequestParam divisionsId: List<Long>): ResponseEntity<List<PlaceDTO>> {
         log.debug("REST request to get a page of Places by Division owners id")
         val page = placeService.findByDivisionOwnerId(pageable, divisionsId)
         val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/places")

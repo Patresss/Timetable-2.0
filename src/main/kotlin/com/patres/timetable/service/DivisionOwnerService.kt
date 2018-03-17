@@ -35,15 +35,19 @@ abstract class DivisionOwnerService<EntityType : AbstractDivisionOwner, EntityDt
     @Transactional(readOnly = true)
     open fun findByCurrentLogin(pageable: Pageable): Page<EntityDtoType> {
         log.debug("Request to get all {} by current user", getEntityName())
-        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-            log.debug("Return {} for user with role {} ", getEntityName(), AuthoritiesConstants.ADMIN)
-            return entityRepository.findAll(pageable).map{ entityMapper.toDto(it) }
-        } else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN)) {
-            log.debug("Return {} for user with role {} ", getEntityName(), AuthoritiesConstants.SCHOOL_ADMIN)
-            return entityRepository.findByCurrentLogin(pageable).map{ entityMapper.toDto(it) }
-        } else {
-            log.debug("Return empty list of {} for user without needed rule ", getEntityName())
-            return PageImpl(ArrayList())
+        return when {
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> {
+                log.debug("Return {} for user with role {} ", getEntityName(), AuthoritiesConstants.ADMIN)
+                entityRepository.findAll(pageable).map{ entityMapper.toDto(it) }
+            }
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> {
+                log.debug("Return {} for user with role {} ", getEntityName(), AuthoritiesConstants.SCHOOL_ADMIN)
+                entityRepository.findByCurrentLogin(pageable).map{ entityMapper.toDto(it) }
+            }
+            else -> {
+                log.debug("Return empty list of {} for user without needed rule ", getEntityName())
+                PageImpl(ArrayList())
+            }
         }
     }
 

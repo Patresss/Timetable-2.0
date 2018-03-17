@@ -8,7 +8,9 @@
                 "school": "Wybierz szkołę",
                 "class": "Wybierz klasę",
                 "subgroups": "Wybierz podgrupy",
-                "type-plan": "Wybierz typ planu"
+                "type-plan": "Wybierz typ planu",
+                "teacher": "Wybierz nauczyciela",
+                "place": "Wybierz sale"
             },
             "type": {
                 "STUDENT": "Uczeń",

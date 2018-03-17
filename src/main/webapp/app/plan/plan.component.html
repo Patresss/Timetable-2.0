@@ -1,8 +1,9 @@
 <div class="plan-view-body">
+
     <jhi-alert></jhi-alert>
 
     <div class="form-group">
-        <div class="container">
+        <div class="container plan-selectors">
             <div class="row plan-row-choose">
                 <div class="col-md-1"></div>
                 <div class="col-md-4">
@@ -15,7 +16,7 @@
                 <div class="col-md-4">
                     <label class="select-label" jhiTranslate="timetableApp.plan.type-plan"></label>
                     <jhi-angular2-multiselect [data]="typePlanSelectOption" [(ngModel)]="selectedTypePlan" [settings]="typePlanSelectSettings"
-                                              (onSelect)="onTypePlanSelect($event)" styleClass="plan-select"
+                                              (onSelect)="onTypeSelect($event)" styleClass="plan-select"
                     >
                     </jhi-angular2-multiselect>
 
@@ -24,25 +25,49 @@
             </div>
 
 
-            <div class="row plan-row-choose">
-                <div class="col-md-1"></div>
-                <div class="col-md-4">
-                    <label class="select-label" jhiTranslate="timetableApp.DivisionType.CLASS"></label>
-                    <jhi-angular2-multiselect [data]="classSelectOption" [(ngModel)]="selectedClass" [settings]="classSelectSettings"
-                                              (onSelect)="onClassSelect($event)"
-                                              (onDeSelect)="OnClassDeSelect($event)" styleClass="plan-select">
-                    </jhi-angular2-multiselect>
+            <div *ngIf="selectedSchool[0]">
+                <div class="row plan-row-choose" *ngIf="selectedTypePlan[0].type === 'STUDENT'">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        <label class="select-label" jhiTranslate="timetableApp.DivisionType.CLASS"></label>
+                        <jhi-angular2-multiselect [data]="classSelectOption" [(ngModel)]="selectedClass" [settings]="classSelectSettings"
+                                                  (onSelect)="onClassSelect($event)"
+                                                  (onDeSelect)="OnClassDeSelect($event)" styleClass="plan-select">
+                        </jhi-angular2-multiselect>
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                        <label class="select-label" jhiTranslate="timetableApp.DivisionType.SUBGROUP"></label>
+                        <jhi-angular2-multiselect [data]="subgroupSelectOption" [(ngModel)]="selectedSubgroup" [settings]="subgroupSelectSettings"
+                                                  (onSelect)="reloadTimetables()" (onSelectAll)="reloadTimetables()" (reloadTimetables)="reloadTimetables()"
+                                                  (onDeSelect)="reloadTimetables()"
+                                                  styleClass="plan-select">
+                        </jhi-angular2-multiselect>
+                    </div>
+                    <div class="col-md-1"></div>
                 </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-4">
-                    <label class="select-label" jhiTranslate="timetableApp.DivisionType.SUBGROUP"></label>
-                    <jhi-angular2-multiselect [data]="subgroupSelectOption" [(ngModel)]="selectedSubgroup" [settings]="subgroupSelectSettings"
-                                              (onSelect)="onSubgroupSelect($event)" (onSelectAll)="onSubgroupSelect($event)" (onDeSelectAll)="onSubgroupSelect($event)"
-                                              (onDeSelect)="onSubgroupSelect($event)"
-                                              styleClass="plan-select">
-                    </jhi-angular2-multiselect>
+
+                <div class="row plan-row-choose" *ngIf="selectedTypePlan[0].type === 'TEACHER'">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        <label class="select-label" jhiTranslate="timetableApp.plan.type.TEACHER"></label>
+                        <jhi-angular2-multiselect [data]="teacherSelectOption" [(ngModel)]="selectedTeacher" [settings]="teacherSelectSettings"
+                                                  (onSelect)="reloadTimetables()"
+                                                  (onDeSelect)="reloadTimetables()" styleClass="plan-select">
+                        </jhi-angular2-multiselect>
+                    </div>
                 </div>
-                <div class="col-md-1"></div>
+
+                <div class="row plan-row-choose" *ngIf="selectedTypePlan[0].type === 'PLACE'">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        <label class="select-label" jhiTranslate="timetableApp.plan.type.PLACE"></label>
+                        <jhi-angular2-multiselect [data]="placeSelectOption" [(ngModel)]="selectedPlace" [settings]="placeSelectSettings"
+                                                  (onSelect)="reloadTimetables()"
+                                                  (onDeSelect)="reloadTimetables()" styleClass="plan-select">
+                        </jhi-angular2-multiselect>
+                    </div>
+                </div>
             </div>
 
         </div>

@@ -102,7 +102,7 @@ open class LessonResource(private val lessonService: LessonService) {
      */
     @GetMapping("/lessons/divisions")
     @Timed
-    open fun getLessonsByDivisionsId(@ApiParam pageable: Pageable, @PathVariable divisionsId: List<Long>): ResponseEntity<List<LessonDTO>> {
+    open fun getLessonsByDivisionsId(@ApiParam pageable: Pageable, @RequestParam divisionsId: List<Long>): ResponseEntity<List<LessonDTO>> {
         log.debug("REST request to get a page of Lessons by Division owners id")
 
         val page = lessonService.findByDivisionOwnerId(pageable, divisionsId)

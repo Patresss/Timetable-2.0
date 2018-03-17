@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service
 open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
 
     @Autowired
-    lateinit private var subjectMapper: SubjectMapper
+    private lateinit var subjectMapper: SubjectMapper
 
     @Autowired
-    lateinit private var divisionMapper: DivisionMapper
+    private lateinit var divisionMapper: DivisionMapper
 
     @Autowired
-    lateinit private var divisionRepository: DivisionRepository
+    private lateinit var divisionRepository: DivisionRepository
 
     override fun toEntity(entityDto: TeacherDTO): Teacher {
         val set = subjectMapper.entityDTOSetToEntitySet(entityDto.preferredSubjects)
@@ -43,6 +43,7 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             id = entity.id
             degree = entity.degree
             shortName = entity.shortName
+            fullName = "$degree $name $surname"
             preferredSubjects = set
         }
     }

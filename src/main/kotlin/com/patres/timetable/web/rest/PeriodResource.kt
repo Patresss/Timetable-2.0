@@ -102,7 +102,7 @@ open class PeriodResource(private val periodService: PeriodService) {
      */
     @GetMapping("/periods/divisions")
     @Timed
-    open fun getPeriodsByDivisionsId(@ApiParam pageable: Pageable, @PathVariable divisionsId: List<Long>): ResponseEntity<List<PeriodDTO>> {
+    open fun getPeriodsByDivisionsId(@ApiParam pageable: Pageable, @RequestParam divisionsId: List<Long>): ResponseEntity<List<PeriodDTO>> {
         log.debug("REST request to get a page of Periods by Division owners id")
 
         val page = periodService.findByDivisionOwnerId(pageable, divisionsId)

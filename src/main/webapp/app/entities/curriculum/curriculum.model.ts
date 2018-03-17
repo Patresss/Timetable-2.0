@@ -1,6 +1,6 @@
 import {BaseEntity} from '../../shared';
 import {EventType} from '../timetable';
-import {Time} from '../../plan/time.model';
+import {Time} from '../../util/time.model';
 
 export class Curriculum implements BaseEntity {
     // TODO - czy potrzeba name?

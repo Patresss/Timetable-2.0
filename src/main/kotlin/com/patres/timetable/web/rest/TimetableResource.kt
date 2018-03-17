@@ -126,20 +126,51 @@ open class TimetableResource(
     }
 
     /**
-     * GET  /timetables/divisionList : get the timetable by dateAndDivisionList
+     * GET  /timetables/division-list : get the timetable by dateAndDivisionList
      *
      * @param divisionIdList
      * @param date
      * @return the ResponseEntity with status 200 (OK) and with body the List of timetableDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/timetables/divisionList", params = arrayOf("divisionIdList", "date"))
+    @GetMapping("/timetables/division-list", params = ["divisionIdList", "date"])
     @Timed
     open fun getTimetableByDateAndDivisionList(@RequestParam(value = "divisionIdList") divisionIdList: List<Long>, @RequestParam(value = "date") date: String): ResponseEntity<Set<TimetableDTO>> {
         log.debug("REST request to get Timetable by date: $date Division List: $divisionIdList")
         val localDate = LocalDate.parse(date)
         val timetablesDTO = timetableService.findByDivisionListAndDateFromPeriod(localDate, divisionIdList)
         return getTimetables(localDate, timetablesDTO)
+    }
 
+    /**
+     * GET  /timetables/teacher : get the timetable by dateAndDivisionList
+     *
+     * @param teacherId
+     * @param date
+     * @return the ResponseEntity with status 200 (OK) and with body the List of timetableDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/timetables/teacher", params = ["teacherId", "date"])
+    @Timed
+    open fun getTimetableByDateAndTeacherId(@RequestParam(value = "teacherId") teacherId: Long, @RequestParam(value = "date") date: String): ResponseEntity<Set<TimetableDTO>> {
+        log.debug("REST request to get Timetable by date: $date Teacher id: $teacherId")
+        val localDate = LocalDate.parse(date)
+        val timetablesDTO = timetableService.findByDivisionListAndDateFromTeacherId(localDate, teacherId)
+        return getTimetables(localDate, timetablesDTO)
+    }
+
+    /**
+     * GET  /timetables/place : get the timetable by dateAndDivisionList
+     *
+     * @param teacherId
+     * @param date
+     * @return the ResponseEntity with status 200 (OK) and with body the List of timetableDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/timetables/place", params = ["placeId", "date"])
+    @Timed
+    open fun getTimetableByDateAndPlaceId(@RequestParam(value = "placeId") placeId: Long, @RequestParam(value = "date") date: String): ResponseEntity<Set<TimetableDTO>> {
+        log.debug("REST request to get Timetable by date: $date Place id: $placeId")
+        val localDate = LocalDate.parse(date)
+        val timetablesDTO = timetableService.findByDivisionListAndDateFromPeriod(localDate, placeId)
+        return getTimetables(localDate, timetablesDTO)
     }
 
     open fun getTimetables(localDate: LocalDate, timetables: Set<TimetableDTO>): ResponseEntity<Set<TimetableDTO>> {
