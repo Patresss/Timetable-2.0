@@ -39,7 +39,8 @@
             "teacher": "Teacher",
             "division": "Division",
             "lesson": "Lesson",
-            "period": "Period"
+            "period": "Period",
+            "time": "Time"
         }
     }
 }

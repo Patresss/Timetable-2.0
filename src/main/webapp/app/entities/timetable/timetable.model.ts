@@ -1,10 +1,10 @@
 import {BaseEntity} from '../../shared';
 import {Time} from '../../util/time.model';
 
-export const enum EventType {
-    'LESSON',
-    'SUBSTITUTION',
-    'SPECIAL'
+export  enum EventType {
+   LESSON = 'LESSON',
+   SUBSTITUTION = 'SUBSTITUTION',
+   SPECIAL = 'SPECIAL'
 }
 
 export class Timetable implements BaseEntity {
@@ -29,14 +29,18 @@ export class Timetable implements BaseEntity {
                 public inSaturday?: boolean,
                 public inSunday?: boolean,
                 public placeId?: number,
-                public placeName?: String,
+                public placeName?: string,
                 public subjectId?: number,
-                public subjectName?: String,
-                public subjectShortName?: String,
+                public subjectName?: string,
+                public subjectShortName?: string,
                 public teacherId?: number,
+                public teacherFullname?: string,
                 public divisionId?: number,
+                public divisionName?: string,
                 public lessonId?: number,
-                public periodId?: number) {
+                public lessonName?: number,
+                public periodId?: number,
+                public usersId: number[] = []) {
         this.inMonday = false;
         this.inTuesday = false;
         this.inWednesday = false;

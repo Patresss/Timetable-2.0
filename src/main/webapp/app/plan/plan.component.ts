@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from 'ng-jhipster';
-import {ITEMS_PER_PAGE, Principal, ResponseWrapper} from '../shared';
+import {Account, ITEMS_PER_PAGE, Principal, ResponseWrapper} from '../shared';
 import {PaginationConfig} from '../blocks/config/uib-pagination.config';
 import {Division, DivisionService} from '../entities/division';
 import {Timetable, TimetableService} from '../entities/timetable';
@@ -12,6 +12,7 @@ import {TeacherService} from '../entities/teacher';
 import {PlaceService} from '../entities/place';
 import {SelectType} from '../util/select-type.model';
 import {Time} from '../util/time.model';
+import {RoleType} from '../util/role-type.model';
 
 @Component({
     selector: 'jhi-board',
@@ -19,7 +20,7 @@ import {Time} from '../util/time.model';
 })
 export class PlanComponent implements OnInit, OnDestroy {
 
-    currentAccount: any;
+    currentAccount: Account;
     error: any;
     success: any;
     eventSubscriber: Subscription;
@@ -32,6 +33,7 @@ export class PlanComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
+    canModifyTimetable = false;
 
     schoolSelectOption = [];
     selectedSchool = [];
@@ -178,7 +180,7 @@ export class PlanComponent implements OnInit, OnDestroy {
     private entityListToSelectList(entityList: Division[]) {
         const selectList = [];
         entityList.forEach((entity) => {
-            const obj = {id: entity.id, itemName: entity.name};
+            const obj = {id: entity.id, itemName: entity.name, item: entity};
             selectList.push(obj)
         });
         return selectList;
@@ -199,6 +201,7 @@ export class PlanComponent implements OnInit, OnDestroy {
 // School
 // ================================================================
     onSchoolSelect(item: any) {
+        this.calculateModifyFlag();
         this.clearClassesSelect();
         this.loadSchoolEntity(item);
 
@@ -206,6 +209,18 @@ export class PlanComponent implements OnInit, OnDestroy {
         this.classSelectSettings = Object.assign({}, this.classSelectSettings); // workaround to detect change
 
         this.reloadTimetables();
+    }
+
+    private calculateModifyFlag() {
+        if (this.currentAccount) {
+            if (this.currentAccount.authorities.indexOf(RoleType.ROLE_ADMIN.toString()) > -1) {
+                this.canModifyTimetable = true;
+            } else if (this.currentAccount.authorities.indexOf(RoleType.ROLE_SCHOOL_ADMIN.toString()) > -1) {
+                this.canModifyTimetable = this.selectedSchool[0].item.users.indexOf(this.currentAccount.id) > -1;
+            }
+        } else {
+            this.canModifyTimetable = false;
+        }
     }
 
     private loadSchoolEntity(item: any) {

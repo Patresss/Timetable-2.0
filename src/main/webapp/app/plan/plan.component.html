@@ -102,22 +102,23 @@
 
             <div style="clear: both;"></div>
 
+
             <div class="column column-first" [ngStyle]="{'width': firstColumnWidth +'%'}">
                 <div class="hour-label" *ngFor="let time of timeArray">
                     {{time.formattedTime}}
                 </div>
             </div>
-            <div class="column" [ngStyle]="{'width': columnWidth + '%'}" *ngFor="let item of planColumns">
+            <div class="column" [ngStyle]="{'width': columnWidth + '%'}" *ngFor="let planColumn of planColumns">
                 <div class="hour" *ngFor="let time of timeArray">
                 </div>
-                <div class="event-container" *ngFor="let cell of item.planCells" [ngStyle]="{'top': cell.startHeightPercent + '%', 'bottom': 100.0 - cell.endHeightPercent + '%', 'left': cell.startWidthPercent + '%', 'right': 100.0 - cell.endWidthPercent + '%'}">
+                <div class="event-container" *ngFor="let cell of planColumn.planCells" [ngStyle]="{'top': cell.startHeightPercent + '%', 'bottom': 100.0 - cell.endHeightPercent + '%', 'left': cell.startWidthPercent + '%', 'right': 100.0 - cell.endWidthPercent + '%'}">
                     <div class="event-blur-background"></div>
-                    <div class="event">
-                        {{cell.timetable.subjectShortName}} ({{cell.timetable.placeName}})
-                    </div>
+                    <jhi-timetable-popover [timetable]="cell.timetable" [canModifyTimetable]="canModifyTimetable" [timetableDate]="planColumn.date"></jhi-timetable-popover>
                 </div>
             </div>
             <div style="clear: both;"></div>
         </jhi-glass>
     </div>
+
+
 </div>
