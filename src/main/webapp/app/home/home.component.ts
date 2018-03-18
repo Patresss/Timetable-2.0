@@ -12,30 +12,14 @@ import { Account, LoginModalService, Principal } from '../shared';
     ]
 
 })
-export class HomeComponent implements OnInit {
-    account: Account;
+export class HomeComponent {
+
     modalRef: NgbModalRef;
 
     constructor(
         private principal: Principal,
-        private loginModalService: LoginModalService,
-        private eventManager: JhiEventManager
+        private loginModalService: LoginModalService
     ) {
-    }
-
-    ngOnInit() {
-        this.principal.identity().then((account) => {
-            this.account = account;
-        });
-        this.registerAuthenticationSuccess();
-    }
-
-    registerAuthenticationSuccess() {
-        this.eventManager.subscribe('authenticationSuccess', (message) => {
-            this.principal.identity().then((account) => {
-                this.account = account;
-            });
-        });
     }
 
     isAuthenticated() {
