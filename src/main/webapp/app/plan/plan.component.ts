@@ -139,9 +139,11 @@ export class PlanComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
-        });
+        if (this.principal.isAuthenticated()) {
+            this.principal.identity().then((account) => {
+                this.currentAccount = account;
+            });
+        }
         this.loadTimeArray();
     }
 
