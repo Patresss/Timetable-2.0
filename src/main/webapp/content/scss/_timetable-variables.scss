@@ -5,8 +5,12 @@ $divider-color: #BDBDBD;
 $dark-primary-color: #1976D2;
 $primary-color: #2196F3;
 $light-primary-color: #BBDEFB;
-$accent-color: #C0B283;
-$accent-color-light: #FFECB3;
+
+$accent-color: rgb(192,178,131);
+$accent-color-light: lighten( $accent-color, 20% );
+$accent-color-dark: darken( $accent-color, 20% );
+$accent-color-strong-dark: darken( $accent-color, 50% );
+
 $color-accent-bright: rgb(200, 200, 200);
 $good-color: green;
 
@@ -16,11 +20,17 @@ $dark-3-color-background: rgba(0, 0, 0, 0.6);
 $dark-4-color-background: rgba(0, 0, 0, 0.4);
 $dark-5-color-background: rgba(0, 0, 0, 0.2);
 
-$accent-1-color-background: rgba(192,178,131, 1.0);
-$accent-2-color-background: rgba(192,178,131, 0.8);
-$accent-3-color-background: rgba(192,178,131, 0.6);
-$accent-4-color-background: rgba(192,178,131, 0.4);
-$accent-5-color-background: rgba(192,178,131, 0.2);
+$accent-1-color-background: transparentize($accent-color, 0.0);
+$accent-2-color-background: transparentize($accent-color, 0.2);
+$accent-3-color-background: transparentize($accent-color, 0.4);
+$accent-4-color-background: transparentize($accent-color, 0.6);
+$accent-5-color-background: transparentize($accent-color, 0.8);
+
+$light-1-color-background: transparentize($light-text-color, 0.0);
+$light-2-color-background: transparentize($light-text-color, 0.2);
+$light-3-color-background: transparentize($light-text-color, 0.4);
+$light-4-color-background: transparentize($light-text-color, 0.6);
+$light-5-color-background: transparentize($light-text-color, 0.8);
 
 $hour-height: 60px;
 $blur-value: 15px;

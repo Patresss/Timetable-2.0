@@ -1,47 +1,51 @@
 <ng-template #popContent>
-    <div class='popover-title'>
-        <label jhiTranslate="timetableApp.EventType.{{timetable.type}}">{{timetable.type}}</label>
-        <button (click)="goToEdit()" *ngIf="canModifyTimetable">
-            <span class="fa fa-pencil"></span>
-        </button>
+    <div class="blur-background"></div>
+    <div class="glass-content">
+        <div class='popover-title'>
+            <label jhiTranslate="timetableApp.EventType.{{timetable.type}}">{{timetable.type}}</label>
+            <button (click)="goToEdit()" *ngIf="canModifyTimetable">
+                <span class="fa fa-pencil"></span>
+            </button>
+        </div>
+        <div class="form-group popover-content">
+            <div>
+                <div class='row'>
+                    <label class='col-md-6' jhiTranslate="timetableApp.timetable.teacher"> Teacher</label>
+                    <label class='col-md-6' jhiTranslate="timetableApp.timetable.place"> Place</label>
+                </div>
+                <div class='row'>
+                    <p class='col-md-6'> {{timetable.teacherFullname}} </p>
+                    <p class='col-md-6'> {{timetable.placeName}} </p>
+                </div>
+                <div class='row'>
+                    <label *ngIf="timetable.type == EventType.SPECIAL" class='col-md-6' jhiTranslate="timetableApp.timetable.title">Title</label>
+                    <label *ngIf="timetable.type != EventType.SPECIAL" class='col-md-6' jhiTranslate="timetableApp.timetable.subject"> Subject</label>
+                    <label class='col-md-6' jhiTranslate="timetableApp.timetable.division"> Division</label>
+                </div>
+                <div class='row'>
+                    <p *ngIf="timetable.type == EventType.SPECIAL" class='col-md-6'> {{timetable.title}}</p>
+                    <p *ngIf="timetable.type != EventType.SPECIAL" class='col-md-6'> {{timetable.subjectName}}</p>
+                    <p class='col-md-6'> {{timetable.divisionName}} </p>
+                </div>
+            </div>
+            <div class='row'>
+                <label class='col-md-6' jhiTranslate="timetableApp.timetable.time">Time</label>
+                <label class='col-md-6' jhiTranslate="timetableApp.timetable.date">Date</label>
+            </div>
+            <div class='row'>
+                <p class='col-md-6'> {{timetable.startTime.formattedTime}} - {{timetable.endTime.formattedTime}}</p>
+                <p class='col-md-6'> {{timetableDate | date:'dd-MM-yyyy'}}</p>
+            </div>
+            <div class='row' *ngIf="timetable.description">
+                <label class='col-md-12' jhiTranslate="timetableApp.timetable.description">Description</label>
+                <p class='col-md-12'> {{timetable.description}} </p>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <div>
-            <div class='row'>
-                <label class='col-md-6' jhiTranslate="timetableApp.timetable.teacher"> Teacher</label>
-                <label class='col-md-6' jhiTranslate="timetableApp.timetable.place"> Place</label>
-            </div>
-            <div class='row'>
-                <p class='col-md-6'> {{timetable.teacherFullname}} </p>
-                <p class='col-md-6'> {{timetable.placeName}} </p>
-            </div>
-            <div class='row'>
-                <label *ngIf="timetable.type == EventType.SPECIAL" class='col-md-6' jhiTranslate="timetableApp.timetable.title">Title</label>
-                <label *ngIf="timetable.type != EventType.SPECIAL" class='col-md-6' jhiTranslate="timetableApp.timetable.subject"> Subject</label>
-                <label class='col-md-6' jhiTranslate="timetableApp.timetable.division"> Division</label>
-            </div>
-            <div class='row'>
-                <p *ngIf="timetable.type == EventType.SPECIAL" class='col-md-6'> {{timetable.title}}</p>
-                <p *ngIf="timetable.type != EventType.SPECIAL" class='col-md-6'> {{timetable.subjectName}}</p>
-                <p class='col-md-6'> {{timetable.divisionName}} </p>
-            </div>
-        </div>
-        <div class='row'>
-            <label class='col-md-6' jhiTranslate="timetableApp.timetable.time">Time</label>
-            <label class='col-md-6' jhiTranslate="timetableApp.timetable.date">Date</label>
-        </div>
-        <div class='row'>
-            <p class='col-md-6'> {{timetable.startTime.formattedTime}} - {{timetable.endTime.formattedTime}}</p>
-            <p class='col-md-6'> {{timetableDate | date:'yyyy-MM-dd'}}</p>
-        </div>
-        <div class='row' *ngIf="timetable.description">
-            <label class='col-md-12' jhiTranslate="timetableApp.timetable.description">Description</label>
-            <p class='col-md-12'> {{timetable.description}} </p>
-        </div>
-    </div>
+
 </ng-template>
 
 
-<a class="event" [ngbPopover]="popContent">
+<a class="event" [ngbPopover]="popContent" #popoverRef="ngbPopover" (click)="setCurrentPopoverOpen(popoverRef)">
     {{timetable.subjectShortName}} ({{timetable.placeName}})
 </a>

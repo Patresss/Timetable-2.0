@@ -1,0 +1,74 @@
+@import "../../../content/scss/timetable-variables";
+
+.glass-container {
+    position: relative;
+    color: white;
+}
+
+.blur-background {
+    background: $plan-background;
+    background-size: cover;
+    -webkit-filter: blur($blur-value);
+    filter: blur($blur-value);
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+}
+
+.glass-content {
+    position: relative;
+    background-color: transparent;
+    color: $accent-color-strong-dark
+}
+
+.default-glass-content{
+    background: $dark-3-color-background;
+}
+
+.popover-title button {
+    float: right;
+    position: relative;
+    background-color: transparent;
+    color: #FFFFFF;
+    border: none;
+}
+
+.popover-title button:hover {
+    cursor: pointer;
+}
+
+.popover-title {
+    padding: 10px 15px 10px 15px;
+    background-color: $accent-color-dark;
+    color: #FFFFFF;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 16px;
+}
+
+.popover-content {
+    background-color: $light-2-color-background;
+    margin: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    p {
+        margin-top: -5px;
+    }
+    label {
+        font-size: 15px;
+        font-weight: bold;
+    }
+}
+
+
+
+
+
+
+
+

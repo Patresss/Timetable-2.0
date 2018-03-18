@@ -2,9 +2,9 @@
     "timetableApp": {
         "EventType" : {
             "null": "",
-            "LESSON": "LESSON",
-            "SUBSTITUTION": "SUBSTITUTION",
-            "SPECIAL": "SPECIAL"
+            "LESSON": "Lesson",
+            "SUBSTITUTION": "Substitution",
+            "SPECIAL": "Special"
         }
     }
 }

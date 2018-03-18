@@ -330,7 +330,7 @@ ui bootstrap tweaks
         }
 
         .event {
-            background-color: transparentize($accent-color, .3);
+            background-color: $accent-3-color-background;
             border-left: 5px solid $light-text-color;
             right: 0;
             top: 0;
@@ -545,22 +545,32 @@ a:hover {
 }
 
 
-
+.popover {
+    background-color: transparent;
+    min-width: 400px;
+    border: none;
+}
 
 .popover-body {
-    background-color: #FFFFFF;
-    min-width: 400px; }
+    padding: 0;
+}
 
 
-.popover-title a {
-    color: #FFFFFF; }
+//.popover-content {
+//    background-color: rgba(0,255,255, 0.2);
+//}
+//
+//.popover-title a {
+//    color: #FFFFFF;
+//}
+//
+//.popover-title button {
+//    float: right;
+//    position: relative;
+//    background-color: transparent; }
+//
+//.popover-title {
+//    margin: -10px -15px 10px -15px;
+//    background-color: rgba(255,0,131, 0.2);
+//    color: #FFFFFF; }
 
-.popover-title button {
-    float: right;
-    position: relative;
-    background-color: transparent; }
-
-.popover-title {
-    margin: -10px -15px 10px -15px;
-    background-color: #2196F3;
-    color: #FFFFFF; }
