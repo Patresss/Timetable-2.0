@@ -12,9 +12,9 @@ class TimetableDTO(
     @get:NotNull
     var title: String? = null,
 
-    var startTime: String? = null,
+    var startTimeString: String? = null,
 
-    var endTime: String? = null,
+    var endTimeString: String? = null,
 
     var startDate: LocalDate? = null,
 
@@ -100,8 +100,8 @@ class TimetableDTO(
         return "TimetableDTO{" +
             "id=" + id +
             ", title='" + title + "'" +
-            ", startTime='" + startTime + "'" +
-            ", endTime='" + endTime + "'" +
+            ", startTimeString='" + startTimeString + "'" +
+            ", endTimeString='" + endTimeString + "'" +
             ", startDate='" + startDate + "'" +
             ", endDate='" + endDate + "'" +
             ", date='" + date + "'" +

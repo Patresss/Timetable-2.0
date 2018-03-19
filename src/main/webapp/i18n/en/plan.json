@@ -8,7 +8,7 @@
                 "school": "Choose a school",
                 "class": "Choose a class",
                 "subgroups": "Choose subgroups",
-                "type-plan": "Choose a type of plan",
+                "plan-type": "Choose a type of plan",
                 "teacher": "Choose a teacher",
                 "place": "Choose a place"
             },
@@ -17,7 +17,7 @@
                 "TEACHER": "Teacher",
                 "PLACE": "Place"
             },
-            "type-plan": "Type of plan",
+            "plan-type": "Type of plan",
             "week-day": {
                 "1": "Monday",
                 "2": "Tuesday",

@@ -58,12 +58,12 @@ export class TimetableService extends EntityService<Timetable> {
     convertEntity(entity: any) {
         entity.startDate = this.dateUtils.convertLocalDateFromServer(entity.startDate);
         entity.endDate = this.dateUtils.convertLocalDateFromServer(entity.endDate);
-        entity.date = this.dateUtils.convertLocalDateFromServer(entity.date);
-        if (entity.startTime) {
-            entity.startTime = new Time(entity.startTime);
+        entity.date = this.dateUtils.convertLocalDateFromServer(entity.date)
+        if (entity.startTimeString) {
+            entity.startTime = new Time(entity.startTimeString);
         }
-        if (entity.endTime) {
-            entity.endTime = new Time(entity.endTime);
+        if (entity.endTimeString) {
+            entity.endTime = new Time(entity.endTimeString);
         }
     }
 
@@ -72,6 +72,8 @@ export class TimetableService extends EntityService<Timetable> {
         copy.startDate = this.dateUtils.convertLocalDateToServer(timetable.startDate);
         copy.endDate = this.dateUtils.convertLocalDateToServer(timetable.endDate);
         copy.date = this.dateUtils.convertLocalDateToServer(timetable.date);
+        copy.startTimeString = timetable.startTime.formattedTime;
+        copy.endTimeString = timetable.endTime.formattedTime;
         return copy;
     }
 }

@@ -16,6 +16,7 @@ import { Division, DivisionService } from '../division';
 import { Lesson, LessonService } from '../lesson';
 import { Period, PeriodService } from '../period';
 import { ResponseWrapper } from '../../shared';
+import {SelectType} from '../../util/select-type.model';
 
 @Component({
     selector: 'jhi-timetable-dialog',
@@ -25,21 +26,68 @@ export class TimetableDialogComponent implements OnInit {
 
     timetable: Timetable;
     isSaving: boolean;
-
-    places: Place[];
-
-    subjects: Subject[];
-
-    teachers: Teacher[];
-
-    divisions: Division[];
-
-    lessons: Lesson[];
-
-    periods: Period[];
     startDateDp: any;
     endDateDp: any;
     dateDp: any;
+
+    eventTypeSelectOption = [
+        new SelectType(1, '', 'timetableApp.EventType.LESSON', 'STUDENT'),
+        new SelectType(2, '', 'timetableApp.EventType.SUBSTITUTION', 'SUBSTITUTION'),
+        new SelectType(3, '', 'timetableApp.EventType.SPECIAL', 'SPECIAL')];
+    selectedEventType: SelectType[] = [this.eventTypeSelectOption[0]];
+    eventTypeSelectSettings = {
+        singleSelection: true,
+        text: 'timetableApp.plan.choose.event-type',
+        enableSearchFilter: false
+    };
+
+    placeSelectOption = [];
+    selectedPlace = [];
+    placeSelectSettings = {
+        singleSelection: true,
+        text: 'timetableApp.plan.choose.place',
+        enableSearchFilter: true
+    };
+
+    subjectSelectOption = [];
+    selectedSubject = [];
+    subjectSelectSettings = {
+        singleSelection: true,
+        text: 'timetableApp.plan.choose.subject',
+        enableSearchFilter: true
+    };
+
+    teacherSelectOption = [];
+    selectedTeacher = [];
+    teacherSelectSettings = {
+        singleSelection: true,
+        text: 'timetableApp.plan.choose.teacher',
+        enableSearchFilter: true
+    };
+
+    divisionSelectOption = [];
+    selectedDivision = [];
+    divisionSelectSettings = {
+        singleSelection: true,
+        text: 'timetableApp.plan.choose.division',
+        enableSearchFilter: true
+    };
+
+    lessonSelectOption = [];
+    selectedLesson = [];
+    lessonSelectSettings = {
+        singleSelection: true,
+        text: 'timetableApp.plan.choose.lesson',
+        enableSearchFilter: true
+    };
+
+    periodSelectOption = [];
+    selectedPeriod = [];
+    periodSelectSettings = {
+        singleSelection: true,
+        text: 'timetableApp.plan.choose.period',
+        enableSearchFilter: true
+    };
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -58,17 +106,27 @@ export class TimetableDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.placeService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => { this.places = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: ResponseWrapper) => { this.placeSelectOption = this.entityListToSelectList(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
         this.subjectService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => { this.subjects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: ResponseWrapper) => { this.subjectSelectOption = this.entityListToSelectList(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
         this.teacherService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => { this.teachers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: ResponseWrapper) => { this.teacherSelectOption = this.entityListToSelectList(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
         this.divisionService.query()
-            .subscribe((res: ResponseWrapper) => { this.divisions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: ResponseWrapper) => { this.divisionSelectOption = this.entityListToSelectList(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
         this.lessonService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => { this.lessons = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: ResponseWrapper) => { this.lessonSelectOption = this.entityListToSelectList(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
         this.periodService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => { this.periods = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: ResponseWrapper) => { this.periodSelectOption = this.entityListToSelectList(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
+    }
+
+    // TODO to samo w plan. Przneisć do wspólnej częśći
+    private entityListToSelectList(entityList: any[]) {
+        const selectList = [];
+        entityList.forEach((entity) => {
+            const obj = {id: entity.id, itemName: entity.name, item: entity};
+            selectList.push(obj)
+        });
+        return selectList;
     }
 
     clear() {

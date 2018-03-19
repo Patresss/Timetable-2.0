@@ -219,8 +219,8 @@ open class LessonResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(lesson.id?.toInt())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toInt())))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toInt())))
+            .andExpect(jsonPath("$.[*].startTimeString").value(hasItem(DEFAULT_START_TIME.toInt())))
+            .andExpect(jsonPath("$.[*].endTimeString").value(hasItem(DEFAULT_END_TIME.toInt())))
     }
 
     @Test
@@ -236,8 +236,8 @@ open class LessonResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(lesson.id?.toInt()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toInt()))
-            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toInt()))
+            .andExpect(jsonPath("$.startTimeString").value(DEFAULT_START_TIME.toInt()))
+            .andExpect(jsonPath("$.endTimeString").value(DEFAULT_END_TIME.toInt()))
     }
 
     @Test

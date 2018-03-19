@@ -52,10 +52,10 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             }
             id = entityDto.id
 
-            entityDto.startTime?.let {
+            entityDto.startTimeString?.let {
                 setStartTimeHHmmFormatted(it)
             }
-            entityDto.endTime?.let {
+            entityDto.endTimeString?.let {
                 setEndTimeHHmmFormatted(it)
             }
 
@@ -97,11 +97,11 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             subjectShortName = timetableSubjectShortName(entity)
             id = entity.id
             if (entity.lesson != null) {
-                startTime = entity.lesson?.getStartTimeHHmmFormatted()
-                endTime = entity.lesson?.getEndTimeHHmmFormatted()
+                startTimeString = entity.lesson?.getStartTimeHHmmFormatted()
+                endTimeString = entity.lesson?.getEndTimeHHmmFormatted()
             } else {
-                startTime = entity.getStartTimeHHmmFormatted()
-                endTime = entity.getEndTimeHHmmFormatted()
+                startTimeString = entity.getStartTimeHHmmFormatted()
+                endTimeString = entity.getEndTimeHHmmFormatted()
             }
             startDate = entity.startDate
             endDate = entity.endDate

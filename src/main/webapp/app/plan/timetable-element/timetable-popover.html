@@ -3,7 +3,7 @@
     <div class="glass-content">
         <div class='popover-title'>
             <label jhiTranslate="timetableApp.EventType.{{timetable.type}}">{{timetable.type}}</label>
-            <button (click)="goToEdit()" *ngIf="canModifyTimetable">
+            <button (click)="goToEdit()" *ngIf="canModifyTimetable" [routerLink]="['/', { outlets: { popup: 'timetable/'+ timetable.id + '/edit'} }]" replaceUrl="true">
                 <span class="fa fa-pencil"></span>
             </button>
         </div>

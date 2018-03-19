@@ -27,14 +27,16 @@ const noop = () => {
     templateUrl: './multiselect.component.html',
     /* tslint:disable:use-host-property-decorator */
     host: {'[class]': 'styleClass'},
-    styleUrls: ['./multiselect.component.scss'],
+    styleUrls: ['./multiselect.component.scss' ],
     providers: [DROPDOWN_CONTROL_VALUE_ACCESSOR, DROPDOWN_CONTROL_VALIDATION]
 })
-
 export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor, OnChanges, Validator, DoCheck, AfterViewInit {
 
     @Input()
     data: Array<ListItem>;
+
+    @Input()
+    blur = true;
 
     @Input()
     styleClass: String = '';

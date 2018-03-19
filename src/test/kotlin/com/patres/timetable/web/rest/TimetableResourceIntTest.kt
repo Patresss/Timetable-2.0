@@ -157,8 +157,8 @@ open class TimetableResourceIntTest {
             return TimetableDTO(
                 title = DEFAULT_TITLE,
                 type = DEFAULT_TYPE,
-                startTime = DEFAULT_START_TIME,
-                endTime = DEFAULT_END_TIME,
+                startTimeString = DEFAULT_START_TIME,
+                endTimeString = DEFAULT_END_TIME,
                 date = DEFAULT_DATE,
                 everyWeek = DEFAULT_EVERY_WEEK,
                 startWithWeek = DEFAULT_START_WITH_WEEK,
@@ -303,8 +303,8 @@ open class TimetableResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(timetable.id?.toInt())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
-            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME)))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME)))
+            .andExpect(jsonPath("$.[*].startTimeString").value(hasItem(DEFAULT_START_TIME)))
+            .andExpect(jsonPath("$.[*].endTimeString").value(hasItem(DEFAULT_END_TIME)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].everyWeek").value(hasItem(DEFAULT_EVERY_WEEK.toInt())))
@@ -334,8 +334,8 @@ open class TimetableResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(timetable.id))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
-            .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME))
-            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME))
+            .andExpect(jsonPath("$.startTimeString").value(DEFAULT_START_TIME))
+            .andExpect(jsonPath("$.endTimeString").value(DEFAULT_END_TIME))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.everyWeek").value(DEFAULT_EVERY_WEEK.toInt()))

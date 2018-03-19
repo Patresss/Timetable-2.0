@@ -12,6 +12,8 @@ export class Timetable implements BaseEntity {
                 public title?: string,
                 public startTime?: Time,
                 public endTime?: Time,
+                public startTimeString?: string,
+                public endTimeString?: string,
                 public startDate?: any,
                 public endDate?: any,
                 public date?: any,

@@ -1,6 +1,6 @@
 <div (jhiClickOutside)="closeDropdown()">
     <div class="select-container">
-        <div class="select-blur"></div>
+        <div *ngIf="blur" class="select-blur"></div>
         <div class="select-body">
             <div class="selected-list">
                 <div class="c-btn" (click)="toggleDropdown($event)" [ngClass]="{'disabled': settings.disabled}">
@@ -29,7 +29,7 @@
                 <div class="arrow-up arrow-2"></div>
                 <div class="arrow-up"></div>
                 <div class="list-area-container">
-                    <div class="list-area-blur"></div>
+                    <div *ngIf="blur" class="list-area-blur"></div>
                     <div class="list-area">
                         <div class="pure-checkbox select-all" *ngIf="settings.enableCheckAll && !settings.singleSelection && !settings.limitSelection" (click)="toggleSelectAll()">
                             <input *ngIf="settings.showCheckbox" type="checkbox" [checked]="isSelectAll" [disabled]="settings.limitSelection == selectedItems?.length"/>

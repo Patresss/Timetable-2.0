@@ -85,7 +85,7 @@ export class PlanComponent implements OnInit, OnDestroy {
     selectedTypePlan: SelectType[] = [this.typePlanSelectOption[0]];
     typePlanSelectSettings = {
         singleSelection: true,
-        text: 'timetableApp.plan.choose.type-plan',
+        text: 'timetableApp.plan.choose.plan-type',
         enableSearchFilter: false
     };
 

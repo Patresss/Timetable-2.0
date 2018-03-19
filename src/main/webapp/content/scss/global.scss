@@ -384,8 +384,6 @@ ui bootstrap tweaks
         }
     }
 
-
-
 }
 
 .plan-view-body {
@@ -433,7 +431,7 @@ ui bootstrap tweaks
     }
     .list-filter {
         .fa {
-            color:  $accent-color !important;
+            color: $accent-color !important;
         }
     }
 
@@ -467,7 +465,11 @@ ui bootstrap tweaks
     }
 
     .pure-checkbox input[type="checkbox"]:checked + label:before {
-        background: $accent-color !important;
+        background: transparent !important;
+    }
+
+    .pure-checkbox input[type="checkbox"] + label:after{
+        border-color: $accent-color !important;
     }
 
     .c-list .c-token {
@@ -491,13 +493,11 @@ ui bootstrap tweaks
         position: absolute;
         z-index: -1;
     }
-
 }
 
 .select-label {
     font-size: 2em;
 }
-
 
 // ================================================================
 // Override
@@ -515,7 +515,6 @@ a:hover {
     color: $light-text-color;
 }
 
-
 // ================================================================
 // Glass
 // ================================================================
@@ -529,7 +528,8 @@ a:hover {
     width: 100%;
     border: none;
 }
-.glass-button:hover{
+
+.glass-button:hover {
     cursor: pointer;
     background: $dark-1-color-background;
 }
@@ -544,7 +544,6 @@ a:hover {
     color: $light-text-color;
 }
 
-
 .popover {
     background-color: transparent;
     min-width: 400px;
@@ -554,7 +553,6 @@ a:hover {
 .popover-body {
     padding: 0;
 }
-
 
 //.popover-content {
 //    background-color: rgba(0,255,255, 0.2);
@@ -573,4 +571,141 @@ a:hover {
 //    margin: -10px -15px 10px -15px;
 //    background-color: rgba(255,0,131, 0.2);
 //    color: #FFFFFF; }
+
+// ================================================================
+// Entity card
+// ================================================================
+.edit-entity-card {
+    background: transparentize($light-text-color, 0.2);
+    color: $accent-color-strong-dark;
+    input {
+        background: $accent-color-strong-light;
+    }
+}
+
+.edit-entity-card-select {
+    .c-btn {
+        background: transparentize($light-text-color, 0.5);
+        color: $accent-color-strong-dark;
+    }
+
+    .c-btn.disabled {
+        background: rgba(255, 0, 0, 0.2);
+    }
+
+    .c-label {
+        background: rgba(0, 0, 0, 0.0);
+    }
+
+    .select-container {
+        position: relative;
+    }
+
+    .select-blur {
+        background: $plan-background;
+        background-size: cover;
+        -webkit-filter: blur($blur-value);
+        filter: blur($blur-value);
+        right: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+    }
+
+    .list-area {
+        background: transparent;
+        color: $light-text-color;
+    }
+    .list-filter {
+        .fa {
+            color: $accent-color !important;
+        }
+    }
+
+    .list-filter input {
+        color: $accent-color-strong-dark;
+        background: $accent-color-strong-light;
+    }
+
+
+    .arrow-up {
+        background: transparent;
+    }
+
+    .dropdown-list {
+        ul {
+            li {
+                background: $accent-color-strong-light;
+            }
+            li:hover {
+                background: $accent-color-medium-light !important;
+            }
+        }
+    }
+
+    .pure-checkbox input[type="checkbox"] + label {
+        color: $accent-color-strong-dark !important;
+    }
+
+    .pure-checkbox input[type="checkbox"] + label:before {
+        border: 2px solid $accent-color-dark !important;
+    }
+
+    .pure-checkbox input[type="checkbox"]:checked + label:before {
+        background: transparent !important;
+    }
+
+    .pure-checkbox input[type="checkbox"] + label:after{
+        border-color: $accent-color-dark !important;
+    }
+
+    .c-list .c-token {
+        background: transparent !important;
+    }
+
+    .list-area-container {
+        position: relative;
+    }
+
+    .list-area-blur {
+        background: $plan-background;
+        background-size: cover;
+        -webkit-filter: blur($blur-value);
+        filter: blur($blur-value);
+        right: -10px;
+        top: -10px;
+        bottom: -10px;
+        left: -10px;
+        position: absolute;
+        z-index: -1;
+    }
+}
+
+// ================================================================
+// Animation
+// ================================================================
+.hover-underline-animation {
+    display: inline-block;
+    position: relative;
+    color: $light-text-color;
+}
+
+.hover-underline-animation::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: $light-text-color;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
 

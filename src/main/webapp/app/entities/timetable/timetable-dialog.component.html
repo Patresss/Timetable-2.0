@@ -1,192 +1,209 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-
-    <div class="modal-header">
-        <h4 class="modal-title" id="myTimetableLabel" jhiTranslate="timetableApp.timetable.home.createOrEditLabel">Create or edit a Timetable</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;</button>
-    </div>
-    <div class="modal-body">
-        <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!timetable.id">
-            <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="timetable.id" readonly />
+    <jhi-glass contentClass="edit-entity-card">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myTimetableLabel" jhiTranslate="timetableApp.timetable.home.createOrEditLabel">Create or edit a Timetable</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                    (click)="clear()">&times;
+            </button>
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.title" for="field_title">Title</label>
-            <input type="text" class="form-control" name="title" id="field_title"
-                [(ngModel)]="timetable.title" required />
-            <div [hidden]="!(editForm.controls.title?.dirty && editForm.controls.title?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.title?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
+        <div class="modal-body">
+            <jhi-alert-error></jhi-alert-error>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.type" for="field_type">Type</label>
+                <jhi-angular2-multiselect [data]="eventTypeSelectOption" [(ngModel)]="selectedEventType" [settings]="eventTypeSelectSettings"
+                                          styleClass="edit-entity-card-select" name="selectedEventType" #type="ngModel"  required [blur]="false">
+                <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.startTime" for="field_startTime">Start Time</label>
-            <input type="number" class="form-control" name="startTime" id="field_startTime"
-                [(ngModel)]="timetable.startTime"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.endTime" for="field_endTime">End Time</label>
-            <input type="number" class="form-control" name="endTime" id="field_endTime"
-                [(ngModel)]="timetable.endTime"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.startDate" for="field_startDate">Start Date</label>
-            <div class="input-group">
-                <input id="field_startDate" type="text" class="form-control" name="startDate" ngbDatepicker  #startDateDp="ngbDatepicker" [(ngModel)]="timetable.startDate"
-                />
-                <span class="input-group-btn">
+            <!--<div class="form-group">-->
+            <!--<div class='row'>-->
+            <!--<div class='col-md-6'>-->
+            <!--<label class="col-md-6 form-control-label" jhiTranslate="timetableApp.timetable.title" for="field_title">Title</label>-->
+            <!--<input type="text" class="form-control" name="title" id="field_title"-->
+            <!--[(ngModel)]="timetable.title" required/>-->
+            <!--<div [hidden]="!(editForm.controls.title?.dirty && editForm.controls.title?.invalid)">-->
+            <!--<small class="form-text text-danger"-->
+            <!--[hidden]="!editForm.controls.title?.errors?.required" jhiTranslate="entity.validation.required">-->
+            <!--This field is required.-->
+            <!--</small>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class='col-md-6'>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <div class="form-group">
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <label jhiTranslate="timetableApp.timetable.place" for="field_place">Place</label>
+                        <jhi-angular2-multiselect [data]="placeSelectOption" [(ngModel)]="selectedPlace" [settings]="placeSelectSettings"
+                                                  styleClass="edit-entity-card-select" name="selectedPlace" #type="ngModel"  required [blur]="false">
+                    </div>
+                    <div class='col-md-6'>
+                        <label jhiTranslate="timetableApp.timetable.subject" for="field_subject">Subject</label>
+                        <jhi-angular2-multiselect [data]="subjectSelectOption" [(ngModel)]="selectedSubject" [settings]="subjectSelectSettings"
+                                                  styleClass="edit-entity-card-select" name="selectedSubject" #type="ngModel"  required [blur]="false">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <label jhiTranslate="timetableApp.timetable.teacher" for="field_teacher">Teacher</label>
+                        <jhi-angular2-multiselect [data]="teacherSelectOption" [(ngModel)]="selectedTeacher" [settings]="teacherSelectSettings"
+                                                  styleClass="edit-entity-card-select" name="selectedTeacher" #type="ngModel"  required [blur]="false">
+                    </div>
+                    <div class='col-md-6'>
+                        <label jhiTranslate="timetableApp.timetable.division" for="field_division">Division</label>
+                        <jhi-angular2-multiselect [data]="divisionSelectOption" [(ngModel)]="selectedDivision" [settings]="divisionSelectSettings"
+                                                  styleClass="edit-entity-card-select" name="selectedDivision" #type="ngModel"  required [blur]="false">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <label jhiTranslate="timetableApp.timetable.lesson" for="field_lesson">Lesson</label>
+                        <jhi-angular2-multiselect [data]="lessonSelectOption" [(ngModel)]="selectedLesson" [settings]="lessonSelectSettings"
+                                                  styleClass="edit-entity-card-select" name="selectedLesson" #type="ngModel"  required [blur]="false">
+                    </div>
+                    <div class='col-md-3'>
+                        <label class="form-control-label" jhiTranslate="timetableApp.timetable.startTime" for="field_startTime">Start Time</label>
+                        <input type="number" class="form-control" name="startTime" id="field_startTime"
+                               [(ngModel)]="timetable.startTime"/>
+                    </div>
+                    <div class='col-md-3'>
+                        <label class="form-control-label" jhiTranslate="timetableApp.timetable.endTime" for="field_endTime">End Time</label>
+                        <input type="number" class="form-control" name="endTime" id="field_endTime"
+                               [(ngModel)]="timetable.endTime"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <label class="form-control-label" jhiTranslate="timetableApp.timetable.date" for="field_date">Date</label>
+                        <div class="input-group">
+                            <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker #dateDp="ngbDatepicker" [(ngModel)]="timetable.date"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" (click)="dateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <label class="form-control-label" jhiTranslate="timetableApp.timetable.description" for="field_description">Description</label>
+                        <textarea  type="text" class="form-control" name="description" id="field_description" [(ngModel)]="timetable.description"></textarea >
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.startDate" for="field_startDate">Start Date</label>
+                <div class="input-group">
+                    <input id="field_startDate" type="text" class="form-control" name="startDate" ngbDatepicker #startDateDp="ngbDatepicker" [(ngModel)]="timetable.startDate"
+                    />
+                    <span class="input-group-btn">
                     <button type="button" class="btn btn-default" (click)="startDateDp.toggle()"><i class="fa fa-calendar"></i></button>
                 </span>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.endDate" for="field_endDate">End Date</label>
-            <div class="input-group">
-                <input id="field_endDate" type="text" class="form-control" name="endDate" ngbDatepicker  #endDateDp="ngbDatepicker" [(ngModel)]="timetable.endDate"
-                />
-                <span class="input-group-btn">
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.endDate" for="field_endDate">End Date</label>
+                <div class="input-group">
+                    <input id="field_endDate" type="text" class="form-control" name="endDate" ngbDatepicker #endDateDp="ngbDatepicker" [(ngModel)]="timetable.endDate"
+                    />
+                    <span class="input-group-btn">
                     <button type="button" class="btn btn-default" (click)="endDateDp.toggle()"><i class="fa fa-calendar"></i></button>
                 </span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.everyWeek" for="field_everyWeek">Every Week</label>
+                <input type="number" class="form-control" name="everyWeek" id="field_everyWeek"
+                       [(ngModel)]="timetable.everyWeek"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.startWithWeek" for="field_startWithWeek">Start With Week</label>
+                <input type="number" class="form-control" name="startWithWeek" id="field_startWithWeek"
+                       [(ngModel)]="timetable.startWithWeek"/>
+            </div>
+
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.colorBackground" for="field_colorBackground">Color Background</label>
+                <input type="text" class="form-control" name="colorBackground" id="field_colorBackground"
+                       [(ngModel)]="timetable.colorBackground"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.colorText" for="field_colorText">Color Text</label>
+                <input type="text" class="form-control" name="colorText" id="field_colorText"
+                       [(ngModel)]="timetable.colorText"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.inMonday" for="field_inMonday">In Monday</label>
+                <input type="checkbox" class="form-control" name="inMonday" id="field_inMonday"
+                       [(ngModel)]="timetable.inMonday"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.inTuesday" for="field_inTuesday">In Tuesday</label>
+                <input type="checkbox" class="form-control" name="inTuesday" id="field_inTuesday"
+                       [(ngModel)]="timetable.inTuesday"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.inWednesday" for="field_inWednesday">In Wednesday</label>
+                <input type="checkbox" class="form-control" name="inWednesday" id="field_inWednesday"
+                       [(ngModel)]="timetable.inWednesday"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.inThursday" for="field_inThursday">In Thursday</label>
+                <input type="checkbox" class="form-control" name="inThursday" id="field_inThursday"
+                       [(ngModel)]="timetable.inThursday"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.inFriday" for="field_inFriday">In Friday</label>
+                <input type="checkbox" class="form-control" name="inFriday" id="field_inFriday"
+                       [(ngModel)]="timetable.inFriday"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.inSaturday" for="field_inSaturday">In Saturday</label>
+                <input type="checkbox" class="form-control" name="inSaturday" id="field_inSaturday"
+                       [(ngModel)]="timetable.inSaturday"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.inSunday" for="field_inSunday">In Sunday</label>
+                <input type="checkbox" class="form-control" name="inSunday" id="field_inSunday"
+                       [(ngModel)]="timetable.inSunday"/>
+            </div>
+
+
+            <div class="form-group">
+                <label jhiTranslate="timetableApp.timetable.period" for="field_period">Period</label>
+                <jhi-angular2-multiselect [data]="periodSelectOption" [(ngModel)]="selectedPeriod" [settings]="periodSelectSettings"
+                                          styleClass="edit-entity-card-select" name="selectedPeriod" #type="ngModel"  required [blur]="false">
             </div>
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.date" for="field_date">Date</label>
-            <div class="input-group">
-                <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker  #dateDp="ngbDatepicker" [(ngModel)]="timetable.date"
-                />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" (click)="dateDp.toggle()"><i class="fa fa-calendar"></i></button>
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.type" for="field_type">Type</label>
-            <select class="form-control" name="type" [(ngModel)]="timetable.type" id="field_type"  required>
-                <option value="LESSON">{{'timetableApp.EventType.LESSON' | translate}}</option>
-                <option value="SUBSTITUTION">{{'timetableApp.EventType.SUBSTITUTION' | translate}}</option>
-                <option value="SPECIAL">{{'timetableApp.EventType.SPECIAL' | translate}}</option>
-            </select>
-            <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.everyWeek" for="field_everyWeek">Every Week</label>
-            <input type="number" class="form-control" name="everyWeek" id="field_everyWeek"
-                [(ngModel)]="timetable.everyWeek"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.startWithWeek" for="field_startWithWeek">Start With Week</label>
-            <input type="number" class="form-control" name="startWithWeek" id="field_startWithWeek"
-                [(ngModel)]="timetable.startWithWeek"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.description" for="field_description">Description</label>
-            <input type="text" class="form-control" name="description" id="field_description"
-                [(ngModel)]="timetable.description"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.colorBackground" for="field_colorBackground">Color Background</label>
-            <input type="text" class="form-control" name="colorBackground" id="field_colorBackground"
-                [(ngModel)]="timetable.colorBackground"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.colorText" for="field_colorText">Color Text</label>
-            <input type="text" class="form-control" name="colorText" id="field_colorText"
-                [(ngModel)]="timetable.colorText"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.inMonday" for="field_inMonday">In Monday</label>
-            <input type="checkbox" class="form-control" name="inMonday" id="field_inMonday"
-                [(ngModel)]="timetable.inMonday"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.inTuesday" for="field_inTuesday">In Tuesday</label>
-            <input type="checkbox" class="form-control" name="inTuesday" id="field_inTuesday"
-                [(ngModel)]="timetable.inTuesday"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.inWednesday" for="field_inWednesday">In Wednesday</label>
-            <input type="checkbox" class="form-control" name="inWednesday" id="field_inWednesday"
-                [(ngModel)]="timetable.inWednesday"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.inThursday" for="field_inThursday">In Thursday</label>
-            <input type="checkbox" class="form-control" name="inThursday" id="field_inThursday"
-                [(ngModel)]="timetable.inThursday"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.inFriday" for="field_inFriday">In Friday</label>
-            <input type="checkbox" class="form-control" name="inFriday" id="field_inFriday"
-                [(ngModel)]="timetable.inFriday"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.inSaturday" for="field_inSaturday">In Saturday</label>
-            <input type="checkbox" class="form-control" name="inSaturday" id="field_inSaturday"
-                [(ngModel)]="timetable.inSaturday"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.timetable.inSunday" for="field_inSunday">In Sunday</label>
-            <input type="checkbox" class="form-control" name="inSunday" id="field_inSunday"
-                [(ngModel)]="timetable.inSunday"  />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+                <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+            <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
         </div>
 
-        <div class="form-group">
-            <label jhiTranslate="timetableApp.timetable.place" for="field_place">Place</label>
-            <select class="form-control" id="field_place" name="place" [(ngModel)]="timetable.placeId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="placeOption.id" *ngFor="let placeOption of places; trackBy: trackPlaceById">{{placeOption.name}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label jhiTranslate="timetableApp.timetable.subject" for="field_subject">Subject</label>
-            <select class="form-control" id="field_subject" name="subject" [(ngModel)]="timetable.subjectId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="subjectOption.id" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.name}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label jhiTranslate="timetableApp.timetable.teacher" for="field_teacher">Teacher</label>
-            <select class="form-control" id="field_teacher" name="teacher" [(ngModel)]="timetable.teacherId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="teacherOption.id" *ngFor="let teacherOption of teachers; trackBy: trackTeacherById">{{teacherOption.surname}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label jhiTranslate="timetableApp.timetable.division" for="field_division">Division</label>
-            <select class="form-control" id="field_division" name="division" [(ngModel)]="timetable.divisionId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="divisionOption.id" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label jhiTranslate="timetableApp.timetable.lesson" for="field_lesson">Lesson</label>
-            <select class="form-control" id="field_lesson" name="lesson" [(ngModel)]="timetable.lessonId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="lessonOption.id" *ngFor="let lessonOption of lessons; trackBy: trackLessonById">{{lessonOption.name}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label jhiTranslate="timetableApp.timetable.period" for="field_period">Period</label>
-            <select class="form-control" id="field_period" name="period" [(ngModel)]="timetable.periodId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="periodOption.id" *ngFor="let periodOption of periods; trackBy: trackPeriodById">{{periodOption.name}}</option>
-            </select>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-        </button>
-        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-        </button>
-    </div>
+    </jhi-glass>
 </form>

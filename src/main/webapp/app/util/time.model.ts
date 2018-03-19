@@ -2,7 +2,7 @@ export class Time {
 
     hour: number;
     minute: number;
-    formattedTime: String;
+    formattedTime: string;
 
     constructor(public stringForm) {
         this.hour = parseInt(stringForm.split(':')[0], 10);
