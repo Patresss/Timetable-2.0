@@ -94,13 +94,13 @@ open class CurriculumListResource(private val curriculumListService: CurriculumL
 
 
     /**
-     * GET  /curriculum-listes/divisions : get the curriculumLists by Division owners id.
+     * GET  /curriculum-listes/division-owners : get the curriculumLists by Division owners id.
      *
      * @param divisionsId divisions id
      * @param pageable    the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of curriculumLists in body
      */
-    @GetMapping("/curriculum-listes/divisions")
+    @GetMapping("/curriculum-listes/division-owners")
     @Timed
     open fun getCurriculumListsByDivisionsId(@ApiParam pageable: Pageable, @RequestParam divisionsId: List<Long>): ResponseEntity<List<CurriculumListDTO>> {
         log.debug("REST request to get a page of CurriculumLists by Division owners id")

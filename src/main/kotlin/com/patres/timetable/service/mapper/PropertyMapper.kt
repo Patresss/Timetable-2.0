@@ -20,7 +20,7 @@ open class PropertyMapper : EntityMapper<Property, PropertyDTO>() {
             propertyKey = entityDto.propertyKey,
             propertyValue = entityDto.propertyValue)
             .apply {
-                divisionOwner = divisionRepository.getOne(entityDto.divisionOwnerId)
+                divisionOwner = entityDto.divisionOwnerId?.let { divisionRepository.getOne(it) }
                 id = entityDto.id
             }
     }

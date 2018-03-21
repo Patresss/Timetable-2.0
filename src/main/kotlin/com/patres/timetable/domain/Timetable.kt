@@ -94,7 +94,7 @@ class Timetable(
 
 ) : AbstractApplicationEntity(), Serializable {
 
-    fun getStartTimeHHmmFormatted(): String {
+    fun getStartTimeHHmmFormatted(): String? {
         return getTimeHHmmFormatted(startTime)
     }
 
@@ -102,7 +102,7 @@ class Timetable(
         startTime = getSecondsFromString(time)
     }
 
-    fun getEndTimeHHmmFormatted(): String {
+    fun getEndTimeHHmmFormatted(): String? {
         return getTimeHHmmFormatted(endTime)
     }
 

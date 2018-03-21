@@ -93,13 +93,13 @@ open class PlaceResource(private val placeService: PlaceService) {
     }
 
     /**
-     * GET  /places/divisions : get the places by Division owners id.
+     * GET  /places/division-owners : get the places by Division owners id.
      *
      * @param divisionsId divisions id
      * @param pageable    the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of places in body
      */
-    @GetMapping("/places/divisions")
+    @GetMapping("/places/division-owners")
     @Timed
     open fun getPlacesByDivisionsId(@ApiParam pageable: Pageable, @RequestParam divisionsId: List<Long>): ResponseEntity<List<PlaceDTO>> {
         log.debug("REST request to get a page of Places by Division owners id")

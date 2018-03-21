@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { Timetable } from './timetable.model';
+import {EventType, Timetable} from './timetable.model';
 import { TimetablePopupService } from './timetable-popup.service';
 import { TimetableService } from './timetable.service';
 import { Place, PlaceService } from '../place';
@@ -17,6 +17,7 @@ import { Lesson, LessonService } from '../lesson';
 import { Period, PeriodService } from '../period';
 import { ResponseWrapper } from '../../shared';
 import {SelectType} from '../../util/select-type.model';
+import {SelectUtil} from '../../util/select-data.model';
 
 @Component({
     selector: 'jhi-timetable-dialog',
@@ -31,10 +32,10 @@ export class TimetableDialogComponent implements OnInit {
     dateDp: any;
 
     eventTypeSelectOption = [
-        new SelectType(1, '', 'timetableApp.EventType.LESSON', 'STUDENT'),
-        new SelectType(2, '', 'timetableApp.EventType.SUBSTITUTION', 'SUBSTITUTION'),
-        new SelectType(3, '', 'timetableApp.EventType.SPECIAL', 'SPECIAL')];
-    selectedEventType: SelectType[] = [this.eventTypeSelectOption[0]];
+        new SelectType(1, '', 'timetableApp.EventType.LESSON', EventType.LESSON),
+        new SelectType(2, '', 'timetableApp.EventType.SUBSTITUTION', EventType.SUBSTITUTION),
+        new SelectType(3, '', 'timetableApp.EventType.SPECIAL', EventType.SPECIAL)];
+    selectedEventType: SelectType[] = [];
     eventTypeSelectSettings = {
         singleSelection: true,
         text: 'timetableApp.plan.choose.event-type',
@@ -105,28 +106,19 @@ export class TimetableDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.placeService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => { this.placeSelectOption = this.entityListToSelectList(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
-        this.subjectService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => { this.subjectSelectOption = this.entityListToSelectList(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
-        this.teacherService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => { this.teacherSelectOption = this.entityListToSelectList(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
-        this.divisionService.query()
-            .subscribe((res: ResponseWrapper) => { this.divisionSelectOption = this.entityListToSelectList(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
-        this.lessonService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => { this.lessonSelectOption = this.entityListToSelectList(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
-        this.periodService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => { this.periodSelectOption = this.entityListToSelectList(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
-    }
-
-    // TODO to samo w plan. Przneisć do wspólnej częśći
-    private entityListToSelectList(entityList: any[]) {
-        const selectList = [];
-        entityList.forEach((entity) => {
-            const obj = {id: entity.id, itemName: entity.name, item: entity};
-            selectList.push(obj)
-        });
-        return selectList;
+        this.placeService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+            .subscribe((res: ResponseWrapper) => { this.initPlaces(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
+        this.subjectService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+            .subscribe((res: ResponseWrapper) => { this.initSubjects(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
+        this.teacherService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['surname,name']})
+            .subscribe((res: ResponseWrapper) => { this.initTeachers(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
+        this.divisionService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+            .subscribe((res: ResponseWrapper) => { this.initDivisions(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
+        this.lessonService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+            .subscribe((res: ResponseWrapper) => { this.initLessons(res.json)}, (res: ResponseWrapper) => this.onError(res.json));
+        this.periodService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+            .subscribe((res: ResponseWrapper) => { this.initPeriods(res.json)}, (res: ResponseWrapper) => this.onError(res.json));
+        this.selectedEventType = this.eventTypeSelectOption.filter( (entity) => entity.type === this.timetable.type)
     }
 
     clear() {
@@ -163,28 +155,95 @@ export class TimetableDialogComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
-    trackPlaceById(index: number, item: Place) {
-        return item.id;
+// ================================================================
+// Init select
+// ================================================================
+    private initPlaces(entityList: any[]) {
+        this.placeSelectOption = SelectUtil.entityListToSelectList(entityList);
+        this.selectedPlace = this.placeSelectOption.filter( (entity) => entity.id === this.timetable.placeId)
     }
 
-    trackSubjectById(index: number, item: Subject) {
-        return item.id;
+    private initSubjects(entityList: any[]) {
+        this.subjectSelectOption = SelectUtil.entityListToSelectList(entityList);
+        this.selectedSubject = this.subjectSelectOption.filter( (entity) => entity.id === this.timetable.subjectId)
+    }
+    private initLessons(entityList: any[]) {
+        this.lessonSelectOption = SelectUtil.entityListToSelectList(entityList);
+        this.selectedLesson = this.lessonSelectOption.filter( (entity) => entity.id === this.timetable.lessonId)
     }
 
-    trackTeacherById(index: number, item: Teacher) {
-        return item.id;
+    private initTeachers(entityList: any[]) {
+        this.teacherSelectOption = SelectUtil.entityListToSelectList(entityList);
+        this.selectedTeacher = this.teacherSelectOption.filter( (entity) => entity.id === this.timetable.teacherId)
     }
 
-    trackDivisionById(index: number, item: Division) {
-        return item.id;
+    private initPeriods(entityList: any[]) {
+        this.periodSelectOption = SelectUtil.entityListToSelectList(entityList);
+        this.selectedPeriod = this.periodSelectOption.filter( (entity) => entity.id === this.timetable.periodId)
     }
 
-    trackLessonById(index: number, item: Lesson) {
-        return item.id;
+    private initDivisions(entityList: any[]) {
+        this.divisionSelectOption = SelectUtil.entityListToSelectList(entityList);
+        this.selectedDivision = this.divisionSelectOption.filter( (entity) => entity.id === this.timetable.divisionId)
     }
 
-    trackPeriodById(index: number, item: Period) {
-        return item.id;
+ // ================================================================
+// On select/deselect
+// ================================================================
+    onPlaceSelect(item: any) {
+        this.timetable.placeId = item.id;
+    }
+
+    onPlaceDeSelect() {
+        this.timetable.placeId = null;
+    }
+
+    onSubjectSelect(item: any) {
+        this.timetable.subjectId = item.id;
+    }
+
+    onSubjectDeSelect() {
+        this.timetable.subjectId = null;
+    }
+
+    onLessonSelect(item: any) {
+        this.timetable.lessonId = item.id;
+    }
+
+    onLessonDeSelect() {
+        this.timetable.lessonId = null;
+    }
+
+    onTeacherSelect(item: any) {
+        this.timetable.teacherId = item.id;
+    }
+
+    onTeacherDeSelect() {
+        this.timetable.teacherId = null;
+    }
+
+    onPeriodSelect(item: any) {
+        this.timetable.periodId = item.id;
+    }
+
+    onPeriodDeSelect() {
+        this.timetable.periodId = null;
+    }
+
+    onDivisionSelect(item: any) {
+        this.timetable.divisionId = item.id;
+    }
+
+    onDivisionDeSelect() {
+        this.timetable.divisionId = null;
+    }
+
+    onEventTypeSelect(item: any) {
+        this.timetable.type = item.type;
+    }
+
+    onEventTypeDeSelect() {
+        this.timetable.type = null;
     }
 }
 

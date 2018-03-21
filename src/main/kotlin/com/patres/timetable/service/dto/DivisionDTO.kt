@@ -28,19 +28,8 @@ class DivisionDTO(
 
     var preferredTeachers: Set<TeacherDTO> = HashSet(),
 
-    var preferredSubjects: Set<SubjectDTO> = HashSet()
+    var preferredSubjects: Set<SubjectDTO> = HashSet(),
 
-) : AbstractApplicationEntityDTO(), Serializable {
+    divisionOwnerId: Long? = null
 
-    override fun toString(): String {
-        return "DivisionDTO{" +
-            "id= $id" +
-            ", name=' $name" +
-            ", shortName='$shortName" +
-            ", numberOfPeople='$numberOfPeople" +
-            ", divisionType='$divisionType" +
-            ", colorBackground='$colorBackground" +
-            ", colorText='$colorText" +
-            "}"
-    }
-}
+) : AbstractDivisionOwnerDTO(divisionOwnerId = divisionOwnerId), Serializable

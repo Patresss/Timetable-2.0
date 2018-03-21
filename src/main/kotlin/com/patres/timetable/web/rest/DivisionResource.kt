@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed
 import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.service.DivisionService
 import com.patres.timetable.service.dto.DivisionDTO
+import com.patres.timetable.service.dto.PlaceDTO
 import com.patres.timetable.web.rest.util.HeaderUtil
 import com.patres.timetable.web.rest.util.PaginationUtil
 import io.github.jhipster.web.util.ResponseUtil
@@ -86,6 +87,37 @@ open class DivisionResource(private val divisionService: DivisionService) {
     open fun getAllDivisions(@ApiParam pageable: Pageable): ResponseEntity<List<DivisionDTO>> {
         log.debug("REST request to get a page of Divisions")
         val page = divisionService.findAll(pageable)
+        val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/divisions")
+        return ResponseEntity(page.content, headers, HttpStatus.OK)
+    }
+
+    /**
+     * GET  /places/divisions : get the places by Division owners id.
+     *
+     * @param divisionsId divisions id
+     * @param pageable    the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of places in body
+     */
+    @GetMapping("/divisions/division-owners")
+    @Timed
+    open fun getDivisionsByDivisionOwnersId(@ApiParam pageable: Pageable, @RequestParam divisionsId: List<Long>): ResponseEntity<List<DivisionDTO>> {
+        log.debug("REST request to get a page of Division by Division owners id")
+        val page = divisionService.findByDivisionOwnerId(pageable, divisionsId)
+        val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/divisions")
+        return ResponseEntity(page.content, headers, HttpStatus.OK)
+    }
+
+    /**
+     * GET  /places/login : get the places by current login.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of places in body
+     */
+    @GetMapping("/divisions/login")
+    @Timed
+    open fun getPlacesByCurrentLogin(@ApiParam pageable: Pageable): ResponseEntity<List<DivisionDTO>> {
+        log.debug("REST request to get a page of Division by current user")
+        val page = divisionService.findByCurrentLogin(pageable)
         val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/divisions")
         return ResponseEntity(page.content, headers, HttpStatus.OK)
     }

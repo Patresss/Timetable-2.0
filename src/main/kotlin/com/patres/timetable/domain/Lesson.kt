@@ -39,7 +39,7 @@ class Lesson(
 
 ) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
 
-    fun getStartTimeHHmmFormatted(): String {
+    fun getStartTimeHHmmFormatted(): String? {
         return getTimeHHmmFormatted(startTime)
     }
 
@@ -47,7 +47,7 @@ class Lesson(
         startTime = getSecondsFromString(time)
     }
 
-    fun getEndTimeHHmmFormatted(): String {
+    fun getEndTimeHHmmFormatted(): String? {
         return getTimeHHmmFormatted(endTime)
     }
 

@@ -13,6 +13,7 @@ import {PlaceService} from '../entities/place';
 import {SelectType} from '../util/select-type.model';
 import {Time} from '../util/time.model';
 import {RoleType} from '../util/role-type.model';
+import {SelectUtil} from '../util/select-data.model';
 
 @Component({
     selector: 'jhi-board',
@@ -59,7 +60,8 @@ export class PlanComponent implements OnInit, OnDestroy {
         text: 'timetableApp.plan.choose.subgroups',
         enableSearchFilter: true,
         disabled: true,
-        enableCheckAll: true
+        enableCheckAll: true,
+        badgeShowLimit: 3
     };
 
     teacherSelectOption = [];
@@ -151,15 +153,15 @@ export class PlanComponent implements OnInit, OnDestroy {
     }
 
     private onSuccessSchool(data) {
-        this.schoolSelectOption = this.entityListToSelectList(data);
+        this.schoolSelectOption = SelectUtil.entityListToSelectList(data);
     }
 
     private onSuccessClass(data) {
-        this.classSelectOption = this.entityListToSelectList(data);
+        this.classSelectOption = SelectUtil.entityListToSelectList(data);
     }
 
     private onSuccessSubgroup(data) {
-        this.subgroupSelectOption = this.entityListToSelectList(data);
+        this.subgroupSelectOption = SelectUtil.entityListToSelectList(data);
     }
 
     private onSuccessTeacher(data) {
@@ -172,20 +174,11 @@ export class PlanComponent implements OnInit, OnDestroy {
     }
 
     private onSuccessPlace(data) {
-        this.placeSelectOption = this.entityListToSelectList(data);
+        this.placeSelectOption = SelectUtil.entityListToSelectList(data);
     }
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
-    }
-
-    private entityListToSelectList(entityList: Division[]) {
-        const selectList = [];
-        entityList.forEach((entity) => {
-            const obj = {id: entity.id, itemName: entity.name, item: entity};
-            selectList.push(obj)
-        });
-        return selectList;
     }
 
     private loadTimeArray() {

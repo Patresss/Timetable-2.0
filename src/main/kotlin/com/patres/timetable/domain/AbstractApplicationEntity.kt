@@ -14,11 +14,11 @@ abstract class AbstractApplicationEntity : Serializable {
 
         val formatter = DateTimeFormatter.ofPattern("HH:mm")!!
 
-        fun getTimeHHmmFormatted(seconds: Long?): String {
+        fun getTimeHHmmFormatted(seconds: Long?): String? {
             seconds?.let { time ->
                 return LocalTime.ofSecondOfDay(time).format(formatter)
             }
-            return "00:00"
+            return null
         }
 
         fun getSecondsFromString(time: String) = LocalTime.parse(time).toSecondOfDay().toLong()

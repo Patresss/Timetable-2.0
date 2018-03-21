@@ -1,7 +1,7 @@
 import {BaseEntity} from '../../shared';
 import {Time} from '../../util/time.model';
 
-export  enum EventType {
+export enum EventType {
    LESSON = 'LESSON',
    SUBSTITUTION = 'SUBSTITUTION',
    SPECIAL = 'SPECIAL'

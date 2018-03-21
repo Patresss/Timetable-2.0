@@ -94,13 +94,13 @@ open class LessonResource(private val lessonService: LessonService) {
 
 
     /**
-     * GET  /lessons/divisions : get the lessons by Division owners id.
+     * GET  /lessons/division-owners : get the lessons by Division owners id.
      *
      * @param divisionsId divisions id
      * @param pageable    the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of lessons in body
      */
-    @GetMapping("/lessons/divisions")
+    @GetMapping("/lessons/division-owners")
     @Timed
     open fun getLessonsByDivisionsId(@ApiParam pageable: Pageable, @RequestParam divisionsId: List<Long>): ResponseEntity<List<LessonDTO>> {
         log.debug("REST request to get a page of Lessons by Division owners id")

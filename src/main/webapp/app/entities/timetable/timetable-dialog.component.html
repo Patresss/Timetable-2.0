@@ -10,6 +10,7 @@
             <jhi-alert-error></jhi-alert-error>
             <div class="form-group">
                 <label class="form-control-label" jhiTranslate="timetableApp.timetable.type" for="field_type">Type</label>
+                <div style="clear: both"></div>
                 <jhi-angular2-multiselect [data]="eventTypeSelectOption" [(ngModel)]="selectedEventType" [settings]="eventTypeSelectSettings"
                                           styleClass="edit-entity-card-select" name="selectedEventType" #type="ngModel"  required [blur]="false">
                 <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
@@ -42,12 +43,12 @@
                     <div class='col-md-6'>
                         <label jhiTranslate="timetableApp.timetable.place" for="field_place">Place</label>
                         <jhi-angular2-multiselect [data]="placeSelectOption" [(ngModel)]="selectedPlace" [settings]="placeSelectSettings"
-                                                  styleClass="edit-entity-card-select" name="selectedPlace" #type="ngModel"  required [blur]="false">
+                                                  styleClass="edit-entity-card-select" name="selectedPlace" #type="ngModel"  required [blur]="false" (onSelect)="onPlaceSelect($event)" (onDeSelect)="onPlaceDeSelect()">
                     </div>
                     <div class='col-md-6'>
                         <label jhiTranslate="timetableApp.timetable.subject" for="field_subject">Subject</label>
                         <jhi-angular2-multiselect [data]="subjectSelectOption" [(ngModel)]="selectedSubject" [settings]="subjectSelectSettings"
-                                                  styleClass="edit-entity-card-select" name="selectedSubject" #type="ngModel"  required [blur]="false">
+                                                  styleClass="edit-entity-card-select" name="selectedSubject" #type="ngModel"  required [blur]="false" (onSelect)="onSubjectSelect($event)" (onDeSelect)="onSubjectDeSelect()">
                     </div>
                 </div>
             </div>
@@ -57,12 +58,12 @@
                     <div class='col-md-6'>
                         <label jhiTranslate="timetableApp.timetable.teacher" for="field_teacher">Teacher</label>
                         <jhi-angular2-multiselect [data]="teacherSelectOption" [(ngModel)]="selectedTeacher" [settings]="teacherSelectSettings"
-                                                  styleClass="edit-entity-card-select" name="selectedTeacher" #type="ngModel"  required [blur]="false">
+                                                  styleClass="edit-entity-card-select" name="selectedTeacher" #type="ngModel"  required [blur]="false" (onSelect)="onTeacherSelect($event)" (onDeSelect)="onTeacherDeSelect()">
                     </div>
                     <div class='col-md-6'>
                         <label jhiTranslate="timetableApp.timetable.division" for="field_division">Division</label>
                         <jhi-angular2-multiselect [data]="divisionSelectOption" [(ngModel)]="selectedDivision" [settings]="divisionSelectSettings"
-                                                  styleClass="edit-entity-card-select" name="selectedDivision" #type="ngModel"  required [blur]="false">
+                                                  styleClass="edit-entity-card-select" name="selectedDivision" #type="ngModel"  required [blur]="false" (onSelect)="onDivisionSelect($event)" (onDeSelect)="onDivisionDeSelect()">
                     </div>
                 </div>
             </div>
@@ -72,17 +73,15 @@
                     <div class='col-md-6'>
                         <label jhiTranslate="timetableApp.timetable.lesson" for="field_lesson">Lesson</label>
                         <jhi-angular2-multiselect [data]="lessonSelectOption" [(ngModel)]="selectedLesson" [settings]="lessonSelectSettings"
-                                                  styleClass="edit-entity-card-select" name="selectedLesson" #type="ngModel"  required [blur]="false">
+                                                  styleClass="edit-entity-card-select" name="selectedLesson" #type="ngModel"  required [blur]="false" (onSelect)="onLessonSelect($event)" (onDeSelect)="onLessonDeSelect()">
                     </div>
                     <div class='col-md-3'>
-                        <label class="form-control-label" jhiTranslate="timetableApp.timetable.startTime" for="field_startTime">Start Time</label>
-                        <input type="number" class="form-control" name="startTime" id="field_startTime"
-                               [(ngModel)]="timetable.startTime"/>
+                        <label class="form-control-label" jhiTranslate="timetableApp.timetable.startTime" for="field_start_time">Start Time</label>
+                        <ngb-timepicker name="field_start_time" id="field_start_time" [(ngModel)]="timetable.startTime" [spinners]="false" [readonlyInputs]="true"></ngb-timepicker>
                     </div>
                     <div class='col-md-3'>
-                        <label class="form-control-label" jhiTranslate="timetableApp.timetable.endTime" for="field_endTime">End Time</label>
-                        <input type="number" class="form-control" name="endTime" id="field_endTime"
-                               [(ngModel)]="timetable.endTime"/>
+                        <label class="form-control-label" jhiTranslate="timetableApp.timetable.endTime" for="field_end_time">End Time</label>
+                        <ngb-timepicker name="field_end_time" id="field_end_time" [(ngModel)]="timetable.endTime" [spinners]="false" [readonlyInputs]="true"></ngb-timepicker>
                     </div>
                 </div>
             </div>
@@ -92,7 +91,7 @@
                     <div class='col-md-6'>
                         <label class="form-control-label" jhiTranslate="timetableApp.timetable.date" for="field_date">Date</label>
                         <div class="input-group">
-                            <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker #dateDp="ngbDatepicker" [(ngModel)]="timetable.date"/>
+                            <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker #dateDp="ngbDatepicker"  [(ngModel)]="timetable.date"/>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" (click)="dateDp.toggle()"><i class="fa fa-calendar"></i></button>
                             </span>
@@ -193,7 +192,7 @@
             <div class="form-group">
                 <label jhiTranslate="timetableApp.timetable.period" for="field_period">Period</label>
                 <jhi-angular2-multiselect [data]="periodSelectOption" [(ngModel)]="selectedPeriod" [settings]="periodSelectSettings"
-                                          styleClass="edit-entity-card-select" name="selectedPeriod" #type="ngModel"  required [blur]="false">
+                                          styleClass="edit-entity-card-select" name="selectedPeriod" #type="ngModel"  required [blur]="false" (onSelect)="onPeriodSelect($event)" (onDeSelect)="onPeriodDeSelect()">
             </div>
         </div>
         <div class="modal-footer">

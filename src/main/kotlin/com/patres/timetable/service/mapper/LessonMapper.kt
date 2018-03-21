@@ -10,17 +10,21 @@ import org.springframework.stereotype.Service
 open class LessonMapper : EntityMapper<Lesson, LessonDTO>() {
 
     @Autowired
-    lateinit private var divisionMapper: DivisionMapper
+    private lateinit var divisionMapper: DivisionMapper
 
     @Autowired
-    lateinit private var divisionRepository: DivisionRepository
+    private lateinit var divisionRepository: DivisionRepository
 
     override fun toEntity(entityDto: LessonDTO): Lesson {
         return Lesson()
             .apply {
                 name = entityDto.name
-                startTime = entityDto.startTime
-                endTime = entityDto.endTime
+                entityDto.startTimeString?.let {
+                    setStartTimeHHmmFormatted(it)
+                }
+                entityDto.endTimeString?.let {
+                    setEndTimeHHmmFormatted(it)
+                }
                 divisionOwner = divisionRepository.findOne(entityDto.divisionOwnerId)
                 id = entityDto.id
             }
@@ -30,8 +34,8 @@ open class LessonMapper : EntityMapper<Lesson, LessonDTO>() {
         return LessonDTO()
             .apply {
                 name = entity.name
-                startTime = entity.startTime
-                endTime = entity.endTime
+                startTimeString = entity.getStartTimeHHmmFormatted()
+                endTimeString = entity.getEndTimeHHmmFormatted()
                 divisionOwnerName = divisionMapper.getDivisionOwnerName(entity.divisionOwner)
                 divisionOwnerId = divisionMapper.getDivisionOwnerId(entity.divisionOwner)
                 id = entity.id

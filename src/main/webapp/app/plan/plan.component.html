@@ -105,7 +105,7 @@
 
             <div class="column column-first" [ngStyle]="{'width': firstColumnWidth +'%'}">
                 <div class="hour-label" *ngFor="let time of timeArray">
-                    {{time.formattedTime}}
+                    {{time.getFormatted()}}
                 </div>
             </div>
             <div class="column" [ngStyle]="{'width': columnWidth + '%'}" *ngFor="let planColumn of planColumns">

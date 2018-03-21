@@ -7,7 +7,7 @@
         Added the constraints for entity Division.
     -->
     <changeSet id="20170731144135-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="divisions_id"
                                  baseTableName="division_parent"
                                  constraintName="fk_division_parent_divisions_id"
@@ -18,7 +18,7 @@
                                  constraintName="fk_division_parent_parents_id"
                                  referencedColumnNames="id"
                                  referencedTableName="division"/>
-        
+
         <addForeignKeyConstraint baseColumnNames="divisions_id"
                                  baseTableName="division_user"
                                  constraintName="fk_division_user_divisions_id"
@@ -29,7 +29,7 @@
                                  constraintName="fk_division_user_users_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
-        
+
         <addForeignKeyConstraint baseColumnNames="divisions_id"
                                  baseTableName="division_preferred_teacher"
                                  constraintName="fk_division_preferred_teacher_divisions_id"
@@ -40,7 +40,7 @@
                                  constraintName="fk_division_preferred_teacher_preferred_teachers_id"
                                  referencedColumnNames="id"
                                  referencedTableName="teacher"/>
-        
+
         <addForeignKeyConstraint baseColumnNames="divisions_id"
                                  baseTableName="division_preferred_subject"
                                  constraintName="fk_division_preferred_subject_divisions_id"
@@ -51,6 +51,12 @@
                                  constraintName="fk_division_preferred_subject_preferred_subjects_id"
                                  referencedColumnNames="id"
                                  referencedTableName="subject"/>
-        
+
+        <addForeignKeyConstraint baseColumnNames="division_owner_id"
+                                 baseTableName="division"
+                                 constraintName="fk_division_division_owner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="division"/>
+
     </changeSet>
 </databaseChangeLog>

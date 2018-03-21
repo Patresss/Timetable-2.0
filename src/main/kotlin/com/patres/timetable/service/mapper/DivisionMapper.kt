@@ -1,6 +1,7 @@
 package com.patres.timetable.service.mapper
 
 import com.patres.timetable.domain.Division
+import com.patres.timetable.repository.DivisionRepository
 import com.patres.timetable.service.dto.DivisionDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -9,11 +10,16 @@ import org.springframework.stereotype.Service
 open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
 
     @Autowired
-    lateinit private var userMapper: UserMapper
+    private lateinit var userMapper: UserMapper
+
     @Autowired
-    lateinit private var teacherMapper: TeacherMapper
+    private lateinit var teacherMapper: TeacherMapper
+
     @Autowired
-    lateinit private var subjectMapper: SubjectMapper
+    private lateinit var subjectMapper: SubjectMapper
+
+    @Autowired
+    private lateinit var divisionRepository: DivisionRepository
 
     override fun toEntity(entityDto: DivisionDTO): Division {
         val division = Division(
@@ -25,6 +31,7 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 numberOfPeople = entityDto.numberOfPeople
                 colorBackground = entityDto.colorBackground
                 colorText = entityDto.colorText
+                divisionOwner = entityDto.divisionOwnerId?.let { divisionRepository.getOne(it) }
             }
 
 
@@ -50,6 +57,8 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 numberOfPeople = entity.numberOfPeople
                 colorBackground = entity.colorBackground
                 colorText = entity.colorText
+                divisionOwnerId = getDivisionOwnerId(entity.divisionOwner)
+                divisionOwnerName = getDivisionOwnerName(entity.divisionOwner)
             }
 
         val divisionDtoSet = entitySetToEntityDTOSet(entity.parents)

@@ -25,7 +25,7 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
         val place = Place(
             name = entityDto.name)
             .apply {
-                divisionOwner = divisionRepository.getOne(entityDto.divisionOwnerId)
+                divisionOwner = entityDto.divisionOwnerId?.let { divisionRepository.getOne(it) }
                 id = entityDto.id
                 numberOfSeats = entityDto.numberOfSeats
                 shortName = entityDto.shortName

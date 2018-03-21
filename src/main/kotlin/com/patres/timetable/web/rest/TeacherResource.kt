@@ -97,13 +97,13 @@ open class TeacherResource(private val teacherService: TeacherService) {
     }
 
     /**
-     * GET  /teachers/divisions : get the teachers by Division owners id.
+     * GET  /teachers/division-owners : get the teachers by Division owners id.
      *
      * @param divisionsId divisions id
      * @param pageable    the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of teachers in body
      */
-    @GetMapping("/teachers/divisions")
+    @GetMapping("/teachers/division-owners")
     @Timed
     open fun getTeachersByDivisionsId(@ApiParam pageable: Pageable, @RequestParam divisionsId: List<Long>): ResponseEntity<List<TeacherDTO>> {
         log.debug("REST request to get a page of Teachers by Division owners id")

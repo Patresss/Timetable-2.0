@@ -5,9 +5,10 @@ import {Observable} from 'rxjs/Rx';
 import {Division} from './division.model';
 import {ResponseWrapper} from '../../shared';
 import {EntityService} from '../entity.service';
+import {DivisionOwnerEntityService} from '../division-owner-entity.service';
 
 @Injectable()
-export class DivisionService extends EntityService<Division> {
+export class DivisionService extends DivisionOwnerEntityService<Division> {
 
     constructor(http: Http) {
         super(http, 'divisions')

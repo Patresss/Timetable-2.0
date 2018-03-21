@@ -9,10 +9,10 @@ class LessonDTO(
     var name: String? = null,
 
     @get:NotNull
-    var startTime: Long? = null,
+    var startTimeString: String? = null,
 
     @get:NotNull
-    var endTime: Long? = null,
+    var endTimeString: String? = null,
 
     divisionOwnerId: Long? = null
 

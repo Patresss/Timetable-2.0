@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
-open class DivisionService(entityRepository: DivisionRepository, entityMapper: EntityMapper<Division, DivisionDTO>) : EntityService<Division, DivisionDTO, DivisionRepository>(entityRepository, entityMapper) {
+open class DivisionService(entityRepository: DivisionRepository, entityMapper: EntityMapper<Division, DivisionDTO>) : DivisionOwnerService<Division, DivisionDTO, DivisionRepository>(entityRepository, entityMapper) {
 
     private val log = LoggerFactory.getLogger(DivisionService::class.java)
 

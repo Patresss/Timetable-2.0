@@ -72,8 +72,8 @@ export class TimetableService extends EntityService<Timetable> {
         copy.startDate = this.dateUtils.convertLocalDateToServer(timetable.startDate);
         copy.endDate = this.dateUtils.convertLocalDateToServer(timetable.endDate);
         copy.date = this.dateUtils.convertLocalDateToServer(timetable.date);
-        copy.startTimeString = timetable.startTime.formattedTime;
-        copy.endTimeString = timetable.endTime.formattedTime;
+        copy.startTimeString = Time.createTimeFromTimePicker(timetable.startTime).getFormatted();
+        copy.endTimeString = Time.createTimeFromTimePicker(timetable.endTime).getFormatted();
         return copy;
     }
 }

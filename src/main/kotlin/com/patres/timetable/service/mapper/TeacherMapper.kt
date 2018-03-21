@@ -24,7 +24,7 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             name = entityDto.name,
             surname = entityDto.surname
         ).apply {
-            divisionOwner = divisionRepository.getOne(entityDto.divisionOwnerId)
+            divisionOwner = entityDto.divisionOwnerId?.let { divisionRepository.getOne(it) }
             id = entityDto.id
             degree = entityDto.degree
             shortName = entityDto.shortName

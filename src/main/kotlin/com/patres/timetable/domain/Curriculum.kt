@@ -52,7 +52,7 @@ class Curriculum(
 
 ) : AbstractApplicationEntity(), Serializable {
 
-    fun getStartTimeHHmmFormatted(): String {
+    fun getStartTimeHHmmFormatted(): String? {
         return getTimeHHmmFormatted(startTime)
     }
 
@@ -60,7 +60,7 @@ class Curriculum(
         startTime = getSecondsFromString(time)
     }
 
-    fun getEndTimeHHmmFormatted(): String {
+    fun getEndTimeHHmmFormatted(): String? {
         return getTimeHHmmFormatted(endTime)
     }
 

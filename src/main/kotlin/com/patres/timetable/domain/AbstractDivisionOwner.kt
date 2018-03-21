@@ -9,7 +9,6 @@ import java.io.Serializable
 abstract class AbstractDivisionOwner(
 
     @ManyToOne
-    @get:NotNull
-    var divisionOwner: Division? = null
+    open var divisionOwner: Division? = null
 
 ) : AbstractApplicationEntity()

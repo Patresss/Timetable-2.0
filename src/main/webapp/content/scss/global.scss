@@ -24,12 +24,28 @@ Generic styles
 ========================================================================== */
 
 /* Error highlight on input fields */
-.ng-valid[required], .ng-valid.required {
-    border-left: 5px solid green;
+input.ng-valid[required], .ng-valid.required {
+    border-left: 5px solid $brand-success;
+}
+
+input.ng-invalid:not(form) {
+    border-left: 5px solid $brand-danger;
 }
 
 .ng-invalid:not(form) {
-    border-left: 5px solid red;
+
+    .c-btn {
+        border-left: 5px solid $brand-danger !important;
+    }
+
+}
+
+.ng-valid[required], .ng-valid.required {
+
+    .c-btn {
+        border-left: 5px solid $brand-success !important;
+    }
+
 }
 
 /* other generic styles */
@@ -708,4 +724,7 @@ a:hover {
     transform: scaleX(1);
     transform-origin: bottom left;
 }
+
+
+
 

@@ -1,6 +1,7 @@
 package com.patres.timetable.web.rest
 
 import com.patres.timetable.TimetableApp
+import com.patres.timetable.domain.AbstractApplicationEntity
 import com.patres.timetable.domain.Lesson
 import com.patres.timetable.repository.DivisionRepository
 import com.patres.timetable.repository.LessonRepository
@@ -32,27 +33,27 @@ import org.springframework.transaction.annotation.Transactional
 open class LessonResourceIntTest {
 
     @Autowired
-    lateinit private var lessonRepository: LessonRepository
+    private lateinit var lessonRepository: LessonRepository
 
     @Autowired
-    lateinit private var divisionRepository: DivisionRepository
+    private lateinit var divisionRepository: DivisionRepository
 
     @Autowired
-    lateinit private var lessonMapper: LessonMapper
+    private lateinit var lessonMapper: LessonMapper
 
     @Autowired
-    lateinit private var lessonService: LessonService
+    private lateinit var lessonService: LessonService
 
     @Autowired
-    lateinit private var jacksonMessageConverter: MappingJackson2HttpMessageConverter
+    private lateinit var jacksonMessageConverter: MappingJackson2HttpMessageConverter
 
     @Autowired
-    lateinit private var pageableArgumentResolver: PageableHandlerMethodArgumentResolver
+    private lateinit var pageableArgumentResolver: PageableHandlerMethodArgumentResolver
 
     @Autowired
-    lateinit private var exceptionTranslator: ExceptionTranslator
+    private lateinit var exceptionTranslator: ExceptionTranslator
 
-    lateinit private var restLessonMockMvc: MockMvc
+    private lateinit var restLessonMockMvc: MockMvc
 
     private var lesson: Lesson = createEntity()
 
@@ -61,11 +62,11 @@ open class LessonResourceIntTest {
         private val DEFAULT_NAME = "AAAAAAAAAA"
         private val UPDATED_NAME = "BBBBBBBBBB"
 
-        private val DEFAULT_START_TIME = 1L
-        private val UPDATED_START_TIME = 2L
+        private const val DEFAULT_START_TIME = "12:34"
+        private const val UPDATED_START_TIME = "13:56"
 
-        private val DEFAULT_END_TIME = 1L
-        private val UPDATED_END_TIME = 2L
+        private const val DEFAULT_END_TIME = "14:34"
+        private const val UPDATED_END_TIME = "15:56"
 
         /**
          * Create an entity for this test.
@@ -74,7 +75,10 @@ open class LessonResourceIntTest {
          * if they test an entity which requires the current entity.
          */
         fun createEntity(): Lesson {
-            return Lesson(DEFAULT_NAME, DEFAULT_START_TIME, DEFAULT_END_TIME)
+            return Lesson(DEFAULT_NAME).apply {
+                setStartTimeHHmmFormatted(DEFAULT_START_TIME)
+                setEndTimeHHmmFormatted(DEFAULT_END_TIME)
+            }
         }
 
         fun createEntityDto(): LessonDTO {
@@ -121,8 +125,8 @@ open class LessonResourceIntTest {
         assertThat(lessonList).hasSize(databaseSizeBeforeCreate + 1)
         val testLesson = lessonList[lessonList.size - 1]
         assertThat(testLesson.name).isEqualTo(DEFAULT_NAME)
-        assertThat(testLesson.startTime).isEqualTo(DEFAULT_START_TIME)
-        assertThat(testLesson.endTime).isEqualTo(DEFAULT_END_TIME)
+        assertThat(testLesson.startTime).isEqualTo(AbstractApplicationEntity.getSecondsFromString(DEFAULT_START_TIME))
+        assertThat(testLesson.endTime).isEqualTo(AbstractApplicationEntity.getSecondsFromString(DEFAULT_END_TIME))
     }
 
     @Test
@@ -219,8 +223,8 @@ open class LessonResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(lesson.id?.toInt())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].startTimeString").value(hasItem(DEFAULT_START_TIME.toInt())))
-            .andExpect(jsonPath("$.[*].endTimeString").value(hasItem(DEFAULT_END_TIME.toInt())))
+            .andExpect(jsonPath("$.[*].startTimeString").value(hasItem(DEFAULT_START_TIME)))
+            .andExpect(jsonPath("$.[*].endTimeString").value(hasItem(DEFAULT_END_TIME)))
     }
 
     @Test
@@ -236,8 +240,8 @@ open class LessonResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(lesson.id?.toInt()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.startTimeString").value(DEFAULT_START_TIME.toInt()))
-            .andExpect(jsonPath("$.endTimeString").value(DEFAULT_END_TIME.toInt()))
+            .andExpect(jsonPath("$.startTimeString").value(DEFAULT_START_TIME))
+            .andExpect(jsonPath("$.endTimeString").value(DEFAULT_END_TIME))
     }
 
     @Test
@@ -258,10 +262,11 @@ open class LessonResourceIntTest {
         val databaseSizeBeforeUpdate = lessonRepository.findAll().size
 
         // Update the lesson
-        val updatedLesson = lessonRepository.findOne(lesson.id)
-        updatedLesson.name = UPDATED_NAME
-        updatedLesson.startTime = UPDATED_START_TIME
-        updatedLesson.endTime = UPDATED_END_TIME
+        val updatedLesson = lessonRepository.findOne(lesson.id).apply {
+            setStartTimeHHmmFormatted(UPDATED_START_TIME)
+            setEndTimeHHmmFormatted(UPDATED_END_TIME)
+            name = UPDATED_NAME
+        }
         val lessonDTO = lessonMapper.toDto(updatedLesson)
 
         restLessonMockMvc.perform(put("/api/lessons")
@@ -274,8 +279,8 @@ open class LessonResourceIntTest {
         assertThat(lessonList).hasSize(databaseSizeBeforeUpdate)
         val testLesson = lessonList[lessonList.size - 1]
         assertThat(testLesson.name).isEqualTo(UPDATED_NAME)
-        assertThat(testLesson.startTime).isEqualTo(UPDATED_START_TIME)
-        assertThat(testLesson.endTime).isEqualTo(UPDATED_END_TIME)
+        assertThat(testLesson.startTime).isEqualTo(AbstractApplicationEntity.getSecondsFromString(UPDATED_START_TIME))
+        assertThat(testLesson.endTime).isEqualTo(AbstractApplicationEntity.getSecondsFromString(UPDATED_END_TIME))
     }
 
     @Test

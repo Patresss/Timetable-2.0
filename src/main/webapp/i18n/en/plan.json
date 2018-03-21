@@ -10,7 +10,11 @@
                 "subgroups": "Choose subgroups",
                 "plan-type": "Choose a type of plan",
                 "teacher": "Choose a teacher",
-                "place": "Choose a place"
+                "lesson": "Choose a lesson",
+                "place": "Choose a place",
+                "subject": "Choose a subject",
+                "division": "Choose a division",
+                "period": "Choose a period"
             },
             "type": {
                 "STUDENT": "Student",

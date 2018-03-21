@@ -94,13 +94,13 @@ open class PeriodResource(private val periodService: PeriodService) {
 
 
     /**
-     * GET  /periods/divisions : get the periods by Division owners id.
+     * GET  /periods/division-owners : get the periods by Division owners id.
      *
      * @param divisionsId divisions id
      * @param pageable    the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of periods in body
      */
-    @GetMapping("/periods/divisions")
+    @GetMapping("/periods/division-owners")
     @Timed
     open fun getPeriodsByDivisionsId(@ApiParam pageable: Pageable, @RequestParam divisionsId: List<Long>): ResponseEntity<List<PeriodDTO>> {
         log.debug("REST request to get a page of Periods by Division owners id")

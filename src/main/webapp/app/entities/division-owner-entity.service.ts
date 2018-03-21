@@ -13,7 +13,7 @@ export abstract class DivisionOwnerEntityService<EntityType> extends EntityServi
                 entityName: String) {
         super(http, entityName);
         this.resourceByCurrentLoginUrl = SERVER_API_URL + 'api/' + entityName + '/login';
-        this.resourceByDivisionsIdUrl = SERVER_API_URL + 'api/' + entityName + '/divisions';
+        this.resourceByDivisionsIdUrl = SERVER_API_URL + 'api/' + entityName + '/division-owners';
     }
 
     findByDivision(ids: number[], req?: any): Observable<ResponseWrapper> {

@@ -25,7 +25,7 @@ open class PeriodMapper : EntityMapper<Period, PeriodDTO>() {
         val period = Period(
             name = entityDto.name
         ).apply {
-            divisionOwner = divisionRepository.getOne(entityDto.divisionOwnerId)
+            divisionOwner = entityDto.divisionOwnerId?.let { divisionRepository.getOne(it) }
             id = entityDto.id
         }
 

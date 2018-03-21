@@ -93,10 +93,11 @@ class Division(
     @ManyToMany(mappedBy = "preferredDivisions")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferredPlaces: Set<Place> = HashSet()
+    var preferredPlaces: Set<Place> = HashSet(),
 
-) : AbstractApplicationEntity(), Serializable {
+    divisionOwner: Division? = null
 
+) : AbstractDivisionOwner(divisionOwner), Serializable {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

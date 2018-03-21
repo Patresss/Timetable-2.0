@@ -92,13 +92,13 @@ open class SubjectResource(private val subjectService: SubjectService) {
     }
 
     /**
-     * GET  /subjects/divisions : get all the subjects by Division owners id.
+     * GET  /subjects/division-owners : get all the subjects by Division owners id.
      *
      * @param divisionsId divisions id
      * @param pageable    the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of subjects in body
      */
-    @GetMapping("/subjects/divisions")
+    @GetMapping("/subjects/division-owners")
     @Timed
     open fun getSubjectsByDivisionsId(@ApiParam pageable: Pageable, @RequestParam divisionsId: List<Long>): ResponseEntity<List<SubjectDTO>> {
         log.debug("REST request to get a page of Subjects by Division owners id")

@@ -10,7 +10,11 @@
                 "subgroups": "Wybierz podgrupy",
                 "plan-type": "Wybierz typ planu",
                 "teacher": "Wybierz nauczyciela",
-                "place": "Wybierz sale"
+                "lesson": "Wybierz lekcje",
+                "place": "Wybierz sale",
+                "subject": "Wybierz przedmiot",
+                "division": "Wybierz grupę",
+                "period": "Wybierz okres czasu"
             },
             "type": {
                 "STUDENT": "Uczeń",
