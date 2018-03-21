@@ -5,7 +5,7 @@
     </jhi-glass>
 
 
-    <div class="sign-elements">
+    <div class="sign-elements" *ngIf="!isAuthenticated()">
         <jhi-glass contentClass="sign-element-container">
             <button class="glass-button hover-underline-animation" (click)="login()" jhiTranslate="home.sign-in">Sign in</button>
         </jhi-glass>
