@@ -33,7 +33,7 @@
                 <label class='col-md-6' jhiTranslate="timetableApp.timetable.date">Date</label>
             </div>
             <div class='row'>
-                <p class='col-md-6'> {{timetable.startTime.formattedTime}} - {{timetable.endTime.formattedTime}}</p>
+                <p class='col-md-6'> {{timetable.startTime.getFormatted()}} - {{timetable.endTime.getFormatted()}}</p>
                 <p class='col-md-6'> {{timetableDate | date:'dd-MM-yyyy'}}</p>
             </div>
             <div class='row' *ngIf="timetable.description">
