@@ -4,8 +4,8 @@ export class Time {
     minute: number;
     second: number;
 
-    static createTimeFromTimePicker(timePicker:any) {
-        return new Time(timePicker.hour + ":" + timePicker.minute)
+    static createTimeFromTimePicker(timePicker: any) {
+        return new Time(timePicker.hour + ':' + timePicker.minute);
     }
 
     constructor(stringForm: string) {
@@ -22,6 +22,5 @@ export class Time {
     public getMinutes() {
         return 60 * this.hour + this.minute;
     }
-
 
 }

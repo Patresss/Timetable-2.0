@@ -17,7 +17,7 @@ import { Lesson, LessonService } from '../lesson';
 import { Period, PeriodService } from '../period';
 import { ResponseWrapper } from '../../shared';
 import {SelectType} from '../../util/select-type.model';
-import {SelectUtil} from '../../util/select-data.model';
+import {SelectUtil} from '../../util/select-util.model';
 
 @Component({
     selector: 'jhi-timetable-dialog',
@@ -30,6 +30,7 @@ export class TimetableDialogComponent implements OnInit {
     startDateDp: any;
     endDateDp: any;
     dateDp: any;
+    series = false;
 
     eventTypeSelectOption = [
         new SelectType(1, '', 'timetableApp.EventType.LESSON', EventType.LESSON),
@@ -128,11 +129,9 @@ export class TimetableDialogComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.timetable.id !== undefined) {
-            this.subscribeToSaveResponse(
-                this.timetableService.update(this.timetable));
+            this.subscribeToSaveResponse(this.timetableService.update(this.timetable));
         } else {
-            this.subscribeToSaveResponse(
-                this.timetableService.create(this.timetable));
+            this.subscribeToSaveResponse(this.timetableService.create(this.timetable));
         }
     }
 
@@ -173,7 +172,7 @@ export class TimetableDialogComponent implements OnInit {
     }
 
     private initTeachers(entityList: any[]) {
-        this.teacherSelectOption = SelectUtil.entityListToSelectList(entityList);
+        this.teacherSelectOption = SelectUtil.teacherListToSelectList(entityList);
         this.selectedTeacher = this.teacherSelectOption.filter( (entity) => entity.id === this.timetable.teacherId)
     }
 

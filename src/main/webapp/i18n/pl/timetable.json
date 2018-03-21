@@ -35,12 +35,13 @@
             "inSaturday": "Sobota",
             "inSunday": "Niedziela",
             "place": "Miejsce",
-            "subject": "Przemdiot",
+            "subject": "Przedmiot",
             "teacher": "Nauczyciel",
             "division": "Grupa",
             "lesson": "Lekcja",
             "period": "Okres czasu",
-            "time": "Czas"
+            "time": "Czas",
+            "series": "Seria"
         }
     }
 }

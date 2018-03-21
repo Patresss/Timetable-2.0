@@ -39,7 +39,7 @@
                     <div class="col-md-4">
                         <label class="select-label" jhiTranslate="timetableApp.DivisionType.SUBGROUP"></label>
                         <jhi-angular2-multiselect [data]="subgroupSelectOption" [(ngModel)]="selectedSubgroup" [settings]="subgroupSelectSettings"
-                                                  (onSelect)="reloadTimetables()" (onSelectAll)="reloadTimetables()" (reloadTimetables)="reloadTimetables()"
+                                                  (onSelect)="reloadTimetables()" (onSelectAll)="reloadTimetables()" (onDeSelectAll)="reloadTimetables()"
                                                   (onDeSelect)="reloadTimetables()"
                                                   styleClass="plan-select">
                         </jhi-angular2-multiselect>

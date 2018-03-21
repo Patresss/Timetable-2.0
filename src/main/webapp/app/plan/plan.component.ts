@@ -13,7 +13,7 @@ import {PlaceService} from '../entities/place';
 import {SelectType} from '../util/select-type.model';
 import {Time} from '../util/time.model';
 import {RoleType} from '../util/role-type.model';
-import {SelectUtil} from '../util/select-data.model';
+import {SelectUtil} from '../util/select-util.model';
 
 @Component({
     selector: 'jhi-board',
@@ -165,12 +165,7 @@ export class PlanComponent implements OnInit, OnDestroy {
     }
 
     private onSuccessTeacher(data) {
-        const selectList = [];
-        data.forEach((entity) => {
-            const obj = {id: entity.id, itemName: entity.fullName};
-            selectList.push(obj)
-        });
-        this.teacherSelectOption = selectList;
+        this.teacherSelectOption = SelectUtil.teacherListToSelectList(data);
     }
 
     private onSuccessPlace(data) {

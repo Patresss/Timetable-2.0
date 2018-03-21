@@ -237,11 +237,13 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
 
     isSelected(clickedItem: ListItem) {
         let found = false;
-        this.selectedItems.forEach((item) => {
-            if (clickedItem.id === item.id) {
-                found = true;
-            }
-        });
+        if (this.selectedItems) {
+            this.selectedItems.forEach((item) => {
+                if (clickedItem.id === item.id) {
+                    found = true;
+                }
+            });
+        }
         return found;
     }
 

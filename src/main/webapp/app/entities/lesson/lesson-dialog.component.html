@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="timetableApp.lesson.startTime" for="field_startTime">Start Time</label>
-            <ngb-timepicker name="startTime" id="field_startTime" [(ngModel)]="lesson.startTime" [spinners]="false"></ngb-timepicker>
+            <ngb-timepicker name="startTime" id="field_startTime" [(ngModel)]="lesson.startTime" [spinners]="false" required></ngb-timepicker>
             <div [hidden]="!(editForm.controls.startTime?.dirty && editForm.controls.startTime?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.startTime?.errors?.required" jhiTranslate="entity.validation.required">
@@ -39,7 +39,7 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="timetableApp.lesson.endTime" for="field_endTime">End Time</label>
-            <ngb-timepicker name="endTime" id="field_endTime" [(ngModel)]="lesson.endTime" [spinners]="false"></ngb-timepicker>
+            <ngb-timepicker name="endTime" id="field_endTime" [(ngModel)]="lesson.endTime" [spinners]="false" required></ngb-timepicker>
             <div [hidden]="!(editForm.controls.endTime?.dirty && editForm.controls.endTime?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.endTime?.errors?.required" jhiTranslate="entity.validation.required">

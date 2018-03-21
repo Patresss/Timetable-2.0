@@ -40,7 +40,8 @@
             "division": "Division",
             "lesson": "Lesson",
             "period": "Period",
-            "time": "Time"
+            "time": "Time",
+            "series": "Series"
         }
     }
 }
