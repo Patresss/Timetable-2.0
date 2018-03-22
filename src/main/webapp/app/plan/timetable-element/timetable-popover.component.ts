@@ -1,12 +1,19 @@
-import {Component, HostListener, Input} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {EventType, Timetable} from '../../entities/timetable';
+import {JhiEventManager} from 'ng-jhipster';
+import {Subscription} from 'rxjs/Subscription';
+import {RoleType} from '../../util/role-type.model';
+import {Account, Principal} from '../../shared';
 
 @Component({
     selector: 'jhi-timetable-popover',
     templateUrl: './timetable-popover.html',
     styleUrls: ['./timetable-popover.component.scss'],
 })
-export class TimetableElementComponent {
+export class TimetableElementComponent implements OnInit {
+
+    eventSubscriber: Subscription;
+    currentAccount: Account;
 
     EventType = EventType;
 
@@ -17,9 +24,26 @@ export class TimetableElementComponent {
     timetableDate: Date;
 
     @Input()
-    canModifyTimetable: boolean;
+    selectedSchool: any;
 
     lastPopoverRef: any;
+
+    constructor(private eventManager: JhiEventManager,
+                private principal: Principal) {
+    }
+
+    ngOnInit() {
+        this.loadCurrentAccount();
+        this.registerChangeOnUser();
+    }
+
+    private loadCurrentAccount() {
+        if (this.principal.isAuthenticated()) {
+            this.principal.identity().then((account) => {
+                this.currentAccount = account;
+            });
+        }
+    }
 
     @HostListener('document:click', ['$event'])
     clickOutside(event) {
@@ -43,4 +67,22 @@ export class TimetableElementComponent {
         console.log('goToEdit')
     }
 
+    registerChangeOnUser() {
+        this.eventSubscriber = this.eventManager.subscribe(
+            'authenticationSuccess',
+            (response) => this.loadCurrentAccount()
+        );
+    }
+
+    canModifyTimetable() {
+        if (this.currentAccount) {
+            if (this.currentAccount.authorities.indexOf(RoleType.ROLE_ADMIN.toString()) > -1) {
+                return true;
+            } else if (this.currentAccount.authorities.indexOf(RoleType.ROLE_SCHOOL_ADMIN.toString()) > -1) {
+                return this.selectedSchool.users.indexOf(this.currentAccount.id) > -1;
+            }
+        } else {
+            return false;
+        }
+    }
 }

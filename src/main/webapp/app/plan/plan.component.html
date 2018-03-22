@@ -113,7 +113,7 @@
                 </div>
                 <div class="event-container" *ngFor="let cell of planColumn.planCells" [ngStyle]="{'top': cell.startHeightPercent + '%', 'bottom': 100.0 - cell.endHeightPercent + '%', 'left': cell.startWidthPercent + '%', 'right': 100.0 - cell.endWidthPercent + '%'}">
                     <div class="event-blur-background"></div>
-                    <jhi-timetable-popover [timetable]="cell.timetable" [canModifyTimetable]="canModifyTimetable" [timetableDate]="planColumn.date"></jhi-timetable-popover>
+                    <jhi-timetable-popover [timetable]="cell.timetable" [selectedSchool]="selectedSchool[0].item" [timetableDate]="planColumn.date"></jhi-timetable-popover>
                 </div>
             </div>
             <div style="clear: both;"></div>

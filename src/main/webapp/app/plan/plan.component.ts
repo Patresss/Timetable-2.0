@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from 'ng-jhipster';
@@ -34,7 +34,6 @@ export class PlanComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
-    canModifyTimetable = false;
 
     schoolSelectOption = [];
     selectedSchool = [];
@@ -191,7 +190,6 @@ export class PlanComponent implements OnInit, OnDestroy {
 // School
 // ================================================================
     onSchoolSelect(item: any) {
-        this.calculateModifyFlag();
         this.clearClassesSelect();
         this.loadSchoolEntity(item);
 
@@ -199,18 +197,6 @@ export class PlanComponent implements OnInit, OnDestroy {
         this.classSelectSettings = Object.assign({}, this.classSelectSettings); // workaround to detect change
 
         this.reloadTimetables();
-    }
-
-    private calculateModifyFlag() {
-        if (this.currentAccount) {
-            if (this.currentAccount.authorities.indexOf(RoleType.ROLE_ADMIN.toString()) > -1) {
-                this.canModifyTimetable = true;
-            } else if (this.currentAccount.authorities.indexOf(RoleType.ROLE_SCHOOL_ADMIN.toString()) > -1) {
-                this.canModifyTimetable = this.selectedSchool[0].item.users.indexOf(this.currentAccount.id) > -1;
-            }
-        } else {
-            this.canModifyTimetable = false;
-        }
     }
 
     private loadSchoolEntity(item: any) {
