@@ -595,6 +595,10 @@ a:hover {
     background: transparentize($light-text-color, 0.2);
     color: $accent-color-strong-dark;
     input {
+        background: transparentize($accent-color-strong-light, 0.2);
+    }
+
+    input:focus {
         background: $accent-color-strong-light;
     }
 }
@@ -726,5 +730,12 @@ a:hover {
 }
 
 
+.full-page-popup {
+    width: 80%;
+    margin: auto;
+}
 
+.modal-content {
+    background: transparent;
+}
 

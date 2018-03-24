@@ -123,6 +123,7 @@ export class PlanComponent implements OnInit, OnDestroy {
             (res: ResponseWrapper) => this.onSuccessSchool(res.json),
             (res: ResponseWrapper) => this.onError(res.json)
         );
+        this.registerChangeOnTimetable();
     }
 
     sort() {
@@ -181,6 +182,13 @@ export class PlanComponent implements OnInit, OnDestroy {
 
             this.timeArray.push(new Time(hour + ':00'));
         }
+    }
+
+    registerChangeOnTimetable() {
+        this.eventSubscriber = this.eventManager.subscribe(
+            'timetableListModification',
+            (response) => this.reloadTimetables()
+        );
     }
 
 // ================================================================================================================================
@@ -316,7 +324,7 @@ export class PlanComponent implements OnInit, OnDestroy {
 // ================================================================
     onTypeSelect(item: any) {
         this.clearPlanColumns();
-
+        this.reloadTimetables();
     }
 
 // ================================================================================================================================
