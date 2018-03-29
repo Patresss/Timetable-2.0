@@ -1,81 +1,83 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-
-    <div class="modal-header">
-        <h4 class="modal-title" id="myPlaceLabel" jhiTranslate="timetableApp.place.home.createOrEditLabel">Create or edit a Place</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;</button>
-    </div>
-    <div class="modal-body">
-        <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!place.id">
-            <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="place.id" readonly />
+    <jhi-glass contentClass="edit-entity-card">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myPlaceLabel" jhiTranslate="timetableApp.place.home.createOrEditLabel">Create or edit a Place</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                    (click)="clear()">&times;
+            </button>
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.place.name" for="field_name">Name</label>
-            <input type="text" class="form-control" name="name" id="field_name"
-                [(ngModel)]="place.name" required />
-            <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
+        <div class="modal-body">
+            <jhi-alert-error></jhi-alert-error>
+            <div class="form-group" [hidden]="!place.id">
+                <label for="id" jhiTranslate="global.field.id">ID</label>
+                <input type="text" class="form-control" id="id" name="id"
+                       [(ngModel)]="place.id" readonly/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.place.name" for="field_name">Name</label>
+                <input type="text" class="form-control" name="name" id="field_name"
+                       [(ngModel)]="place.name" required/>
+                <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.place.numberOfSeats" for="field_numberOfSeats">Number Of Seats</label>
+                <input type="number" class="form-control" name="numberOfSeats" id="field_numberOfSeats"
+                       [(ngModel)]="place.numberOfSeats"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.place.shortName" for="field_shortName">Short Name</label>
+                <input type="text" class="form-control" name="shortName" id="field_shortName"
+                       [(ngModel)]="place.shortName"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.place.colorBackground" for="field_colorBackground">Color Background</label>
+                <input type="text" class="form-control" name="colorBackground" id="field_colorBackground"
+                       [(ngModel)]="place.colorBackground"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.place.colorText" for="field_colorText">Color Text</label>
+                <input type="text" class="form-control" name="colorText" id="field_colorText"
+                       [(ngModel)]="place.colorText"/>
+            </div>
+
+            <div class="form-group">
+                <label jhiTranslate="timetableApp.place.preferredSubject" for="field_preferredSubject">Preferred Subject</label>
+                <select class="form-control" id="field_preferredSubject" multiple name="preferredSubject" [(ngModel)]="place.preferredSubjects">
+                    <option [ngValue]="getSelected(place.preferredSubjects, subjectOption)" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label jhiTranslate="timetableApp.place.preferredDivision" for="field_preferredDivision">Preferred Division</label>
+                <select class="form-control" id="field_preferredDivision" multiple name="preferredDivision" [(ngModel)]="place.preferredDivisions">
+                    <option [ngValue]="getSelected(place.preferredDivisions, divisionOption)" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label jhiTranslate="timetableApp.place.preferredTeacher" for="field_preferredTeacher">Preferred Teacher</label>
+                <select class="form-control" id="field_preferredTeacher" multiple name="preferredTeacher" [(ngModel)]="place.preferredTeachers">
+                    <option [ngValue]="getSelected(place.preferredTeachers, teacherOption)" *ngFor="let teacherOption of teachers; trackBy: trackTeacherById">{{teacherOption.surname}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label jhiTranslate="timetableApp.place.divisionOwner" for="field_division">Division</label>
+                <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="place.divisionOwnerId">
+                    <option [ngValue]="null"></option>
+                    <option [ngValue]="divisionOption.id" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
+                </select>
             </div>
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.place.numberOfSeats" for="field_numberOfSeats">Number Of Seats</label>
-            <input type="number" class="form-control" name="numberOfSeats" id="field_numberOfSeats"
-                [(ngModel)]="place.numberOfSeats"  />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+                <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+            <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.place.shortName" for="field_shortName">Short Name</label>
-            <input type="text" class="form-control" name="shortName" id="field_shortName"
-                [(ngModel)]="place.shortName"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.place.colorBackground" for="field_colorBackground">Color Background</label>
-            <input type="text" class="form-control" name="colorBackground" id="field_colorBackground"
-                [(ngModel)]="place.colorBackground"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.place.colorText" for="field_colorText">Color Text</label>
-            <input type="text" class="form-control" name="colorText" id="field_colorText"
-                [(ngModel)]="place.colorText"  />
-        </div>
-
-        <div class="form-group">
-            <label jhiTranslate="timetableApp.place.preferredSubject" for="field_preferredSubject">Preferred Subject</label>
-            <select class="form-control" id="field_preferredSubject" multiple name="preferredSubject" [(ngModel)]="place.preferredSubjects">
-                <option [ngValue]="getSelected(place.preferredSubjects, subjectOption)" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.name}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label jhiTranslate="timetableApp.place.preferredDivision" for="field_preferredDivision">Preferred Division</label>
-            <select class="form-control" id="field_preferredDivision" multiple name="preferredDivision" [(ngModel)]="place.preferredDivisions">
-                <option [ngValue]="getSelected(place.preferredDivisions, divisionOption)" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label jhiTranslate="timetableApp.place.preferredTeacher" for="field_preferredTeacher">Preferred Teacher</label>
-            <select class="form-control" id="field_preferredTeacher" multiple name="preferredTeacher" [(ngModel)]="place.preferredTeachers">
-                <option [ngValue]="getSelected(place.preferredTeachers, teacherOption)" *ngFor="let teacherOption of teachers; trackBy: trackTeacherById">{{teacherOption.surname}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label jhiTranslate="timetableApp.place.divisionOwner" for="field_division">Division</label>
-            <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="place.divisionOwnerId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="divisionOption.id" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
-            </select>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-        </button>
-        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-        </button>
-    </div>
+    </jhi-glass>
 </form>

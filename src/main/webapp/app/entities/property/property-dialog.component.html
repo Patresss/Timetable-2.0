@@ -1,48 +1,50 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-
-    <div class="modal-header">
-        <h4 class="modal-title" id="myPropertiesLabel" jhiTranslate="timetableApp.property.home.createOrEditLabel">Create or edit a Properties</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;</button>
-    </div>
-    <div class="modal-body">
-        <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!property.id">
-            <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="property.id" readonly />
+    <jhi-glass contentClass="edit-entity-card">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myPropertiesLabel" jhiTranslate="timetableApp.property.home.createOrEditLabel">Create or edit a Properties</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                    (click)="clear()">&times;
+            </button>
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.property.propertyKey" for="field_propertyKey">Property Key</label>
-            <input type="text" class="form-control" name="propertyKey" id="field_propertyKey"
-                [(ngModel)]="property.propertyKey" required />
-            <div [hidden]="!(editForm.controls.propertyKey?.dirty && editForm.controls.propertyKey?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.propertyKey?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
+        <div class="modal-body">
+            <jhi-alert-error></jhi-alert-error>
+            <div class="form-group" [hidden]="!property.id">
+                <label for="id" jhiTranslate="global.field.id">ID</label>
+                <input type="text" class="form-control" id="id" name="id"
+                       [(ngModel)]="property.id" readonly/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.property.propertyKey" for="field_propertyKey">Property Key</label>
+                <input type="text" class="form-control" name="propertyKey" id="field_propertyKey"
+                       [(ngModel)]="property.propertyKey" required/>
+                <div [hidden]="!(editForm.controls.propertyKey?.dirty && editForm.controls.propertyKey?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.propertyKey?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.property.propertyValue" for="field_propertyValue">Property Value</label>
+                <input type="text" class="form-control" name="propertyValue" id="field_propertyValue"
+                       [(ngModel)]="property.propertyValue"/>
+            </div>
+
+            <div class="form-group">
+                <label jhiTranslate="timetableApp.property.divisionOwner" for="field_division">Division</label>
+                <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="property.divisionOwnerId">
+                    <option [ngValue]="null"></option>
+                    <option [ngValue]="divisionOption.id" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
+                </select>
             </div>
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="timetableApp.property.propertyValue" for="field_propertyValue">Property Value</label>
-            <input type="text" class="form-control" name="propertyValue" id="field_propertyValue"
-                [(ngModel)]="property.propertyValue"  />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+                <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+            <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
         </div>
-
-        <div class="form-group">
-            <label jhiTranslate="timetableApp.property.divisionOwner" for="field_division">Division</label>
-            <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="property.divisionOwnerId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="divisionOption.id" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
-            </select>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-        </button>
-        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-        </button>
-    </div>
+    </jhi-glass>
 </form>
