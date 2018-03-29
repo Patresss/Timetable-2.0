@@ -34,7 +34,8 @@
             "teacher": "Nauczyciel",
             "division": "Grupa",
             "lesson": "Lekcja",
-            "period": "Okres czasu"
+            "period": "Okres czasu",
+            "numberOfActivities": "Liczba zajęć"
         }
     }
 }

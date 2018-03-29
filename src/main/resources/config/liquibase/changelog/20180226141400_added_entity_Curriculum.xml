@@ -24,7 +24,12 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+
             <column name="event_type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="activities_number" type="bigint">
                 <constraints nullable="false" />
             </column>
 

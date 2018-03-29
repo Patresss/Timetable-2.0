@@ -31,6 +31,7 @@ open class CurriculumMapper : EntityMapper<Curriculum, CurriculumDTO>() {
         return Curriculum()
             .apply {
                 type = entityDto.type
+                numberOfActivities = entityDto.numberOfActivities
                 everyWeek = entityDto.everyWeek
                 startWithWeek = entityDto.startWithWeek
                 entityDto.divisionId?.let { division = divisionRepository.getOne(entityDto.divisionId) }
@@ -57,6 +58,7 @@ open class CurriculumMapper : EntityMapper<Curriculum, CurriculumDTO>() {
                 placeName = curriculumPlaceName(entity)
                 subjectName = curriculumSubjectName(entity)
                 id = entity.id
+                numberOfActivities = entity.numberOfActivities
                 everyWeek = entity.everyWeek
                 startWithWeek = entity.startWithWeek
                 id = entity.id

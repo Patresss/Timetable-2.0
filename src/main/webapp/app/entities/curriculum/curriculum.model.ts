@@ -9,6 +9,7 @@ export class Curriculum implements BaseEntity {
                 public startTime?: Time,
                 public endTime?: Time,
                 public type?: EventType,
+                public numberOfActivities?: number,
                 public everyWeek?: number,
                 public startWithWeek?: number,
                 public placeId?: number,

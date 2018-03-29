@@ -16,6 +16,8 @@ class CurriculumDTO(
     @get:NotNull
     var type: EventType = EventType.LESSON,
 
+    var numberOfActivities: Long = 0,
+
     var everyWeek: Long = 1,
 
     var startWithWeek: Long = 1,

@@ -22,6 +22,9 @@ class Curriculum(
     @Column(name = "event_type", nullable = false)
     var type: EventType = EventType.LESSON,
 
+    @Column(name = "activities_number")
+    var numberOfActivities: Long = 0,
+
     @Column(name = "every_week")
     var everyWeek: Long = 1,
 
