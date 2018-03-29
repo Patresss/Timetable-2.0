@@ -121,73 +121,47 @@
                                               styleClass="edit-entity-card-select" name="selectedPeriod" #type="ngModel" required [blur]="false" (onSelect)="onPeriodSelect($event)" (onDeSelect)="onPeriodDeSelect()">
                 </div>
 
+
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="timetableApp.timetable.startDate" for="field_startDate">Start Date</label>
-                    <div class="input-group">
-                        <input id="field_startDate" type="text" class="form-control" name="startDate" ngbDatepicker #startDateDp="ngbDatepicker" [(ngModel)]="timetable.startDate"
-                        />
-                        <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" (click)="startDateDp.toggle()"><i class="fa fa-calendar"></i></button>
-                </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="timetableApp.timetable.endDate" for="field_endDate">End Date</label>
-                    <div class="input-group">
-                        <input id="field_endDate" type="text" class="form-control" name="endDate" ngbDatepicker #endDateDp="ngbDatepicker" [(ngModel)]="timetable.endDate"
-                        />
-                        <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" (click)="endDateDp.toggle()"><i class="fa fa-calendar"></i></button>
-                </span>
+                    <div class='row'>
+                        <div class='col-md-6'>
+                            <label class="form-control-label" jhiTranslate="timetableApp.timetable.everyWeek" for="field_everyWeek">Every Week</label>
+                            <input type="number" class="form-control" name="everyWeek" id="field_everyWeek" [(ngModel)]="timetable.everyWeek"/>
+                        </div>
+                        <div class='col-md-6'>
+                            <label class="form-control-label" jhiTranslate="timetableApp.timetable.startWithWeek" for="field_startWithWeek">Start With Week</label>
+                            <input type="number" class="form-control" name="startWithWeek" id="field_startWithWeek" [(ngModel)]="timetable.startWithWeek"/>
+                        </div>
                     </div>
                 </div>
 
-
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="timetableApp.timetable.everyWeek" for="field_everyWeek">Every Week</label>
-                    <input type="number" class="form-control" name="everyWeek" id="field_everyWeek"
-                           [(ngModel)]="timetable.everyWeek"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="timetableApp.timetable.startWithWeek" for="field_startWithWeek">Start With Week</label>
-                    <input type="number" class="form-control" name="startWithWeek" id="field_startWithWeek"
-                           [(ngModel)]="timetable.startWithWeek"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="timetableApp.timetable.inMonday" for="field_inMonday">In Monday</label>
-                    <input type="checkbox" class="form-control" name="inMonday" id="field_inMonday"
-                           [(ngModel)]="timetable.inMonday"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="timetableApp.timetable.inTuesday" for="field_inTuesday">In Tuesday</label>
-                    <input type="checkbox" class="form-control" name="inTuesday" id="field_inTuesday"
-                           [(ngModel)]="timetable.inTuesday"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="timetableApp.timetable.inWednesday" for="field_inWednesday">In Wednesday</label>
-                    <input type="checkbox" class="form-control" name="inWednesday" id="field_inWednesday"
-                           [(ngModel)]="timetable.inWednesday"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="timetableApp.timetable.inThursday" for="field_inThursday">In Thursday</label>
-                    <input type="checkbox" class="form-control" name="inThursday" id="field_inThursday"
-                           [(ngModel)]="timetable.inThursday"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="timetableApp.timetable.inFriday" for="field_inFriday">In Friday</label>
-                    <input type="checkbox" class="form-control" name="inFriday" id="field_inFriday"
-                           [(ngModel)]="timetable.inFriday"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="timetableApp.timetable.inSaturday" for="field_inSaturday">In Saturday</label>
-                    <input type="checkbox" class="form-control" name="inSaturday" id="field_inSaturday"
-                           [(ngModel)]="timetable.inSaturday"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="timetableApp.timetable.inSunday" for="field_inSunday">In Sunday</label>
-                    <input type="checkbox" class="form-control" name="inSunday" id="field_inSunday"
-                           [(ngModel)]="timetable.inSunday"/>
+                    <div class="table-responsive"  >
+                        <table class="jh-table table table-striped week-table" ngClass="{ 'not-valid' : !(eventForm.inMonday.$valid || eventForm.inTuesday.$valid || eventForm.inWednesday.$valid || eventForm.inThursday.$valid || eventForm.inFriday.$valid || eventForm.inSaturday.$valid || eventForm.inSunday.$valid)}">
+                            <thead>
+                            <tr>
+                                <th><span jhiTranslate="timetableApp.timetable.inMonday">In Monday</span></th>
+                                <th><span jhiTranslate="timetableApp.timetable.inTuesday">In Tuesday</span></th>
+                                <th><span jhiTranslate="timetableApp.timetable.inWednesday">In Wednesday</span></th>
+                                <th><span jhiTranslate="timetableApp.timetable.inThursday">In Thursday</span></th>
+                                <th><span jhiTranslate="timetableApp.timetable.inFriday">In Friday</span></th>
+                                <th><span jhiTranslate="timetableApp.timetable.inSaturday">In Saturday</span></th>
+                                <th><span jhiTranslate="timetableApp.timetable.inSunday">In Sunday</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><input type="checkbox" class="form-control" name="inMonday" id="field_inMonday" [(ngModel)]="timetable.inMonday" (click)="changeTaken()" [required]="series && !(timetable.inMonday || timetable.inTuesday || timetable.inWednesday || timetable.inThursday || timetable.inFriday || timetable.inSaturday || timetable.inSunday)" /></td>
+                                <td><input type="checkbox" class="form-control" name="inTuesday" id="field_inTuesday" [(ngModel)]="timetable.inTuesday" (click)="changeTaken()" [required]="series && !(timetable.inMonday || timetable.inTuesday || timetable.inWednesday || timetable.inThursday || timetable.inFriday || timetable.inSaturday || timetable.inSunday)"/> </td>
+                                <td><input type="checkbox" class="form-control"  name="inWednesday" id="field_inWednesday" [(ngModel)]="timetable.inWednesday" (click)="changeTaken()" [required]="series && !(timetable.inMonday || timetable.inTuesday || timetable.inWednesday || timetable.inThursday || timetable.inFriday || timetable.inSaturday || timetable.inSunday)"/></td>
+                                <td><input type="checkbox" class="form-control"  name="inThursday" id="field_inThursday" [(ngModel)]="timetable.inThursday" (click)="changeTaken()" [required]="series && !(timetable.inMonday || timetable.inTuesday || timetable.inWednesday || timetable.inThursday || timetable.inFriday || timetable.inSaturday || timetable.inSunday)"/></td>
+                                <td><input type="checkbox" class="form-control"  name="inFriday" id="field_inFriday" [(ngModel)]="timetable.inFriday" (click)="changeTaken()" [required]="series && !(timetable.inMonday || timetable.inTuesday || timetable.inWednesday || timetable.inThursday || timetable.inFriday || timetable.inSaturday || timetable.inSunday)"/></td>
+                                <td><input type="checkbox" class="form-control"  name="inSaturday" id="field_inSaturday" [(ngModel)]="timetable.inSaturday" (click)="changeTaken()" [required]="series && !(timetable.inMonday || timetable.inTuesday || timetable.inWednesday || timetable.inThursday || timetable.inFriday || timetable.inSaturday || timetable.inSunday)"/></td>
+                                <td><input type="checkbox" class="form-control"  name="inSunday" id="field_inSunday" [(ngModel)]="timetable.inSunday" (click)="changeTaken()" [required]="series && !(timetable.inMonday || timetable.inTuesday || timetable.inWednesday || timetable.inThursday || timetable.inFriday || timetable.inSaturday || timetable.inSunday)"/></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
             </div>

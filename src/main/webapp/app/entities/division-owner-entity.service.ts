@@ -18,13 +18,13 @@ export abstract class DivisionOwnerEntityService<EntityType> extends EntityServi
 
     findByDivision(ids: number[], req?: any): Observable<ResponseWrapper> {
         return this.http.get(this.resourceByDivisionsIdUrl, createRequestOptionWithDivisionsId(ids, req))
-            .map((res: Response) => this.convertResponse(res));
+            .map((res: Response) => this.convertResponses(res));
     }
 
     findByCurrentLogin(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceByCurrentLoginUrl, options)
-            .map((res: Response) => this.convertResponse(res));
+            .map((res: Response) => this.convertResponses(res));
     }
 
 }

@@ -484,7 +484,7 @@ ui bootstrap tweaks
         background: transparent !important;
     }
 
-    .pure-checkbox input[type="checkbox"] + label:after{
+    .pure-checkbox input[type="checkbox"] + label:after {
         border-color: $accent-color !important;
     }
 
@@ -594,18 +594,18 @@ a:hover {
 .edit-entity-card {
     background: transparentize($light-text-color, 0.2);
     color: $accent-color-strong-dark;
-    input {
+    input, textarea {
         background: transparentize($accent-color-strong-light, 0.2);
     }
 
-    input:focus {
+    input:focus, textarea:focus {
         background: $accent-color-strong-light;
     }
 }
 
 .edit-entity-card-select {
     .c-btn {
-        background: transparentize($light-text-color, 0.5);
+        background: transparentize($accent-color-strong-light, 0.2);
         color: $accent-color-strong-dark;
     }
 
@@ -648,7 +648,6 @@ a:hover {
         background: $accent-color-strong-light;
     }
 
-
     .arrow-up {
         background: transparent;
     }
@@ -676,7 +675,7 @@ a:hover {
         background: transparent !important;
     }
 
-    .pure-checkbox input[type="checkbox"] + label:after{
+    .pure-checkbox input[type="checkbox"] + label:after {
         border-color: $accent-color-dark !important;
     }
 
@@ -728,7 +727,6 @@ a:hover {
     transform: scaleX(1);
     transform-origin: bottom left;
 }
-
 
 .full-page-popup {
     width: 80%;

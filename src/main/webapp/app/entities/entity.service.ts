@@ -54,9 +54,14 @@ EntityService<EntityType> {
         return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
+    convertResponses(res: Response): ResponseWrapper {
+        const jsonResponse = res.json();
+        jsonResponse.forEach((entity) =>  this.convertEntity(entity));
+        return new ResponseWrapper(res.headers, jsonResponse, res.status);
+    }
+
     convert(entity: EntityType): EntityType {
-        const copy: EntityType = Object.assign({}, entity);
-        return copy;
+        return Object.assign({}, entity);
     }
 
 }

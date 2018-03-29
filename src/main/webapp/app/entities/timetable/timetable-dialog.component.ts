@@ -154,6 +154,10 @@ export class TimetableDialogComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
+    changeTaken() {
+
+    }
+
 // ================================================================
 // Init select
 // ================================================================
@@ -207,6 +211,10 @@ export class TimetableDialogComponent implements OnInit {
 
     onLessonSelect(item: any) {
         this.timetable.lessonId = item.id;
+        this.timetable.startTime = item.item.startTime;
+        this.timetable.endTime = item.item.endTime;
+        console.log(item)
+        console.log(this.lessonSelectOption)
     }
 
     onLessonDeSelect() {

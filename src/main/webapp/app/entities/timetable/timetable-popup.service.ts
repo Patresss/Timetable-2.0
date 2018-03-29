@@ -26,20 +26,6 @@ export class TimetablePopupService {
 
             if (id) {
                 this.timetableService.find(id).subscribe((timetable) => {
-                    if (timetable.startDate) {
-                        timetable.startDate = {
-                            year: timetable.startDate.getFullYear(),
-                            month: timetable.startDate.getMonth() + 1,
-                            day: timetable.startDate.getDate()
-                        };
-                    }
-                    if (timetable.endDate) {
-                        timetable.endDate = {
-                            year: timetable.endDate.getFullYear(),
-                            month: timetable.endDate.getMonth() + 1,
-                            day: timetable.endDate.getDate()
-                        };
-                    }
                     if (timetable.date) {
                         timetable.date = {
                             year: timetable.date.getFullYear(),

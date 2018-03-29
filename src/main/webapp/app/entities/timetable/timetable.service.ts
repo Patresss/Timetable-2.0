@@ -56,8 +56,6 @@ export class TimetableService extends EntityService<Timetable> {
     }
 
     convertEntity(entity: any) {
-        entity.startDate = this.dateUtils.convertLocalDateFromServer(entity.startDate);
-        entity.endDate = this.dateUtils.convertLocalDateFromServer(entity.endDate);
         entity.date = this.dateUtils.convertLocalDateFromServer(entity.date)
         if (entity.startTimeString) {
             entity.startTime = new Time(entity.startTimeString);
@@ -69,8 +67,6 @@ export class TimetableService extends EntityService<Timetable> {
 
     convert(timetable: Timetable): Timetable {
         const copy: Timetable = Object.assign({}, timetable);
-        copy.startDate = this.dateUtils.convertLocalDateToServer(timetable.startDate);
-        copy.endDate = this.dateUtils.convertLocalDateToServer(timetable.endDate);
         copy.date = this.dateUtils.convertLocalDateToServer(timetable.date);
         copy.startTimeString = Time.createTimeFromTimePicker(timetable.startTime).getFormatted();
         copy.endTimeString = Time.createTimeFromTimePicker(timetable.endTime).getFormatted();

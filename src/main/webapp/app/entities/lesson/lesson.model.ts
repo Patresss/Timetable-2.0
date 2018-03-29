@@ -9,7 +9,6 @@ export class Lesson implements BaseEntity {
         public endTime?: Time,
         public startTimeString?: string,
         public endTimeString?: string,
-        public timetables?: BaseEntity[],
         public divisionId?: number,
     ) {
     }

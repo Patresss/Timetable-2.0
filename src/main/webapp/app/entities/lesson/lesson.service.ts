@@ -13,7 +13,7 @@ export class LessonService extends DivisionOwnerEntityService<Lesson> {
         super(http, 'lessons')
     }
 
-    convertEntity(entity: any) {
+    convertEntity(entity: Lesson) {
         if (entity.startTimeString) {
             entity.startTime = new Time(entity.startTimeString);
         }

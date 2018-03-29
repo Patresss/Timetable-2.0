@@ -20,8 +20,6 @@
             <th jhiSortBy="title"><span jhiTranslate="timetableApp.timetable.title">Title</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="startTime"><span jhiTranslate="timetableApp.timetable.startTime">Start Time</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="endTime"><span jhiTranslate="timetableApp.timetable.endTime">End Time</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="startDate"><span jhiTranslate="timetableApp.timetable.startDate">Start Date</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="endDate"><span jhiTranslate="timetableApp.timetable.endDate">End Date</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="date"><span jhiTranslate="timetableApp.timetable.date">Date</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="type"><span jhiTranslate="timetableApp.timetable.type">Type</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="everyWeek"><span jhiTranslate="timetableApp.timetable.everyWeek">Every Week</span> <span class="fa fa-sort"></span></th>
@@ -51,8 +49,6 @@
                 <td>{{timetable.title}}</td>
                 <td>{{timetable.startTime}}</td>
                 <td>{{timetable.endTime}}</td>
-                <td>{{timetable.startDate | date:'mediumDate'}}</td>
-                <td>{{timetable.endDate | date:'mediumDate'}}</td>
                 <td>{{timetable.date | date:'mediumDate'}}</td>
                 <td jhiTranslate="{{'timetableApp.EventType.' + timetable.type}}">{{timetable.type}}</td>
                 <td>{{timetable.everyWeek}}</td>
