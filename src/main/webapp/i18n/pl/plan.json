@@ -14,7 +14,8 @@
                 "place": "Wybierz sale",
                 "subject": "Wybierz przedmiot",
                 "division": "Wybierz grupę",
-                "period": "Wybierz okres czasu"
+                "period": "Wybierz okres czasu",
+                "event-type": "Wybierz typ wydarzenia"
             },
             "type": {
                 "STUDENT": "Uczeń",

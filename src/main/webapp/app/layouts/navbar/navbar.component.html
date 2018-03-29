@@ -84,6 +84,12 @@
                             </a>
                         </li>
                         <li>
+                            <a class="dropdown-item" routerLink="curriculum" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                                <span jhiTranslate="global.menu.entities.curriculum">Curriculum</span>
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" routerLink="curriculum-list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                                 <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
                                 <span jhiTranslate="global.menu.entities.curriculum-list">Curriculum List</span>

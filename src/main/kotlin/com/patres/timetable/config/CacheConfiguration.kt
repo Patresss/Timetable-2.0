@@ -78,6 +78,7 @@ open class CacheConfiguration(jHipsterProperties: JHipsterProperties) {
             it.createCache(com.patres.timetable.domain.CurriculumList::class.java.name, jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.CurriculumList::class.java.name + ".curriculums", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Curriculum::class.java.name, jcacheConfiguration)
+            it.createCache(com.patres.timetable.domain.Curriculum::class.java.name + ".curriculumnListes", jcacheConfiguration)
         }
     }
 }

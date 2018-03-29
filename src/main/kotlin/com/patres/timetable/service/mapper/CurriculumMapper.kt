@@ -1,9 +1,6 @@
 package com.patres.timetable.service.mapper
 
 import com.patres.timetable.domain.Curriculum
-import com.patres.timetable.domain.CurriculumList
-import com.patres.timetable.domain.Interval
-import com.patres.timetable.domain.Timetable
 import com.patres.timetable.repository.*
 import com.patres.timetable.service.dto.CurriculumDTO
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,9 +8,6 @@ import org.springframework.stereotype.Service
 
 @Service
 open class CurriculumMapper : EntityMapper<Curriculum, CurriculumDTO>() {
-
-    @Autowired
-    private lateinit var curriculumListRepository: CurriculumListRepository
 
     @Autowired
     private lateinit var divisionRepository: DivisionRepository
@@ -30,15 +24,12 @@ open class CurriculumMapper : EntityMapper<Curriculum, CurriculumDTO>() {
     @Autowired
     private lateinit var placeRepository: PlaceRepository
 
+    @Autowired
+    private lateinit var divisionMapper: DivisionMapper
+
     override fun toEntity(entityDto: CurriculumDTO): Curriculum {
         return Curriculum()
             .apply {
-                entityDto.startTime?.let {
-                    setStartTimeHHmmFormatted(it)
-                }
-                entityDto.endTime?.let {
-                    setEndTimeHHmmFormatted(it)
-                }
                 type = entityDto.type
                 everyWeek = entityDto.everyWeek
                 startWithWeek = entityDto.startWithWeek
@@ -47,8 +38,8 @@ open class CurriculumMapper : EntityMapper<Curriculum, CurriculumDTO>() {
                 entityDto.subjectId?.let { subject = subjectRepository.getOne(entityDto.subjectId) }
                 entityDto.lessonId?.let { lesson = lessonRepository.getOne(entityDto.lessonId) }
                 entityDto.placeId?.let { place = placeRepository.getOne(entityDto.placeId) }
-                entityDto.curriculumListId?.let { curriculumList = curriculumListRepository.getOne(entityDto.curriculumListId) }
                 id = entityDto.id
+                entityDto.divisionOwnerId?.let { divisionOwner = divisionRepository.findOne(it) }
             }
     }
 
@@ -58,7 +49,7 @@ open class CurriculumMapper : EntityMapper<Curriculum, CurriculumDTO>() {
                 placeId = curriculumPlaceId(entity)
                 divisionName = curriculumDivisionName(entity)
                 lessonId = curriculumLessonId(entity)
-                teacherSurname = curriculumTeacherSurname(entity)
+                teacherFullName = entity.teacher?.getFullName()
                 subjectId = curriculumSubjectId(entity)
                 lessonName = curriculumLessonName(entity)
                 teacherId = curriculumTeacherId(entity)
@@ -66,27 +57,12 @@ open class CurriculumMapper : EntityMapper<Curriculum, CurriculumDTO>() {
                 placeName = curriculumPlaceName(entity)
                 subjectName = curriculumSubjectName(entity)
                 id = entity.id
-                if (entity.lesson != null) {
-                    startTime = entity.lesson?.getStartTimeHHmmFormatted()
-                    endTime = entity.lesson?.getEndTimeHHmmFormatted()
-                } else {
-                    startTime = entity.getStartTimeHHmmFormatted()
-                    endTime = entity.getEndTimeHHmmFormatted()
-                }
                 everyWeek = entity.everyWeek
                 startWithWeek = entity.startWithWeek
-                curriculumListId = curriculumListId(entity)
-                curriculumListName = curriculumListName(entity)
                 id = entity.id
+                divisionOwnerName = divisionMapper.getDivisionOwnerName(entity.divisionOwner)
+                divisionOwnerId = divisionMapper.getDivisionOwnerId(entity.divisionOwner)
             }
-    }
-
-    private fun curriculumListId(curriculum: Curriculum?): Long? {
-        if (curriculum == null) {
-            return null
-        }
-        val curriculumList = curriculum.curriculumList ?: return null
-        return curriculumList.id
     }
 
     private fun curriculumPlaceId(curriculum: Curriculum?): Long? {
@@ -95,14 +71,6 @@ open class CurriculumMapper : EntityMapper<Curriculum, CurriculumDTO>() {
         }
         val place = curriculum.place ?: return null
         return place.id
-    }
-
-    private fun curriculumListName(curriculum: Curriculum?): String? {
-        if (curriculum == null) {
-            return null
-        }
-        val curriculumList = curriculum.curriculumList ?: return null
-        return curriculumList.name
     }
 
     private fun curriculumDivisionName(curriculum: Curriculum?): String? {
@@ -121,13 +89,6 @@ open class CurriculumMapper : EntityMapper<Curriculum, CurriculumDTO>() {
         return lesson.id
     }
 
-    private fun curriculumTeacherSurname(curriculum: Curriculum?): String? {
-        if (curriculum == null) {
-            return null
-        }
-        val teacher = curriculum.teacher ?: return null
-        return teacher.surname
-    }
 
     private fun curriculumSubjectId(curriculum: Curriculum?): Long? {
         if (curriculum == null) {

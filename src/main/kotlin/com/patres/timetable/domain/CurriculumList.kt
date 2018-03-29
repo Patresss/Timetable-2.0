@@ -17,8 +17,9 @@ class CurriculumList(
     @Column(name = "name")
     var name: String? = null,
 
-    @OneToMany(cascade = [(CascadeType.ALL)], orphanRemoval = true, mappedBy = "curriculumList")
+    @ManyToMany(cascade = [(CascadeType.ALL)])
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "curriculum_list_curriculum", joinColumns = [(JoinColumn(name = "curriculum_list_id", referencedColumnName = "id"))], inverseJoinColumns = [(JoinColumn(name = "curriculum_id", referencedColumnName = "id"))])
     var curriculums: Set<Curriculum> = HashSet(),
 
     @Column(name = "start_date")

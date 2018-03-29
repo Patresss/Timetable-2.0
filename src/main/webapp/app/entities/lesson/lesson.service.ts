@@ -4,7 +4,6 @@ import {Http} from '@angular/http';
 import {Lesson} from './lesson.model';
 import {DivisionOwnerEntityService} from '../division-owner-entity.service';
 import {Time} from '../../util/time.model';
-import {Timetable} from '../timetable/timetable.model';
 
 @Injectable()
 export class LessonService extends DivisionOwnerEntityService<Lesson> {

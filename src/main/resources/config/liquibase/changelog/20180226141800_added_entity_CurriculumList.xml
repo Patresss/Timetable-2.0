@@ -42,5 +42,15 @@
             </column>
         </createTable>
 
+        <createTable tableName="curriculum_list_curriculum">
+            <column name="curriculum_list_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="curriculum_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="curriculum_list_id, curriculum_id" tableName="curriculum_list_curriculum"/>
     </changeSet>
 </databaseChangeLog>

@@ -14,7 +14,7 @@ export class CurriculumListService extends DivisionOwnerEntityService<Curriculum
     convertEntity(jsonResponse: any) {
         if (jsonResponse.curriculumTimes != null) {
             for (let i = 0; i < jsonResponse.curriculumTimes.length; i++) {
-                this.curriculumService.convertItemFromServer(jsonResponse.curriculumTimes[i]);
+                this.curriculumService.convertEntity(jsonResponse.curriculumTimes[i]);
             }
         }
     }

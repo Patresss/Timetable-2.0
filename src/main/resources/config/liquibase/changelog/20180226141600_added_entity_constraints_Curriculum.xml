@@ -7,14 +7,6 @@
         Added the constraints for entity Curriculum.
     -->
     <changeSet id="20180226141600" author="Patres">
-
-        <addForeignKeyConstraint baseColumnNames="curriculum_list_id"
-                                 baseTableName="curriculum"
-                                 constraintName="fk_curriculum_curriculum_list_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="curriculum_list"/>
-
-
         <addForeignKeyConstraint baseColumnNames="place_id"
                                  baseTableName="curriculum"
                                  constraintName="fk_curriculum_place_id"
@@ -45,7 +37,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="lesson"/>
 
-
+        <addForeignKeyConstraint baseColumnNames="division_owner_id"
+                                 baseTableName="curriculum"
+                                 constraintName="fk_curriculum_division_owner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="division"/>
 
     </changeSet>
 </databaseChangeLog>

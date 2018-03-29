@@ -21,14 +21,9 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="start_time" type="bigint">
+            <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-
-            <column name="end_time" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="event_type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
@@ -61,7 +56,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="curriculum_list_id" type="bigint">
+            <column name="division_owner_id" type="bigint">
                 <constraints nullable="true" />
             </column>
         </createTable>

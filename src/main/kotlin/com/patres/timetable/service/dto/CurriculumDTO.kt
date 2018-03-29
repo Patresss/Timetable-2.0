@@ -7,7 +7,7 @@ import java.time.LocalDate
 import java.util.*
 import javax.validation.constraints.NotNull
 
-data class CurriculumDTO(
+class CurriculumDTO(
 
     var startTime: String? = null,
 
@@ -26,7 +26,7 @@ data class CurriculumDTO(
 
     var teacherId: Long? = null,
 
-    var teacherSurname: String? = null,
+    var teacherFullName: String? = null,
 
     var divisionId: Long? = null,
 
@@ -40,8 +40,7 @@ data class CurriculumDTO(
 
     var placeName: String? = null,
 
-    var curriculumListId: Long? = null,
+    divisionOwnerId: Long? = null
 
-    var curriculumListName: String? = null
+) : AbstractDivisionOwnerDTO(divisionOwnerId = divisionOwnerId), Serializable
 
-) : AbstractApplicationEntityDTO(), Serializable

@@ -1,0 +1,58 @@
+<div *ngIf="curriculum">
+    <h2><span jhiTranslate="timetableApp.curriculum.detail.title">Curriculum</span> {{curriculum.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+
+        <dt><span jhiTranslate="timetableApp.curriculum.type">Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'timetableApp.EventType.' + curriculum.type}}">{{curriculum.type}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.curriculum.everyWeek">Every Week</span></dt>
+        <dd>
+            <span>{{curriculum.everyWeek}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.curriculum.startWithWeek">Start With Week</span></dt>
+        <dd>
+            <span>{{curriculum.startWithWeek}}</span>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.curriculum.place">Place</span></dt>
+        <dd>
+            <div *ngIf="curriculum.placeId">
+                <a [routerLink]="['/place', curriculum.placeId]">{{curriculum.placeName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.curriculum.subject">Subject</span></dt>
+        <dd>
+            <div *ngIf="curriculum.subjectId">
+                <a [routerLink]="['/subject', curriculum.subjectId]">{{curriculum.subjectName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.curriculum.teacher">Teacher</span></dt>
+        <dd>
+            <div *ngIf="curriculum.teacherId">
+                <a [routerLink]="['/teacher', curriculum.teacherId]">{{curriculum.teacherFullName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="timetableApp.curriculum.division">Division</span></dt>
+        <dd>
+            <div *ngIf="curriculum.divisionId">
+                <a [routerLink]="['/division', curriculum.divisionId]">{{curriculum.divisionName}}</a>
+            </div>
+        </dd>
+
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'curriculum/'+ curriculum.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

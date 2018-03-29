@@ -1,19 +1,35 @@
 import {Injectable} from '@angular/core';
 import {JhiDateUtils} from 'ng-jhipster';
 
+import {ResponseWrapper} from '../../shared';
+import {Http, Response} from '@angular/http';
+import {Time} from '../../util/time.model';
+import {EntityService} from '../entity.service';
 import {Curriculum} from './curriculum.model';
 
 @Injectable()
-export class CurriculumService {
+export class CurriculumService extends EntityService<Curriculum> {
 
-    constructor(private dateUtils: JhiDateUtils) {
+    constructor(http: Http, private dateUtils: JhiDateUtils) {
+        super(http, 'curriculums');
     }
 
-    public convertItemFromServer(entity: Curriculum) {
+    convertResponse(res: Response): ResponseWrapper {
+        const jsonResponse = res.json();
+        for (let i = 0; i < jsonResponse.length; i++) {
+            this.convertEntity(jsonResponse[i]);
+        }
+        return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
-    public convert(curriculum: Curriculum): Curriculum {
-        const copy: Curriculum = Object.assign({}, curriculum);
-        return copy;
+    convertEntity(entity: any) {
+        entity.date = this.dateUtils.convertLocalDateFromServer(entity.date)
+        if (entity.startTimeString) {
+            entity.startTime = new Time(entity.startTimeString);
+        }
+        if (entity.endTimeString) {
+            entity.endTime = new Time(entity.endTimeString);
+        }
     }
+
 }

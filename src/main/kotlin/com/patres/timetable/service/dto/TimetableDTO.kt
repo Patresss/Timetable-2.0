@@ -61,7 +61,7 @@ class TimetableDTO(
 
     var teacherId: Long? = null,
 
-    var teacherFullname: String? = null,
+    var teacherFullName: String? = null,
 
     var divisionId: Long? = null,
 

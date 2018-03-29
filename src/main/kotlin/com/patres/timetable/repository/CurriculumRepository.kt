@@ -11,8 +11,4 @@ import org.springframework.stereotype.Repository
 import org.springframework.data.jpa.repository.*
 
 @Repository
-interface CurriculumRepository : JpaRepository<Curriculum, Long> {
-
-    fun findByCurriculumListId(periodId: Long): Set<Curriculum>
-
-}
+interface CurriculumRepository : DivisionOwnerRepository<Curriculum>

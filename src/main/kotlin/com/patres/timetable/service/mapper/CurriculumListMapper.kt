@@ -19,31 +19,22 @@ open class CurriculumListMapper : EntityMapper<CurriculumList, CurriculumListDTO
     private lateinit var divisionRepository: DivisionRepository
 
     override fun toEntity(entityDto: CurriculumListDTO): CurriculumList {
-        val curriculumList = CurriculumList().apply {
+        return CurriculumList().apply {
             name = entityDto.name
             divisionOwner = entityDto.divisionOwnerId?.let { divisionRepository.getOne(it) }
             id = entityDto.id
+            curriculums = curriculumMapper.entityDTOSetToEntitySet(entityDto.curriculums)
         }
-
-        val curriculums = curriculumMapper.entityDTOSetToEntitySet(entityDto.curriculums)
-        curriculums.forEach { it.curriculumList = curriculumList }
-        curriculumList.curriculums = curriculums
-
-        return curriculumList
     }
 
     override fun toDto(entity: CurriculumList): CurriculumListDTO {
-        val curriculumList = CurriculumListDTO().apply {
+        return CurriculumListDTO().apply {
             name = entity.name
             divisionOwnerId = divisionMapper.getDivisionOwnerId(entity.divisionOwner)
             divisionOwnerName = divisionMapper.getDivisionOwnerName(entity.divisionOwner)
             id = entity.id
+            curriculums = curriculumMapper.entitySetToEntityDTOSet(entity.curriculums)
         }
-
-        val curriculums = entity.curriculums.map { curriculumMapper.toDto(it) }.toSet()
-        curriculumList.curriculums = curriculums
-
-        return curriculumList
     }
 
 }

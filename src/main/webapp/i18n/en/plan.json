@@ -14,7 +14,8 @@
                 "place": "Choose a place",
                 "subject": "Choose a subject",
                 "division": "Choose a division",
-                "period": "Choose a period"
+                "period": "Choose a period",
+                "event-type": "Choose an event type"
             },
             "type": {
                 "STUDENT": "Student",

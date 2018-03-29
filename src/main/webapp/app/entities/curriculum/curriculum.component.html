@@ -1,0 +1,99 @@
+<div>
+    <h2>
+        <span jhiTranslate="timetableApp.curriculum.home.title">Timetables</span>
+        <button class="btn btn-primary float-right jh-create-entity create-curriculum" [routerLink]="['/', { outlets: { popup: ['curriculum-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="timetableApp.curriculum.home.createLabel">
+            Create new Timetable
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="curriculums">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="name"><span jhiTranslate="timetableApp.curriculum.name">Name</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="type"><span jhiTranslate="timetableApp.curriculum.type">Type</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="everyWeek"><span jhiTranslate="timetableApp.curriculum.everyWeek">Every Week</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="startWithWeek"><span jhiTranslate="timetableApp.curriculum.startWithWeek">Start With Week</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="placeName"><span jhiTranslate="timetableApp.curriculum.place">Place</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="subjectName"><span jhiTranslate="timetableApp.curriculum.subject">Subject</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="teacherSurname"><span jhiTranslate="timetableApp.curriculum.teacher">Teacher</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="divisionName"><span jhiTranslate="timetableApp.curriculum.division">Division</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="lessonName"><span jhiTranslate="timetableApp.curriculum.lesson">Lesson</span> <span class="fa fa-sort"></span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let curriculum of curriculums ;trackBy: trackId">
+                <td><a [routerLink]="['../curriculum', curriculum.id ]">{{curriculum.id}}</a></td>
+                <td>{{curriculum.name}}</td>
+                <td>{{curriculum.everyWeek}}</td>
+                <td>{{curriculum.startWithWeek}}</td>
+                <td>
+                    <div *ngIf="curriculum.placeId">
+                        <a [routerLink]="['../place', curriculum.placeId  ]" >{{curriculum.placeName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="curriculum.subjectId">
+                        <a [routerLink]="['../subject', curriculum.subjectId  ]" >{{curriculum.subjectName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="curriculum.teacherId">
+                        <a [routerLink]="['../teacher', curriculum.teacherId  ]" >{{curriculum.teacherSurname}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="curriculum.divisionId">
+                        <a [routerLink]="['../division', curriculum.divisionId  ]" >{{curriculum.divisionName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="curriculum.lessonId">
+                        <a [routerLink]="['../lesson', curriculum.lessonId  ]" >{{curriculum.lessonName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../curriculum', curriculum.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'curriculum/'+ curriculum.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'curriculum/'+ curriculum.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="curriculums && curriculums.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

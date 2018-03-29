@@ -1,0 +1,78 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+    <jhi-glass contentClass="edit-entity-card">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myTimetableLabel" jhiTranslate="timetableApp.timetable.home.createOrEditLabel">Create or edit a Timetable</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                    (click)="clear()">&times;
+            </button>
+        </div>
+        <div class="modal-body">
+            <jhi-alert-error></jhi-alert-error>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.timetable.type" for="field_type">Type</label>
+                <div style="clear: both"></div>
+                <jhi-angular2-multiselect [data]="eventTypeSelectOption" [(ngModel)]="selectedEventType" [settings]="eventTypeSelectSettings"
+                                          styleClass="edit-entity-card-select" name="selectedEventType" #type="ngModel" required [blur]="false">
+                    <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                    </div>
+            </div>
+
+            <div class="form-group">
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <label jhiTranslate="timetableApp.timetable.place" for="field_place">Place</label>
+                        <jhi-angular2-multiselect [data]="placeSelectOption" [(ngModel)]="selectedPlace" [settings]="placeSelectSettings"
+                                                  styleClass="edit-entity-card-select" name="selectedPlace" #type="ngModel" required [blur]="false" (onSelect)="onPlaceSelect($event)" (onDeSelect)="onPlaceDeSelect()">
+                    </div>
+                    <div class='col-md-6'>
+                        <label jhiTranslate="timetableApp.timetable.subject" for="field_subject">Subject</label>
+                        <jhi-angular2-multiselect [data]="subjectSelectOption" [(ngModel)]="selectedSubject" [settings]="subjectSelectSettings"
+                                                  styleClass="edit-entity-card-select" name="selectedSubject" #type="ngModel" required [blur]="false" (onSelect)="onSubjectSelect($event)" (onDeSelect)="onSubjectDeSelect()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <label jhiTranslate="timetableApp.timetable.teacher" for="field_teacher">Teacher</label>
+                        <jhi-angular2-multiselect [data]="teacherSelectOption" [(ngModel)]="selectedTeacher" [settings]="teacherSelectSettings"
+                                                  styleClass="edit-entity-card-select" name="selectedTeacher" #type="ngModel" required [blur]="false" (onSelect)="onTeacherSelect($event)" (onDeSelect)="onTeacherDeSelect()">
+                    </div>
+                    <div class='col-md-6'>
+                        <label jhiTranslate="timetableApp.timetable.division" for="field_division">Division</label>
+                        <jhi-angular2-multiselect [data]="divisionSelectOption" [(ngModel)]="selectedDivision" [settings]="divisionSelectSettings"
+                                                  styleClass="edit-entity-card-select" name="selectedDivision" #type="ngModel" required [blur]="false" (onSelect)="onDivisionSelect($event)" (onDeSelect)="onDivisionDeSelect()">
+                    </div>
+                </div>
+            </div>
+                <div class="form-group">
+                    <div class='row'>
+                        <div class='col-md-6'>
+                            <label class="form-control-label" jhiTranslate="timetableApp.timetable.everyWeek" for="field_everyWeek">Every Week</label>
+                            <input type="number" class="form-control" name="everyWeek" id="field_everyWeek" [(ngModel)]="curriculum.everyWeek"/>
+                        </div>
+                        <div class='col-md-6'>
+                            <label class="form-control-label" jhiTranslate="timetableApp.timetable.startWithWeek" for="field_startWithWeek">Start With Week</label>
+                            <input type="number" class="form-control" name="startWithWeek" id="field_startWithWeek" [(ngModel)]="curriculum.startWithWeek"/>
+                        </div>
+                    </div>
+                </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+                <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+            <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
+        </div>
+
+    </jhi-glass>
+</form>

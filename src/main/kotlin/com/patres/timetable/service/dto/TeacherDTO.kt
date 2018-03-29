@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull
 
 class TeacherDTO(
 
-
     @get:NotNull
     var name: String? = null,
 

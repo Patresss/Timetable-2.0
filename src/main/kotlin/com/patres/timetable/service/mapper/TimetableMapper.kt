@@ -118,7 +118,7 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             inFriday = entity.inFriday
             inSaturday = entity.inSaturday
             inSunday = entity.inSunday
-            teacherFullname = "${entity.teacher?.degree} ${entity.teacher?.name} ${entity.teacher?.surname}"
+            teacherFullName = entity.teacher?.getFullName()
         }
     }
 

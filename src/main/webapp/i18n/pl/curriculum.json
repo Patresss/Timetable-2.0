@@ -1,0 +1,40 @@
+{
+    "timetableApp": {
+        "curriculum" : {
+            "home": {
+                "title": "Plan nauczanias",
+                "createLabel": "Dodaj Plan nauczania",
+                "createOrEditLabel": "Dodaj lub edytuj: Plan nauczania"
+            },
+            "created": "Utworzono nowy Plan nauczania z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Plan nauczania z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Plan nauczania z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Plan nauczania {{ id }}?"
+            },
+            "detail": {
+                "title": "Plan nauczania"
+            },
+            "name": "Nazwa",
+            "type": "Type",
+            "everyWeek": "Co ile tygodni",
+            "startWithWeek": "Zaczynajac od tygodnia",
+            "description": "Opis",
+            "colorBackground": "Kolor tła",
+            "colorText": "Kolor tekstu",
+            "inMonday": "Poniedziałek",
+            "inTuesday": "Wtorek",
+            "inWednesday": "Środa",
+            "inThursday": "Czwartek",
+            "inFriday": "Piątek",
+            "inSaturday": "Sobota",
+            "inSunday": "Niedziela",
+            "place": "Miejsce",
+            "subject": "Przedmiot",
+            "teacher": "Nauczyciel",
+            "division": "Grupa",
+            "lesson": "Lekcja",
+            "period": "Okres czasu"
+        }
+    }
+}

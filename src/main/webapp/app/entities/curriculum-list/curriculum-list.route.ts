@@ -60,13 +60,13 @@ export const curriculumListPopupRoute: Routes = [
     },
     {
         path: 'curriculum-list/:id/edit',
-        component: CurriculumListDialogComponent,
+        component: CurriculumListPopupComponent,
         data: {
             authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.curriculum-list'
         },
         canActivate: [UserRouteAccessService],
-        // outlet: 'popup'
+        outlet: 'popup'
     },
     {
         path: 'curriculum-list/:id/delete',

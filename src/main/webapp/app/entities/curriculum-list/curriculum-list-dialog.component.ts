@@ -10,6 +10,11 @@ import {ResponseWrapper} from '../../shared';
 import {Curriculum} from '../curriculum';
 import {CurriculumList} from './curriculum-list.model';
 import {CurriculumListService} from './curriculum-list.service';
+import {PeriodDialogComponent} from '../period/period-dialog.component';
+import {PeriodPopupService} from '../period/period-popup.service';
+import {CurriculumListPopupService} from './curriculum-list-popup.service';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {PeriodService} from '../period/period.service';
 
 @Component({
     selector: 'jhi-curriculum-list-popup',
@@ -17,38 +22,26 @@ import {CurriculumListService} from './curriculum-list.service';
 })
 export class CurriculumListPopupComponent implements OnInit, OnDestroy {
 
-    curriculumList: CurriculumList;
-    private subscription: Subscription;
-    private eventSubscriber: Subscription;
+    routeSub: any;
 
-    constructor(private eventManager: JhiEventManager,
-                private curriculumListService: CurriculumListService,
-                private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute,
+                private curriculumListPopupService: CurriculumListPopupService) {
     }
 
     ngOnInit() {
-        this.subscription = this.route.params.subscribe((params) => {
-            this.load(params['id']);
+        this.routeSub = this.route.params.subscribe((params) => {
+            if (params['id']) {
+                this.curriculumListPopupService
+                    .open(CurriculumListDialogComponent as Component, params['id']);
+            } else {
+                this.curriculumListPopupService
+                    .open(CurriculumListDialogComponent as Component);
+            }
         });
-        this.registerChangeInCurriculumLists();
-    }
-
-    load(id) {
-        this.curriculumListService.find(id).subscribe((curriculumList) => {
-            this.curriculumList = curriculumList;
-        });
-    }
-
-    registerChangeInCurriculumLists() {
-        this.eventSubscriber = this.eventManager.subscribe(
-            'curriculumListListModification',
-            (response) => this.load(this.curriculumList.id)
-        );
     }
 
     ngOnDestroy() {
-        this.subscription.unsubscribe();
-        this.eventManager.destroy(this.eventSubscriber);
+        this.routeSub.unsubscribe();
     }
 }
 
@@ -56,7 +49,7 @@ export class CurriculumListPopupComponent implements OnInit, OnDestroy {
     selector: 'jhi-curriculum-list-dialog',
     templateUrl: './curriculum-list-dialog.component.html'
 })
-export class CurriculumListDialogComponent implements OnInit, OnDestroy {
+export class CurriculumListDialogComponent implements OnInit {
 
     curriculumList: CurriculumList;
     private subscription: Subscription;
@@ -78,32 +71,15 @@ export class CurriculumListDialogComponent implements OnInit, OnDestroy {
                 private divisionService: DivisionService,
                 private eventManager: JhiEventManager,
                 private curriculumListService: CurriculumListService,
-                private route: ActivatedRoute) {
+                private activeModal: NgbActiveModal) {
     }
 
     ngOnInit() {
-        this.subscription = this.route.params.subscribe((params) => {
-            this.load(params['id']);
-        });
         this.isSaving = false;
         this.divisionService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.divisions = res.json;
-                this.divisionSelectOption = this.entityListToSelectList(this.divisions);
             }, (res: ResponseWrapper) => this.onError(res.json));
-        this.registerChangeInCurriculumLists();
-    }
-
-    registerChangeInCurriculumLists() {
-        this.eventSubscriber = this.eventManager.subscribe(
-            'curriculumListListModification',
-            (response) => this.load(this.curriculumList.id)
-        );
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-        this.eventManager.destroy(this.eventSubscriber);
     }
 
     load(id) {
@@ -134,13 +110,8 @@ export class CurriculumListDialogComponent implements OnInit, OnDestroy {
         this.curriculumList.curriculums.push(new Curriculum());
     }
 
-    startDateDp() {
-    }
-
-    endDateDp() {
-    }
-
     clear() {
+        this.activeModal.dismiss('cancel');
     }
 
     private subscribeToSaveResponse(result: Observable<CurriculumList>) {
@@ -151,6 +122,7 @@ export class CurriculumListDialogComponent implements OnInit, OnDestroy {
     private onSaveSuccess(result: CurriculumList) {
         this.eventManager.broadcast({name: 'curriculumListListModification', content: 'OK'});
         this.isSaving = false;
+        this.activeModal.dismiss(result);
     }
 
     private onSaveError() {

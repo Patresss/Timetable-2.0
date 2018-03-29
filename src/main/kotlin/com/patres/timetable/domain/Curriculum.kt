@@ -1,10 +1,10 @@
 package com.patres.timetable.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.patres.timetable.domain.enumeration.EventType
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
-import java.time.LocalDate
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotNull
@@ -14,11 +14,8 @@ import javax.validation.constraints.NotNull
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 class Curriculum(
 
-    @Column(name = "start_time")
-    var startTime: Long? = null,
-
-    @Column(name = "end_time")
-    var endTime: Long? = null,
+    @Column(name = "name")
+    var name: String? = null,
 
     @get:NotNull
     @Enumerated(EnumType.STRING)
@@ -46,27 +43,14 @@ class Curriculum(
     @ManyToOne
     var lesson: Lesson? = null,
 
-    @ManyToOne
-    var curriculumList: CurriculumList? = null
+    @ManyToMany(mappedBy = "curriculums")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    var curriculumnListes: Set<CurriculumList> = HashSet(),
 
+    divisionOwner: Division? = null
 
-) : AbstractApplicationEntity(), Serializable {
-
-    fun getStartTimeHHmmFormatted(): String? {
-        return getTimeHHmmFormatted(startTime)
-    }
-
-    fun setStartTimeHHmmFormatted(time: String) {
-        startTime = getSecondsFromString(time)
-    }
-
-    fun getEndTimeHHmmFormatted(): String? {
-        return getTimeHHmmFormatted(endTime)
-    }
-
-    fun setEndTimeHHmmFormatted(time: String) {
-        endTime = getSecondsFromString(time)
-    }
+) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
