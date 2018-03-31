@@ -18,6 +18,7 @@
                 "period": "Period",
                 "interval": "Interval",
                 "curriculum-list": "Curriculum List",
+                "curriculum": "Curriculum",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

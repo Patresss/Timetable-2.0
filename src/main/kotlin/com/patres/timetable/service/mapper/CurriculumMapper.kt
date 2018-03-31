@@ -34,13 +34,15 @@ open class CurriculumMapper : EntityMapper<Curriculum, CurriculumDTO>() {
                 numberOfActivities = entityDto.numberOfActivities
                 everyWeek = entityDto.everyWeek
                 startWithWeek = entityDto.startWithWeek
-                entityDto.divisionId?.let { division = divisionRepository.getOne(entityDto.divisionId) }
+                entityDto.divisionId?.let {
+                    division = divisionRepository.getOne(entityDto.divisionId)
+                    divisionOwner = division?.divisionOwner
+                }
                 entityDto.teacherId?.let { teacher = teacherRepository.getOne(entityDto.teacherId) }
                 entityDto.subjectId?.let { subject = subjectRepository.getOne(entityDto.subjectId) }
                 entityDto.lessonId?.let { lesson = lessonRepository.getOne(entityDto.lessonId) }
                 entityDto.placeId?.let { place = placeRepository.getOne(entityDto.placeId) }
                 id = entityDto.id
-                entityDto.divisionOwnerId?.let { divisionOwner = divisionRepository.findOne(it) }
             }
     }
 

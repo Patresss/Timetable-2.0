@@ -1,7 +1,6 @@
 package com.patres.timetable.service.mapper
 
 import com.patres.timetable.domain.Division
-import com.patres.timetable.repository.DivisionRepository
 import com.patres.timetable.service.dto.DivisionDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -18,11 +17,8 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
     @Autowired
     private lateinit var subjectMapper: SubjectMapper
 
-    @Autowired
-    private lateinit var divisionRepository: DivisionRepository
-
     override fun toEntity(entityDto: DivisionDTO): Division {
-        val division = Division(
+        return Division(
             name = entityDto.name,
             divisionType = entityDto.divisionType)
             .apply {
@@ -31,20 +27,13 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 numberOfPeople = entityDto.numberOfPeople
                 colorBackground = entityDto.colorBackground
                 colorText = entityDto.colorText
-                divisionOwner = entityDto.divisionOwnerId?.let { divisionRepository.getOne(it) }
+                parents = entityDTOSetToEntitySet(entityDto.parents)
+                users = userMapper.entityDTOSetToEntitySet(entityDto.users)
+                preferredTeachers = teacherMapper.entityDTOSetToEntitySet(entityDto.preferredTeachers)
+                preferredSubjects = subjectMapper.entityDTOSetToEntitySet(entityDto.preferredSubjects)
+                val parent = parents.elementAtOrNull(0) //TODO validate if all parents has the same owner
+                divisionOwner = parent?.divisionOwner?: parent
             }
-
-
-        val divisionSet = entityDTOSetToEntitySet(entityDto.parents)
-        division.parents = divisionSet
-        val userSet = userMapper.entityDTOSetToEntitySet(entityDto.users)
-        division.users = userSet
-        val teacherSet = teacherMapper.entityDTOSetToEntitySet(entityDto.preferredTeachers)
-        division.preferredTeachers = teacherSet
-        val subjectSet = subjectMapper.entityDTOSetToEntitySet(entityDto.preferredSubjects)
-        division.preferredSubjects = subjectSet
-
-        return division
     }
 
     override fun toDto(entity: Division): DivisionDTO {

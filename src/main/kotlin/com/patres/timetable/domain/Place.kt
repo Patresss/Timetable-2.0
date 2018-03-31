@@ -47,8 +47,11 @@ class Place(
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "place_preferred_teacher", joinColumns = arrayOf(JoinColumn(name = "places_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_teachers_id", referencedColumnName = "id")))
-    var preferredTeachers: Set<Teacher> = HashSet()
-    ) : AbstractDivisionOwner(), Serializable {
+    var preferredTeachers: Set<Teacher> = HashSet(),
+
+    divisionOwner: Division? = null
+
+) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
 
 
     override fun equals(other: Any?): Boolean {

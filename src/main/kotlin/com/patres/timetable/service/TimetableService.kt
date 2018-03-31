@@ -12,7 +12,7 @@ import java.time.LocalDate
 
 @Service
 @Transactional
-open class TimetableService(entityRepository: TimetableRepository, entityMapper: EntityMapper<Timetable, TimetableDTO>) : EntityService<Timetable, TimetableDTO, TimetableRepository>(entityRepository, entityMapper) {
+open class TimetableService(entityRepository: TimetableRepository, entityMapper: EntityMapper<Timetable, TimetableDTO>) : DivisionOwnerService<Timetable, TimetableDTO, TimetableRepository>(entityRepository, entityMapper) {
 
     companion object {
         private val log = LoggerFactory.getLogger(TimetableResource::class.java)

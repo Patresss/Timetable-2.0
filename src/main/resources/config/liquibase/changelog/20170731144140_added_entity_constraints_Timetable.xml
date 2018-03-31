@@ -7,7 +7,7 @@
         Added the constraints for entity Timetable.
     -->
     <changeSet id="20170731144140-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="place_id"
                                  baseTableName="timetable"
                                  constraintName="fk_timetable_place_id"
@@ -43,6 +43,12 @@
                                  constraintName="fk_timetable_period_id"
                                  referencedColumnNames="id"
                                  referencedTableName="period"/>
+
+        <addForeignKeyConstraint baseColumnNames="division_owner_id"
+                                 baseTableName="timetable"
+                                 constraintName="fk_timetable_division_owner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="division"/>
 
     </changeSet>
 </databaseChangeLog>

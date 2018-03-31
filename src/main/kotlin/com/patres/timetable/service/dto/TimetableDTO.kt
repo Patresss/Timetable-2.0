@@ -73,9 +73,11 @@ class TimetableDTO(
 
     var periodId: Long? = null,
 
-    var periodName: String? = null
+    var periodName: String? = null,
 
-) : AbstractApplicationEntityDTO(), Serializable {
+    divisionOwnerId: Long? = null
+
+) : AbstractDivisionOwnerDTO(divisionOwnerId = divisionOwnerId), Serializable {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -97,27 +99,7 @@ class TimetableDTO(
     }
 
     override fun toString(): String {
-        return "TimetableDTO{" +
-            "id=" + id +
-            ", title='" + title + "'" +
-            ", startTimeString='" + startTimeString + "'" +
-            ", endTimeString='" + endTimeString + "'" +
-            ", startDate='" + startDate + "'" +
-            ", endDate='" + endDate + "'" +
-            ", date='" + date + "'" +
-            ", type='" + type + "'" +
-            ", everyWeek='" + everyWeek + "'" +
-            ", startWithWeek='" + startWithWeek + "'" +
-            ", description='" + description + "'" +
-            ", colorBackground='" + colorBackground + "'" +
-            ", colorText='" + colorText + "'" +
-            ", inMonday='" + inMonday + "'" +
-            ", inTuesday='" + inTuesday + "'" +
-            ", inWednesday='" + inWednesday + "'" +
-            ", inThursday='" + inThursday + "'" +
-            ", inFriday='" + inFriday + "'" +
-            ", inSaturday='" + inSaturday + "'" +
-            ", inSunday='" + inSunday + "'" +
-            "}"
+        return "TimetableDTO(title=$title, startTimeString=$startTimeString, endTimeString=$endTimeString, startDate=$startDate, endDate=$endDate, date=$date, type=$type, everyWeek=$everyWeek, startWithWeek=$startWithWeek, description=$description, colorBackground=$colorBackground, colorText=$colorText, inMonday=$inMonday, inTuesday=$inTuesday, inWednesday=$inWednesday, inThursday=$inThursday, inFriday=$inFriday, inSaturday=$inSaturday, inSunday=$inSunday, placeId=$placeId, placeName=$placeName, subjectId=$subjectId, subjectName=$subjectName, subjectShortName=$subjectShortName, teacherId=$teacherId, teacherFullName=$teacherFullName, divisionId=$divisionId, divisionName=$divisionName, lessonId=$lessonId, lessonName=$lessonName, periodId=$periodId, periodName=$periodName)"
     }
+
 }

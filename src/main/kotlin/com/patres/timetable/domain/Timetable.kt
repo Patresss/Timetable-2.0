@@ -90,9 +90,11 @@ class Timetable(
     var lesson: Lesson? = null,
 
     @ManyToOne
-    var period: Period? = null
+    var period: Period? = null,
 
-) : AbstractApplicationEntity(), Serializable {
+    divisionOwner: Division? = null
+
+) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
 
     fun getStartTimeHHmmFormatted(): String? {
         return getTimeHHmmFormatted(startTime)

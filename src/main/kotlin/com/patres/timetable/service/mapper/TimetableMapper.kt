@@ -27,6 +27,9 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
     @Autowired
     private lateinit var placeRepository: PlaceRepository
 
+    @Autowired
+    private lateinit var divisionMapper: DivisionMapper
+
     override fun toEntity(entityDto: TimetableDTO): Timetable {
         return Timetable(
             title = entityDto.title,
@@ -34,6 +37,7 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
         ).apply {
             entityDto.divisionId?.let {
                 division = divisionRepository.getOne(entityDto.divisionId)
+                divisionOwner = division?.divisionOwner
             }
             entityDto.periodId?.let {
                 period = periodRepository.getOne(entityDto.periodId)
@@ -119,6 +123,8 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             inSaturday = entity.inSaturday
             inSunday = entity.inSunday
             teacherFullName = entity.teacher?.getFullName()
+            divisionOwnerName = divisionMapper.getDivisionOwnerName(entity.divisionOwner)
+            divisionOwnerId = divisionMapper.getDivisionOwnerId(entity.divisionOwner)
         }
     }
 
@@ -160,14 +166,6 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
         }
         val period = timetable.period ?: return null
         return period.name
-    }
-
-    private fun timetableTeacherSurname(timetable: Timetable?): String? {
-        if (timetable == null) {
-            return null
-        }
-        val teacher = timetable.teacher ?: return null
-        return teacher.surname
     }
 
     private fun timetableSubjectId(timetable: Timetable?): Long? {
