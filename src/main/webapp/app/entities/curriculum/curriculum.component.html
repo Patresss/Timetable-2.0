@@ -18,9 +18,6 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
                 <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
                 <th jhiSortBy="name"><span jhiTranslate="timetableApp.curriculum.name">Name</span> <span class="fa fa-sort"></span></th>
-                <th jhiSortBy="type"><span jhiTranslate="timetableApp.curriculum.type">Type</span> <span class="fa fa-sort"></span></th>
-                <th jhiSortBy="everyWeek"><span jhiTranslate="timetableApp.curriculum.everyWeek">Every Week</span> <span class="fa fa-sort"></span></th>
-                <th jhiSortBy="startWithWeek"><span jhiTranslate="timetableApp.curriculum.startWithWeek">Start With Week</span> <span class="fa fa-sort"></span></th>
                 <th jhiSortBy="placeName"><span jhiTranslate="timetableApp.curriculum.place">Place</span> <span class="fa fa-sort"></span></th>
                 <th jhiSortBy="subjectName"><span jhiTranslate="timetableApp.curriculum.subject">Subject</span> <span class="fa fa-sort"></span></th>
                 <th jhiSortBy="teacherSurname"><span jhiTranslate="timetableApp.curriculum.teacher">Teacher</span> <span class="fa fa-sort"></span></th>
@@ -33,8 +30,6 @@
             <tr *ngFor="let curriculum of curriculums ;trackBy: trackId">
                 <td><a [routerLink]="['../curriculum', curriculum.id ]">{{curriculum.id}}</a></td>
                 <td>{{curriculum.name}}</td>
-                <td>{{curriculum.everyWeek}}</td>
-                <td>{{curriculum.startWithWeek}}</td>
                 <td>
                     <div *ngIf="curriculum.placeId">
                         <a [routerLink]="['../place', curriculum.placeId  ]" >{{curriculum.placeName}}</a>
