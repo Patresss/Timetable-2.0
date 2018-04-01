@@ -29,14 +29,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="start_date" type="date">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="end_date" type="date">
-                <constraints nullable="true" />
-            </column>
-
             <column name="period_id" type="bigint">
                 <constraints nullable="true" />
             </column>

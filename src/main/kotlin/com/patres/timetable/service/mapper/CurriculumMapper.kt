@@ -49,23 +49,26 @@ open class CurriculumMapper : EntityMapper<Curriculum, CurriculumDTO>() {
     override fun toDto(entity: Curriculum): CurriculumDTO {
         return CurriculumDTO()
             .apply {
-                placeId = curriculumPlaceId(entity)
                 divisionName = curriculumDivisionName(entity)
                 lessonId = curriculumLessonId(entity)
                 teacherFullName = entity.teacher?.getFullName()
                 subjectId = curriculumSubjectId(entity)
+                subjectName = curriculumSubjectName(entity)
+                lessonId = curriculumLessonId(entity)
                 lessonName = curriculumLessonName(entity)
                 teacherId = curriculumTeacherId(entity)
+                teacherFullName = entity.teacher?.getFullName()
                 divisionId = curriculumDivisionId(entity)
+                divisionName = curriculumDivisionName(entity)
+                placeId = curriculumPlaceId(entity)
                 placeName = curriculumPlaceName(entity)
-                subjectName = curriculumSubjectName(entity)
                 id = entity.id
                 numberOfActivities = entity.numberOfActivities
                 everyWeek = entity.everyWeek
                 startWithWeek = entity.startWithWeek
-                id = entity.id
                 divisionOwnerName = divisionMapper.getDivisionOwnerName(entity.divisionOwner)
                 divisionOwnerId = divisionMapper.getDivisionOwnerId(entity.divisionOwner)
+                name = entity.name?: "D: $divisionName  | S: $subjectName  | T: $teacherFullName  | ID: $id"
             }
     }
 

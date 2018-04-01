@@ -20,7 +20,7 @@
                 <th jhiSortBy="name"><span jhiTranslate="timetableApp.curriculum.name">Name</span> <span class="fa fa-sort"></span></th>
                 <th jhiSortBy="placeName"><span jhiTranslate="timetableApp.curriculum.place">Place</span> <span class="fa fa-sort"></span></th>
                 <th jhiSortBy="subjectName"><span jhiTranslate="timetableApp.curriculum.subject">Subject</span> <span class="fa fa-sort"></span></th>
-                <th jhiSortBy="teacherSurname"><span jhiTranslate="timetableApp.curriculum.teacher">Teacher</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="teacherFullName"><span jhiTranslate="timetableApp.curriculum.teacher">Teacher</span> <span class="fa fa-sort"></span></th>
                 <th jhiSortBy="divisionName"><span jhiTranslate="timetableApp.curriculum.division">Division</span> <span class="fa fa-sort"></span></th>
                 <th jhiSortBy="lessonName"><span jhiTranslate="timetableApp.curriculum.lesson">Lesson</span> <span class="fa fa-sort"></span></th>
                 <th></th>
@@ -42,7 +42,7 @@
                 </td>
                 <td>
                     <div *ngIf="curriculum.teacherId">
-                        <a [routerLink]="['../teacher', curriculum.teacherId  ]" >{{curriculum.teacherSurname}}</a>
+                        <a [routerLink]="['../teacher', curriculum.teacherId  ]" >{{curriculum.teacherFullName}}</a>
                     </div>
                 </td>
                 <td>

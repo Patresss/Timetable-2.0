@@ -615,6 +615,7 @@ a:hover {
 
     .c-label {
         background: rgba(0, 0, 0, 0.0);
+        color: $accent-color-strong-dark;
     }
 
     .select-container {
@@ -634,7 +635,7 @@ a:hover {
     }
 
     .list-area {
-        background: transparent;
+        background: $accent-color-strong-light;
         color: $light-text-color;
     }
     .list-filter {
@@ -645,7 +646,6 @@ a:hover {
 
     .list-filter input {
         color: $accent-color-strong-dark;
-        background: $accent-color-strong-light;
     }
 
     .arrow-up {
@@ -654,9 +654,6 @@ a:hover {
 
     .dropdown-list {
         ul {
-            li {
-                background: $accent-color-strong-light;
-            }
             li:hover {
                 background: $accent-color-medium-light !important;
             }

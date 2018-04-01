@@ -7,7 +7,7 @@ import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
 
 import {Division, DivisionService} from '../division';
 import {ResponseWrapper} from '../../shared';
-import {Curriculum} from '../curriculum';
+import {Curriculum, CurriculumService} from '../curriculum';
 import {CurriculumList} from './curriculum-list.model';
 import {CurriculumListService} from './curriculum-list.service';
 import {PeriodDialogComponent} from '../period/period-dialog.component';
@@ -15,6 +15,8 @@ import {PeriodPopupService} from '../period/period-popup.service';
 import {CurriculumListPopupService} from './curriculum-list-popup.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {PeriodService} from '../period/period.service';
+import {SelectType} from '../../util/select-type.model';
+import {SelectUtil} from '../../util/select-util.model';
 
 @Component({
     selector: 'jhi-curriculum-list-popup',
@@ -58,17 +60,26 @@ export class CurriculumListDialogComponent implements OnInit {
 
     divisions: Division[] = [];
 
-    divisionSelectOption = [];
-    selectedDivision = [];
-    divisionSelectSettings = {
+    periodSelectOption = [];
+    selectedPeriod = [];
+    periodSelectSettings = {
         singleSelection: true,
-        text: 'timetableApp.plan.choose.school',
-        enableSearchFilter: true,
-        classes: 'plan-select'
+        text: 'timetableApp.plan.choose.period',
+        enableSearchFilter: true
     };
 
+    curriculumSelectOption = [];
+    selectedCurriculum = [];
+    curriculumSelectSettings = {
+        singleSelection: false,
+        text: 'timetableApp.plan.choose.curriculums',
+        enableSearchFilter: true
+    };
+
+
     constructor(private alertService: JhiAlertService,
-                private divisionService: DivisionService,
+                private periodService: PeriodService,
+                private curriculumService: CurriculumService,
                 private eventManager: JhiEventManager,
                 private curriculumListService: CurriculumListService,
                 private activeModal: NgbActiveModal) {
@@ -76,10 +87,20 @@ export class CurriculumListDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.divisionService.query()
-            .subscribe((res: ResponseWrapper) => {
-                this.divisions = res.json;
-            }, (res: ResponseWrapper) => this.onError(res.json));
+        this.periodService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+            .subscribe((res: ResponseWrapper) => { this.initPeriods(res.json)}, (res: ResponseWrapper) => this.onError(res.json));
+        this.curriculumService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+            .subscribe((res: ResponseWrapper) => { this.initCurriculums(res.json)}, (res: ResponseWrapper) => this.onError(res.json));
+    }
+
+    private initPeriods(entityList: any[]) {
+        this.periodSelectOption = SelectUtil.entityListToSelectList(entityList);
+        this.selectedPeriod = this.periodSelectOption.filter( (entity) => entity.id === this.curriculumList.periodId)
+    }
+
+    private initCurriculums(entityList: any[]) {
+        this.curriculumSelectOption = SelectUtil.entityListToSelectList(entityList);
+        this.selectedCurriculum = this.curriculumSelectOption.filter( (entity) => this.curriculumList.curriculums.some((curriculum) => entity.id == curriculum.id ))
     }
 
     load(id) {
@@ -90,6 +111,7 @@ export class CurriculumListDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        this.curriculumList.curriculums = this.selectedCurriculum;
         if (this.curriculumList.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.curriculumListService.update(this.curriculumList));
@@ -97,17 +119,6 @@ export class CurriculumListDialogComponent implements OnInit {
             this.subscribeToSaveResponse(
                 this.curriculumListService.create(this.curriculumList));
         }
-    }
-
-    removeCurriculumTime(curriculum: Curriculum) {
-        const index: number = this.curriculumList.curriculums.indexOf(curriculum);
-        if (index !== -1) {
-            this.curriculumList.curriculums.splice(index, 1);
-        }
-    }
-
-    addCurriculumTime() {
-        this.curriculumList.curriculums.push(new Curriculum());
     }
 
     clear() {
@@ -133,25 +144,12 @@ export class CurriculumListDialogComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
-    trackDivisionById(index: number, item: Division) {
-        return item.id;
+    onPeriodSelect(item: any) {
+        this.curriculumList.periodId = item.id;
     }
 
-    onDivisionSelect(item: any) {
-        console.log(item);
-    }
-    OnDivisionDeSelect(item: any) {
-        console.log(item);
-    }
-
-    // TODO refctoring in plan is this same
-    private entityListToSelectList(entityList: Division[]) {
-        const selectList = [];
-        entityList.forEach((entity) => {
-            const obj = {id: entity.id, itemName: entity.name};
-            selectList.push(obj)
-        });
-        return selectList;
+    onPeriodDeSelect() {
+        this.curriculumList.periodId = null;
     }
 
 }

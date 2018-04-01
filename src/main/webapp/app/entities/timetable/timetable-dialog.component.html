@@ -118,7 +118,7 @@
                 <div class="form-group">
                     <label jhiTranslate="timetableApp.timetable.period" for="field_period">Period</label>
                     <jhi-angular2-multiselect [data]="periodSelectOption" [(ngModel)]="selectedPeriod" [settings]="periodSelectSettings"
-                                              styleClass="edit-entity-card-select" name="selectedPeriod" #type="ngModel" required [blur]="false" (onSelect)="onPeriodSelect($event)" (onDeSelect)="onPeriodDeSelect()">
+                                              styleClass="edit-entity-card-select" id="field_period" name="selectedPeriod" #type="ngModel" required [blur]="false" (onSelect)="onPeriodSelect($event)" (onDeSelect)="onPeriodDeSelect()">
                 </div>
 
 

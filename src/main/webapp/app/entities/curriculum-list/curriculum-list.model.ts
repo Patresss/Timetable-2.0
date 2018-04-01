@@ -8,7 +8,6 @@ export class CurriculumList implements BaseEntity {
                 public divisionOwnerId?: number,
                 public startDate?: any,
                 public endDate?: any,
-                public periodId?: number,
-                public skills = []) {
+                public periodId?: number) {
     }
 }

@@ -2,7 +2,7 @@
     "timetableApp": {
         "curriculum" : {
             "home": {
-                "title": "Plan nauczanias",
+                "title": "Plan nauczania",
                 "createLabel": "Dodaj Plan nauczania",
                 "createOrEditLabel": "Dodaj lub edytuj: Plan nauczania"
             },

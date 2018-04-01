@@ -11,42 +11,26 @@
             <jhi-alert-error></jhi-alert-error>
 
             <div class="form-group">
-                <label class="form-control-label" jhiTranslate="timetableApp.curriculum-list.name" for="field_name">Name</label>
-                <input type="text" class="form-control" name="name" id="field_name"
-                       [(ngModel)]="curriculumList.name" required/>
-                <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                    <small class="form-text text-danger"
-                           [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <label class="form-control-label" jhiTranslate="timetableApp.curriculum-list.name" for="field_name">Name</label>
+                        <input type="text" class="form-control" name="name" id="field_name" [(ngModel)]="curriculumList.name" required/>
+                    </div>
+                    <div class='col-md-6'>
+                        <label jhiTranslate="timetableApp.curriculum-list.period" for="field_period">Period</label>
+                        <jhi-angular2-multiselect [data]="periodSelectOption" [(ngModel)]="selectedPeriod" [settings]="periodSelectSettings"
+                                                  styleClass="edit-entity-card-select" id="field_period" name="selectedPeriod" #type="ngModel" required [blur]="false" (onSelect)="onPeriodSelect($event)" (onDeSelect)="onPeriodDeSelect()">
+                    </div>
                 </div>
             </div>
             <div class="form-group">
-                <label jhiTranslate="timetableApp.curriculum-list.divisionOwner" for="field_division">Division owner</label>
-                <span style="color: red;float: right;">* required</span>
-                <jhi-angular2-multiselect [data]="divisionSelectOption" [(ngModel)]="selectedDivision" [settings]="divisionSelectSettings"
-                                          (onSelect)="onDivisionSelect($event)"
-                                          (onDeSelect)="OnDivisionDeSelect($event)"
-                                          styleClass="edit-entity-card-select" name="selectedDivision" #divisionOwner="ngModel" required>
-
-                    <div [hidden]="!(editForm.controls.divisionOwner?.dirty && editForm.controls.divisionOwner?.invalid)">
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.divisionOwner?.errors?.required" jhiTranslate="entity.validation.required">
-                            This field is required.
-                        </small>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <label jhiTranslate="timetableApp.curriculum-list.curriculum-list" for="field_curriculum-list">Curriculum List</label>
+                        <jhi-angular2-multiselect [data]="curriculumSelectOption" [(ngModel)]="selectedCurriculum" [settings]="curriculumSelectSettings"
+                                                  styleClass="edit-entity-card-select" id="field_curriculum-list" name="selectedCurriculum" #type="ngModel" required [blur]="false" (onSelect)="onCurriculumSelect($event)" (onDeSelect)="onCurriculumDeSelect()">
                     </div>
-            </div>
-
-            <div class="form-group">
-                <label data-translate="timetableApp.curriculum-list.curriculumTime" for="field_name">Curriculum time</label>
-                <span>
-            <button type="button" class="btn btn-success btn-sm" (click)="addCurriculumTime(true)">
-                <i class="fa fa-plus"></i>
-            </button>
-        </span>
-            </div>
-            <div style="clear: both;"></div>
-
+                </div>
             </div>
 
         </div>

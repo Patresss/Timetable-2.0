@@ -1,0 +1,24 @@
+{
+    "timetableApp": {
+        "curriculum-list" : {
+            "home": {
+                "title": "Plany nauczania",
+                "createLabel": "Dodaj Plany nauczania",
+                "createOrEditLabel": "Dodaj lub edytuj: Plany nauczania"
+            },
+            "created": "Utworzono nowy Plany nauczania z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Plany nauczania z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Plany nauczania z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Plany nauczania {{ id }}?"
+            },
+            "detail": {
+                "title": "Plany nauczania"
+            },
+            "name": "Name",
+            "divisionOwner": "Division owner",
+            "curriculum-list": "Plany nauczania",
+            "period": "Okres czasu"
+        }
+    }
+}

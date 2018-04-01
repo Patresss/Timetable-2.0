@@ -15,7 +15,8 @@
                 "subject": "Wybierz przedmiot",
                 "division": "Wybierz grupę",
                 "period": "Wybierz okres czasu",
-                "event-type": "Wybierz typ wydarzenia"
+                "event-type": "Wybierz typ wydarzenia",
+                "curriculums": "Wybierz plany nauczania"
             },
             "type": {
                 "STUDENT": "Uczeń",

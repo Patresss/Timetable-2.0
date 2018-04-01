@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull
 
 class CurriculumDTO(
 
+    var name: String? = null,
+
     var startTime: String? = null,
 
     var endTime: String? = null,

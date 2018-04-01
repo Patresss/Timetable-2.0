@@ -17,16 +17,10 @@ class CurriculumList(
     @Column(name = "name")
     var name: String? = null,
 
-    @ManyToMany(cascade = [(CascadeType.ALL)])
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "curriculum_list_curriculum", joinColumns = [(JoinColumn(name = "curriculum_list_id", referencedColumnName = "id"))], inverseJoinColumns = [(JoinColumn(name = "curriculum_id", referencedColumnName = "id"))])
     var curriculums: Set<Curriculum> = HashSet(),
-
-    @Column(name = "start_date")
-    var startDate: LocalDate? = null,
-
-    @Column(name = "end_date")
-    var endDate: LocalDate? = null,
 
     @ManyToOne
     var period: Period? = null,

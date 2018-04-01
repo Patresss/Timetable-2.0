@@ -27,9 +27,6 @@ export class TimetableDialogComponent implements OnInit {
 
     timetable: Timetable;
     isSaving: boolean;
-    startDateDp: any;
-    endDateDp: any;
-    dateDp: any;
     series = false;
 
     eventTypeSelectOption = [

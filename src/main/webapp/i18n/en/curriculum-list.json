@@ -16,10 +16,9 @@
                 "title": "Curriculum List"
             },
             "name": "Name",
-            "startTime": "Start Time",
-            "endTime": "End Time",
-            "timetable": "Timetable",
-            "divisionOwner": "Division owner"
+            "divisionOwner": "Division owner",
+            "curriculum-list": "Curriculum list",
+            "period": "Period"
         }
     }
 }

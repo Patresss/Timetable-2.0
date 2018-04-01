@@ -6,9 +6,10 @@ import {Http, Response} from '@angular/http';
 import {Time} from '../../util/time.model';
 import {EntityService} from '../entity.service';
 import {Curriculum} from './curriculum.model';
+import {DivisionOwnerEntityService} from '../division-owner-entity.service';
 
 @Injectable()
-export class CurriculumService extends EntityService<Curriculum> {
+export class CurriculumService extends DivisionOwnerEntityService<Curriculum> {
 
     constructor(http: Http, private dateUtils: JhiDateUtils) {
         super(http, 'curriculums');
