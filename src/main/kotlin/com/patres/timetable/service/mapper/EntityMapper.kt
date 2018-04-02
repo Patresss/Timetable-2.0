@@ -5,7 +5,7 @@ import com.patres.timetable.domain.AbstractApplicationEntity
 import java.util.ArrayList
 import java.util.HashSet
 
-abstract class EntityMapper<EntityType : AbstractApplicationEntity, EntityDtoType> {
+abstract class EntityMapper<EntityType, EntityDtoType> {
 
     companion object {
         private const val SHORT_NAME_MAX_LENGTH = 3

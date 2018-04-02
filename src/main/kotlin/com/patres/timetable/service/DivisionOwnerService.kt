@@ -58,13 +58,13 @@ abstract class DivisionOwnerService<EntityType : AbstractDivisionOwner, EntityDt
     }
 
     fun hasPrivilegeToAddEntity(entityDto: AbstractDivisionOwnerDTO): Boolean {
-        return if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-            true
-        } else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN)) {
-            val divisionOwnerId = entityDto.divisionOwnerId
-            entityRepository.userHasPrivilegeToAddEntity(divisionOwnerId)
-        } else {
-            false
+        return when {
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> true
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> {
+                val divisionOwnerId = entityDto.divisionOwnerId
+                entityRepository.userHasPrivilegeToAddEntity(divisionOwnerId)
+            }
+            else -> false
         }
     }
 

@@ -1,6 +1,9 @@
 package com.patres.timetable.service
 
 import com.patres.timetable.domain.AbstractApplicationEntity
+import com.patres.timetable.security.AuthoritiesConstants
+import com.patres.timetable.security.SecurityUtils
+import com.patres.timetable.service.dto.AbstractDivisionOwnerDTO
 import com.patres.timetable.service.mapper.EntityMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -49,5 +52,14 @@ abstract class EntityService<EntityType : AbstractApplicationEntity, EntityDtoTy
     open fun delete(id: Long?) {
         log.debug("Request to delete {} : {}", getEntityName(), id)
         entityRepository.delete(id)
+    }
+
+
+    fun hasPrivilegeToShow(): Boolean {
+        return when {
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> true
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> true
+            else -> false
+        }
     }
 }
