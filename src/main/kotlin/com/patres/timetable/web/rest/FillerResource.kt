@@ -465,7 +465,7 @@ open class FillerResource(
         p16 = createPlace(name = "16", numberOfSeats = 34, division = lo2)
         p20 = createPlace(name = "20", numberOfSeats = 34, preferredSubjects = setOf(geografia), division = lo2)
         p21 = createPlace(name = "21", numberOfSeats = 34, division = lo2)
-        p22 = createPlace(name = "22", numberOfSeats = 34, preferredSubjects = setOf(matematyka), division = lo2)
+        p22 = createPlace(name = "22", numberOfSeats = 34, preferredSubjects = setOf(matematyka), preferredTeachers = setOf(czuba), preferredDivisions = setOf(class1a), division = lo2)
         p24 = createPlace(name = "24", numberOfSeats = 34, preferredSubjects = setOf(chemia), division = lo2)
         p25 = createPlace(name = "25", numberOfSeats = 34, division = lo2)
         p31 = createPlace(name = "31", numberOfSeats = 34, preferredSubjects = setOf(edukacjaDoBezpieczeństwa), division = lo2)
@@ -620,8 +620,8 @@ open class FillerResource(
     }
 
 
-    private fun createPlace(name: String, shortName: String? = null, numberOfSeats: Long?, preferredSubjects: Set<SubjectDTO> = emptySet(), division: DivisionDTO): PlaceDTO {
-        val place = PlaceDTO(name = name, shortName = shortName, numberOfSeats = numberOfSeats, preferredSubjects = preferredSubjects, divisionOwnerId = division.id)
+    private fun createPlace(name: String, shortName: String? = null, numberOfSeats: Long?, preferredSubjects: Set<SubjectDTO> = emptySet(), preferredTeachers: Set<TeacherDTO> = emptySet(), preferredDivisions: Set<DivisionDTO> = emptySet(), division: DivisionDTO): PlaceDTO {
+        val place = PlaceDTO(name = name, shortName = shortName, numberOfSeats = numberOfSeats, preferredSubjects = preferredSubjects, preferredTeachers = preferredTeachers, preferredDivisions = preferredDivisions, divisionOwnerId = division.id)
         return placeService.save(place)
     }
 

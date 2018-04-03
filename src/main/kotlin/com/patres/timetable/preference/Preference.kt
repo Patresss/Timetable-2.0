@@ -1,16 +1,34 @@
 package com.patres.timetable.preference
 
+import java.util.*
+
 class Preference {
 
-    val preferredTeachersId: Set<Long> = HashSet()
-    val preferredSubjectsId: Set<Long> = HashSet()
-    val preferredPlacesId: Set<Long> = HashSet()
-    val preferredDivisionsId: Set<Long> = HashSet()
+    private val preferredTeachersMap = TreeMap<Long, PreferenceHierarchy>()
+    val preferredSubjectsMap = TreeMap<Long, PreferenceHierarchy>()
+    val preferredPlaceMap = TreeMap<Long, PreferenceHierarchy>()
+    val preferredDivisionMap = TreeMap<Long, PreferenceHierarchy>()
 
-    val tooSmallPlacesId: Set<Long> = HashSet()
+    fun getTeacherPreferenceHierarchy(teachersId: Set<Long>): MutableCollection<PreferenceHierarchy> {
+        return getPlaceHierarchy(preferredTeachersMap, teachersId)
+    }
 
-    val takenTeachersId: Set<Long> = HashSet()
-    val takenPlacesId: Set<Long> = HashSet()
-    val takenDivisionsId: Set<Long> = HashSet()
+    fun geDivisionPreferenceHierarchy(divisionsId: Set<Long>): MutableCollection<PreferenceHierarchy> {
+        return getPlaceHierarchy(preferredDivisionMap, divisionsId)
+    }
+
+    fun getSubjectPreferenceHierarchy(subjectsId: Set<Long>): MutableCollection<PreferenceHierarchy> {
+        return getPlaceHierarchy(preferredSubjectsMap, subjectsId)
+    }
+
+    fun getPlacePreferenceHierarchy(placesId: Set<Long>): MutableCollection<PreferenceHierarchy> {
+        return getPlaceHierarchy(preferredPlaceMap, placesId)
+    }
+
+    private fun getPlaceHierarchy(map: TreeMap<Long, PreferenceHierarchy>, ids: Set<Long>): MutableCollection<PreferenceHierarchy> {
+        ids.filter { !map.contains(it) }.forEach { map[it] = PreferenceHierarchy() }
+        return map.values
+    }
+
 
 }

@@ -6,6 +6,7 @@ import com.patres.timetable.service.dto.PreferenceDependencyDTO
 import com.patres.timetable.service.mapper.PreferenceDependencyMapper
 import com.patres.timetable.web.rest.errors.ExceptionTranslator
 import org.hamcrest.Matchers
+import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,7 +18,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.transaction.annotation.Transactional
@@ -75,18 +75,48 @@ open class PreferenceResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun `test Preference Division `() {
+    open fun `Test preference by Division `() {
         // Initialize the database
-
         fillerResource.fill()
 
         val preferenceDependencyDTO = PreferenceDependencyDTO(divisionId = fillerResource.class1a.id)
 
         // Get the Preference
-        restPreferenceMockMvc.perform(get("/api/preferences", preferenceDependencyDTO))
+        restPreferenceMockMvc.perform(get("/api/preferences")
+            .flashAttr("preferenceDependencyDTO", preferenceDependencyDTO))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.preferredTeachersId.[*]", Matchers.hasSize<Int>(1)))
+            .andExpect(jsonPath("$.preferredTeachersId.*", Matchers.hasSize<Int>(1)))
+            .andExpect(jsonPath("$.preferredTeachersId.*").value(Matchers.hasItem(fillerResource.czuba.id?.toInt())))
+            .andExpect(jsonPath("$.preferredTeachersId.*").value(not (Matchers.hasItem(fillerResource.stasik.id?.toInt()))))
+            .andExpect(jsonPath("$.preferredSubjectsMap.*", Matchers.hasSize<Int>(20)))
+            .andExpect(jsonPath("$.preferredSubjectsMap.*").value(Matchers.hasItem(fillerResource.matematyka.id?.toInt())))
+            .andExpect(jsonPath("$.preferredSubjectsMap.*").value(not (Matchers.hasItem(fillerResource.jLaciński.id?.toInt()))))
+    }
+
+    @Test
+    @Transactional
+    @Throws(Exception::class)
+    open fun `Test preference by Place `() {
+        // Initialize the database
+        fillerResource.fill()
+
+        val preferenceDependencyDTO = PreferenceDependencyDTO(divisionId = fillerResource.p22.id)
+
+        // Get the Preference
+        restPreferenceMockMvc.perform(get("/api/preferences")
+            .flashAttr("preferenceDependencyDTO", preferenceDependencyDTO))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.preferredTeachersId.*", Matchers.hasSize<Int>(1)))
+            .andExpect(jsonPath("$.preferredTeachersId.*").value(Matchers.hasItem(fillerResource.czuba.id?.toInt())))
+            .andExpect(jsonPath("$.preferredTeachersId.*").value(not (Matchers.hasItem(fillerResource.stasik.id?.toInt()))))
+            .andExpect(jsonPath("$.preferredSubjectsMap.*", Matchers.hasSize<Int>(1)))
+            .andExpect(jsonPath("$.preferredSubjectsMap.*").value(Matchers.hasItem(fillerResource.matematyka.id?.toInt())))
+            .andExpect(jsonPath("$.preferredSubjectsMap.*").value(not (Matchers.hasItem(fillerResource.jLaciński.id?.toInt()))))
+            .andExpect(jsonPath("$.preferredDivisionMap.*", Matchers.hasSize<Int>(1)))
+            .andExpect(jsonPath("$.preferredDivisionMap.*").value(Matchers.hasItem(fillerResource.class1a.id?.toInt())))
+            .andExpect(jsonPath("$.preferredDivisionMap.*").value(not (Matchers.hasItem(fillerResource.class1b.id?.toInt()))))
     }
 
 

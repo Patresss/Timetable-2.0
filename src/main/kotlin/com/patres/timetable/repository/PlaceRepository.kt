@@ -14,4 +14,9 @@ interface PlaceRepository : DivisionOwnerRepository<Place> {
     @Query("select place from Place place left join fetch place.preferredSubjects left join fetch place.preferredDivisions left join fetch place.preferredTeachers where place.id =:id")
     fun findOneWithEagerRelationships(@Param("id") id: Long?): Place?
 
+    @Query("select place from Place place left join fetch place.preferredSubjects left join fetch place.preferredDivisions left join fetch place.preferredTeachers left join fetch place.preferredTeachers where place.id =:id")
+    fun findOneWithPreference(@Param("id") id: Long?): Place?
+
+
+
 }

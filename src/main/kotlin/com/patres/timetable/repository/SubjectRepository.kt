@@ -1,12 +1,15 @@
 package com.patres.timetable.repository
 
+import com.patres.timetable.domain.Place
 import com.patres.timetable.domain.Subject
-import com.patres.timetable.domain.Teacher
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
-import org.springframework.data.jpa.repository.*
-
 @Repository
-interface SubjectRepository : DivisionOwnerRepository<Subject>
+interface SubjectRepository : DivisionOwnerRepository<Subject> {
+
+    @Query("select subject from Subject subject left join fetch subject.preferredPlaces left join fetch subject.preferredDivisions left join fetch subject.preferredTeachers left join fetch subject.preferredTeachers where subject.id =:id")
+    fun findOneWithPreference(@Param("id") id: Long?): Subject?
+
+}

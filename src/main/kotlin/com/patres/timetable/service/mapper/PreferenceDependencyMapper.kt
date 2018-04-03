@@ -30,12 +30,12 @@ open class PreferenceDependencyMapper : EntityMapper<PreferenceDependency, Prefe
 
     override fun toEntity(entityDto: PreferenceDependencyDTO): PreferenceDependency {
         return PreferenceDependency(
-            division = divisionRepository.getOneOrNull(entityDto.divisionId),
+            division = divisionRepository.findOneWithPreference(entityDto.divisionId),
             period = periodRepository.getOneOrNull(entityDto.periodId),
-            teacher = teacherRepository.getOneOrNull(entityDto.teacherId),
-            subject = subjectRepository.getOneOrNull(entityDto.subjectId),
+            teacher = teacherRepository.findOneWithPreference(entityDto.teacherId),
+            subject = subjectRepository.findOneWithPreference(entityDto.subjectId),
             lesson = lessonRepository.getOneOrNull(entityDto.lessonId),
-            place = placeRepository.getOneOrNull(entityDto.placeId),
+            place = placeRepository.findOneWithPreference(entityDto.placeId),
             date = entityDto.date,
             everyWeek = entityDto.everyWeek,
             startWithWeek = entityDto.startWithWeek,

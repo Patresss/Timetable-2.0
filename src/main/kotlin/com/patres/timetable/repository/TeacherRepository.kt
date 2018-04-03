@@ -14,4 +14,7 @@ interface TeacherRepository : DivisionOwnerRepository<Teacher> {
     @Query("select teacher from Teacher teacher left join fetch teacher.preferredSubjects where teacher.id =:id")
     fun findOneWithEagerRelationships(@Param("id") id: Long?): Teacher?
 
+    @Query("select teacher from Teacher teacher left join fetch teacher.preferredSubjects left join fetch teacher.preferredDivisions left join fetch teacher.preferredPlaces where teacher.id =:id")
+    fun findOneWithPreference(@Param("id") id: Long?): Teacher?
+
 }
