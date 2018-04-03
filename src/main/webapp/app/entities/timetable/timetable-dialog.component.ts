@@ -28,6 +28,7 @@ export class TimetableDialogComponent implements OnInit {
     timetable: Timetable;
     isSaving: boolean;
     series = false;
+    dateDp: any;
 
     eventTypeSelectOption = [
         new SelectType(1, '', 'timetableApp.EventType.LESSON', EventType.LESSON),

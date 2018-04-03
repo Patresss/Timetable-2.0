@@ -28,7 +28,7 @@
                     <div class='col-md-12'>
                         <label jhiTranslate="timetableApp.curriculum-list.curriculum-list" for="field_curriculum-list">Curriculum List</label>
                         <jhi-angular2-multiselect [data]="curriculumSelectOption" [(ngModel)]="selectedCurriculum" [settings]="curriculumSelectSettings"
-                                                  styleClass="edit-entity-card-select" id="field_curriculum-list" name="selectedCurriculum" #type="ngModel" required [blur]="false" (onSelect)="onCurriculumSelect($event)" (onDeSelect)="onCurriculumDeSelect()">
+                                                  styleClass="edit-entity-card-select" id="field_curriculum-list" name="selectedCurriculum" #type="ngModel" required [blur]="false"">
                     </div>
                 </div>
             </div>

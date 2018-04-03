@@ -76,7 +76,6 @@ export class CurriculumListDialogComponent implements OnInit {
         enableSearchFilter: true
     };
 
-
     constructor(private alertService: JhiAlertService,
                 private periodService: PeriodService,
                 private curriculumService: CurriculumService,
@@ -100,7 +99,7 @@ export class CurriculumListDialogComponent implements OnInit {
 
     private initCurriculums(entityList: any[]) {
         this.curriculumSelectOption = SelectUtil.entityListToSelectList(entityList);
-        this.selectedCurriculum = this.curriculumSelectOption.filter( (entity) => this.curriculumList.curriculums.some((curriculum) => entity.id == curriculum.id ))
+        this.selectedCurriculum = this.curriculumSelectOption.filter( (entity) => this.curriculumList.curriculums.some((curriculum) => entity.id === curriculum.id ))
     }
 
     load(id) {
