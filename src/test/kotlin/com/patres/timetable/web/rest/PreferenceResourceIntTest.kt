@@ -75,48 +75,12 @@ open class PreferenceResourceIntTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun `Test preference by Division `() {
+    open fun `Test preference`() {
         // Initialize the database
-        fillerResource.fill()
-
-        val preferenceDependencyDTO = PreferenceDependencyDTO(divisionId = fillerResource.class1a.id)
-
         // Get the Preference
-        restPreferenceMockMvc.perform(get("/api/preferences")
-            .flashAttr("preferenceDependencyDTO", preferenceDependencyDTO))
+        restPreferenceMockMvc.perform(get("/api/preferences"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.preferredTeachersId.*", Matchers.hasSize<Int>(1)))
-            .andExpect(jsonPath("$.preferredTeachersId.*").value(Matchers.hasItem(fillerResource.czuba.id?.toInt())))
-            .andExpect(jsonPath("$.preferredTeachersId.*").value(not (Matchers.hasItem(fillerResource.stasik.id?.toInt()))))
-            .andExpect(jsonPath("$.preferredSubjectsMap.*", Matchers.hasSize<Int>(20)))
-            .andExpect(jsonPath("$.preferredSubjectsMap.*").value(Matchers.hasItem(fillerResource.matematyka.id?.toInt())))
-            .andExpect(jsonPath("$.preferredSubjectsMap.*").value(not (Matchers.hasItem(fillerResource.jLaciński.id?.toInt()))))
-    }
-
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun `Test preference by Place `() {
-        // Initialize the database
-        fillerResource.fill()
-
-        val preferenceDependencyDTO = PreferenceDependencyDTO(divisionId = fillerResource.p22.id)
-
-        // Get the Preference
-        restPreferenceMockMvc.perform(get("/api/preferences")
-            .flashAttr("preferenceDependencyDTO", preferenceDependencyDTO))
-            .andExpect(status().isOk)
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.preferredTeachersId.*", Matchers.hasSize<Int>(1)))
-            .andExpect(jsonPath("$.preferredTeachersId.*").value(Matchers.hasItem(fillerResource.czuba.id?.toInt())))
-            .andExpect(jsonPath("$.preferredTeachersId.*").value(not (Matchers.hasItem(fillerResource.stasik.id?.toInt()))))
-            .andExpect(jsonPath("$.preferredSubjectsMap.*", Matchers.hasSize<Int>(1)))
-            .andExpect(jsonPath("$.preferredSubjectsMap.*").value(Matchers.hasItem(fillerResource.matematyka.id?.toInt())))
-            .andExpect(jsonPath("$.preferredSubjectsMap.*").value(not (Matchers.hasItem(fillerResource.jLaciński.id?.toInt()))))
-            .andExpect(jsonPath("$.preferredDivisionMap.*", Matchers.hasSize<Int>(1)))
-            .andExpect(jsonPath("$.preferredDivisionMap.*").value(Matchers.hasItem(fillerResource.class1a.id?.toInt())))
-            .andExpect(jsonPath("$.preferredDivisionMap.*").value(not (Matchers.hasItem(fillerResource.class1b.id?.toInt()))))
     }
 
 

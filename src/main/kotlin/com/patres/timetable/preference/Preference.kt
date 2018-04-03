@@ -4,7 +4,7 @@ import java.util.*
 
 class Preference {
 
-    private val preferredTeachersMap = TreeMap<Long, PreferenceHierarchy>()
+    val preferredTeachersMap = TreeMap<Long, PreferenceHierarchy>()
     val preferredSubjectsMap = TreeMap<Long, PreferenceHierarchy>()
     val preferredPlaceMap = TreeMap<Long, PreferenceHierarchy>()
     val preferredDivisionMap = TreeMap<Long, PreferenceHierarchy>()

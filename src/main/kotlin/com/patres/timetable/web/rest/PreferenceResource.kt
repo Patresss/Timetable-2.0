@@ -44,7 +44,7 @@ open class PreferenceResource(val preferenceDependencyMapper: PreferenceDependen
     @GetMapping("/preferences")
     @Timed
     open fun getPreferences(@ModelAttribute preferenceDependencyDTO: PreferenceDependencyDTO): ResponseEntity<Preference> {
-        log.debug("REST request to get preference dependency")
+        log.debug("REST request to get preference by preferenceDependencyDTO: $preferenceDependencyDTO")
         val preferenceDependency = preferenceDependencyMapper.toEntity(preferenceDependencyDTO)
         val preference = PreferenceManager(preferenceDependency).calculatePreference()
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(preference))
