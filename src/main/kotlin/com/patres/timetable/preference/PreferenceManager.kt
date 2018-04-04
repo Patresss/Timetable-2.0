@@ -28,7 +28,7 @@ class PreferenceManager(private val preferenceDependency: PreferenceDependency) 
         preferredByDivision?.let { preference.getPlacePreferenceHierarchy(it).forEach { it.preferredByDivision = PreferenceHierarchy.PREFFERRED_POINTS } }
 
         val preferredByTeacher = preferenceDependency.teacher?.preferredPlaces?.mapNotNull { it.id }?.toSet()
-        preferredByTeacher?.let { preference.getPlacePreferenceHierarchy(it).forEach { it.preferredByTeachers = PreferenceHierarchy.PREFFERRED_POINTS } }
+        preferredByTeacher?.let { preference.getPlacePreferenceHierarchy(it).forEach { it.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS } }
 
         val preferredBySubject = preferenceDependency.subject?.preferredPlaces?.mapNotNull { it.id }?.toSet()
         preferredBySubject?.let { preference.getPlacePreferenceHierarchy(it).forEach { it.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS } }
@@ -39,7 +39,7 @@ class PreferenceManager(private val preferenceDependency: PreferenceDependency) 
         preferredByPlace?.let { preference.geDivisionPreferenceHierarchy(it).forEach { it.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS } }
 
         val preferredByTeacher = preferenceDependency.teacher?.preferredDivisions?.mapNotNull { it.id }?.toSet()
-        preferredByTeacher?.let { preference.geDivisionPreferenceHierarchy(it).forEach { it.preferredByTeachers = PreferenceHierarchy.PREFFERRED_POINTS } }
+        preferredByTeacher?.let { preference.geDivisionPreferenceHierarchy(it).forEach { it.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS } }
 
         val preferredBySubject = preferenceDependency.subject?.preferredDivisions?.mapNotNull { it.id }?.toSet()
         preferredBySubject?.let { preference.geDivisionPreferenceHierarchy(it).forEach { it.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS } }
@@ -51,7 +51,7 @@ class PreferenceManager(private val preferenceDependency: PreferenceDependency) 
         preferredByPlace?.let { preference.getSubjectPreferenceHierarchy(it).forEach { it.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS } }
 
         val preferredByTeacher = preferenceDependency.teacher?.preferredSubjects?.mapNotNull { it.id }?.toSet()
-        preferredByTeacher?.let { preference.getSubjectPreferenceHierarchy(it).forEach { it.preferredByTeachers = PreferenceHierarchy.PREFFERRED_POINTS } }
+        preferredByTeacher?.let { preference.getSubjectPreferenceHierarchy(it).forEach { it.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS } }
 
         val preferredByDivision = preferenceDependency.division?.preferredSubjects?.mapNotNull { it.id }?.toSet()
         preferredByDivision?.let { preference.getSubjectPreferenceHierarchy(it).forEach { it.preferredByDivision = PreferenceHierarchy.PREFFERRED_POINTS } }

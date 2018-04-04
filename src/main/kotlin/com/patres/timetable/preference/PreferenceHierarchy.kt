@@ -10,7 +10,7 @@ class PreferenceHierarchy {
         override fun compare(a: PreferenceHierarchy, b: PreferenceHierarchy): Int = a.points - b.points
     }
 
-    var preferredByTeachers = 0
+    var preferredByTeacher = 0
     var preferredBySubject = 0
     var preferredByPlace = 0
     var preferredByDivision = 0
@@ -19,6 +19,6 @@ class PreferenceHierarchy {
     var taken = 0
 
     var points = 0
-        get() = preferredByTeachers + preferredBySubject + preferredByPlace + preferredByDivision + tooSmallPlace + taken
+        get() = preferredByTeacher + preferredBySubject + preferredByPlace + preferredByDivision + tooSmallPlace + taken
 
 }

@@ -4,13 +4,13 @@ import java.util.*
 
 class Preference {
 
-    val preferredTeachersMap = TreeMap<Long, PreferenceHierarchy>()
-    val preferredSubjectsMap = TreeMap<Long, PreferenceHierarchy>()
+    val preferredTeacherMap = TreeMap<Long, PreferenceHierarchy>()
+    val preferredSubjectMap = TreeMap<Long, PreferenceHierarchy>()
     val preferredPlaceMap = TreeMap<Long, PreferenceHierarchy>()
     val preferredDivisionMap = TreeMap<Long, PreferenceHierarchy>()
 
     fun getTeacherPreferenceHierarchy(teachersId: Set<Long>): MutableCollection<PreferenceHierarchy> {
-        return getPlaceHierarchy(preferredTeachersMap, teachersId)
+        return getPlaceHierarchy(preferredTeacherMap, teachersId)
     }
 
     fun geDivisionPreferenceHierarchy(divisionsId: Set<Long>): MutableCollection<PreferenceHierarchy> {
@@ -18,7 +18,7 @@ class Preference {
     }
 
     fun getSubjectPreferenceHierarchy(subjectsId: Set<Long>): MutableCollection<PreferenceHierarchy> {
-        return getPlaceHierarchy(preferredSubjectsMap, subjectsId)
+        return getPlaceHierarchy(preferredSubjectMap, subjectsId)
     }
 
     fun getPlacePreferenceHierarchy(placesId: Set<Long>): MutableCollection<PreferenceHierarchy> {

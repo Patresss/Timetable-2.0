@@ -11,6 +11,7 @@ import {TimetablePeriodModule} from './period/period.module';
 import {TimetableIntervalModule} from './interval/interval.module';
 import {TimetableCurriculumListModule} from './curriculum-list/curriculum-list.module';
 import {TimetableCurriculumModule} from './curriculum/curriculum.module';
+import {TimetablePreferenceModule} from '../preference/preference.module';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {TimetableCurriculumModule} from './curriculum/curriculum.module';
         TimetableIntervalModule,
         TimetableCurriculumListModule,
         TimetableCurriculumModule,
+        TimetablePreferenceModule,
     ],
     declarations: [],
     entryComponents: [],
