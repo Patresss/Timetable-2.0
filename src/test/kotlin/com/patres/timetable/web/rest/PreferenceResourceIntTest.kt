@@ -1,6 +1,7 @@
 package com.patres.timetable.web.rest
 
 import com.patres.timetable.TimetableApp
+import com.patres.timetable.preference.PreferenceManager
 import com.patres.timetable.service.*
 import com.patres.timetable.service.dto.PreferenceDependencyDTO
 import com.patres.timetable.service.mapper.PreferenceDependencyMapper
@@ -53,6 +54,9 @@ open class PreferenceResourceIntTest {
     @Autowired
     private lateinit var placeService: PlaceService
 
+    @Autowired
+    private lateinit var preferenceManager: PreferenceManager
+
     private lateinit var restPreferenceMockMvc: MockMvc
     private lateinit var restFillerMockMvc: MockMvc
     private lateinit var fillerResource: FillerResource
@@ -61,7 +65,7 @@ open class PreferenceResourceIntTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        restPreferenceMockMvc = initMockMvc(PreferenceResource(preferenceDependencyMapper))
+        restPreferenceMockMvc = initMockMvc(PreferenceResource(preferenceDependencyMapper, preferenceManager))
         fillerResource = FillerResource(lessonService, divisionService, subjectService, timetableService, periodService, teacherService, curriculumService, placeService)
         restFillerMockMvc = initMockMvc(fillerResource)
     }

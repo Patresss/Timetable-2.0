@@ -21,5 +21,7 @@ class PreferenceDependencyDTO(
     var everyWeek: Long = 1,
     var startWithWeek: Long = 1,
     var startTimeString: String? = null,
-    var endTimeString: String? = null
+    var endTimeString: String? = null,
+    var divisionOwnerId: Long? = null
+
 )

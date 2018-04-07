@@ -159,6 +159,7 @@ $base-color: #0079FE;
   padding: 0;
   position: absolute;
   width: 1px;
+    background: #28a745;
 }
 .pure-checkbox input[type="checkbox"]:focus + label:before,
 .pure-checkbox input[type="checkbox"]:hover + label:before

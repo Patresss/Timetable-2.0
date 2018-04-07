@@ -37,27 +37,27 @@ import org.springframework.transaction.annotation.Transactional
 open class PropertyResourceIntTest {
 
     @Autowired
-    lateinit private var propertyRepository: PropertyRepository
+    private lateinit var propertyRepository: PropertyRepository
 
     @Autowired
-    lateinit private var divisionRepository: DivisionRepository
+    private lateinit var divisionRepository: DivisionRepository
 
     @Autowired
-    lateinit private var propertyMapper: PropertyMapper
+    private lateinit var propertyMapper: PropertyMapper
 
     @Autowired
-    lateinit private var propertyService: PropertyService
+    private lateinit var propertyService: PropertyService
 
     @Autowired
-    lateinit private var jacksonMessageConverter: MappingJackson2HttpMessageConverter
+    private lateinit var jacksonMessageConverter: MappingJackson2HttpMessageConverter
 
     @Autowired
-    lateinit private var pageableArgumentResolver: PageableHandlerMethodArgumentResolver
+    private lateinit var pageableArgumentResolver: PageableHandlerMethodArgumentResolver
 
     @Autowired
-    lateinit private var exceptionTranslator: ExceptionTranslator
+    private lateinit var exceptionTranslator: ExceptionTranslator
 
-    lateinit private var restPropertiesMockMvc: MockMvc
+    private lateinit var restPropertiesMockMvc: MockMvc
 
     private var property: Property = createEntity()
 

@@ -41,11 +41,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="jhi_date" type="date">
+            <column name="date" type="date">
                 <constraints nullable="true" />
             </column>
 
-            <column name="jhi_type" type="varchar(255)">
+            <column name="type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 

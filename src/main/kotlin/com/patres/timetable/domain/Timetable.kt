@@ -30,12 +30,12 @@ class Timetable(
     @Column(name = "end_date")
     var endDate: LocalDate? = null,
 
-    @Column(name = "jhi_date")
+    @Column(name = "date")
     var date: LocalDate? = null,
 
     @get:NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "jhi_type", nullable = false)
+    @Column(name = "type", nullable = false)
     var type: EventType? = null,
 
     @Column(name = "every_week")

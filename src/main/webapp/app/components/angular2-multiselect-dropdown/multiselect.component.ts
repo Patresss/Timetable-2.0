@@ -39,6 +39,9 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
     blur = true;
 
     @Input()
+    preferenceHierarchy = false;
+
+    @Input()
     styleClass: String = '';
 
     @Input()

@@ -9,25 +9,26 @@ class Preference {
     val preferredPlaceMap = TreeMap<Long, PreferenceHierarchy>()
     val preferredDivisionMap = TreeMap<Long, PreferenceHierarchy>()
 
-    fun getTeacherPreferenceHierarchy(teachersId: Set<Long>): MutableCollection<PreferenceHierarchy> {
-        return getPlaceHierarchy(preferredTeacherMap, teachersId)
+    fun getTeacherPreferenceHierarchy(teachersId: Set<Long>): Collection<PreferenceHierarchy> {
+        return getPreferenceHierarchy(preferredTeacherMap, teachersId)
     }
 
-    fun geDivisionPreferenceHierarchy(divisionsId: Set<Long>): MutableCollection<PreferenceHierarchy> {
-        return getPlaceHierarchy(preferredDivisionMap, divisionsId)
+    fun geDivisionPreferenceHierarchy(divisionsId: Set<Long>): Collection<PreferenceHierarchy> {
+        return getPreferenceHierarchy(preferredDivisionMap, divisionsId)
     }
 
-    fun getSubjectPreferenceHierarchy(subjectsId: Set<Long>): MutableCollection<PreferenceHierarchy> {
-        return getPlaceHierarchy(preferredSubjectMap, subjectsId)
+    fun getSubjectPreferenceHierarchy(subjectsId: Set<Long>): Collection<PreferenceHierarchy> {
+        return getPreferenceHierarchy(preferredSubjectMap, subjectsId)
     }
 
-    fun getPlacePreferenceHierarchy(placesId: Set<Long>): MutableCollection<PreferenceHierarchy> {
-        return getPlaceHierarchy(preferredPlaceMap, placesId)
+    fun getPlacePreferenceHierarchy(placesId: Set<Long>): Collection<PreferenceHierarchy> {
+        return getPreferenceHierarchy(preferredPlaceMap, placesId)
     }
 
-    private fun getPlaceHierarchy(map: TreeMap<Long, PreferenceHierarchy>, ids: Set<Long>): MutableCollection<PreferenceHierarchy> {
+    private fun getPreferenceHierarchy(map: TreeMap<Long, PreferenceHierarchy>, ids: Set<Long>): Collection<PreferenceHierarchy> {
         ids.filter { !map.contains(it) }.forEach { map[it] = PreferenceHierarchy() }
-        return map.values
+        val filterKeys = map.filterKeys { key -> ids.contains(key) }
+        return filterKeys.values
     }
 
 

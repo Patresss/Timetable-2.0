@@ -6,18 +6,19 @@ export class PreferenceDependency {
         public placeId?: number,
         public periodId?: number,
         public lessonId?: number,
+        public divisionOwnerId?: number,
         public date?: number,
-        public inMonday?: number,
-        public inTuesday?: number,
-        public inWednesday?: number,
-        public inThursday?: number,
-        public inFriday?: number,
-        public inSaturday?: number,
-        public inSunday?: number,
+        public inMonday?: boolean,
+        public inTuesday?: boolean,
+        public inWednesday?: boolean,
+        public inThursday?: boolean,
+        public inFriday?: boolean,
+        public inSaturday?: boolean,
+        public inSunday?: boolean,
         public everyWeek?: number,
         public startWithWeek?: number,
-        public startTimeString?: number,
-        public endTimeString?: number) {
+        public startTimeString?: string,
+        public endTimeString?: string) {
     }
 
 }

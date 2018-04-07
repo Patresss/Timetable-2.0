@@ -21,7 +21,8 @@ data class PreferenceDependency(
     var everyWeek: Long = 1,
     var startWithWeek: Long = 1,
     var startTime: Long? = null,
-    var endTime: Long? = null
+    var endTime: Long? = null,
+    var divisionOwnerId: Long? = null
 ) {
 
     fun getStartTimeHHmmFormatted(): String? {

@@ -45,7 +45,8 @@ open class PreferenceDependencyMapper : EntityMapper<PreferenceDependency, Prefe
             inThursday = entityDto.inThursday,
             inFriday = entityDto.inFriday,
             inSaturday = entityDto.inSaturday,
-            inSunday = entityDto.inSunday
+            inSunday = entityDto.inSunday,
+            divisionOwnerId = entityDto.divisionOwnerId
         ).apply {
             entityDto.startTimeString?.let { setStartTimeHHmmFormatted(it) }
             entityDto.endTimeString?.let { setEndTimeHHmmFormatted(it) }
@@ -69,7 +70,8 @@ open class PreferenceDependencyMapper : EntityMapper<PreferenceDependency, Prefe
             inThursday = entity.inThursday,
             inFriday = entity.inFriday,
             inSaturday = entity.inSaturday,
-            inSunday = entity.inSunday
+            inSunday = entity.inSunday,
+            divisionOwnerId = entity.divisionOwnerId
         ).apply {
             if (entity.lesson?.let { } != null) {
                 startTimeString = entity.lesson.getStartTimeHHmmFormatted()

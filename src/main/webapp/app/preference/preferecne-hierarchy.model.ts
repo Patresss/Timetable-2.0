@@ -1,4 +1,5 @@
 export class PreferenceHierarchy {
+
     constructor(
         public preferredByTeacher = 0,
         public preferredBySubject = 0,

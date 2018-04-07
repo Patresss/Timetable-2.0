@@ -81,6 +81,9 @@ export class PreferenceService {
             if (preferenceDependency.lessonId) {
                 params.set('lessonId', preferenceDependency.lessonId.toString());
             }
+            if (preferenceDependency.divisionOwnerId) {
+                params.set('divisionOwnerId', preferenceDependency.divisionOwnerId.toString());
+            }
             if (preferenceDependency.date) {
                 params.set('date', preferenceDependency.date.toString());
             }

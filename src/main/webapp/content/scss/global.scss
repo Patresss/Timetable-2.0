@@ -654,8 +654,11 @@ a:hover {
 
     .dropdown-list {
         ul {
+            li {
+
+            }
             li:hover {
-                background: $accent-color-medium-light !important;
+               background: transparentize($accent-color-strong-light, 0.2);
             }
         }
     }

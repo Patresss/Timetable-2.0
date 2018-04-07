@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service
 @Service
 open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
 
-
     @Autowired private
     lateinit var divisionMapper: DivisionMapper
 
