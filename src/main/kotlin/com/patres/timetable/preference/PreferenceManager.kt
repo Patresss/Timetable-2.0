@@ -72,12 +72,13 @@ open class PreferenceManager(private var placeRepository: PlaceRepository, priva
     }
 
     private fun calculateTaken(preferenceDependency: PreferenceDependency, preference : Preference) {
-        var timetablesInThisTime = timetableRepository.findTakenTimetable(preferenceDependency, TimetableDateUtil.getAllDatesByPreferenceDependency(preferenceDependency))
+        val dates = TimetableDateUtil.getAllDatesByPreferenceDependency(preferenceDependency)
+        var timetablesInThisTime = timetableRepository.findTakenTimetable(preferenceDependency, dates)
         if (preferenceDependency.notTimetableId != null) {
             timetablesInThisTime = timetablesInThisTime.filter { it.id != preferenceDependency.notTimetableId}.toSet()
         }
-        val firstDateFromPeriod = preferenceDependency.period?.getFirstDay()
-        val timetableFilteredByEachDay = timetablesInThisTime.filter { it.period != null || TimetableDateUtil.canAddByEveryDay(it.date, firstDateFromPeriod, preferenceDependency.startWithWeek, preferenceDependency.everyWeek) }
+
+        val timetableFilteredByEachDay = timetablesInThisTime.filter { it.period == null || TimetableDateUtil.canAddByEveryDays(dates, it.period?.getFirstDay(), it.startWithWeek, it.everyWeek) }
 
         val takenPlacesId = timetableFilteredByEachDay.mapNotNull { it.place?.id }.toSet()
         preference.getPlacePreferenceHierarchy(takenPlacesId).forEach { it.taken = PreferenceHierarchy.TAKEN }

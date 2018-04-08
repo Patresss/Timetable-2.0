@@ -14,7 +14,7 @@ open class TimetableRepositoryImpl : TimetableCustomRepository {
     private lateinit var entityManager: EntityManager
 
     companion object {
-        const val DATE_PARAMETR_NAME = "<date>"
+        const val DATE_PARAMETER_NAME = "<date>"
         const val TAKEN_TIMETABLE_QUERY = """
                     SELECT DISTINCT
                       timetable
@@ -33,7 +33,7 @@ open class TimetableRepositoryImpl : TimetableCustomRepository {
                        (lesson IS NULL AND timetable.startTime >= :startTime AND timetable.endTime <= :endTime))
                        """
         const val TAKEN_TIMETABLE_DATE_CRITERIA_SQL = """
-                       ( timetable.date = '$DATE_PARAMETR_NAME' OR (
+                       ( timetable.date = '$DATE_PARAMETER_NAME' OR (
                         (
                            (:inMonday = true AND timetable.inMonday = true) OR
                            (:inTuesday = true AND timetable.inTuesday = true) OR
@@ -44,8 +44,8 @@ open class TimetableRepositoryImpl : TimetableCustomRepository {
                            (:inSunday = true AND timetable.inSunday = true)
                         ) AND
                        interval.included = true AND
-                        '$DATE_PARAMETR_NAME' BETWEEN interval.startDate AND interval.endDate) AND
-                       interval.period NOT IN (SELECT intervalGlobal.period FROM Interval intervalGlobal WHERE intervalGlobal.included = false AND '$DATE_PARAMETR_NAME' BETWEEN intervalGlobal.startDate AND intervalGlobal.endDate) )
+                        '$DATE_PARAMETER_NAME' BETWEEN interval.startDate AND interval.endDate) AND
+                       interval.period NOT IN (SELECT intervalGlobal.period FROM Interval intervalGlobal WHERE intervalGlobal.included = false AND '$DATE_PARAMETER_NAME' BETWEEN intervalGlobal.startDate AND intervalGlobal.endDate) )
             """
     }
 
@@ -83,6 +83,6 @@ open class TimetableRepositoryImpl : TimetableCustomRepository {
     }
 
     private fun createTakenQueryWithDates(dates: Set<LocalDate>): String {
-        return dates.joinToString(separator = " OR ", prefix = "$TAKEN_TIMETABLE_QUERY AND (", postfix = ")") { date -> TAKEN_TIMETABLE_DATE_CRITERIA_SQL.replace(DATE_PARAMETR_NAME, date.format(DateTimeFormatter.ISO_LOCAL_DATE)) }
+        return dates.joinToString(separator = " OR ", prefix = "$TAKEN_TIMETABLE_QUERY AND (", postfix = ")") { date -> TAKEN_TIMETABLE_DATE_CRITERIA_SQL.replace(DATE_PARAMETER_NAME, date.format(DateTimeFormatter.ISO_LOCAL_DATE)) }
     }
 }

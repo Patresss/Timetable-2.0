@@ -51,11 +51,11 @@ object TimetableDateUtil {
         }
     }
 
-    fun canAddByEveryDay(date: LocalDate?, firstDateFromPeriod: LocalDate?, startWithWeek: Long, everyWeek: Long): Boolean {
-        if (firstDateFromPeriod == null || date == null) {
+    fun canAddByEveryDays(dates: Set<LocalDate>, firstDateFromPeriod: LocalDate?, startWithWeek: Long, everyWeek: Long): Boolean {
+        if (firstDateFromPeriod == null) {
             return false
         }
-        log.debug("Can be add: date={}, firstDateFromPeriod={}, startWithWeek={}, everyWeek={}", date, firstDateFromPeriod, startWithWeek, everyWeek)
+        log.debug("Can be add: date={}, firstDateFromPeriod={}, startWithWeek={}, everyWeek={}", dates, firstDateFromPeriod, startWithWeek, everyWeek)
         var firstMonday = if (firstDateFromPeriod.dayOfWeek == DayOfWeek.MONDAY) {
             firstDateFromPeriod
         } else {
@@ -63,9 +63,10 @@ object TimetableDateUtil {
         }
         firstMonday = firstMonday.plusDays(7 * (startWithWeek - 1))
 
-        val weekNumber = ChronoUnit.WEEKS.between(firstMonday, date)
-
-        return !firstMonday.isAfter(date) && weekNumber % everyWeek == 0L
+        return dates.any {date ->
+            val weekNumber = ChronoUnit.WEEKS.between(firstMonday, date)
+            !firstMonday.isAfter(date) && weekNumber % everyWeek == 0L
+          }
     }
 
     private fun getDatesFromPeriod(period: Period): Set<LocalDate> {

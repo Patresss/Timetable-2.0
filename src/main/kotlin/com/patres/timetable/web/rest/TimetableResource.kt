@@ -183,7 +183,7 @@ open class TimetableResource(
         val periodsId = timetablesWithPeriod.map { it.periodId }.toSet()
         periodsId.filterNotNull().forEach { periodIdIntervalMap[it] = intervalRepository.findFirstByPeriodIdAndIncludedTrueOrderByStartDate(it) }
 
-        timetablesWithPeriod = timetablesWithPeriod.filter { TimetableDateUtil.canAddByEveryDay(localDate, periodIdIntervalMap[it.periodId]?.startDate, it.startWithWeek, it.everyWeek) }
+        timetablesWithPeriod = timetablesWithPeriod.filter { TimetableDateUtil.canAddByEveryDays(setOf(localDate), periodIdIntervalMap[it.periodId]?.startDate, it.startWithWeek, it.everyWeek) }
 
         val timetableSet = (timetablesWithDate + timetablesWithPeriod).toSet()
         return ResponseEntity(timetableSet, HttpStatus.OK)
