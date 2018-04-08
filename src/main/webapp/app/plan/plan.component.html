@@ -88,6 +88,13 @@
                 <button class="plan-button" (click)="nextWeek()">
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
                 </button>
+                <button style="margin: 30px" class="btn float-right jh-create-entity create-timetable app-primary-button" [routerLink]="['/', { outlets: { popup: ['timetable-new'] } }]">
+                    <span class="fa fa-plus"></span>
+                    <span  jhiTranslate="timetableApp.timetable.home.createLabel">
+            Create new Timetable
+            </span>
+                </button>
+
                 <span jhiTranslate="timetableApp.plan.month-with-year.{{currentMonday.getMonth() + 1}}" translateValues="{year: '{{ currentMonday.getFullYear() }}'}">{{currentMonday.getMonth()}}, {{currentMonday.getFullYear()}}</span>
             </div>
             <div id="plan-body-header">
