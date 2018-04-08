@@ -130,32 +130,35 @@ export class TimetableDialogComponent implements OnInit {
 
     reloadSchool() {
         this.currentLoadCounter = 0;
-        const schoolId = this.selectedSchool[0].id;
-        this.placeService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
-            .subscribe((res: ResponseWrapper) => {
-                this.initPlaces(res.json)
-            }, (res: ResponseWrapper) => this.onError(res.json));
-        this.subjectService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
-            .subscribe((res: ResponseWrapper) => {
-                this.initSubjects(res.json)
-            }, (res: ResponseWrapper) => this.onError(res.json));
-        this.teacherService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
-            .subscribe((res: ResponseWrapper) => {
-                this.initTeachers(res.json)
-            }, (res: ResponseWrapper) => this.onError(res.json));
-        this.divisionService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
-            .subscribe((res: ResponseWrapper) => {
-                this.initDivisions(res.json)
-            }, (res: ResponseWrapper) => this.onError(res.json));
-        this.lessonService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
-            .subscribe((res: ResponseWrapper) => {
-                this.initLessons(res.json)
-            }, (res: ResponseWrapper) => this.onError(res.json));
-        this.periodService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
-            .subscribe((res: ResponseWrapper) => {
-                this.initPeriods(res.json)
-            }, (res: ResponseWrapper) => this.onError(res.json));
-
+        if (this.selectedSchool[0]) {
+            const schoolId = this.selectedSchool[0].id;
+            this.placeService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
+                .subscribe((res: ResponseWrapper) => {
+                    this.initPlaces(res.json)
+                }, (res: ResponseWrapper) => this.onError(res.json));
+            this.subjectService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
+                .subscribe((res: ResponseWrapper) => {
+                    this.initSubjects(res.json)
+                }, (res: ResponseWrapper) => this.onError(res.json));
+            this.teacherService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
+                .subscribe((res: ResponseWrapper) => {
+                    this.initTeachers(res.json)
+                }, (res: ResponseWrapper) => this.onError(res.json));
+            this.divisionService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
+                .subscribe((res: ResponseWrapper) => {
+                    this.initDivisions(res.json)
+                }, (res: ResponseWrapper) => this.onError(res.json));
+            this.lessonService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
+                .subscribe((res: ResponseWrapper) => {
+                    this.initLessons(res.json)
+                }, (res: ResponseWrapper) => this.onError(res.json));
+            this.periodService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
+                .subscribe((res: ResponseWrapper) => {
+                    this.initPeriods(res.json)
+                }, (res: ResponseWrapper) => this.onError(res.json));
+        } else {
+            this.currentLoadCounter = this.numberOfLoad;
+        }
     }
 
     clear() {

@@ -14,8 +14,7 @@ import javax.validation.constraints.NotNull
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 class Timetable(
 
-    @get:NotNull
-    @Column(name = "title", nullable = false)
+    @Column(name = "title")
     var title: String? = null,
 
     @Column(name = "start_time")

@@ -13,7 +13,7 @@
                 <div class='row'>
                     <div class='col-md-12'>
                         <label jhiTranslate="timetableApp.DivisionType.SCHOOL" for="field_school">School</label>
-                        <jhi-angular2-multiselect [data]="schoolSelectOption" [(ngModel)]="selectedSchool" [settings]="placeSelectSettings"
+                        <jhi-angular2-multiselect [data]="schoolSelectOption" [(ngModel)]="selectedSchool" [settings]="schoolSelectSettings"
                                                   styleClass="edit-entity-card-select" name="selectedSchool" #type="ngModel" required [blur]="false"
                                                   (onSelect)="onSchoolSelect($event)" >
                     </div>
@@ -24,7 +24,8 @@
                 <label class="form-control-label" jhiTranslate="timetableApp.timetable.type" for="field_type">Type</label>
                 <div style="clear: both"></div>
                 <jhi-angular2-multiselect [data]="eventTypeSelectOption" [(ngModel)]="selectedEventType" [settings]="eventTypeSelectSettings"
-                                          styleClass="edit-entity-card-select" name="selectedEventType" #type="ngModel" required [blur]="false">
+                                          styleClass="edit-entity-card-select" name="selectedEventType" #type="ngModel" required [blur]="false"
+                                            (onSelect)="onEventTypeSelect($event)" (onDeSelect)="onEventTypeDeSelect($event)">
                     <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
                         <small class="form-text text-danger"
                                [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">

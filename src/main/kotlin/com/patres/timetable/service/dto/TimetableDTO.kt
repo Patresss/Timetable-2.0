@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull
 
 class TimetableDTO(
 
-    @get:NotNull
     var title: String? = null,
 
     var startTimeString: String? = null,
