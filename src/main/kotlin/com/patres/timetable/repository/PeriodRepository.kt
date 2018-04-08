@@ -1,12 +1,15 @@
 package com.patres.timetable.repository
 
 import com.patres.timetable.domain.Period
-import com.patres.timetable.domain.Teacher
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
+import com.patres.timetable.domain.Place
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
-import org.springframework.data.jpa.repository.*
-
 @Repository
-interface PeriodRepository : DivisionOwnerRepository<Period>
+interface PeriodRepository : DivisionOwnerRepository<Period> {
+
+    @Query("select period from Period period left join fetch period.intervalTimes where period.id =:id")
+    fun findOneWithIntervals(@Param("id") id: Long?): Period?
+
+}

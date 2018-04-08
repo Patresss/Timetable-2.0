@@ -3,13 +3,14 @@ package com.patres.timetable.preference
 import com.patres.timetable.domain.*
 import java.time.LocalDate
 
-data class PreferenceDependency(
+data class PreferenceDependency (
     val subject: Subject? = null,
     val teacher: Teacher? = null,
     val division: Division? = null,
     val place: Place? = null,
     val period: Period? = null,
     val lesson: Lesson? = null,
+    var notTimetableId: Long? = null,
     val date: LocalDate? = null,
     var inMonday: Boolean = false,
     var inTuesday: Boolean = false,

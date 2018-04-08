@@ -6,13 +6,14 @@ import {ResponseWrapper} from '../shared';
 import {SERVER_API_URL} from '../app.constants';
 import {PreferenceDependency} from './preferecne-dependency.model';
 import {PreferenceHierarchy} from './preferecne-hierarchy.model';
+import {JhiDateUtils} from 'ng-jhipster';
 
 @Injectable()
 export class PreferenceService {
 
     protected resourceUrl: string;
 
-    constructor(protected http: Http) {
+    constructor(protected http: Http, private dateUtils: JhiDateUtils) {
         this.resourceUrl = SERVER_API_URL + 'api/' + 'preferences';
     }
 
@@ -84,8 +85,12 @@ export class PreferenceService {
             if (preferenceDependency.divisionOwnerId) {
                 params.set('divisionOwnerId', preferenceDependency.divisionOwnerId.toString());
             }
+            if (preferenceDependency.notTimetableId) {
+                params.set('notTimetableId', preferenceDependency.notTimetableId.toString());
+            }
             if (preferenceDependency.date) {
-                params.set('date', preferenceDependency.date.toString());
+                const date = this.dateUtils.convertLocalDateToServer(preferenceDependency.date);
+                params.set('date', date);
             }
             if (preferenceDependency.inMonday) {
                 params.set('inMonday', preferenceDependency.inMonday.toString());

@@ -10,6 +10,7 @@ class PreferenceDependencyDTO(
     var placeId: Long? = null,
     var periodId: Long? = null,
     var lessonId: Long? = null,
+    var notTimetableId: Long? = null,
     var date: LocalDate? = null,
     var inMonday: Boolean = false,
     var inTuesday: Boolean = false,

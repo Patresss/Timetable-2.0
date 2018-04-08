@@ -3,7 +3,7 @@ package com.patres.timetable.repository
 import com.patres.timetable.domain.Timetable
 import com.patres.timetable.preference.PreferenceDependency
 import java.time.LocalDate
-import java.util.*
+import java.time.format.DateTimeFormatter
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
@@ -14,8 +14,8 @@ open class TimetableRepositoryImpl : TimetableCustomRepository {
     private lateinit var entityManager: EntityManager
 
     companion object {
-        val DATE_PARAMETR_NAME = "<date>"
-        val TAKEN_TIMETABLE_QUERY = """
+        const val DATE_PARAMETR_NAME = "<date>"
+        const val TAKEN_TIMETABLE_QUERY = """
                     SELECT DISTINCT
                       timetable
                     FROM
@@ -23,28 +23,51 @@ open class TimetableRepositoryImpl : TimetableCustomRepository {
                       LEFT JOIN FETCH timetable.period period
                       LEFT JOIN FETCH period.intervalTimes interval
                       LEFT JOIN FETCH timetable.lesson lesson
+                      LEFT JOIN FETCH timetable.division division
+                      LEFT JOIN FETCH timetable.subject subject
+                      LEFT JOIN FETCH timetable.place place
+                      LEFT JOIN FETCH timetable.teacher teacher
                     WHERE
                       timetable.divisionOwner.id = :divisionOwnerId AND
                        ((lesson IS NOT NULL AND lesson.startTime >= :startTime AND lesson.endTime <= :endTime) OR
-                       (lesson IS NULL AND timetable.startTime >= :startTime AND timetable.endTime <= :endTime)) AND
-                       timetable.inMonday = :inMonday AND
-                       timetable.inTuesday = :inTuesday AND
-                       timetable.inWednesday = :inWednesday AND
-                       timetable.inThursday = :inThursday AND
-                       timetable.inFriday = :inFriday AND
-                       timetable.inSaturday = :inSaturday AND
-                       timetable.inSunday = :inSunday
+                       (lesson IS NULL AND timetable.startTime >= :startTime AND timetable.endTime <= :endTime))
                        """
-        val TAKEN_TIMETABLE_DATE_CRITERIA_SQL = """
-                       ( TIMETABLE.DATE = $DATE_PARAMETR_NAME OR
-                       (interval.included = true AND
-                        $DATE_PARAMETR_NAME BETWEEN INTERVAL.START_DATE AND INTERVAL.END_DATE) AND
-                       INTERVAL.PERIOD_ID NOT IN (SELECT INTERVAL.PERIOD_ID FROM INTERVAL WHERE INTERVAL.INCLUDED = false AND $DATE_PARAMETR_NAME BETWEEN INTERVAL.START_DATE AND INTERVAL.END_DATE) )
+        const val TAKEN_TIMETABLE_DATE_CRITERIA_SQL = """
+                       ( timetable.date = '$DATE_PARAMETR_NAME' OR (
+                        (
+                           (:inMonday = true AND timetable.inMonday = true) OR
+                           (:inTuesday = true AND timetable.inTuesday = true) OR
+                           (:inWednesday = true AND timetable.inWednesday = true) OR
+                           (:inThursday = true AND timetable.inThursday = true) OR
+                           (:inFriday = true AND timetable.inFriday = true) OR
+                           (:inSaturday = true AND timetable.inSaturday = true) OR
+                           (:inSunday = true AND timetable.inSunday = true)
+                        ) AND
+                       interval.included = true AND
+                        '$DATE_PARAMETR_NAME' BETWEEN interval.startDate AND interval.endDate) AND
+                       interval.period NOT IN (SELECT intervalGlobal.period FROM Interval intervalGlobal WHERE intervalGlobal.included = false AND '$DATE_PARAMETR_NAME' BETWEEN intervalGlobal.startDate AND intervalGlobal.endDate) )
             """
     }
 
     override fun findTakenTimetable(preferenceDependency: PreferenceDependency, dates: Set<LocalDate>): Set<Timetable> {
+        return if (dates.isEmpty()) {
+            findTakenTimetableWithoutDate(preferenceDependency)
+        } else {
+            findTakenTimetableWithDates(preferenceDependency, dates)
+        }
+    }
+
+    private fun findTakenTimetableWithoutDate(preferenceDependency: PreferenceDependency) : Set<Timetable> {
         return entityManager.createQuery(TAKEN_TIMETABLE_QUERY, Timetable::class.java)
+            .setParameter("divisionOwnerId", preferenceDependency.divisionOwnerId)
+            .setParameter("startTime", preferenceDependency.startTime)
+            .setParameter("endTime", preferenceDependency.endTime)
+            .resultList
+            .toSet()
+    }
+
+    private fun findTakenTimetableWithDates(preferenceDependency: PreferenceDependency, dates: Set<LocalDate>) : Set<Timetable> {
+        return entityManager.createQuery(createTakenQueryWithDates(dates), Timetable::class.java)
             .setParameter("divisionOwnerId", preferenceDependency.divisionOwnerId)
             .setParameter("startTime", preferenceDependency.startTime)
             .setParameter("endTime", preferenceDependency.endTime)
@@ -57,5 +80,9 @@ open class TimetableRepositoryImpl : TimetableCustomRepository {
             .setParameter("inSunday", preferenceDependency.inSunday)
             .resultList
             .toSet()
+    }
+
+    private fun createTakenQueryWithDates(dates: Set<LocalDate>): String {
+        return dates.joinToString(separator = " OR ", prefix = "$TAKEN_TIMETABLE_QUERY AND (", postfix = ")") { date -> TAKEN_TIMETABLE_DATE_CRITERIA_SQL.replace(DATE_PARAMETR_NAME, date.format(DateTimeFormatter.ISO_LOCAL_DATE)) }
     }
 }

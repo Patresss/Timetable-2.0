@@ -213,11 +213,11 @@ export class PlanComponent implements OnInit, OnDestroy {
             (res: ResponseWrapper) => this.onError(res.json)
         );
         const schoolsId = this.selectedSchool.map((school) => school.id);
-        this.teacherService.findByDivision(schoolsId, {size: SelectType.MAX_INT_JAVA, sort: ['surname,name']}).subscribe(
+        this.teacherService.findByDivisionOwner(schoolsId, {size: SelectType.MAX_INT_JAVA, sort: ['surname,name']}).subscribe(
             (res: ResponseWrapper) => this.onSuccessTeacher(res.json),
             (res: ResponseWrapper) => this.onError(res.json)
         );
-        this.placeService.findByDivision(schoolsId, {size: SelectType.MAX_INT_JAVA, sort: ['name']}).subscribe(
+        this.placeService.findByDivisionOwner(schoolsId, {size: SelectType.MAX_INT_JAVA, sort: ['name']}).subscribe(
             (res: ResponseWrapper) => this.onSuccessPlace(res.json),
             (res: ResponseWrapper) => this.onError(res.json)
         );

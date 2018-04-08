@@ -7,7 +7,7 @@ import com.patres.timetable.service.TimetableService
 import com.patres.timetable.service.dto.TimetableDTO
 import com.patres.timetable.web.rest.util.HeaderUtil
 import com.patres.timetable.web.rest.util.PaginationUtil
-import com.patres.timetable.web.rest.util.TimetableDate
+import com.patres.timetable.web.rest.util.TimetableDateUtil
 import io.github.jhipster.web.util.ResponseUtil
 import io.swagger.annotations.ApiParam
 import org.slf4j.LoggerFactory
@@ -174,7 +174,7 @@ open class TimetableResource(
     }
 
     open fun getTimetables(localDate: LocalDate, timetables: Set<TimetableDTO>): ResponseEntity<Set<TimetableDTO>> {
-        val filteredByWeekDay = timetables.filter { TimetableDate.canAddByWeekDay(localDate, it) }
+        val filteredByWeekDay = timetables.filter { TimetableDateUtil.canAddByWeekDay(localDate, it) }
 
         val timetablesWithDate = filteredByWeekDay.filter { it.date != null }
         var timetablesWithPeriod = filteredByWeekDay.filter { it.date == null && it.periodId != null }
@@ -183,7 +183,7 @@ open class TimetableResource(
         val periodsId = timetablesWithPeriod.map { it.periodId }.toSet()
         periodsId.filterNotNull().forEach { periodIdIntervalMap[it] = intervalRepository.findFirstByPeriodIdAndIncludedTrueOrderByStartDate(it) }
 
-        timetablesWithPeriod = timetablesWithPeriod.filter { TimetableDate.canAddByEveryDay(localDate, periodIdIntervalMap[it.periodId]?.startDate, it) }
+        timetablesWithPeriod = timetablesWithPeriod.filter { TimetableDateUtil.canAddByEveryDay(localDate, periodIdIntervalMap[it.periodId]?.startDate, it.startWithWeek, it.everyWeek) }
 
         val timetableSet = (timetablesWithDate + timetablesWithPeriod).toSet()
         return ResponseEntity(timetableSet, HttpStatus.OK)

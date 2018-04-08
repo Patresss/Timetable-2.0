@@ -1,5 +1,5 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-    <jhi-glass contentClass="edit-entity-card">
+    <jhi-glass *ngIf="currentLoadCounter >= numberOfLoad" contentClass="edit-entity-card">
         <div class="modal-header">
             <h4 class="modal-title" id="myTimetableLabel" jhiTranslate="timetableApp.timetable.home.createOrEditLabel">Create or edit a Timetable</h4>
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
@@ -8,6 +8,18 @@
         </div>
         <div class="modal-body">
             <jhi-alert-error></jhi-alert-error>
+
+            <div class="form-group">
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <label jhiTranslate="timetableApp.DivisionType.SCHOOL" for="field_school">School</label>
+                        <jhi-angular2-multiselect [data]="schoolSelectOption" [(ngModel)]="selectedSchool" [settings]="placeSelectSettings"
+                                                  styleClass="edit-entity-card-select" name="selectedSchool" #type="ngModel" required [blur]="false"
+                                                  (onSelect)="onSchoolSelect($event)" >
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label class="form-control-label" jhiTranslate="timetableApp.timetable.type" for="field_type">Type</label>
                 <div style="clear: both"></div>
@@ -38,16 +50,6 @@
             <!--</div>-->
             <!--</div>-->
 
-            <div class="form-group">
-                <div class='row'>
-                    <div class='col-md-12'>
-                        <label jhiTranslate="timetableApp.DivisionType.SCHOOL" for="field_school">School</label>
-                        <jhi-angular2-multiselect [data]="schoolSelectOption" [(ngModel)]="selectedSchool" [settings]="placeSelectSettings"
-                                                  styleClass="edit-entity-card-select" name="selectedSchool" #type="ngModel" required [blur]="false"
-                                                  (onSelect)="onSchoolSelect($event)" >
-                    </div>
-                </div>
-            </div>
 
             <div class="form-group">
                 <div class='row'>

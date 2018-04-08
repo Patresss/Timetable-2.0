@@ -2,9 +2,8 @@ package com.patres.timetable.preference
 
 import com.patres.timetable.repository.PlaceRepository
 import com.patres.timetable.repository.TimetableRepository
+import com.patres.timetable.web.rest.util.TimetableDateUtil
 import org.springframework.stereotype.Component
-import java.time.LocalDate
-import java.time.Month
 
 @Component
 open class PreferenceManager(private var placeRepository: PlaceRepository, private var timetableRepository: TimetableRepository) {
@@ -44,13 +43,13 @@ open class PreferenceManager(private var placeRepository: PlaceRepository, priva
 
     private fun calculatePreferredDivision(preferenceDependency: PreferenceDependency, preference : Preference) {
         val preferredByPlace = preferenceDependency.place?.preferredDivisions?.mapNotNull { it.id }?.toSet()
-        preferredByPlace?.let { preference.geDivisionPreferenceHierarchy(it).forEach { it.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS } }
+        preferredByPlace?.let { preference.getDivisionPreferenceHierarchy(it).forEach { it.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS } }
 
         val preferredByTeacher = preferenceDependency.teacher?.preferredDivisions?.mapNotNull { it.id }?.toSet()
-        preferredByTeacher?.let { preference.geDivisionPreferenceHierarchy(it).forEach { it.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS } }
+        preferredByTeacher?.let { preference.getDivisionPreferenceHierarchy(it).forEach { it.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS } }
 
         val preferredBySubject = preferenceDependency.subject?.preferredDivisions?.mapNotNull { it.id }?.toSet()
-        preferredBySubject?.let { preference.geDivisionPreferenceHierarchy(it).forEach { it.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS } }
+        preferredBySubject?.let { preference.getDivisionPreferenceHierarchy(it).forEach { it.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS } }
 
     }
 
@@ -73,7 +72,21 @@ open class PreferenceManager(private var placeRepository: PlaceRepository, priva
     }
 
     private fun calculateTaken(preferenceDependency: PreferenceDependency, preference : Preference) {
-        timetableRepository.findTakenTimetable(preferenceDependency, setOf(LocalDate.of(2018, Month.MARCH, 3)))
+        var timetablesInThisTime = timetableRepository.findTakenTimetable(preferenceDependency, TimetableDateUtil.getAllDatesByPreferenceDependency(preferenceDependency))
+        if (preferenceDependency.notTimetableId != null) {
+            timetablesInThisTime = timetablesInThisTime.filter { it.id != preferenceDependency.notTimetableId}.toSet()
+        }
+        val firstDateFromPeriod = preferenceDependency.period?.getFirstDay()
+        val timetableFilteredByEachDay = timetablesInThisTime.filter { it.period != null || TimetableDateUtil.canAddByEveryDay(it.date, firstDateFromPeriod, preferenceDependency.startWithWeek, preferenceDependency.everyWeek) }
+
+        val takenPlacesId = timetableFilteredByEachDay.mapNotNull { it.place?.id }.toSet()
+        preference.getPlacePreferenceHierarchy(takenPlacesId).forEach { it.taken = PreferenceHierarchy.TAKEN }
+
+        val takenTeachersId = timetableFilteredByEachDay.mapNotNull { it.teacher?.id }.toSet()
+        preference.getTeacherPreferenceHierarchy(takenTeachersId).forEach { it.taken = PreferenceHierarchy.TAKEN }
+
+        val takenDivisionsId = timetableFilteredByEachDay.mapNotNull { it.division?.id }.toSet()
+        preference.getDivisionPreferenceHierarchy(takenDivisionsId).forEach { it.taken = PreferenceHierarchy.TAKEN }
     }
 
 }

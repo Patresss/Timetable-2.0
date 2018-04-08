@@ -48,7 +48,7 @@
                         </div>
                         <ul *ngIf="!settings.groupBy" [style.maxHeight]="settings.maxHeight+'px'" class="lazyContainer">
 
-                            <span *ngIf="itemTempl">
+                            <span *ngIf="!preferenceHierarchy && itemTempl">
                                 <li *ngFor="let item of data | listFilter:filter; let i = index;" (click)="onItemClick(item,i,$event)" class="pure-checkbox">
                                     <input *ngIf="settings.showCheckbox" type="checkbox" [checked]="isSelected(item)" [disabled]="settings.limitSelection == selectedItems?.length && !isSelected(item)"/>
                                     <label></label>
@@ -56,20 +56,20 @@
                                 </li>
                             </span>
                             <span *ngIf="preferenceHierarchy">
-                                <li *ngFor="let item of data | listFilter:filter; let i = index;" (click)="onItemClick(item,i,$event)" class="pure-checkbox" [ngStyle]="item.preferenceHierarchy.points != 0 && {'background': 'rgba(40, 167, 69, ' + item.preferenceHierarchy.points / 10.0 +')'}">
+                                <li *ngFor="let item of data | listFilter:filter; let i = index;" (click)="onItemClick(item,i,$event)" class="pure-checkbox" [ngStyle]="getStyle(item)">
                                         <input *ngIf="settings.showCheckbox" type="checkbox" [checked]="isSelected(item)" [disabled]="settings.limitSelection == selectedItems?.length && !isSelected(item)"/>
                                         <label *ngIf="!item.itemTranslate">{{item.itemName}}</label>
                                         <label *ngIf="item.itemTranslate !== ''">{{item.itemTranslate | translate}}</label>
                                 </li>
                             </span>
-                            <span *ngIf="!itemTempl && !settings.lazyLoading">
+                            <span *ngIf="!preferenceHierarchy && !itemTempl && !settings.lazyLoading">
                                 <li *ngFor="let item of data | listFilter:filter; let i = index;" (click)="onItemClick(item,i,$event)" class="pure-checkbox">
                                     <input *ngIf="settings.showCheckbox" type="checkbox" [checked]="isSelected(item)" [disabled]="settings.limitSelection == selectedItems?.length && !isSelected(item)"/>
                                     <label *ngIf="!item.itemTranslate">{{item.itemName}}</label>
                                     <label *ngIf="item.itemTranslate !== ''">{{item.itemTranslate | translate}}</label>
                                 </li>
                             </span>
-                            <span *ngIf="!itemTempl && settings.lazyLoading">
+                            <span *ngIf="!preferenceHierarchy && !itemTempl && settings.lazyLoading">
                                 <div [ngStyle]="{'height':totalHeight+'px'}" style="position: relative;">
                                     <li *ngFor="let item of chunkArray | listFilter:filter; let i = index;" (click)="onItemClick(item,i,$event)" style="position: absolute;width: 100%;" class="pure-checkbox" [jhiStyleProp]="chunkIndex[i]">
                                         <input *ngIf="settings.showCheckbox" type="checkbox" [checked]="isSelected(item)" [disabled]="settings.limitSelection == selectedItems?.length && !isSelected(item)"/>

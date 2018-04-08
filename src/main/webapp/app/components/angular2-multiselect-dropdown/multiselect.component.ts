@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter,
-    forwardRef, Input, NgModule, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, forwardRef, Input, NgModule, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormControl, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {ListItem, MyException} from './multiselect.model';
@@ -27,10 +26,13 @@ const noop = () => {
     templateUrl: './multiselect.component.html',
     /* tslint:disable:use-host-property-decorator */
     host: {'[class]': 'styleClass'},
-    styleUrls: ['./multiselect.component.scss' ],
+    styleUrls: ['./multiselect.component.scss'],
     providers: [DROPDOWN_CONTROL_VALUE_ACCESSOR, DROPDOWN_CONTROL_VALIDATION]
 })
 export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor, OnChanges, Validator, DoCheck, AfterViewInit {
+
+    public static MAX_POSITIVE_HIERARCHY_POINTS = 10.0;
+    public static MAX_NEGATIVE_HIERARCHY_POINTS = -100.0;
 
     @Input()
     data: Array<ListItem>;
@@ -326,7 +328,7 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
             return prev;
         }, {});
         const tempArr: any = [];
-        Object.keys(groupedObj).map(function(x) {
+        Object.keys(groupedObj).map(function (x) {
             tempArr.push({key: x, value: groupedObj[x]});
         });
         return tempArr;
@@ -345,8 +347,10 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
             this.chunkArray.push(this.data[i]);
         }
     }
+
     listFilter() {
     }
+
     public onScroll(e: any) {
         this.scrollTop = e.target.scrollTop;
         this.updateView(this.scrollTop);
@@ -366,7 +370,7 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
         const filteredElems: Array<any> = [];
         this.data = this.cachedItems.slice();
         if (evt.target.value.toString() !== '') {
-            this.data.filter(function(el: any) {
+            this.data.filter(function (el: any) {
                 for (const prop in el) {
                     if (el[prop].toString().toLowerCase().indexOf(evt.target.value.toString().toLowerCase()) >= 0) {
                         filteredElems.push(el);
@@ -385,6 +389,16 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
             this.totalHeight = this.itemHeight * this.data.length;
             this.totalRows = this.data.length;
             this.updateView(this.scrollTop);
+        }
+    }
+
+    getStyle(item: any) {
+        if (item.preferenceHierarchy.points > 0) {
+            return {'background': 'rgba(40, 167, 69, ' + item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_POSITIVE_HIERARCHY_POINTS + ')'};
+        } else if (item.preferenceHierarchy.points < 0) {
+            return {'background': 'rgba(220, 53, 69, ' + item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_NEGATIVE_HIERARCHY_POINTS + ')'};
+        } else {
+            return {}
         }
     }
 }

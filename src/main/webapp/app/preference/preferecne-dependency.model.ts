@@ -7,6 +7,7 @@ export class PreferenceDependency {
         public periodId?: number,
         public lessonId?: number,
         public divisionOwnerId?: number,
+        public notTimetableId?: number,
         public date?: number,
         public inMonday?: boolean,
         public inTuesday?: boolean,

@@ -16,7 +16,7 @@ export abstract class DivisionOwnerEntityService<EntityType> extends EntityServi
         this.resourceByDivisionsIdUrl = SERVER_API_URL + 'api/' + entityName + '/division-owners';
     }
 
-    findByDivision(ids: number[], req?: any): Observable<ResponseWrapper> {
+    findByDivisionOwner(ids: number[], req?: any): Observable<ResponseWrapper> {
         return this.http.get(this.resourceByDivisionsIdUrl, createRequestOptionWithDivisionsId(ids, req))
             .map((res: Response) => this.convertResponses(res));
     }

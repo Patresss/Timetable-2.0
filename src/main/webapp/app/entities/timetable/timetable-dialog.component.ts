@@ -101,6 +101,9 @@ export class TimetableDialogComponent implements OnInit {
         enableSearchFilter: true
     };
 
+    currentLoadCounter = 0;
+    numberOfLoad = 6;
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
@@ -118,35 +121,41 @@ export class TimetableDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.divisionService.findByDivisionType('SCHOOL').subscribe(
+        this.divisionService.findByDivisionType('SCHOOL', {size: SelectType.MAX_INT_JAVA, sort: ['name']}).subscribe(
             (res: ResponseWrapper) => this.initSchools(res.json)
         );
-        this.placeService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+
+        this.selectedEventType = this.eventTypeSelectOption.filter((entity) => entity.type === this.timetable.type)
+    }
+
+    reloadSchool() {
+        this.currentLoadCounter = 0;
+        const schoolId = this.selectedSchool[0].id;
+        this.placeService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
             .subscribe((res: ResponseWrapper) => {
                 this.initPlaces(res.json)
             }, (res: ResponseWrapper) => this.onError(res.json));
-        this.subjectService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+        this.subjectService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
             .subscribe((res: ResponseWrapper) => {
                 this.initSubjects(res.json)
             }, (res: ResponseWrapper) => this.onError(res.json));
-        this.teacherService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['surname,name']})
+        this.teacherService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
             .subscribe((res: ResponseWrapper) => {
                 this.initTeachers(res.json)
             }, (res: ResponseWrapper) => this.onError(res.json));
-        this.divisionService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+        this.divisionService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
             .subscribe((res: ResponseWrapper) => {
                 this.initDivisions(res.json)
             }, (res: ResponseWrapper) => this.onError(res.json));
-        this.lessonService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+        this.lessonService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
             .subscribe((res: ResponseWrapper) => {
                 this.initLessons(res.json)
             }, (res: ResponseWrapper) => this.onError(res.json));
-        this.periodService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+        this.periodService.findByDivisionOwner(schoolId, {size: SelectType.MAX_INT_JAVA})
             .subscribe((res: ResponseWrapper) => {
                 this.initPeriods(res.json)
             }, (res: ResponseWrapper) => this.onError(res.json));
-        this.selectedEventType = this.eventTypeSelectOption.filter((entity) => entity.type === this.timetable.type)
-        this.changePreference();
+
     }
 
     clear() {
@@ -173,7 +182,6 @@ export class TimetableDialogComponent implements OnInit {
         this.activeModal.dismiss(result);
     }
 
-
     private onSaveError() {
         this.isSaving = false;
     }
@@ -191,37 +199,62 @@ export class TimetableDialogComponent implements OnInit {
 // ================================================================
     private initSchools(data) {
         this.schoolSelectOption = SelectUtil.entityListToSelectList(data);
-        this.selectedSchool = this.schoolSelectOption.filter((entity) => entity.id === this.timetable.divisionOwnerId)
+        this.selectedSchool = this.schoolSelectOption.filter((entity) => entity.id === this.timetable.divisionOwnerId);
+        this.reloadSchool()
     }
 
     private initPlaces(entityList: any[]) {
         this.placeSelectOption = SelectUtil.entityListToSelectList(entityList);
-        this.selectedPlace = this.placeSelectOption.filter((entity) => entity.id === this.timetable.placeId)
+        this.selectedPlace = this.placeSelectOption.filter((entity) => entity.id === this.timetable.placeId);
+
+        this.currentLoadCounter++;
+        this.changePreferenceAfterLoadEntities()
     }
 
     private initSubjects(entityList: any[]) {
         this.subjectSelectOption = SelectUtil.entityListToSelectList(entityList);
-        this.selectedSubject = this.subjectSelectOption.filter((entity) => entity.id === this.timetable.subjectId)
+        this.selectedSubject = this.subjectSelectOption.filter((entity) => entity.id === this.timetable.subjectId);
+
+        this.currentLoadCounter++;
+        this.changePreferenceAfterLoadEntities()
     }
 
     private initLessons(entityList: any[]) {
         this.lessonSelectOption = SelectUtil.entityListToSelectList(entityList);
-        this.selectedLesson = this.lessonSelectOption.filter((entity) => entity.id === this.timetable.lessonId)
+        this.selectedLesson = this.lessonSelectOption.filter((entity) => entity.id === this.timetable.lessonId);
+
+        this.currentLoadCounter++;
+        this.changePreferenceAfterLoadEntities()
     }
 
     private initTeachers(entityList: any[]) {
         this.teacherSelectOption = SelectUtil.teacherListToSelectList(entityList);
-        this.selectedTeacher = this.teacherSelectOption.filter((entity) => entity.id === this.timetable.teacherId)
+        this.selectedTeacher = this.teacherSelectOption.filter((entity) => entity.id === this.timetable.teacherId);
+
+        this.currentLoadCounter++;
+        this.changePreferenceAfterLoadEntities()
     }
 
     private initPeriods(entityList: any[]) {
         this.periodSelectOption = SelectUtil.entityListToSelectList(entityList);
-        this.selectedPeriod = this.periodSelectOption.filter((entity) => entity.id === this.timetable.periodId)
+        this.selectedPeriod = this.periodSelectOption.filter((entity) => entity.id === this.timetable.periodId);
+
+        this.currentLoadCounter++;
+        this.changePreferenceAfterLoadEntities()
     }
 
     private initDivisions(entityList: any[]) {
         this.divisionSelectOption = SelectUtil.entityListToSelectList(entityList);
         this.selectedDivision = this.divisionSelectOption.filter((entity) => entity.id === this.timetable.divisionId)
+
+        this.currentLoadCounter++;
+        this.changePreferenceAfterLoadEntities()
+    }
+
+    private changePreferenceAfterLoadEntities() {
+        if (this.currentLoadCounter >= this.numberOfLoad) {
+            this.changePreference();
+        }
     }
 
 // ================================================================
@@ -229,9 +262,9 @@ export class TimetableDialogComponent implements OnInit {
 // ================================================================
     onSchoolSelect(item: any) {
         this.timetable.divisionOwnerId = item.id;
+        this.reloadSchool();
         this.changePreference()
     }
-
 
     onPlaceSelect(item: any) {
         this.timetable.placeId = item.id;
@@ -310,7 +343,9 @@ export class TimetableDialogComponent implements OnInit {
         preferenceDependency.lessonId = this.timetable.lessonId;
         preferenceDependency.subjectId = this.timetable.subjectId;
         preferenceDependency.placeId = this.timetable.placeId;
+        preferenceDependency.periodId = this.timetable.periodId;
         preferenceDependency.divisionOwnerId = this.timetable.divisionOwnerId;
+        preferenceDependency.notTimetableId = this.timetable.id;
         preferenceDependency.date = this.timetable.date;
         preferenceDependency.inMonday = this.timetable.inMonday;
         preferenceDependency.inTuesday = this.timetable.inTuesday;
@@ -342,7 +377,9 @@ export class TimetableDialogComponent implements OnInit {
 
     updateSelectListsByPreference(profferedMap: Map<number, PreferenceHierarchy>, selectOption: any) {
         selectOption.forEach(
-            (selectOptionEntity) => selectOption.filter((entity) => selectOptionEntity.id !== entity.id).forEach((selectOptionEntity) => selectOptionEntity.preferenceHierarchy = new PreferenceHierarchy())
+            (selectOptionEntity) => selectOption
+                                    .filter((entity) => selectOptionEntity.id !== entity.id)
+                                    .forEach((entity) => entity.preferenceHierarchy = new PreferenceHierarchy())
         );
         profferedMap.forEach((value, key) => {
             selectOption.filter((entity) => key === entity.id).forEach((entity) => entity.preferenceHierarchy = value)

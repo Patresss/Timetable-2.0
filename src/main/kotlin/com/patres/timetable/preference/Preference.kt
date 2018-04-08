@@ -13,7 +13,7 @@ class Preference {
         return getPreferenceHierarchy(preferredTeacherMap, teachersId)
     }
 
-    fun geDivisionPreferenceHierarchy(divisionsId: Set<Long>): Collection<PreferenceHierarchy> {
+    fun getDivisionPreferenceHierarchy(divisionsId: Set<Long>): Collection<PreferenceHierarchy> {
         return getPreferenceHierarchy(preferredDivisionMap, divisionsId)
     }
 

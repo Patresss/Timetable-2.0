@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
+import java.time.Month
 import javax.persistence.EntityManager
 
 
@@ -183,7 +185,7 @@ open class PreferenceManagerTest {
         entityManager.flush()
         entityManager.clear()
 
-        val preferenceDependencyDTO = PreferenceDependencyDTO(divisionId = fillerResource.class1a.id)
+        val preferenceDependencyDTO = PreferenceDependencyDTO(divisionOwnerId = fillerResource.lo2.id, divisionId = fillerResource.class1a.id)
         val preferenceDependency = preferenceDependencyMapper.toEntity(preferenceDependencyDTO)
         val preference = preferenceManager.calculatePreference(preferenceDependency)
 
@@ -197,22 +199,25 @@ open class PreferenceManagerTest {
     @Test
     @Transactional
     @Throws(Exception::class)
-    open fun `Test taken by Lesson`() {
+    open fun `Test taken by date and lesson`() {
         // Initialize the database
         fillerResource.fill()
         entityManager.flush()
         entityManager.clear()
 
-        val preferenceDependencyDTO = PreferenceDependencyDTO(lessonId = fillerResource.l4.id)
+        val preferenceDependencyDTO = PreferenceDependencyDTO(divisionOwnerId = fillerResource.lo2.id, date = LocalDate.of(2018, Month.APRIL, 3), lessonId = fillerResource.l4.id)
         val preferenceDependency = preferenceDependencyMapper.toEntity(preferenceDependencyDTO)
         val preference = preferenceManager.calculatePreference(preferenceDependency)
 
+        assertFalse(preference.preferredDivisionMap.containsKey(fillerResource.class1b.id))
         assertTrue(preference.preferredDivisionMap.containsKey(fillerResource.class1a.id))
         assertTrue(preference.preferredDivisionMap[fillerResource.class1a.id]?.taken != 0)
 
+        assertFalse(preference.preferredTeacherMap.containsKey(fillerResource.stasik.id))
         assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.czuba.id))
         assertTrue(preference.preferredTeacherMap[fillerResource.czuba.id]?.taken != 0)
 
+        assertFalse(preference.preferredPlaceMap.containsKey(fillerResource.p10.id))
         assertTrue(preference.preferredPlaceMap.containsKey(fillerResource.p22.id))
         assertTrue(preference.preferredPlaceMap[fillerResource.p22.id]?.taken != 0)
     }

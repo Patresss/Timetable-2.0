@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy
 
 import javax.persistence.*
 import java.io.Serializable
+import java.time.LocalDate
 import java.util.HashSet
 import java.util.Objects
 import javax.validation.constraints.NotNull
@@ -31,6 +32,10 @@ class Period(
     divisionOwner: Division? = null
 
 ) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
+
+    fun getFirstDay(): LocalDate? {
+        return intervalTimes.filter { it.included }.sortedBy { it.startDate }.first().startDate
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
