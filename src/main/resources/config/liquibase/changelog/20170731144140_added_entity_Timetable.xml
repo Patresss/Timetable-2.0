@@ -69,31 +69,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="in_monday" type="boolean">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="in_tuesday" type="boolean">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="in_wednesday" type="boolean">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="in_thursday" type="boolean">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="in_friday" type="boolean">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="in_saturday" type="boolean">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="in_sunday" type="boolean">
+            <column name="day_of_week" type="int">
                 <constraints nullable="true" />
             </column>
 

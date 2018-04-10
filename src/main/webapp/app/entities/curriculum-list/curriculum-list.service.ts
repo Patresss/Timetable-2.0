@@ -11,20 +11,20 @@ export class CurriculumListService extends DivisionOwnerEntityService<Curriculum
         super(http, 'curriculum-listes')
     }
 
-    convertEntity(jsonResponse: any) {
+    convertFromServer(jsonResponse: any) {
         if (jsonResponse.curriculumTimes != null) {
             for (let i = 0; i < jsonResponse.curriculumTimes.length; i++) {
-                this.curriculumService.convertEntity(jsonResponse.curriculumTimes[i]);
+                this.curriculumService.convertFromServer(jsonResponse.curriculumTimes[i]);
             }
         }
     }
 
-    convert(curriculumList: CurriculumList): CurriculumList {
+    convertToServer(curriculumList: CurriculumList): CurriculumList {
         const copy: CurriculumList = Object.assign({}, curriculumList);
         copy.curriculums = Object.assign([], curriculumList.curriculums);
         if (copy.curriculums != null) {
             for (let i = 0; i < copy.curriculums.length; i++) {
-                copy.curriculums[i] = this.curriculumService.convert(copy.curriculums[i]);
+                copy.curriculums[i] = this.curriculumService.convertToServer(copy.curriculums[i]);
             }
         }
         return copy;

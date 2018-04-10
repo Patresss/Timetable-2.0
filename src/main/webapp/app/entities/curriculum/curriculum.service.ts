@@ -18,12 +18,12 @@ export class CurriculumService extends DivisionOwnerEntityService<Curriculum> {
     convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         for (let i = 0; i < jsonResponse.length; i++) {
-            this.convertEntity(jsonResponse[i]);
+            this.convertFromServer(jsonResponse[i]);
         }
         return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
-    convertEntity(entity: any) {
+    convertFromServer(entity: any) {
         entity.date = this.dateUtils.convertLocalDateFromServer(entity.date)
         if (entity.startTimeString) {
             entity.startTime = new Time(entity.startTimeString);

@@ -10,19 +10,11 @@
         </dd>
         <dt><span jhiTranslate="timetableApp.timetable.startTime">Start Time</span></dt>
         <dd>
-            <span>{{timetable.startTime}}</span>
+            <span>{{timetable.startTime.getFormatted()}}</span>
         </dd>
         <dt><span jhiTranslate="timetableApp.timetable.endTime">End Time</span></dt>
         <dd>
-            <span>{{timetable.endTime}}</span>
-        </dd>
-        <dt><span jhiTranslate="timetableApp.timetable.startDate">Start Date</span></dt>
-        <dd>
-            <span>{{timetable.startDate | date:'mediumDate'}}</span>
-        </dd>
-        <dt><span jhiTranslate="timetableApp.timetable.endDate">End Date</span></dt>
-        <dd>
-            <span>{{timetable.endDate | date:'mediumDate'}}</span>
+            <span>{{timetable.endTime.getFormatted()}}</span>
         </dd>
         <dt><span jhiTranslate="timetableApp.timetable.date">Date</span></dt>
         <dd>
@@ -52,33 +44,9 @@
         <dd>
             <span>{{timetable.colorText}}</span>
         </dd>
-        <dt><span jhiTranslate="timetableApp.timetable.inMonday">In Monday</span></dt>
+        <dt><span jhiTranslate="timetableApp.timetable.day-of-week">Day of week</span></dt>
         <dd>
-            <span>{{timetable.inMonday}}</span>
-        </dd>
-        <dt><span jhiTranslate="timetableApp.timetable.inTuesday">In Tuesday</span></dt>
-        <dd>
-            <span>{{timetable.inTuesday}}</span>
-        </dd>
-        <dt><span jhiTranslate="timetableApp.timetable.inWednesday">In Wednesday</span></dt>
-        <dd>
-            <span>{{timetable.inWednesday}}</span>
-        </dd>
-        <dt><span jhiTranslate="timetableApp.timetable.inThursday">In Thursday</span></dt>
-        <dd>
-            <span>{{timetable.inThursday}}</span>
-        </dd>
-        <dt><span jhiTranslate="timetableApp.timetable.inFriday">In Friday</span></dt>
-        <dd>
-            <span>{{timetable.inFriday}}</span>
-        </dd>
-        <dt><span jhiTranslate="timetableApp.timetable.inSaturday">In Saturday</span></dt>
-        <dd>
-            <span>{{timetable.inSaturday}}</span>
-        </dd>
-        <dt><span jhiTranslate="timetableApp.timetable.inSunday">In Sunday</span></dt>
-        <dd>
-            <span>{{timetable.inSunday}}</span>
+            <span jhiTranslate="{{'global.date.week-day.' + timetable.dayOfWeek}}">{{timetable.dayOfWeek}}</span>
         </dd>
         <dt><span jhiTranslate="timetableApp.timetable.place">Place</span></dt>
         <dd>
@@ -95,7 +63,7 @@
         <dt><span jhiTranslate="timetableApp.timetable.teacher">Teacher</span></dt>
         <dd>
             <div *ngIf="timetable.teacherId">
-                <a [routerLink]="['/teacher', timetable.teacherId]">{{timetable.teacherSurname}}</a>
+                <a [routerLink]="['/teacher', timetable.teacherId]">{{timetable.teacherFullName}}</a>
             </div>
         </dd>
         <dt><span jhiTranslate="timetableApp.timetable.division">Division</span></dt>

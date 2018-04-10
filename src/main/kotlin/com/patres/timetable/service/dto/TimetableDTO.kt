@@ -5,6 +5,7 @@ import com.patres.timetable.domain.enumeration.EventType
 import java.io.Serializable
 import java.time.LocalDate
 import java.util.*
+import javax.persistence.Column
 import javax.validation.constraints.NotNull
 
 class TimetableDTO(
@@ -34,20 +35,8 @@ class TimetableDTO(
 
     var colorText: String? = null,
 
-    var inMonday: Boolean = false,
+    var dayOfWeek: Int? = null,
 
-    var inTuesday: Boolean = false,
-
-    var inWednesday: Boolean = false,
-
-    var inThursday: Boolean = false,
-
-    var inFriday: Boolean = false,
-
-    var inSaturday: Boolean = false,
-
-    var inSunday: Boolean = false
-    ,
     var placeId: Long? = null,
 
     var placeName: String? = null,
@@ -98,7 +87,8 @@ class TimetableDTO(
     }
 
     override fun toString(): String {
-        return "TimetableDTO(title=$title, startTimeString=$startTimeString, endTimeString=$endTimeString, startDate=$startDate, endDate=$endDate, date=$date, type=$type, everyWeek=$everyWeek, startWithWeek=$startWithWeek, description=$description, colorBackground=$colorBackground, colorText=$colorText, inMonday=$inMonday, inTuesday=$inTuesday, inWednesday=$inWednesday, inThursday=$inThursday, inFriday=$inFriday, inSaturday=$inSaturday, inSunday=$inSunday, placeId=$placeId, placeName=$placeName, subjectId=$subjectId, subjectName=$subjectName, subjectShortName=$subjectShortName, teacherId=$teacherId, teacherFullName=$teacherFullName, divisionId=$divisionId, divisionName=$divisionName, lessonId=$lessonId, lessonName=$lessonName, periodId=$periodId, periodName=$periodName)"
+        return "TimetableDTO(title=$title, startTimeString=$startTimeString, endTimeString=$endTimeString, startDate=$startDate, endDate=$endDate, date=$date, type=$type, everyWeek=$everyWeek, startWithWeek=$startWithWeek, description=$description, colorBackground=$colorBackground, colorText=$colorText, dayOfWeek=$dayOfWeek, placeId=$placeId, placeName=$placeName, subjectId=$subjectId, subjectName=$subjectName, subjectShortName=$subjectShortName, teacherId=$teacherId, teacherFullName=$teacherFullName, divisionId=$divisionId, divisionName=$divisionName, lessonId=$lessonId, lessonName=$lessonName, periodId=$periodId, periodName=$periodName)"
     }
+
 
 }

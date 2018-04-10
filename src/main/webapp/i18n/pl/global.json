@@ -92,16 +92,28 @@
             }
         },
         "field": {
-            "id" : "ID"
+            "id": "ID"
         },
         "ribbon": {
-            "dev":"Development"
+            "dev": "Development"
         },
         "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
         "search": "Szukaj",
         "select-all": "Zaznacz wszystko",
         "un-select-all": "Odznacz wszystko",
-        "no-data": "Brak danych"
+        "no-data": "Brak danych",
+        "date": {
+            "week-day": {
+                "day-of-week": "Dzień tygodnia",
+                "1": "Poniedziałek",
+                "2": "Wtorek",
+                "3": "Środa",
+                "4": "Czwartek",
+                "5": "Piątek",
+                "6": "Sobota",
+                "7": "Niedziela"
+            }
+        }
     },
     "entity": {
         "action": {

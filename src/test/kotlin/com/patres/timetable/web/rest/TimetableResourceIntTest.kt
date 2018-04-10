@@ -109,26 +109,8 @@ open class TimetableResourceIntTest {
         private const val DEFAULT_COLOR_TEXT = "AAAAAAAAAA"
         private const val UPDATED_COLOR_TEXT = "BBBBBBBBBB"
 
-        private const val DEFAULT_IN_MONDAY = false
-        private const val UPDATED_IN_MONDAY = true
-
-        private const val DEFAULT_IN_TUESDAY = false
-        private const val UPDATED_IN_TUESDAY = true
-
-        private const val DEFAULT_IN_WEDNESDAY = false
-        private const val UPDATED_IN_WEDNESDAY = true
-
-        private const val DEFAULT_IN_THURSDAY = false
-        private const val UPDATED_IN_THURSDAY = true
-
-        private const val DEFAULT_IN_FRIDAY = false
-        private const val UPDATED_IN_FRIDAY = true
-
-        private const val DEFAULT_IN_SATURDAY = false
-        private const val UPDATED_IN_SATURDAY = true
-
-        private const val DEFAULT_IN_SUNDAY = false
-        private const val UPDATED_IN_SUNDAY = true
+        private const val DEFAULT_DAY_OF_WEEK = 1
+        private const val UPDATED_DAY_OF_WEEK = 2
 
         fun createEntity(): Timetable {
             return Timetable(
@@ -140,13 +122,7 @@ open class TimetableResourceIntTest {
                 description = DEFAULT_DESCRIPTION,
                 colorBackground = DEFAULT_COLOR_BACKGROUND,
                 colorText = DEFAULT_COLOR_TEXT,
-                inMonday = DEFAULT_IN_MONDAY,
-                inTuesday = DEFAULT_IN_TUESDAY,
-                inWednesday = DEFAULT_IN_WEDNESDAY,
-                inThursday = DEFAULT_IN_THURSDAY,
-                inFriday = DEFAULT_IN_FRIDAY,
-                inSaturday = DEFAULT_IN_SATURDAY,
-                inSunday = DEFAULT_IN_SUNDAY)
+                dayOfWeek = DEFAULT_DAY_OF_WEEK)
                 .apply {
                     setStartTimeHHmmFormatted(DEFAULT_START_TIME)
                     setEndTimeHHmmFormatted(DEFAULT_END_TIME)
@@ -165,13 +141,7 @@ open class TimetableResourceIntTest {
                 description = DEFAULT_DESCRIPTION,
                 colorBackground = DEFAULT_COLOR_BACKGROUND,
                 colorText = DEFAULT_COLOR_TEXT,
-                inMonday = DEFAULT_IN_MONDAY,
-                inTuesday = DEFAULT_IN_TUESDAY,
-                inWednesday = DEFAULT_IN_WEDNESDAY,
-                inThursday = DEFAULT_IN_THURSDAY,
-                inFriday = DEFAULT_IN_FRIDAY,
-                inSaturday = DEFAULT_IN_SATURDAY,
-                inSunday = DEFAULT_IN_SUNDAY)
+                dayOfWeek = DEFAULT_DAY_OF_WEEK)
         }
     }
 
@@ -220,13 +190,7 @@ open class TimetableResourceIntTest {
         assertThat(testTimetable.description).isEqualTo(DEFAULT_DESCRIPTION)
         assertThat(testTimetable.colorBackground).isEqualTo(DEFAULT_COLOR_BACKGROUND)
         assertThat(testTimetable.colorText).isEqualTo(DEFAULT_COLOR_TEXT)
-        assertThat(testTimetable.inMonday).isEqualTo(DEFAULT_IN_MONDAY)
-        assertThat(testTimetable.inTuesday).isEqualTo(DEFAULT_IN_TUESDAY)
-        assertThat(testTimetable.inWednesday).isEqualTo(DEFAULT_IN_WEDNESDAY)
-        assertThat(testTimetable.inThursday).isEqualTo(DEFAULT_IN_THURSDAY)
-        assertThat(testTimetable.inFriday).isEqualTo(DEFAULT_IN_FRIDAY)
-        assertThat(testTimetable.inSaturday).isEqualTo(DEFAULT_IN_SATURDAY)
-        assertThat(testTimetable.inSunday).isEqualTo(DEFAULT_IN_SUNDAY)
+        assertThat(testTimetable.dayOfWeek).isEqualTo(DEFAULT_DAY_OF_WEEK)
     }
 
     @Test
@@ -248,26 +212,6 @@ open class TimetableResourceIntTest {
         // Validate the Alice in the database
         val timetableList = timetableRepository.findAll()
         assertThat(timetableList).hasSize(databaseSizeBeforeCreate)
-    }
-
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun checkTitleIsRequired() {
-        val databaseSizeBeforeTest = timetableRepository.findAll().size
-        // set the field null
-        timetable.title = null
-
-        // Create the Timetable, which fails.
-        val timetableDTO = timetableMapper.toDto(timetable)
-
-        restTimetableMockMvc.perform(post("/api/timetables")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(timetableDTO)))
-            .andExpect(status().isBadRequest)
-
-        val timetableList = timetableRepository.findAll()
-        assertThat(timetableList).hasSize(databaseSizeBeforeTest)
     }
 
     @Test
@@ -312,13 +256,8 @@ open class TimetableResourceIntTest {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].colorBackground").value(hasItem(DEFAULT_COLOR_BACKGROUND)))
             .andExpect(jsonPath("$.[*].colorText").value(hasItem(DEFAULT_COLOR_TEXT)))
-            .andExpect(jsonPath("$.[*].inMonday").value(hasItem<Boolean>(DEFAULT_IN_MONDAY)))
-            .andExpect(jsonPath("$.[*].inTuesday").value(hasItem<Boolean>(DEFAULT_IN_TUESDAY)))
-            .andExpect(jsonPath("$.[*].inWednesday").value(hasItem<Boolean>(DEFAULT_IN_WEDNESDAY)))
-            .andExpect(jsonPath("$.[*].inThursday").value(hasItem<Boolean>(DEFAULT_IN_THURSDAY)))
-            .andExpect(jsonPath("$.[*].inFriday").value(hasItem<Boolean>(DEFAULT_IN_FRIDAY)))
-            .andExpect(jsonPath("$.[*].inSaturday").value(hasItem<Boolean>(DEFAULT_IN_SATURDAY)))
-            .andExpect(jsonPath("$.[*].inSunday").value(hasItem<Boolean>(DEFAULT_IN_SUNDAY)))
+            .andExpect(jsonPath("$.[*].dayOfWeek").value(hasItem<Int>(DEFAULT_DAY_OF_WEEK)))
+
     }
 
     @Test
@@ -343,13 +282,7 @@ open class TimetableResourceIntTest {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.colorBackground").value(DEFAULT_COLOR_BACKGROUND))
             .andExpect(jsonPath("$.colorText").value(DEFAULT_COLOR_TEXT))
-            .andExpect(jsonPath("$.inMonday").value(DEFAULT_IN_MONDAY))
-            .andExpect(jsonPath("$.inTuesday").value(DEFAULT_IN_TUESDAY))
-            .andExpect(jsonPath("$.inWednesday").value(DEFAULT_IN_WEDNESDAY))
-            .andExpect(jsonPath("$.inThursday").value(DEFAULT_IN_THURSDAY))
-            .andExpect(jsonPath("$.inFriday").value(DEFAULT_IN_FRIDAY))
-            .andExpect(jsonPath("$.inSaturday").value(DEFAULT_IN_SATURDAY))
-            .andExpect(jsonPath("$.inSunday").value(DEFAULT_IN_SUNDAY))
+            .andExpect(jsonPath("$.dayOfWeek").value(DEFAULT_DAY_OF_WEEK))
     }
 
     @Test
@@ -378,7 +311,7 @@ open class TimetableResourceIntTest {
 
         val timetableWithPeriod = createEntity().apply {
             date = null
-            inWednesday = true
+            dayOfWeek = 3
             division = class1
             period = period1
         }
@@ -386,7 +319,7 @@ open class TimetableResourceIntTest {
 
         val timetableWithWrongPeriod = createEntity().apply {
             date = null
-            inWednesday = true
+            dayOfWeek = 3
             division = class1
             period = period2
         }
@@ -439,7 +372,7 @@ open class TimetableResourceIntTest {
 
         val timetableWithEvery2WeekStartWith1Week = createEntity().apply {
             date = null
-            inFriday = true
+            dayOfWeek = 5
             division = class1
             period = period1
             everyWeek = 2
@@ -449,7 +382,7 @@ open class TimetableResourceIntTest {
 
         val timetableWithEvery2WeekStartWith2Week = createEntity().apply {
             date = null
-            inFriday = true
+            dayOfWeek = 5
             division = class1
             period = period1
             everyWeek = 2
@@ -504,13 +437,7 @@ open class TimetableResourceIntTest {
             description = UPDATED_DESCRIPTION
             colorBackground = UPDATED_COLOR_BACKGROUND
             colorText = UPDATED_COLOR_TEXT
-            inMonday = UPDATED_IN_MONDAY
-            inTuesday = UPDATED_IN_TUESDAY
-            inWednesday = UPDATED_IN_WEDNESDAY
-            inThursday = UPDATED_IN_THURSDAY
-            inFriday = UPDATED_IN_FRIDAY
-            inSaturday = UPDATED_IN_SATURDAY
-            inSunday = UPDATED_IN_SUNDAY
+            dayOfWeek = UPDATED_DAY_OF_WEEK
             setStartTimeHHmmFormatted(UPDATED_START_TIME)
             setEndTimeHHmmFormatted(UPDATED_END_TIME)
         }
@@ -535,13 +462,7 @@ open class TimetableResourceIntTest {
         assertThat(testTimetable.description).isEqualTo(UPDATED_DESCRIPTION)
         assertThat(testTimetable.colorBackground).isEqualTo(UPDATED_COLOR_BACKGROUND)
         assertThat(testTimetable.colorText).isEqualTo(UPDATED_COLOR_TEXT)
-        assertThat(testTimetable.inMonday).isEqualTo(UPDATED_IN_MONDAY)
-        assertThat(testTimetable.inTuesday).isEqualTo(UPDATED_IN_TUESDAY)
-        assertThat(testTimetable.inWednesday).isEqualTo(UPDATED_IN_WEDNESDAY)
-        assertThat(testTimetable.inThursday).isEqualTo(UPDATED_IN_THURSDAY)
-        assertThat(testTimetable.inFriday).isEqualTo(UPDATED_IN_FRIDAY)
-        assertThat(testTimetable.inSaturday).isEqualTo(UPDATED_IN_SATURDAY)
-        assertThat(testTimetable.inSunday).isEqualTo(UPDATED_IN_SUNDAY)
+        assertThat(testTimetable.dayOfWeek).isEqualTo(UPDATED_DAY_OF_WEEK)
     }
 
     @Test

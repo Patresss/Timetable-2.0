@@ -489,111 +489,111 @@ open class FillerResource(
         // Timetable
         // =====================================================
         // Klasa 1a
-        d1aMon2 = createTimetable(inMonday = true, lesson = l2, subject = biologia, teacher = szarłowicz, place = p8, division = class1a, period = semestLetniPeriod)
-        d1aMon3 = createTimetable(inMonday = true, lesson = l3, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, place = p35, division = class1a, period = semestLetniPeriod)
-        d1aMon4a = createTimetable(inMonday = true, lesson = l4, subject = jAngielski, teacher = kijowska, place = p7g, division = div1aG1, period = semestLetniPeriod)
-        d1aMon4b = createTimetable(inMonday = true, lesson = l4, subject = jAngielski, teacher = kasprzyk, place = p21, division = div1aG2, period = semestLetniPeriod)
-        d1aMon5 = createTimetable(inMonday = true, lesson = l5, subject = religia, teacher = tPiwinski, place = p36, division = class1a, period = semestLetniPeriod)
-        d1aMon6 = createTimetable(inMonday = true, lesson = l6, subject = fizyka, teacher = szott, place = p15, division = class1a, period = semestLetniPeriod)
-        d1aMon8 = createTimetable(inMonday = true, lesson = l8, subject = historia, teacher = świstak, place = p7, division = class1a, period = semestLetniPeriod)
-        d1aMon9Test = createTimetable(inMonday = true, lesson = l9, subject = historia, teacher = świstak, place = p7, division = class1a, period = semestLetniPeriod, everyWeek = 2)
+        d1aMon2 = createTimetable(dayOfWeek = 1, lesson = l2, subject = biologia, teacher = szarłowicz, place = p8, division = class1a, period = semestLetniPeriod)
+        d1aMon3 = createTimetable(dayOfWeek = 1, lesson = l3, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, place = p35, division = class1a, period = semestLetniPeriod)
+        d1aMon4a = createTimetable(dayOfWeek = 1, lesson = l4, subject = jAngielski, teacher = kijowska, place = p7g, division = div1aG1, period = semestLetniPeriod)
+        d1aMon4b = createTimetable(dayOfWeek = 1, lesson = l4, subject = jAngielski, teacher = kasprzyk, place = p21, division = div1aG2, period = semestLetniPeriod)
+        d1aMon5 = createTimetable(dayOfWeek = 1, lesson = l5, subject = religia, teacher = tPiwinski, place = p36, division = class1a, period = semestLetniPeriod)
+        d1aMon6 = createTimetable(dayOfWeek = 1, lesson = l6, subject = fizyka, teacher = szott, place = p15, division = class1a, period = semestLetniPeriod)
+        d1aMon8 = createTimetable(dayOfWeek = 1, lesson = l8, subject = historia, teacher = świstak, place = p7, division = class1a, period = semestLetniPeriod)
+        d1aMon9Test = createTimetable(dayOfWeek = 1, lesson = l9, subject = historia, teacher = świstak, place = p7, division = class1a, period = semestLetniPeriod, everyWeek = 2)
 
-        d1aTue1 = createTimetable(inTuesday = true, lesson = l1, subject = jPolski, teacher = pernal, place = p24, division = class1a, period = semestLetniPeriod)
-        d1aTue2 = createTimetable(inTuesday = true, lesson = l2, subject = geografia, teacher = gonet, place = p20, division = class1a, period = semestLetniPeriod)
-        d1aTue3a = createTimetable(inTuesday = true, lesson = l3, subject = jAngielski, teacher = kijowska, place = p4, division = div1aG1, period = semestLetniPeriod)
-        d1aTue3b = createTimetable(inTuesday = true, lesson = l3, subject = jAngielski, teacher = kasprzyk, place = p7g, division = div1aG2, period = semestLetniPeriod)
-        d1aTue4 = createTimetable(inTuesday = true, lesson = l4, subject = matematyka, teacher = czuba, place = p22, division = class1a, period = semestLetniPeriod)
-        d1aTue5 = createTimetable(inTuesday = true, lesson = l5, subject = matematyka, teacher = czuba, place = p22, division = class1a, period = semestLetniPeriod)
-        d1aTue6 = createTimetable(inTuesday = true, lesson = l6, subject = chemia, teacher = chodorowiczBąk, place = p24, division = class1a, period = semestLetniPeriod)
-        d1aTue7 = createTimetable(inTuesday = true, lesson = l7, subject = fizyka, teacher = szott, place = p15, division = class1a, period = semestLetniPeriod)
+        d1aTue1 = createTimetable(dayOfWeek = 2, lesson = l1, subject = jPolski, teacher = pernal, place = p24, division = class1a, period = semestLetniPeriod)
+        d1aTue2 = createTimetable(dayOfWeek = 2, lesson = l2, subject = geografia, teacher = gonet, place = p20, division = class1a, period = semestLetniPeriod)
+        d1aTue3a = createTimetable(dayOfWeek = 2, lesson = l3, subject = jAngielski, teacher = kijowska, place = p4, division = div1aG1, period = semestLetniPeriod)
+        d1aTue3b = createTimetable(dayOfWeek = 2, lesson = l3, subject = jAngielski, teacher = kasprzyk, place = p7g, division = div1aG2, period = semestLetniPeriod)
+        d1aTue4 = createTimetable(dayOfWeek = 2, lesson = l4, subject = matematyka, teacher = czuba, place = p22, division = class1a, period = semestLetniPeriod)
+        d1aTue5 = createTimetable(dayOfWeek = 2, lesson = l5, subject = matematyka, teacher = czuba, place = p22, division = class1a, period = semestLetniPeriod)
+        d1aTue6 = createTimetable(dayOfWeek = 2, lesson = l6, subject = chemia, teacher = chodorowiczBąk, place = p24, division = class1a, period = semestLetniPeriod)
+        d1aTue7 = createTimetable(dayOfWeek = 2, lesson = l7, subject = fizyka, teacher = szott, place = p15, division = class1a, period = semestLetniPeriod)
 
-        d1aWen1 = createTimetable(inWednesday = true, lesson = l1, subject = wiedzaOSpołeczeństwie, teacher = świstak, place = p24, division = class1a, period = semestLetniPeriod)
-        d1aWen3 = createTimetable(inWednesday = true, lesson = l3, subject = historia, teacher = świstak, place = p24, division = class1a, period = semestLetniPeriod)
-        d1aWen4 = createTimetable(inWednesday = true, lesson = l4, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, place = p35, division = class1a, period = semestLetniPeriod)
+        d1aWen1 = createTimetable(dayOfWeek = 3, lesson = l1, subject = wiedzaOSpołeczeństwie, teacher = świstak, place = p24, division = class1a, period = semestLetniPeriod)
+        d1aWen3 = createTimetable(dayOfWeek = 3, lesson = l3, subject = historia, teacher = świstak, place = p24, division = class1a, period = semestLetniPeriod)
+        d1aWen4 = createTimetable(dayOfWeek = 3, lesson = l4, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, place = p35, division = class1a, period = semestLetniPeriod)
 
-        d1aThu1 = createTimetable(inThursday = true, lesson = l1, subject = podstawyPrzedsiębiorczości, teacher = mSuchodolski, place = p36, division = class1a, period = semestLetniPeriod)
-        d1aThu2 = createTimetable(inThursday = true, lesson = l2, subject = matematyka, teacher = czuba, place = p22, division = class1a, period = semestLetniPeriod)
-        d1aThu3 = createTimetable(inThursday = true, lesson = l3, subject = wiedzaOKulturze, teacher = twardzikWilk, place = p13, division = class1a, period = semestLetniPeriod)
-        d1aThu4 = createTimetable(inThursday = true, lesson = l4, subject = edukacjaDoBezpieczeństwa, teacher = bloch, place = p31, division = class1a, period = semestLetniPeriod)
-        d1aThu5a = createTimetable(inThursday = true, lesson = l5, subject = jAngielski, teacher = kijowska, place = p14, division = div1aG1, period = semestLetniPeriod)
-        d1aThu5b = createTimetable(inThursday = true, lesson = l5, subject = informatyka, teacher = dzierwa, place = p4, division = div1aG2, period = semestLetniPeriod)
-        d1aThu6a = createTimetable(inThursday = true, lesson = l6, subject = informatyka, teacher = dzierwa, place = p4, division = div1aG1, period = semestLetniPeriod)
-        d1aThu6b = createTimetable(inThursday = true, lesson = l6, subject = jAngielski, teacher = kasprzyk, place = p5, division = div1aG2, period = semestLetniPeriod)
+        d1aThu1 = createTimetable(dayOfWeek = 4, lesson = l1, subject = podstawyPrzedsiębiorczości, teacher = mSuchodolski, place = p36, division = class1a, period = semestLetniPeriod)
+        d1aThu2 = createTimetable(dayOfWeek = 4, lesson = l2, subject = matematyka, teacher = czuba, place = p22, division = class1a, period = semestLetniPeriod)
+        d1aThu3 = createTimetable(dayOfWeek = 4, lesson = l3, subject = wiedzaOKulturze, teacher = twardzikWilk, place = p13, division = class1a, period = semestLetniPeriod)
+        d1aThu4 = createTimetable(dayOfWeek = 4, lesson = l4, subject = edukacjaDoBezpieczeństwa, teacher = bloch, place = p31, division = class1a, period = semestLetniPeriod)
+        d1aThu5a = createTimetable(dayOfWeek = 4, lesson = l5, subject = jAngielski, teacher = kijowska, place = p14, division = div1aG1, period = semestLetniPeriod)
+        d1aThu5b = createTimetable(dayOfWeek = 4, lesson = l5, subject = informatyka, teacher = dzierwa, place = p4, division = div1aG2, period = semestLetniPeriod)
+        d1aThu6a = createTimetable(dayOfWeek = 4, lesson = l6, subject = informatyka, teacher = dzierwa, place = p4, division = div1aG1, period = semestLetniPeriod)
+        d1aThu6b = createTimetable(dayOfWeek = 4, lesson = l6, subject = jAngielski, teacher = kasprzyk, place = p5, division = div1aG2, period = semestLetniPeriod)
 
-        d1aThu7 = createTimetable(inThursday = true, lesson = l7, subject = godzWych, teacher = czuba, place = p22, division = class1a, period = semestLetniPeriod)
+        d1aThu7 = createTimetable(dayOfWeek = 4, lesson = l7, subject = godzWych, teacher = czuba, place = p22, division = class1a, period = semestLetniPeriod)
 
-        d1aFri4 = createTimetable(inFriday = true, lesson = l4, subject = jPolski, teacher = pernal, place = p16, division = class1a, period = semestLetniPeriod)
-        d1aFri5 = createTimetable(inFriday = true, lesson = l5, subject = jPolski, teacher = pernal, place = p16, division = class1a, period = semestLetniPeriod)
-        d1aFri6 = createTimetable(inFriday = true, lesson = l6, subject = matematyka, teacher = czuba, place = p36, division = class1a, period = semestLetniPeriod)
-        d1aFri8 = createTimetable(inFriday = true, lesson = l8, subject = religia, teacher = tPiwinski, place = p22, division = class1a, period = semestLetniPeriod)
+        d1aFri4 = createTimetable(dayOfWeek = 5, lesson = l4, subject = jPolski, teacher = pernal, place = p16, division = class1a, period = semestLetniPeriod)
+        d1aFri5 = createTimetable(dayOfWeek = 5, lesson = l5, subject = jPolski, teacher = pernal, place = p16, division = class1a, period = semestLetniPeriod)
+        d1aFri6 = createTimetable(dayOfWeek = 5, lesson = l6, subject = matematyka, teacher = czuba, place = p36, division = class1a, period = semestLetniPeriod)
+        d1aFri8 = createTimetable(dayOfWeek = 5, lesson = l8, subject = religia, teacher = tPiwinski, place = p22, division = class1a, period = semestLetniPeriod)
 
-        d1aMon7a = createTimetable(inMonday = true, lesson = l7, subject = jNiemiecki, teacher = hadel, place = p14, division = divNie1G2, period = semestLetniPeriod)
-        d1aMon7b = createTimetable(inMonday = true, lesson = l7, subject = jFrancuski, teacher = rachwał, place = p25, division = divFra1G1, period = semestLetniPeriod)
-        d1aMon7c = createTimetable(inMonday = true, lesson = l7, subject = jRosyjski, teacher = łopuszańska, place = p6, division = divRos1G1, period = semestLetniPeriod)
-        d1aMon7d = createTimetable(inMonday = true, lesson = l7, subject = jRosyjski, teacher = stasik, place = p10, division = divRos1G2, period = semestLetniPeriod)
+        d1aMon7a = createTimetable(dayOfWeek = 1, lesson = l7, subject = jNiemiecki, teacher = hadel, place = p14, division = divNie1G2, period = semestLetniPeriod)
+        d1aMon7b = createTimetable(dayOfWeek = 1, lesson = l7, subject = jFrancuski, teacher = rachwał, place = p25, division = divFra1G1, period = semestLetniPeriod)
+        d1aMon7c = createTimetable(dayOfWeek = 1, lesson = l7, subject = jRosyjski, teacher = łopuszańska, place = p6, division = divRos1G1, period = semestLetniPeriod)
+        d1aMon7d = createTimetable(dayOfWeek = 1, lesson = l7, subject = jRosyjski, teacher = stasik, place = p10, division = divRos1G2, period = semestLetniPeriod)
 
-        d1aWen2a = createTimetable(inWednesday = true, lesson = l2, subject = jNiemiecki, teacher = hadel, place = p14, division = divNie1G2, period = semestLetniPeriod)
-        d1vWen2b = createTimetable(inWednesday = true, lesson = l2, subject = jFrancuski, teacher = rachwał, place = p13, division = divFra1G1, period = semestLetniPeriod)
-        d1aWen2c = createTimetable(inWednesday = true, lesson = l2, subject = jRosyjski, teacher = łopuszańska, place = pG4, division = divRos1G1, period = semestLetniPeriod)
-        d1aWen2d = createTimetable(inWednesday = true, lesson = l2, subject = jRosyjski, teacher = stasik, place = p12, division = divRos1G2, period = semestLetniPeriod)
+        d1aWen2a = createTimetable(dayOfWeek = 3, lesson = l2, subject = jNiemiecki, teacher = hadel, place = p14, division = divNie1G2, period = semestLetniPeriod)
+        d1vWen2b = createTimetable(dayOfWeek = 3, lesson = l2, subject = jFrancuski, teacher = rachwał, place = p13, division = divFra1G1, period = semestLetniPeriod)
+        d1aWen2c = createTimetable(dayOfWeek = 3, lesson = l2, subject = jRosyjski, teacher = łopuszańska, place = pG4, division = divRos1G1, period = semestLetniPeriod)
+        d1aWen2d = createTimetable(dayOfWeek = 3, lesson = l2, subject = jRosyjski, teacher = stasik, place = p12, division = divRos1G2, period = semestLetniPeriod)
 
-        d1aFri7a = createTimetable(inFriday = true, lesson = l7, subject = jNiemiecki, teacher = hadel, place = p14, division = divNie1G2, period = semestLetniPeriod)
-        d1vFri7b = createTimetable(inFriday = true, lesson = l7, subject = jFrancuski, teacher = rachwał, place = p24, division = divFra1G1, period = semestLetniPeriod)
-        d1aFri7c = createTimetable(inFriday = true, lesson = l7, subject = jRosyjski, teacher = łopuszańska, place = p6, division = divRos1G1, period = semestLetniPeriod)
-        d1aFri7d = createTimetable(inFriday = true, lesson = l7, subject = jRosyjski, teacher = stasik, place = p13, division = divRos1G2, period = semestLetniPeriod)
+        d1aFri7a = createTimetable(dayOfWeek = 5, lesson = l7, subject = jNiemiecki, teacher = hadel, place = p14, division = divNie1G2, period = semestLetniPeriod)
+        d1vFri7b = createTimetable(dayOfWeek = 5, lesson = l7, subject = jFrancuski, teacher = rachwał, place = p24, division = divFra1G1, period = semestLetniPeriod)
+        d1aFri7c = createTimetable(dayOfWeek = 5, lesson = l7, subject = jRosyjski, teacher = łopuszańska, place = p6, division = divRos1G1, period = semestLetniPeriod)
+        d1aFri7d = createTimetable(dayOfWeek = 5, lesson = l7, subject = jRosyjski, teacher = stasik, place = p13, division = divRos1G2, period = semestLetniPeriod)
 
-        d1WfGrDz1Fri2 = createTimetable(inFriday = true, lesson = l2, subject = wychowanieFizyczne, teacher = wilk, place = ph, division = div1GrDz1, period = semestLetniPeriod)
-        d1WfGrCh1Fri2 = createTimetable(inFriday = true, lesson = l2, subject = wychowanieFizyczne, teacher = zając, place = ph, division = div1GrCh1, period = semestLetniPeriod)
-        d1WfGrCh2Fri2 = createTimetable(inFriday = true, lesson = l2, subject = wychowanieFizyczne, teacher = dawidkoJ, place = ph, division = div1GrCh2, period = semestLetniPeriod)
+        d1WfGrDz1Fri2 = createTimetable(dayOfWeek = 5, lesson = l2, subject = wychowanieFizyczne, teacher = wilk, place = ph, division = div1GrDz1, period = semestLetniPeriod)
+        d1WfGrCh1Fri2 = createTimetable(dayOfWeek = 5, lesson = l2, subject = wychowanieFizyczne, teacher = zając, place = ph, division = div1GrCh1, period = semestLetniPeriod)
+        d1WfGrCh2Fri2 = createTimetable(dayOfWeek = 5, lesson = l2, subject = wychowanieFizyczne, teacher = dawidkoJ, place = ph, division = div1GrCh2, period = semestLetniPeriod)
 
-        d1WfGrDz1Fri3 = createTimetable(inFriday = true, lesson = l3, subject = wychowanieFizyczne, teacher = wilk, place = ph, division = div1GrDz1, period = semestLetniPeriod)
-        d1WfGrDz2Fri3 = createTimetable(inFriday = true, lesson = l3, subject = wychowanieFizyczne, teacher = rachfał, place = pS, division = div1GrDz2, period = semestLetniPeriod)
-        d1WfGrCh1Fri3 = createTimetable(inFriday = true, lesson = l3, subject = wychowanieFizyczne, teacher = zając, place = ph, division = div1GrCh1, period = semestLetniPeriod)
-        d1WfGrCh2Fri3 = createTimetable(inFriday = true, lesson = l3, subject = wychowanieFizyczne, teacher = dawidkoJ, place = ph, division = div1GrCh2, period = semestLetniPeriod)
+        d1WfGrDz1Fri3 = createTimetable(dayOfWeek = 5, lesson = l3, subject = wychowanieFizyczne, teacher = wilk, place = ph, division = div1GrDz1, period = semestLetniPeriod)
+        d1WfGrDz2Fri3 = createTimetable(dayOfWeek = 5, lesson = l3, subject = wychowanieFizyczne, teacher = rachfał, place = pS, division = div1GrDz2, period = semestLetniPeriod)
+        d1WfGrCh1Fri3 = createTimetable(dayOfWeek = 5, lesson = l3, subject = wychowanieFizyczne, teacher = zając, place = ph, division = div1GrCh1, period = semestLetniPeriod)
+        d1WfGrCh2Fri3 = createTimetable(dayOfWeek = 5, lesson = l3, subject = wychowanieFizyczne, teacher = dawidkoJ, place = ph, division = div1GrCh2, period = semestLetniPeriod)
 
         // Calass 1B
-        d1bMon2 = createTimetable(inMonday = true, lesson = l2, subject = podstawyPrzedsiębiorczości, teacher = mSuchodolski, place = p10, division = class1b, period = semestLetniPeriod)
-        d1bMon3 = createTimetable(inMonday = true, lesson = l3, subject = jPolski, teacher = klein, place = p13, division = class1b, period = semestLetniPeriod)
-        d1bMon4 = createTimetable(inMonday = true, lesson = l4, subject = jPolski, teacher = klein, place = p13, division = class1b, period = semestLetniPeriod)
-        d1bMon5 = createTimetable(inMonday = true, lesson = l5, subject = edukacjaDoBezpieczeństwa, teacher = bloch, place = p31, division = class1b, period = semestLetniPeriod)
-        d1bMon6 = createTimetable(inMonday = true, lesson = l6, subject = historia, teacher = świstak, place = p35, division = class1b, period = semestLetniPeriod)
-        d1bMon7a = createTimetable(inMonday = true, lesson = l7, subject = jNiemiecki, teacher = przybyłowiczCiszewska, place = p13, division = divNie1G1, period = semestLetniPeriod)
-        d1bMon8 = createTimetable(inMonday = true, lesson = l8, subject = geografia, teacher = gonet, place = p20, division = class1b, period = semestLetniPeriod)
+        d1bMon2 = createTimetable(dayOfWeek = 1, lesson = l2, subject = podstawyPrzedsiębiorczości, teacher = mSuchodolski, place = p10, division = class1b, period = semestLetniPeriod)
+        d1bMon3 = createTimetable(dayOfWeek = 1, lesson = l3, subject = jPolski, teacher = klein, place = p13, division = class1b, period = semestLetniPeriod)
+        d1bMon4 = createTimetable(dayOfWeek = 1, lesson = l4, subject = jPolski, teacher = klein, place = p13, division = class1b, period = semestLetniPeriod)
+        d1bMon5 = createTimetable(dayOfWeek = 1, lesson = l5, subject = edukacjaDoBezpieczeństwa, teacher = bloch, place = p31, division = class1b, period = semestLetniPeriod)
+        d1bMon6 = createTimetable(dayOfWeek = 1, lesson = l6, subject = historia, teacher = świstak, place = p35, division = class1b, period = semestLetniPeriod)
+        d1bMon7a = createTimetable(dayOfWeek = 1, lesson = l7, subject = jNiemiecki, teacher = przybyłowiczCiszewska, place = p13, division = divNie1G1, period = semestLetniPeriod)
+        d1bMon8 = createTimetable(dayOfWeek = 1, lesson = l8, subject = geografia, teacher = gonet, place = p20, division = class1b, period = semestLetniPeriod)
 
-        d1bTue5 = createTimetable(inTuesday = true, lesson = l5, subject = wiedzaOSpołeczeństwie, teacher = dynowski, place = p7, division = class1b, period = semestLetniPeriod)
-        d1aTue6a = createTimetable(inTuesday = true, lesson = l6, subject = jAngielski, teacher = karnas, place = p35, division = div1bG1, period = semestLetniPeriod)
-        d1aTue6b = createTimetable(inTuesday = true, lesson = l6, subject = jAngielski, teacher = kijowska, place = p6, division = div1bG2, period = semestLetniPeriod)
-        d1bTue7 = createTimetable(inTuesday = true, lesson = l7, subject = biologia, teacher = szarłowicz, place = p8, division = class1b, period = semestLetniPeriod)
-        d1bTue8 = createTimetable(inTuesday = true, lesson = l8, subject = chemia, teacher = chodorowiczBąk, place = p24, division = class1b, period = semestLetniPeriod)
-        d1bTue9a = createTimetable(inTuesday = true, lesson = l9, subject = wychowanieFizyczne, teacher = rachfał, place = pds, division = div1Gr1bDz1, period = semestLetniPeriod)
-        d1bTue10a = createTimetable(inTuesday = true, lesson = l10, subject = wychowanieFizyczne, teacher = rachfał, place = pds, division = div1Gr1bDz1, period = semestLetniPeriod)
+        d1bTue5 = createTimetable(dayOfWeek = 2, lesson = l5, subject = wiedzaOSpołeczeństwie, teacher = dynowski, place = p7, division = class1b, period = semestLetniPeriod)
+        d1aTue6a = createTimetable(dayOfWeek = 2, lesson = l6, subject = jAngielski, teacher = karnas, place = p35, division = div1bG1, period = semestLetniPeriod)
+        d1aTue6b = createTimetable(dayOfWeek = 2, lesson = l6, subject = jAngielski, teacher = kijowska, place = p6, division = div1bG2, period = semestLetniPeriod)
+        d1bTue7 = createTimetable(dayOfWeek = 2, lesson = l7, subject = biologia, teacher = szarłowicz, place = p8, division = class1b, period = semestLetniPeriod)
+        d1bTue8 = createTimetable(dayOfWeek = 2, lesson = l8, subject = chemia, teacher = chodorowiczBąk, place = p24, division = class1b, period = semestLetniPeriod)
+        d1bTue9a = createTimetable(dayOfWeek = 2, lesson = l9, subject = wychowanieFizyczne, teacher = rachfał, place = pds, division = div1Gr1bDz1, period = semestLetniPeriod)
+        d1bTue10a = createTimetable(dayOfWeek = 2, lesson = l10, subject = wychowanieFizyczne, teacher = rachfał, place = pds, division = div1Gr1bDz1, period = semestLetniPeriod)
 
-        d1bWen1 = createTimetable(inWednesday = true, lesson = l1, subject = matematyka, teacher = mięsowicz, place = p16, division = class1b, period = semestLetniPeriod)
-        d1bWen2a = createTimetable(inWednesday = true, lesson = l2, subject = jNiemiecki, teacher = przybyłowiczCiszewska, place = p25, division = divNie1G1, period = semestLetniPeriod)
-        d1bWen3a = createTimetable(inWednesday = true, lesson = l3, subject = jAngielski, teacher = karnas, place = p10, division = div1bG1, period = semestLetniPeriod)
-        d1bWen3b = createTimetable(inWednesday = true, lesson = l3, subject = informatyka, teacher = dzierwa, place = p4, division = div1bG2, period = semestLetniPeriod)
-        d1bWen4a = createTimetable(inWednesday = true, lesson = l4, subject = informatyka, teacher = dzierwa, place = p4, division = div1bG2, period = semestLetniPeriod)
-        d1bWen4b = createTimetable(inWednesday = true, lesson = l4, subject = jAngielski, teacher = kijowska, place = p14, division = div1bG2, period = semestLetniPeriod)
-        d1bWen5 = createTimetable(inWednesday = true, lesson = l5, subject = geografia, teacher = gonet, place = p20, division = class1b, period = semestLetniPeriod)
-        d1bWen6 = createTimetable(inWednesday = true, lesson = l6, subject = wiedzaOKulturze, teacher = twardzikWilk, place = p13, division = class1b, period = semestLetniPeriod)
-        d1bWen7 = createTimetable(inWednesday = true, lesson = l7, subject = godzWych, teacher = klein, place = p16, division = class1b, period = semestLetniPeriod)
-        d1bWen8 = createTimetable(inWednesday = true, lesson = l8, subject = religia, teacher = tPiwinski, place = p36, division = class1b, period = semestLetniPeriod)
-
-
-        d1bThu1 = createTimetable(inThursday = true, lesson = l1, subject = fizyka, teacher = józefczyk, place = p15, division = class1b, period = semestLetniPeriod)
-        d1bThu2 = createTimetable(inThursday = true, lesson = l2, subject = podstawyPrzedsiębiorczości, teacher = mSuchodolski, place = p14, division = class1b, period = semestLetniPeriod)
-        d1bThu3 = createTimetable(inThursday = true, lesson = l3, subject = matematyka, teacher = mięsowicz, place = p22, division = class1b, period = semestLetniPeriod)
-        d1bThu4 = createTimetable(inThursday = true, lesson = l4, subject = matematyka, teacher = mięsowicz, place = p22, division = class1b, period = semestLetniPeriod)
-        d1bThu5 = createTimetable(inThursday = true, lesson = l5, subject = religia, teacher = tPiwinski, place = p10, division = class1b, period = semestLetniPeriod)
-        d1bThu6 = createTimetable(inMonday = true, lesson = l6, subject = historia, teacher = świstak, place = p36, division = class1b, period = semestLetniPeriod)
-        d1bThu7 = createTimetable(inMonday = true, lesson = l7, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, place = p36, division = class1b, period = semestLetniPeriod)
+        d1bWen1 = createTimetable(dayOfWeek = 3, lesson = l1, subject = matematyka, teacher = mięsowicz, place = p16, division = class1b, period = semestLetniPeriod)
+        d1bWen2a = createTimetable(dayOfWeek = 3, lesson = l2, subject = jNiemiecki, teacher = przybyłowiczCiszewska, place = p25, division = divNie1G1, period = semestLetniPeriod)
+        d1bWen3a = createTimetable(dayOfWeek = 3, lesson = l3, subject = jAngielski, teacher = karnas, place = p10, division = div1bG1, period = semestLetniPeriod)
+        d1bWen3b = createTimetable(dayOfWeek = 3, lesson = l3, subject = informatyka, teacher = dzierwa, place = p4, division = div1bG2, period = semestLetniPeriod)
+        d1bWen4a = createTimetable(dayOfWeek = 3, lesson = l4, subject = informatyka, teacher = dzierwa, place = p4, division = div1bG2, period = semestLetniPeriod)
+        d1bWen4b = createTimetable(dayOfWeek = 3, lesson = l4, subject = jAngielski, teacher = kijowska, place = p14, division = div1bG2, period = semestLetniPeriod)
+        d1bWen5 = createTimetable(dayOfWeek = 3, lesson = l5, subject = geografia, teacher = gonet, place = p20, division = class1b, period = semestLetniPeriod)
+        d1bWen6 = createTimetable(dayOfWeek = 3, lesson = l6, subject = wiedzaOKulturze, teacher = twardzikWilk, place = p13, division = class1b, period = semestLetniPeriod)
+        d1bWen7 = createTimetable(dayOfWeek = 3, lesson = l7, subject = godzWych, teacher = klein, place = p16, division = class1b, period = semestLetniPeriod)
+        d1bWen8 = createTimetable(dayOfWeek = 3, lesson = l8, subject = religia, teacher = tPiwinski, place = p36, division = class1b, period = semestLetniPeriod)
 
 
-        d1bFri4 = createTimetable(inFriday = true, lesson = l4, subject = matematyka, teacher = mięsowicz, place = p7, division = class1b, period = semestLetniPeriod)
-        d1bFri5a = createTimetable(inFriday = true, lesson = l5, subject = jAngielski, teacher = karnas, place = p11, division = div1bG1, period = semestLetniPeriod)
-        d1bFri5b = createTimetable(inFriday = true, lesson = l5, subject = jAngielski, teacher = kijowska, place = p13, division = div1bG2, period = semestLetniPeriod)
-        d1bFri6 = createTimetable(inFriday = true, lesson = l6, subject = jPolski, teacher = klein, place = p15, division = class1b, period = semestLetniPeriod)
-        d1bFri7a = createTimetable(inFriday = true, lesson = l7, subject = jNiemiecki, teacher = przybyłowiczCiszewska, place = p22, division = divNie1G1, period = semestLetniPeriod)
+        d1bThu1 = createTimetable(dayOfWeek = 4, lesson = l1, subject = fizyka, teacher = józefczyk, place = p15, division = class1b, period = semestLetniPeriod)
+        d1bThu2 = createTimetable(dayOfWeek = 4, lesson = l2, subject = podstawyPrzedsiębiorczości, teacher = mSuchodolski, place = p14, division = class1b, period = semestLetniPeriod)
+        d1bThu3 = createTimetable(dayOfWeek = 4, lesson = l3, subject = matematyka, teacher = mięsowicz, place = p22, division = class1b, period = semestLetniPeriod)
+        d1bThu4 = createTimetable(dayOfWeek = 4, lesson = l4, subject = matematyka, teacher = mięsowicz, place = p22, division = class1b, period = semestLetniPeriod)
+        d1bThu5 = createTimetable(dayOfWeek = 4, lesson = l5, subject = religia, teacher = tPiwinski, place = p10, division = class1b, period = semestLetniPeriod)
+        d1bThu6 = createTimetable(dayOfWeek = 1, lesson = l6, subject = historia, teacher = świstak, place = p36, division = class1b, period = semestLetniPeriod)
+        d1bThu7 = createTimetable(dayOfWeek = 1, lesson = l7, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, place = p36, division = class1b, period = semestLetniPeriod)
+
+
+        d1bFri4 = createTimetable(dayOfWeek = 5, lesson = l4, subject = matematyka, teacher = mięsowicz, place = p7, division = class1b, period = semestLetniPeriod)
+        d1bFri5a = createTimetable(dayOfWeek = 5, lesson = l5, subject = jAngielski, teacher = karnas, place = p11, division = div1bG1, period = semestLetniPeriod)
+        d1bFri5b = createTimetable(dayOfWeek = 5, lesson = l5, subject = jAngielski, teacher = kijowska, place = p13, division = div1bG2, period = semestLetniPeriod)
+        d1bFri6 = createTimetable(dayOfWeek = 5, lesson = l6, subject = jPolski, teacher = klein, place = p15, division = class1b, period = semestLetniPeriod)
+        d1bFri7a = createTimetable(dayOfWeek = 5, lesson = l7, subject = jNiemiecki, teacher = przybyłowiczCiszewska, place = p22, division = divNie1G1, period = semestLetniPeriod)
 
         // =====================================================
         // Curriculum
@@ -658,13 +658,7 @@ open class FillerResource(
         division: DivisionDTO,
         period: PeriodDTO,
         type: EventType = EventType.LESSON,
-        inMonday: Boolean = false,
-        inTuesday: Boolean = false,
-        inWednesday: Boolean = false,
-        inThursday: Boolean = false,
-        inFriday: Boolean = false,
-        inSaturday: Boolean = false,
-        inSunday: Boolean = false,
+        dayOfWeek: Int? = null,
         everyWeek: Long = 1
     ): TimetableDTO {
         val timetable = TimetableDTO(
@@ -676,13 +670,7 @@ open class FillerResource(
             divisionId = division.id,
             periodId = period.id,
             type = type,
-            inMonday = inMonday,
-            inTuesday = inTuesday,
-            inWednesday = inWednesday,
-            inThursday = inThursday,
-            inFriday = inFriday,
-            inSaturday = inSaturday,
-            inSunday = inSunday,
+            dayOfWeek = dayOfWeek,
             everyWeek = everyWeek
         )
         return timetableService.save(timetable)

@@ -10,7 +10,7 @@ class TimetableDateUnitTest {
     @Test
     fun `should return true if timetable is week day`() {
         val monday = LocalDate.of(2018, 2, 12)
-        val timetable = TimetableDTO().apply { inMonday = true }
+        val timetable = TimetableDTO().apply { dayOfWeek = 1 }
 
         val result = TimetableDateUtil.canAddByWeekDay(monday, timetable)
         val expected = true
@@ -20,7 +20,7 @@ class TimetableDateUnitTest {
     @Test
     fun `should return false if timetable is not week day`() {
         val tuesday = LocalDate.of(2018, 2, 13)
-        val timetable = TimetableDTO().apply { inTuesday = false }
+        val timetable = TimetableDTO().apply { dayOfWeek = 1 }
 
         val result = TimetableDateUtil.canAddByWeekDay(tuesday, timetable)
         val expected = false
@@ -54,32 +54,32 @@ class TimetableDateUnitTest {
         val everyWeek = 1L
         val startWithWeek = 1L
 
-        val result = TimetableDateUtil.canAddByEveryDay(date, fistMonday, everyWeek, startWithWeek)
+        val result = TimetableDateUtil.canAddByEveryDays(setOf(date), fistMonday, everyWeek, startWithWeek)
         val expected = true
         assertEquals(expected, result)
     }
 
     @Test
-    fun `should return true if timetable is every 2 week and start week is 1 with date in 1 week`() {
+    fun `should return false if timetable is every 2 week and start week is 1 with date in 1 week`() {
         val fistMonday = LocalDate.of(2018, 2, 5)
         val date = LocalDate.of(2018, 2, 7)
         val everyWeek = 2L
         val startWithWeek = 1L
 
-        val result = TimetableDateUtil.canAddByEveryDay(date, fistMonday, everyWeek, startWithWeek)
-        val expected = true
+        val result = TimetableDateUtil.canAddByEveryDays(setOf(date), fistMonday, everyWeek, startWithWeek)
+        val expected = false
         assertEquals(expected, result)
     }
 
     @Test
-    fun `should return false if timetable is every 2 week and start week is 1 with date in 2 week`() {
+    fun `should return true if timetable is every 2 week and start week is 1 with date in 2 week`() {
         val fistMonday = LocalDate.of(2018, 2, 5)
         val date = LocalDate.of(2018, 2, 14)
         val everyWeek = 2L
         val startWithWeek = 1L
 
-        val result = TimetableDateUtil.canAddByEveryDay(date, fistMonday, everyWeek, startWithWeek)
-        val expected = false
+        val result = TimetableDateUtil.canAddByEveryDays(setOf(date), fistMonday, everyWeek, startWithWeek)
+        val expected = true
         assertEquals(expected, result)
     }
 
@@ -90,7 +90,7 @@ class TimetableDateUnitTest {
         val everyWeek = 2L
         val startWithWeek = 2L
 
-        val result = TimetableDateUtil.canAddByEveryDay(date, fistMonday, everyWeek, startWithWeek)
+        val result = TimetableDateUtil.canAddByEveryDays(setOf(date), fistMonday, everyWeek, startWithWeek)
         val expected = true
         assertEquals(expected, result)
     }
@@ -102,7 +102,7 @@ class TimetableDateUnitTest {
         val everyWeek = 2L
         val startWithWeek = 2L
 
-        val result = TimetableDateUtil.canAddByEveryDay(date, fistMonday, everyWeek, startWithWeek)
+        val result = TimetableDateUtil.canAddByEveryDays(setOf(date), fistMonday, everyWeek, startWithWeek)
         val expected = false
         assertEquals(expected, result)
     }

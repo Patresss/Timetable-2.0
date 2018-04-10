@@ -105,7 +105,7 @@
                     <div class="day-label">
                         <span>{{item.date.getDate()}}</span>
                     </div>
-                    <div class="week-day-label" jhiTranslate="timetableApp.plan.week-day.{{item.date.getDay()}}">
+                    <div class="week-day-label" jhiTranslate="global.date.week-day.{{item.date.getDay() == 0 ? 7 : item.date.getDay()}}">
                     </div>
                 </div>
             </div>

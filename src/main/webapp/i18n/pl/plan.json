@@ -16,7 +16,8 @@
                 "division": "Wybierz grupę",
                 "period": "Wybierz okres czasu",
                 "event-type": "Wybierz typ wydarzenia",
-                "curriculums": "Wybierz plany nauczania"
+                "curriculums": "Wybierz plany nauczania",
+                "day-of-week": "Wybierz dzień tyogdnia"
             },
             "type": {
                 "STUDENT": "Uczeń",
@@ -24,15 +25,6 @@
                 "PLACE": "Miejsce"
             },
             "plan-type": "Typ planu",
-            "week-day": {
-                "1": "Poniedziałek",
-                "2": "Wtorek",
-                "3": "Środa",
-                "4": "Czwartek",
-                "5": "Piątek",
-                "6": "Sobota",
-                "0": "Niedziela"
-            },
             "month-with-year": {
                 "1": "Styczeń, {{ year }}",
                 "2": "Luty, {{ year }}",

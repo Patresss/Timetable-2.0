@@ -52,26 +52,8 @@ class Timetable(
     @Column(name = "color_text")
     var colorText: String? = null,
 
-    @Column(name = "in_monday")
-    var inMonday: Boolean = false,
-
-    @Column(name = "in_tuesday")
-    var inTuesday: Boolean = false,
-
-    @Column(name = "in_wednesday")
-    var inWednesday: Boolean = false,
-
-    @Column(name = "in_thursday")
-    var inThursday: Boolean = false,
-
-    @Column(name = "in_friday")
-    var inFriday: Boolean = false,
-
-    @Column(name = "in_saturday")
-    var inSaturday: Boolean = false,
-
-    @Column(name = "in_sunday")
-    var inSunday: Boolean = false,
+    @Column(name = "day_of_week")
+    var dayOfWeek: Int? = null,
 
     @ManyToOne
     var place: Place? = null,

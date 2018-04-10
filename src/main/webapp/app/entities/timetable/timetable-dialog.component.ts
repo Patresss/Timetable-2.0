@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Rx';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
 
-import {EventType, Timetable} from './timetable.model';
+import {DayOfWeek, EventType, Timetable} from './timetable.model';
 import {TimetablePopupService} from './timetable-popup.service';
 import {TimetableService} from './timetable.service';
 import {PlaceService} from '../place';
@@ -31,7 +31,6 @@ export class TimetableDialogComponent implements OnInit {
 
     timetable: Timetable;
     isSaving: boolean;
-    series = false;
     dateDp: any;
 
     eventTypeSelectOption = [
@@ -42,6 +41,22 @@ export class TimetableDialogComponent implements OnInit {
     eventTypeSelectSettings = {
         singleSelection: true,
         text: 'timetableApp.plan.choose.event-type',
+        enableSearchFilter: false
+    };
+
+    dayOfWeekSelectOption = [
+        {id: 1, itemName: '', itemTranslate: 'global.date.week-day.1', day: DayOfWeek.MONDAY},
+        {id: 2, itemName: '', itemTranslate: 'global.date.week-day.2', day: DayOfWeek.TUESDAY},
+        {id: 3, itemName: '', itemTranslate: 'global.date.week-day.3', day: DayOfWeek.WEDNESDAY},
+        {id: 4, itemName: '', itemTranslate: 'global.date.week-day.4', day: DayOfWeek.THURSDAY},
+        {id: 5, itemName: '', itemTranslate: 'global.date.week-day.5', day: DayOfWeek.FRIDAY},
+        {id: 6, itemName: '', itemTranslate: 'global.date.week-day.6', day: DayOfWeek.SATURDAY},
+        {id: 7, itemName: '', itemTranslate: 'global.date.week-day.7', day: DayOfWeek.SUNDAY}
+    ];
+    selectedDayOfWeek = [];
+    dayOfWeekSelectSettings = {
+        singleSelection: true,
+        text: 'timetableApp.plan.choose.day-of-week',
         enableSearchFilter: false
     };
 
@@ -124,8 +139,9 @@ export class TimetableDialogComponent implements OnInit {
         this.divisionService.findByDivisionType('SCHOOL', {size: SelectType.MAX_INT_JAVA, sort: ['name']}).subscribe(
             (res: ResponseWrapper) => this.initSchools(res.json)
         );
-
-        this.selectedEventType = this.eventTypeSelectOption.filter((entity) => entity.type === this.timetable.type)
+        this.timetable.series = this.timetable.periodId != null;
+        this.selectedEventType = this.eventTypeSelectOption.filter((entity) => entity.type === this.timetable.type);
+        this.selectedDayOfWeek = this.dayOfWeekSelectOption.filter((entity) => entity.day === this.timetable.dayOfWeek);
     }
 
     reloadSchool() {
@@ -339,6 +355,14 @@ export class TimetableDialogComponent implements OnInit {
         this.timetable.type = null;
     }
 
+    onDayOfWeekSelect(item: any) {
+        this.timetable.dayOfWeek = item.day;
+    }
+
+    onDayOfWeekDeSelect() {
+        this.timetable.dayOfWeek = null;
+    }
+
     changePreference() {
         const preferenceDependency = new PreferenceDependency();
         preferenceDependency.divisionId = this.timetable.divisionId;
@@ -350,13 +374,7 @@ export class TimetableDialogComponent implements OnInit {
         preferenceDependency.divisionOwnerId = this.timetable.divisionOwnerId;
         preferenceDependency.notTimetableId = this.timetable.id;
         preferenceDependency.date = this.timetable.date;
-        preferenceDependency.inMonday = this.timetable.inMonday;
-        preferenceDependency.inTuesday = this.timetable.inTuesday;
-        preferenceDependency.inWednesday = this.timetable.inWednesday;
-        preferenceDependency.inThursday = this.timetable.inThursday;
-        preferenceDependency.inFriday = this.timetable.inFriday;
-        preferenceDependency.inSaturday = this.timetable.inSaturday;
-        preferenceDependency.inSunday = this.timetable.inSunday;
+        preferenceDependency.dayOfWeek = this.timetable.dayOfWeek;
         preferenceDependency.everyWeek = this.timetable.everyWeek;
         preferenceDependency.startWithWeek = this.timetable.startWithWeek;
         preferenceDependency.startTimeString = this.timetable.startTimeString;
@@ -381,8 +399,8 @@ export class TimetableDialogComponent implements OnInit {
     updateSelectListsByPreference(profferedMap: Map<number, PreferenceHierarchy>, selectOption: any) {
         selectOption.forEach(
             (selectOptionEntity) => selectOption
-                                    .filter((entity) => selectOptionEntity.id !== entity.id)
-                                    .forEach((entity) => entity.preferenceHierarchy = new PreferenceHierarchy())
+                .filter((entity) => selectOptionEntity.id !== entity.id)
+                .forEach((entity) => entity.preferenceHierarchy = new PreferenceHierarchy())
         );
         profferedMap.forEach((value, key) => {
             selectOption.filter((entity) => key === entity.id).forEach((entity) => entity.preferenceHierarchy = value)

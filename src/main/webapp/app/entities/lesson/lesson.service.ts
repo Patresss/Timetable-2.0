@@ -12,7 +12,7 @@ export class LessonService extends DivisionOwnerEntityService<Lesson> {
         super(http, 'lessons')
     }
 
-    convertEntity(entity: Lesson) {
+    convertFromServer(entity: Lesson) {
         if (entity.startTimeString) {
             entity.startTime = new Time(entity.startTimeString);
         }
@@ -21,7 +21,7 @@ export class LessonService extends DivisionOwnerEntityService<Lesson> {
         }
     }
 
-    convert(lesson: Lesson): Lesson {
+    convertToServer(lesson: Lesson): Lesson {
         const copy: Lesson = Object.assign({}, lesson);
         copy.startTimeString = Time.createTimeFromTimePicker(lesson.startTime).getFormatted();
         copy.endTimeString = Time.createTimeFromTimePicker(lesson.endTime).getFormatted();

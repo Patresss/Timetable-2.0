@@ -7,6 +7,16 @@ export enum EventType {
    SPECIAL = 'SPECIAL'
 }
 
+export enum DayOfWeek {
+    MONDAY = 1,
+    TUESDAY = 2,
+    WEDNESDAY = 3,
+    THURSDAY = 4,
+    FRIDAY = 5,
+    SATURDAY = 6,
+    SUNDAY = 7
+}
+
 export class Timetable implements BaseEntity {
     constructor(public id?: number,
                 public title?: string,
@@ -22,13 +32,7 @@ export class Timetable implements BaseEntity {
                 public description?: string,
                 public colorBackground?: string,
                 public colorText?: string,
-                public inMonday?: boolean,
-                public inTuesday?: boolean,
-                public inWednesday?: boolean,
-                public inThursday?: boolean,
-                public inFriday?: boolean,
-                public inSaturday?: boolean,
-                public inSunday?: boolean,
+                public dayOfWeek?: number,
                 public placeId?: number,
                 public placeName?: string,
                 public subjectId?: number,
@@ -41,13 +45,8 @@ export class Timetable implements BaseEntity {
                 public lessonId?: number,
                 public lessonName?: number,
                 public periodId?: number,
+                public periodName?: string,
+                public series = false,
                 public usersId: number[] = []) {
-        this.inMonday = false;
-        this.inTuesday = false;
-        this.inWednesday = false;
-        this.inThursday = false;
-        this.inFriday = false;
-        this.inSaturday = false;
-        this.inSunday = false;
     }
 }

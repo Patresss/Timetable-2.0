@@ -34,15 +34,7 @@ open class TimetableRepositoryImpl : TimetableCustomRepository {
                        """
         const val TAKEN_TIMETABLE_DATE_CRITERIA_SQL = """
                        ( timetable.date = '$DATE_PARAMETER_NAME' OR (
-                        (
-                           (:inMonday = true AND timetable.inMonday = true) OR
-                           (:inTuesday = true AND timetable.inTuesday = true) OR
-                           (:inWednesday = true AND timetable.inWednesday = true) OR
-                           (:inThursday = true AND timetable.inThursday = true) OR
-                           (:inFriday = true AND timetable.inFriday = true) OR
-                           (:inSaturday = true AND timetable.inSaturday = true) OR
-                           (:inSunday = true AND timetable.inSunday = true)
-                        ) AND
+                        timetable.dayOfWeek = :dayOfWeek AND
                        interval.included = true AND
                         '$DATE_PARAMETER_NAME' BETWEEN interval.startDate AND interval.endDate) AND
                        interval.period NOT IN (SELECT intervalGlobal.period FROM Interval intervalGlobal WHERE intervalGlobal.included = false AND '$DATE_PARAMETER_NAME' BETWEEN intervalGlobal.startDate AND intervalGlobal.endDate) )
@@ -71,13 +63,7 @@ open class TimetableRepositoryImpl : TimetableCustomRepository {
             .setParameter("divisionOwnerId", preferenceDependency.divisionOwnerId)
             .setParameter("startTime", preferenceDependency.startTime)
             .setParameter("endTime", preferenceDependency.endTime)
-            .setParameter("inMonday", preferenceDependency.inMonday)
-            .setParameter("inTuesday", preferenceDependency.inTuesday)
-            .setParameter("inWednesday", preferenceDependency.inWednesday)
-            .setParameter("inThursday", preferenceDependency.inThursday)
-            .setParameter("inFriday", preferenceDependency.inFriday)
-            .setParameter("inSaturday", preferenceDependency.inSaturday)
-            .setParameter("inSunday", preferenceDependency.inSunday)
+            .setParameter("dayOfWeek", preferenceDependency.dayOfWeek)
             .resultList
             .toSet()
     }

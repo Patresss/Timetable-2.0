@@ -18,7 +18,7 @@ object TimetableDateUtil {
     fun getAllDatesByPreferenceDependency(preferenceDependency: PreferenceDependency): Set<LocalDate> {
         return when {
             preferenceDependency.period != null -> getAllDatesFromPeriod(preferenceDependency)
-            preferenceDependency.date != null -> setOf(preferenceDependency.date)
+            preferenceDependency.date != null -> setOf(preferenceDependency.date).filterNotNull().toSet()
             else -> emptySet()
         }
     }
@@ -27,13 +27,7 @@ object TimetableDateUtil {
         return if (timetable.date != null) {
             timetable.date == date
         } else {
-            (date.dayOfWeek == DayOfWeek.MONDAY && timetable.inMonday
-                || date.dayOfWeek == DayOfWeek.TUESDAY && timetable.inTuesday
-                || date.dayOfWeek == DayOfWeek.WEDNESDAY && timetable.inWednesday
-                || date.dayOfWeek == DayOfWeek.THURSDAY && timetable.inThursday
-                || date.dayOfWeek == DayOfWeek.FRIDAY && timetable.inFriday
-                || date.dayOfWeek == DayOfWeek.SATURDAY && timetable.inSaturday
-                || date.dayOfWeek == DayOfWeek.SUNDAY && timetable.inSunday)
+            date.dayOfWeek.value == timetable.dayOfWeek
         }
     }
 
@@ -41,13 +35,7 @@ object TimetableDateUtil {
         return if (preferenceDependency.date != null) {
             preferenceDependency.date == date
         } else {
-            (date.dayOfWeek == DayOfWeek.MONDAY && preferenceDependency.inMonday
-                || date.dayOfWeek == DayOfWeek.TUESDAY && preferenceDependency.inTuesday
-                || date.dayOfWeek == DayOfWeek.WEDNESDAY && preferenceDependency.inWednesday
-                || date.dayOfWeek == DayOfWeek.THURSDAY && preferenceDependency.inThursday
-                || date.dayOfWeek == DayOfWeek.FRIDAY && preferenceDependency.inFriday
-                || date.dayOfWeek == DayOfWeek.SATURDAY && preferenceDependency.inSaturday
-                || date.dayOfWeek == DayOfWeek.SUNDAY && preferenceDependency.inSunday)
+            date.dayOfWeek.value == preferenceDependency.dayOfWeek
         }
     }
 
@@ -63,10 +51,10 @@ object TimetableDateUtil {
         }
         firstMonday = firstMonday.plusDays(7 * (startWithWeek - 1))
 
-        return dates.any {date ->
+        return dates.any { date ->
             val weekNumber = ChronoUnit.WEEKS.between(firstMonday, date)
             !firstMonday.isAfter(date) && weekNumber % everyWeek == 0L
-          }
+        }
     }
 
     private fun getDatesFromPeriod(period: Period): Set<LocalDate> {
@@ -91,11 +79,10 @@ object TimetableDateUtil {
     }
 
     private fun getAllDatesFromPeriod(preferenceDependency: PreferenceDependency): Set<LocalDate> {
-        val period = preferenceDependency.period
-        val startWithWeek = preferenceDependency.startWithWeek
-        val everyWeek = preferenceDependency.everyWeek
-        if (period != null) {
-            val datesFromPeriod = getDatesFromPeriod(preferenceDependency.period )
+        preferenceDependency.period?.let { period ->
+            val startWithWeek = preferenceDependency.startWithWeek
+            val everyWeek = preferenceDependency.everyWeek
+            val datesFromPeriod = getDatesFromPeriod(period)
             val availableDates = HashSet<LocalDate>()
             val firstDateFromPeriod = period.intervalTimes.filter { it.included }.sortedBy { it.startDate }.first().startDate
             if (firstDateFromPeriod != null) {
@@ -115,6 +102,7 @@ object TimetableDateUtil {
                 return availableDates.filter { canAddByWeekDay(it, preferenceDependency) }.toSet()
             }
         }
+
         return emptySet()
     }
 

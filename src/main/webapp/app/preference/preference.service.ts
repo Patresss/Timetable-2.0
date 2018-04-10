@@ -92,26 +92,8 @@ export class PreferenceService {
                 const date = this.dateUtils.convertLocalDateToServer(preferenceDependency.date);
                 params.set('date', date);
             }
-            if (preferenceDependency.inMonday) {
-                params.set('inMonday', preferenceDependency.inMonday.toString());
-            }
-            if (preferenceDependency.inTuesday) {
-                params.set('inTuesday', preferenceDependency.inTuesday.toString());
-            }
-            if (preferenceDependency.inWednesday) {
-                params.set('inWednesday', preferenceDependency.inWednesday.toString());
-            }
-            if (preferenceDependency.inThursday) {
-                params.set('inThursday', preferenceDependency.inThursday.toString());
-            }
-            if (preferenceDependency.inFriday) {
-                params.set('inFriday', preferenceDependency.inFriday.toString());
-            }
-            if (preferenceDependency.inSaturday) {
-                params.set('inSaturday', preferenceDependency.inSaturday.toString());
-            }
-            if (preferenceDependency.inSunday) {
-                params.set('inSunday', preferenceDependency.inSunday.toString());
+            if (preferenceDependency.dayOfWeek) {
+                params.set('inMondayOfWeekday', preferenceDependency.dayOfWeek.toString());
             }
             if (preferenceDependency.everyWeek) {
                 params.set('everyWeek', preferenceDependency.everyWeek.toString());

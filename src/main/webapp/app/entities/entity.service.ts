@@ -14,14 +14,14 @@ EntityService<EntityType> {
     }
 
     create(entity: EntityType): Observable<EntityType> {
-        const copy = this.convert(entity);
+        const copy = this.convertToServer(entity);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             return res.json();
         });
     }
 
     update(entity: EntityType): Observable<EntityType> {
-        const copy = this.convert(entity);
+        const copy = this.convertToServer(entity);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             return res.json();
         });
@@ -30,7 +30,7 @@ EntityService<EntityType> {
     find(id: number): Observable<EntityType> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
-            this.convertEntity(jsonResponse);
+            this.convertFromServer(jsonResponse);
             return jsonResponse;
         });
     }
@@ -45,22 +45,22 @@ EntityService<EntityType> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
-    convertEntity(jsonResponse: any) {
+    convertFromServer(jsonResponse: any) {
     }
 
     convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
-        this.convertEntity(jsonResponse);
+        this.convertFromServer(jsonResponse);
         return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
     convertResponses(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
-        jsonResponse.forEach((entity) =>  this.convertEntity(entity));
+        jsonResponse.forEach((entity) =>  this.convertFromServer(entity));
         return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
-    convert(entity: EntityType): EntityType {
+    convertToServer(entity: EntityType): EntityType {
         return Object.assign({}, entity);
     }
 

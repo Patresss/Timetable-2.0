@@ -32,7 +32,7 @@ open class PreferenceDependencyMapper : EntityMapper<PreferenceDependency, Prefe
     override fun toEntity(entityDto: PreferenceDependencyDTO): PreferenceDependency {
         return PreferenceDependency(
             division = divisionRepository.findOneWithPreference(entityDto.divisionId),
-            period = periodRepository.findOneWithIntervals(entityDto.periodId)?.let {it},
+
             teacher = teacherRepository.findOneWithPreference(entityDto.teacherId),
             subject = subjectRepository.findOneWithPreference(entityDto.subjectId),
             lesson = lessonRepository.getOneOrNull(entityDto.lessonId),
@@ -44,29 +44,19 @@ open class PreferenceDependencyMapper : EntityMapper<PreferenceDependency, Prefe
             divisionOwnerId = entityDto.divisionOwnerId
         ).apply {
             if (lesson != null) {
-                startTime = lesson.startTime
-                endTime = lesson.endTime
+                startTime = lesson?.startTime
+                endTime = lesson?.endTime
             } else {
                 entityDto.startTimeString?.let { setStartTimeHHmmFormatted(it) }
                 entityDto.endTimeString?.let { setEndTimeHHmmFormatted(it) }
             }
 
-            if (period == null && date != null) {
-                inMonday = date.dayOfWeek == DayOfWeek.MONDAY
-                inTuesday = date.dayOfWeek == DayOfWeek.TUESDAY
-                inWednesday = date.dayOfWeek == DayOfWeek.WEDNESDAY
-                inThursday = date.dayOfWeek == DayOfWeek.THURSDAY
-                inFriday = date.dayOfWeek == DayOfWeek.FRIDAY
-                inSaturday = date.dayOfWeek == DayOfWeek.SATURDAY
-                inSunday = date.dayOfWeek == DayOfWeek.SUNDAY
+            if (entityDto.periodId != null) {
+                period = periodRepository.findOneWithIntervals(entityDto.periodId)
+                dayOfWeek = entityDto.dayOfWeek
             } else {
-                inMonday = entityDto.inMonday
-                inTuesday = entityDto.inTuesday
-                inWednesday = entityDto.inWednesday
-                inThursday = entityDto.inThursday
-                inFriday = entityDto.inFriday
-                inSaturday = entityDto.inSaturday
-                inSunday = entityDto.inSunday
+                date = entityDto.date
+                dayOfWeek = date?.dayOfWeek?.value
             }
 
         }
@@ -84,18 +74,12 @@ open class PreferenceDependencyMapper : EntityMapper<PreferenceDependency, Prefe
             date = entity.date,
             everyWeek = entity.everyWeek,
             startWithWeek = entity.startWithWeek,
-            inMonday = entity.inMonday,
-            inTuesday = entity.inTuesday,
-            inWednesday = entity.inWednesday,
-            inThursday = entity.inThursday,
-            inFriday = entity.inFriday,
-            inSaturday = entity.inSaturday,
-            inSunday = entity.inSunday,
+            dayOfWeek = entity.dayOfWeek,
             divisionOwnerId = entity.divisionOwnerId
         ).apply {
             if (entity.lesson != null) {
-                startTimeString = entity.lesson.getStartTimeHHmmFormatted()
-                endTimeString = entity.lesson.getEndTimeHHmmFormatted()
+                startTimeString = entity.lesson?.getStartTimeHHmmFormatted()
+                endTimeString = entity.lesson?.getEndTimeHHmmFormatted()
             } else {
                 startTimeString = entity.getStartTimeHHmmFormatted()
                 endTimeString = entity.getEndTimeHHmmFormatted()

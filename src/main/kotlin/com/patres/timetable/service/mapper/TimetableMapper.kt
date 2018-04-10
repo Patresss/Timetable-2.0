@@ -36,26 +36,16 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             title = entityDto.title,
             type = entityDto.type,
             division = divisionRepository.getOneOrNull(entityDto.divisionId),
-            period = periodRepository.getOneOrNull(entityDto.periodId),
             teacher = teacherRepository.getOneOrNull(entityDto.teacherId),
             subject = subjectRepository.getOneOrNull(entityDto.subjectId),
             lesson = lessonRepository.getOneOrNull(entityDto.lessonId),
             place = placeRepository.getOneOrNull(entityDto.placeId),
-            startDate = entityDto.startDate,
-            endDate = entityDto.endDate,
-            date = entityDto.date,
             everyWeek = entityDto.everyWeek,
             startWithWeek = entityDto.startWithWeek,
             description = entityDto.description,
             colorBackground = entityDto.colorBackground,
             colorText = entityDto.colorText,
-            inMonday = entityDto.inMonday,
-            inTuesday = entityDto.inTuesday,
-            inWednesday = entityDto.inWednesday,
-            inThursday = entityDto.inThursday,
-            inFriday = entityDto.inFriday,
-            inSaturday = entityDto.inSaturday,
-            inSunday = entityDto.inSunday
+            dayOfWeek = entityDto.dayOfWeek
         ).apply {
             division?.let {
                 divisionOwner = division?.divisionOwner
@@ -64,6 +54,12 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             entityDto.startTimeString?.let {setStartTimeHHmmFormatted(it)}
             entityDto.endTimeString?.let {setEndTimeHHmmFormatted(it)}
 
+            if (entityDto.periodId != null) {
+                period = periodRepository.getOneOrNull(entityDto.periodId)
+            } else {
+                date = entityDto.date
+            }
+
         }
     }
 
@@ -71,8 +67,7 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
         return TimetableDTO(
             title = entity.title,
             type = entity.type,
-            periodId = entity.period?.id,
-            periodName = entity.period?.name,
+
             teacherId = entity.teacher?.id,
             teacherFullName = entity.teacher?.getFullName(),
             placeId = entity.place?.id,
@@ -86,19 +81,13 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             subjectShortName = timetableSubjectShortName(entity),
             startDate = entity.startDate,
             endDate = entity.endDate,
-            date = entity.date,
+
             everyWeek = entity.everyWeek,
             startWithWeek = entity.startWithWeek,
             description = entity.description,
             colorBackground = entity.colorBackground,
             colorText = entity.colorText,
-            inMonday = entity.inMonday,
-            inTuesday = entity.inTuesday,
-            inWednesday = entity.inWednesday,
-            inThursday = entity.inThursday,
-            inFriday = entity.inFriday,
-            inSaturday = entity.inSaturday,
-            inSunday = entity.inSunday
+            dayOfWeek = entity.dayOfWeek
         ).apply {
             id = entity.id
             if (entity.lesson != null) {
@@ -110,6 +99,13 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             }
             divisionOwnerName = divisionMapper.getDivisionOwnerName(entity.divisionOwner)
             divisionOwnerId = divisionMapper.getDivisionOwnerId(entity.divisionOwner)
+
+            if (entity.period != null) {
+                periodId = entity.period?.id
+                periodName = entity.period?.name
+            } else {
+                date = entity.date
+            }
         }
     }
 

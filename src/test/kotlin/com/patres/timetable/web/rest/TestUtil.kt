@@ -28,7 +28,7 @@ object TestUtil {
      * Convert an object to JSON byte array.
      *
      * @param object
-     * the object to convert
+     * the object to convertToServer
      * @return the JSON byte array
      * @throws IOException
      */

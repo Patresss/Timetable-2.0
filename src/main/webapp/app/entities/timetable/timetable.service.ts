@@ -50,13 +50,13 @@ export class TimetableService extends EntityService<Timetable> {
     convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         for (let i = 0; i < jsonResponse.length; i++) {
-            this.convertEntity(jsonResponse[i]);
+            this.convertFromServer(jsonResponse[i]);
         }
         return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
-    convertEntity(entity: any) {
-        entity.date = this.dateUtils.convertLocalDateFromServer(entity.date)
+    convertFromServer(entity: any) {
+        entity.date = this.dateUtils.convertLocalDateFromServer(entity.date);
         if (entity.startTimeString) {
             entity.startTime = new Time(entity.startTimeString);
         }
@@ -65,9 +65,14 @@ export class TimetableService extends EntityService<Timetable> {
         }
     }
 
-    convert(timetable: Timetable): Timetable {
+    convertToServer(timetable: Timetable): Timetable {
         const copy: Timetable = Object.assign({}, timetable);
-        copy.date = this.dateUtils.convertLocalDateToServer(timetable.date);
+        if (copy.series) {
+            copy.date = null;
+        } else {
+            copy.date = this.dateUtils.convertLocalDateToServer(timetable.date);
+            copy.periodId = null;
+        }
         copy.startTimeString = Time.createTimeFromTimePicker(timetable.startTime).getFormatted();
         copy.endTimeString = Time.createTimeFromTimePicker(timetable.endTime).getFormatted();
         return copy;

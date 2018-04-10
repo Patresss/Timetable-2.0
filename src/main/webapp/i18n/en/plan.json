@@ -16,7 +16,8 @@
                 "division": "Choose a division",
                 "period": "Choose a period",
                 "event-type": "Choose an event type",
-                "curriculums": "Choose curriculums"
+                "curriculums": "Choose curriculums",
+                "day-of-week": "Choose a day of week"
             },
             "type": {
                 "STUDENT": "Student",
@@ -24,15 +25,6 @@
                 "PLACE": "Place"
             },
             "plan-type": "Type of plan",
-            "week-day": {
-                "1": "Monday",
-                "2": "Tuesday",
-                "3": "Wednesday",
-                "4": "Thursday",
-                "5": "Friday",
-                "6": "Saturday",
-                "0": "Sunday"
-            },
             "month-with-year": {
                 "1": "January, {{ year }}",
                 "2": "February, {{ year }}",

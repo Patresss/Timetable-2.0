@@ -27,13 +27,6 @@
             "description": "Opis",
             "colorBackground": "Kolor tła",
             "colorText": "Kolor tekstu",
-            "inMonday": "Poniedziałek",
-            "inTuesday": "Wtorek",
-            "inWednesday": "Środa",
-            "inThursday": "Czwartek",
-            "inFriday": "Piątek",
-            "inSaturday": "Sobota",
-            "inSunday": "Niedziela",
             "place": "Miejsce",
             "subject": "Przedmiot",
             "teacher": "Nauczyciel",
@@ -41,7 +34,8 @@
             "lesson": "Lekcja",
             "period": "Okres czasu",
             "time": "Czas",
-            "series": "Seria"
+            "series": "Seria",
+            "day-of-week": "Dzień tygodnia"
         }
     }
 }

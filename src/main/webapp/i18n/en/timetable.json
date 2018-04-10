@@ -27,13 +27,6 @@
             "description": "Description",
             "colorBackground": "Color Background",
             "colorText": "Color Text",
-            "inMonday": "In Monday",
-            "inTuesday": "In Tuesday",
-            "inWednesday": "In Wednesday",
-            "inThursday": "In Thursday",
-            "inFriday": "In Friday",
-            "inSaturday": "In Saturday",
-            "inSunday": "In Sunday",
             "place": "Place",
             "subject": "Subject",
             "teacher": "Teacher",
@@ -41,7 +34,8 @@
             "lesson": "Lesson",
             "period": "Period",
             "time": "Time",
-            "series": "Series"
+            "series": "Series",
+            "day-of-week": "Day of week"
         }
     }
 }

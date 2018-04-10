@@ -27,13 +27,7 @@
             <th jhiSortBy="description"><span jhiTranslate="timetableApp.timetable.description">Description</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="colorBackground"><span jhiTranslate="timetableApp.timetable.colorBackground">Color Background</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="colorText"><span jhiTranslate="timetableApp.timetable.colorText">Color Text</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="inMonday"><span jhiTranslate="timetableApp.timetable.inMonday">In Monday</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="inTuesday"><span jhiTranslate="timetableApp.timetable.inTuesday">In Tuesday</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="inWednesday"><span jhiTranslate="timetableApp.timetable.inWednesday">In Wednesday</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="inThursday"><span jhiTranslate="timetableApp.timetable.inThursday">In Thursday</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="inFriday"><span jhiTranslate="timetableApp.timetable.inFriday">In Friday</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="inSaturday"><span jhiTranslate="timetableApp.timetable.inSaturday">In Saturday</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="inSunday"><span jhiTranslate="timetableApp.timetable.inSunday">In Sunday</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dayOfWeek"><span jhiTranslate="timetableApp.timetable.day-of-week">Day of weeky</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="placeName"><span jhiTranslate="timetableApp.timetable.place">Place</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="subjectName"><span jhiTranslate="timetableApp.timetable.subject">Subject</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="teacherSurname"><span jhiTranslate="timetableApp.timetable.teacher">Teacher</span> <span class="fa fa-sort"></span></th>
@@ -47,8 +41,8 @@
             <tr *ngFor="let timetable of timetables ;trackBy: trackId">
                 <td><a [routerLink]="['../timetable', timetable.id ]">{{timetable.id}}</a></td>
                 <td>{{timetable.title}}</td>
-                <td>{{timetable.startTime}}</td>
-                <td>{{timetable.endTime}}</td>
+                <td>{{timetable.startTime.getFormatted()}}</td>
+                <td>{{timetable.endTime.getFormatted()}}</td>
                 <td>{{timetable.date | date:'mediumDate'}}</td>
                 <td jhiTranslate="{{'timetableApp.EventType.' + timetable.type}}">{{timetable.type}}</td>
                 <td>{{timetable.everyWeek}}</td>
@@ -56,13 +50,7 @@
                 <td>{{timetable.description}}</td>
                 <td>{{timetable.colorBackground}}</td>
                 <td>{{timetable.colorText}}</td>
-                <td>{{timetable.inMonday}}</td>
-                <td>{{timetable.inTuesday}}</td>
-                <td>{{timetable.inWednesday}}</td>
-                <td>{{timetable.inThursday}}</td>
-                <td>{{timetable.inFriday}}</td>
-                <td>{{timetable.inSaturday}}</td>
-                <td>{{timetable.inSunday}}</td>
+                <td jhiTranslate="{{'global.date.week-day.' + timetable.dayOfWeek}}">{{timetable.dayOfWeek}}</td>
                 <td>
                     <div *ngIf="timetable.placeId">
                         <a [routerLink]="['../place', timetable.placeId  ]" >{{timetable.placeName}}</a>

@@ -101,7 +101,19 @@
         "search": "Search",
         "select-all": "Select All",
         "un-select-all": "Unselect all",
-        "no-data": "No data"
+        "no-data": "No data",
+        "date": {
+            "week-day": {
+                "day-of-week": "Day of week",
+                "1": "Monday",
+                "2": "Tuesday",
+                "3": "Wednesday",
+                "4": "Thursday",
+                "5": "Friday",
+                "6": "Saturday",
+                "7": "Sunday"
+            }
+        }
     },
     "entity": {
         "action": {

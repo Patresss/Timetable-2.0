@@ -12,7 +12,7 @@ export class PeriodService extends DivisionOwnerEntityService<Period> {
         super(http, 'periods')
     }
 
-    convertEntity(jsonResponse: any) {
+    convertFromServer(jsonResponse: any) {
         if (jsonResponse.intervalTimes != null) {
             for (let i = 0; i < jsonResponse.intervalTimes.length; i++) {
                 this.intervalService.convertItemFromServer(jsonResponse.intervalTimes[i]);
@@ -20,7 +20,7 @@ export class PeriodService extends DivisionOwnerEntityService<Period> {
         }
     }
 
-    convert(period: Period): Period {
+    convertToServer(period: Period): Period {
         const copy: Period = Object.assign({}, period);
         copy.intervalTimes = Object.assign([], period.intervalTimes);
         if (copy.intervalTimes != null) {
