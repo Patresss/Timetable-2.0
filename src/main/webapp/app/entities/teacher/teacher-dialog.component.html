@@ -59,65 +59,18 @@
                     <option [ngValue]="divisionOption.id" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
                 </select>
             </div>
-            <!--TEST-->
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <td jhiTranslate="timetableApp.lesson.main">Lesson</td>
-                    <td jhiTranslate="global.date.week-day.1">Monday</td>
-                    <td jhiTranslate="global.date.week-day.2">Tuesday</td>
-                    <td jhiTranslate="global.date.week-day.3">Wednesday</td>
-                    <td jhiTranslate="global.date.week-day.4">Thursday</td>
-                    <td jhiTranslate="global.date.week-day.5">Friday</td>
-                    <td jhiTranslate="global.date.week-day.6">Saturday</td>
-                    <td jhiTranslate="global.date.week-day.7">Sunday</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let preferenceDataTimeByLesson of preferenceDataTimeByLessonList">
-                    <td>{{preferenceDataTimeByLesson.lesson.name}}</td>
-                    <td>
-                        <select class="form-control" name="preference_{{preferenceDataTimeByLesson.preference[1].dayOfWeek}}{{preferenceDataTimeByLesson.lesson.name}}" [(ngModel)]="preferenceDataTimeByLesson.preference[1].points">
-                            <option *ngFor="let preferenceDataTime of preferenceDataTimeSelectOption" [ngValue]="preferenceDataTime.value" jhiTranslate="{{preferenceDataTime.itemTranslate}}">{{preferenceDataTime.value}}</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" name="preference_{{preferenceDataTimeByLesson.preference[2].dayOfWeek}}{{preferenceDataTimeByLesson.lesson.name}}" [(ngModel)]="preferenceDataTimeByLesson.preference[2].points">
-                            <option *ngFor="let preferenceDataTime of preferenceDataTimeSelectOption" [ngValue]="preferenceDataTime.value" jhiTranslate="{{preferenceDataTime.itemTranslate}}">{{preferenceDataTime.value}}</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" name="preference_{{preferenceDataTimeByLesson.preference[3].dayOfWeek}}{{preferenceDataTimeByLesson.lesson.name}}" [(ngModel)]="preferenceDataTimeByLesson.preference[3].points">
-                            <option *ngFor="let preferenceDataTime of preferenceDataTimeSelectOption" [ngValue]="preferenceDataTime.value" jhiTranslate="{{preferenceDataTime.itemTranslate}}">{{preferenceDataTime.value}}</option>
-                        </select>
-                    </td>
 
-                    <td>
-                        <select class="form-control" name="preference_{{preferenceDataTimeByLesson.preference[4].dayOfWeek}}{{preferenceDataTimeByLesson.lesson.name}}" [(ngModel)]="preferenceDataTimeByLesson.preference[4].points">
-                            <option *ngFor="let preferenceDataTime of preferenceDataTimeSelectOption" [ngValue]="preferenceDataTime.value" jhiTranslate="{{preferenceDataTime.itemTranslate}}">{{preferenceDataTime.value}}</option>
-                        </select>
-                    </td>
 
-                    <td>
-                        <select class="form-control" name="preference_{{preferenceDataTimeByLesson.preference[5].dayOfWeek}}{{preferenceDataTimeByLesson.lesson.name}}" [(ngModel)]="preferenceDataTimeByLesson.preference[5].points">
-                            <option *ngFor="let preferenceDataTime of preferenceDataTimeSelectOption" [ngValue]="preferenceDataTime.value" jhiTranslate="{{preferenceDataTime.itemTranslate}}">{{preferenceDataTime.value}}</option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select class="form-control" name="preference_{{preferenceDataTimeByLesson.preference[6].dayOfWeek}}{{preferenceDataTimeByLesson.lesson.name}}" [(ngModel)]="preferenceDataTimeByLesson.preference[6].points">
-                            <option *ngFor="let preferenceDataTime of preferenceDataTimeSelectOption" [ngValue]="preferenceDataTime.value" jhiTranslate="{{preferenceDataTime.itemTranslate}}">{{preferenceDataTime.value}}</option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select class="form-control" name="preference_{{preferenceDataTimeByLesson.preference[7].dayOfWeek}}{{preferenceDataTimeByLesson.lesson.name}}" [(ngModel)]="preferenceDataTimeByLesson.preference[7].points">
-                            <option *ngFor="let preferenceDataTime of preferenceDataTimeSelectOption" [ngValue]="preferenceDataTime.value" jhiTranslate="{{preferenceDataTime.itemTranslate}}">{{preferenceDataTime.value}}</option>
-                        </select>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <ngb-accordion #acc="ngbAccordion">
+                <ngb-panel>
+                    <ng-template ngbPanelTitle>
+                        <span jhiTranslate="timetableApp.preference.preferenceLessonAndDate">Preference lesson and date <span class="fa fa-angle-down"></span></span>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <jhi-preference-data-time-by-lesson [preferenceDataTimeByLessonList]="preferenceDataTimeByLessonList"></jhi-preference-data-time-by-lesson>
+                    </ng-template>
+                </ngb-panel>
+            </ngb-accordion>
 
         </div>
         <div class="modal-footer">

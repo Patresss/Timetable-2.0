@@ -16,6 +16,7 @@ import {
     JhiLoginModalComponent
 } from './';
 import {GlassComponent} from '../components/glass/glass.component';
+import {PreferenceDataTimeByLessonComponent} from '../preference/preference-data-time-by-lesson/preference-data-time-by-lesson.component';
 
 @NgModule({
     imports: [
@@ -26,6 +27,7 @@ import {GlassComponent} from '../components/glass/glass.component';
         JhiLoginModalComponent,
         HasAnyAuthorityDirective,
         GlassComponent,
+        PreferenceDataTimeByLessonComponent,
 ],
     providers: [
         LoginService,
@@ -44,7 +46,8 @@ import {GlassComponent} from '../components/glass/glass.component';
         JhiLoginModalComponent,
         HasAnyAuthorityDirective,
         DatePipe,
-        GlassComponent
+        GlassComponent,
+        PreferenceDataTimeByLessonComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

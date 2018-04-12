@@ -8,6 +8,8 @@ class Preference {
     val preferredSubjectMap = TreeMap<Long, PreferenceHierarchy>()
     val preferredPlaceMap = TreeMap<Long, PreferenceHierarchy>()
     val preferredDivisionMap = TreeMap<Long, PreferenceHierarchy>()
+    val preferredLessonMap = TreeMap<Long, PreferenceHierarchy>()
+    val preferredDayOfWeekMap = TreeMap<Long, PreferenceHierarchy>()
 
     fun getTeacherPreferenceHierarchy(teachersId: Set<Long>): Collection<PreferenceHierarchy> {
         return getPreferenceHierarchy(preferredTeacherMap, teachersId)

@@ -594,13 +594,28 @@ a:hover {
 .edit-entity-card {
     background: transparentize($light-text-color, 0.2);
     color: $accent-color-strong-dark;
-    input, textarea {
+    input, textarea, select {
         background: transparentize($accent-color-strong-light, 0.2);
     }
 
-    input:focus, textarea:focus {
+    input:focus, textarea:focus, select:focus {
         background: $accent-color-strong-light;
     }
+
+    a {
+        color: $accent-color-strong-dark;
+        font-weight: normal;
+    }
+
+    .card {
+        background-color: transparent;
+
+    }
+
+    .card-body {
+        padding: 0.5rem;
+    }
+
 }
 
 .edit-entity-card-select {
@@ -658,7 +673,7 @@ a:hover {
 
             }
             li:hover {
-               background: transparentize($accent-color-strong-light, 0.2);
+                background: transparentize($accent-color-strong-light, 0.2);
             }
         }
     }
@@ -737,14 +752,11 @@ a:hover {
     background: transparent;
 }
 
-
 button.app-primary-button {
     background: $accent-color-dark;
     border-color: $accent-color-dark;
     color: $light-text-color;
 }
-
-
 
 button.app-primary-button:hover {
     background: $accent-color-dark-hover;

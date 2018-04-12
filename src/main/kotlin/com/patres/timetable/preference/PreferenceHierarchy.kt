@@ -14,6 +14,7 @@ class PreferenceHierarchy {
     var preferredBySubject = 0
     var preferredByPlace = 0
     var preferredByDivision = 0
+    var preferredByDataTime = 0
 
     var tooSmallPlace = 0
     var taken = 0
