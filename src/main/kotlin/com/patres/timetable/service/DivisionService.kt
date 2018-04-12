@@ -24,7 +24,7 @@ open class DivisionService(entityRepository: DivisionRepository, entityMapper: E
 
     @Transactional(readOnly = true)
     open fun findByDivisionType(divisionType: DivisionType): List<DivisionDTO> {
-        log.debug("Request to get {} by division type", getEntityName())
+        log.debug("Request to get {} by division value", getEntityName())
         return entityRepository.findAllByDivisionType(divisionType).map { entityMapper.toDto(it) }
     }
 

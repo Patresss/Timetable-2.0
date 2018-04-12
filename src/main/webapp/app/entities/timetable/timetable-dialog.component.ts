@@ -140,7 +140,7 @@ export class TimetableDialogComponent implements OnInit {
             (res: ResponseWrapper) => this.initSchools(res.json)
         );
         this.timetable.series = this.timetable.periodId != null;
-        this.selectedEventType = this.eventTypeSelectOption.filter((entity) => entity.type === this.timetable.type);
+        this.selectedEventType = this.eventTypeSelectOption.filter((entity) => entity.value === this.timetable.type);
         this.selectedDayOfWeek = this.dayOfWeekSelectOption.filter((entity) => entity.day === this.timetable.dayOfWeek);
     }
 

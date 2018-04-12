@@ -1,4 +1,5 @@
 import { BaseEntity } from './../../shared';
+import {PreferenceForDataTimeForTeacherModel} from '../../preference/preference-for-data-time-for-teacher.model';
 
 export class Teacher implements BaseEntity {
     constructor(
@@ -10,7 +11,8 @@ export class Teacher implements BaseEntity {
         public fullName?: string,
         public timetables?: BaseEntity[],
         public preferredSubjects?: BaseEntity[],
-        public divisionId?: number,
+        public preferenceDataTimeForTeachers?: PreferenceForDataTimeForTeacherModel[],
+        public divisionOwnerId?: number,
         public preferredDivisions?: BaseEntity[],
         public preferredPlaces?: BaseEntity[],
     ) {

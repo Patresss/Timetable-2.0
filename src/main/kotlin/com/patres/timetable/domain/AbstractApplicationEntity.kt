@@ -12,7 +12,7 @@ abstract class AbstractApplicationEntity : Serializable {
     companion object {
         private const val serialVersionUID = 7296270053887329327L
 
-        val formatter = DateTimeFormatter.ofPattern("HH:mm")!!
+        private val formatter = DateTimeFormatter.ofPattern("HH:mm")!!
 
         fun getTimeHHmmFormatted(seconds: Long?): String? {
             seconds?.let { time ->

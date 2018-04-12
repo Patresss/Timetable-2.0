@@ -29,7 +29,7 @@
 
 
             <div *ngIf="selectedSchool[0]">
-                <div class="row plan-row-choose" *ngIf="selectedTypePlan[0].type === 'STUDENT'">
+                <div class="row plan-row-choose" *ngIf="selectedTypePlan[0].value === 'STUDENT'">
                     <div class="col-md-1"></div>
                     <div class="col-md-4">
                         <label class="select-label" jhiTranslate="timetableApp.DivisionType.CLASS"></label>
@@ -50,7 +50,7 @@
                     <div class="col-md-1"></div>
                 </div>
 
-                <div class="row plan-row-choose" *ngIf="selectedTypePlan[0].type === 'TEACHER'">
+                <div class="row plan-row-choose" *ngIf="selectedTypePlan[0].value === 'TEACHER'">
                     <div class="col-md-1"></div>
                     <div class="col-md-4">
                         <label class="select-label" jhiTranslate="timetableApp.plan.type.TEACHER"></label>
@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                <div class="row plan-row-choose" *ngIf="selectedTypePlan[0].type === 'PLACE'">
+                <div class="row plan-row-choose" *ngIf="selectedTypePlan[0].value === 'PLACE'">
                     <div class="col-md-1"></div>
                     <div class="col-md-4">
                         <label class="select-label" jhiTranslate="timetableApp.plan.type.PLACE"></label>

@@ -58,6 +58,7 @@ open class CacheConfiguration(jHipsterProperties: JHipsterProperties) {
             it.createCache(com.patres.timetable.domain.Teacher::class.java.name + ".preferredSubjects", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Teacher::class.java.name + ".preferredDivisions", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Teacher::class.java.name + ".preferredPlaces", jcacheConfiguration)
+            it.createCache(com.patres.timetable.domain.Teacher::class.java.name + ".preferenceDataTimeForTeachers", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Subject::class.java.name, jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Subject::class.java.name + ".timetables", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Subject::class.java.name + ".preferredTeachers", jcacheConfiguration)
@@ -79,6 +80,7 @@ open class CacheConfiguration(jHipsterProperties: JHipsterProperties) {
             it.createCache(com.patres.timetable.domain.CurriculumList::class.java.name + ".curriculums", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Curriculum::class.java.name, jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Curriculum::class.java.name + ".curriculumnListes", jcacheConfiguration)
+            it.createCache(com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher::class.java.name, jcacheConfiguration)
         }
     }
 }

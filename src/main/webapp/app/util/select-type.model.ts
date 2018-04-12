@@ -5,6 +5,6 @@ export class SelectType {
     constructor(public id: number,
                 public itemName: String,
                 public itemTranslate: String,
-                public type: String) {
+                public value: any) {
     }
 }

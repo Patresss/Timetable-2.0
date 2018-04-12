@@ -1,6 +1,7 @@
 package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -34,7 +35,7 @@ class Teacher(
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "teacher_preferred_subject", joinColumns = arrayOf(JoinColumn(name = "teachers_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id")))
+    @JoinTable(name = "teacher_preferred_subject", joinColumns = [(JoinColumn(name = "teachers_id", referencedColumnName = "id"))], inverseJoinColumns = [(JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id"))])
     var preferredSubjects: Set<Subject> = HashSet(),
 
     @ManyToMany(mappedBy = "preferredTeachers")
@@ -46,6 +47,10 @@ class Teacher(
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferredPlaces: Set<Place> = HashSet(),
+
+    @OneToMany(cascade = [(CascadeType.ALL)], orphanRemoval = true, mappedBy = "teacher")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    var preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacher> = HashSet(),
 
     divisionOwner: Division? = null
 

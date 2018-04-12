@@ -1,6 +1,7 @@
 {
     "timetableApp": {
         "lesson" : {
+            "main": "Lekcja",
             "home": {
                 "title": "Lessons",
                 "createLabel": "Dodaj Lesson",

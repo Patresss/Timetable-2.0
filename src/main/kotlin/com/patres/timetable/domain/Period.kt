@@ -20,7 +20,7 @@ class Period(
     @Column(name = "name", nullable = false)
     var name: String? = null,
 
-    @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true, mappedBy = "period")
+    @OneToMany(cascade = [(CascadeType.ALL)], orphanRemoval = true, mappedBy = "period")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var intervalTimes: Set<Interval> = HashSet(),
 

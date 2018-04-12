@@ -279,7 +279,7 @@ export class PlanComponent implements OnInit, OnDestroy {
     reloadTimetables() {
         this.clearPlanColumns();
         for (const weekDay of this.planColumns) {
-            switch (this.selectedTypePlan[0].type) {
+            switch (this.selectedTypePlan[0].value) {
                 case 'STUDENT': {
                     const divisionListId = [];
                     if (this.selectedClass[0]) {

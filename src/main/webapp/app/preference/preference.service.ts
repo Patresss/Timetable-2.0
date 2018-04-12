@@ -93,7 +93,7 @@ export class PreferenceService {
                 params.set('date', date);
             }
             if (preferenceDependency.dayOfWeek) {
-                params.set('inMondayOfWeekday', preferenceDependency.dayOfWeek.toString());
+                params.set('dayOfWeek', preferenceDependency.dayOfWeek.toString());
             }
             if (preferenceDependency.everyWeek) {
                 params.set('everyWeek', preferenceDependency.everyWeek.toString());

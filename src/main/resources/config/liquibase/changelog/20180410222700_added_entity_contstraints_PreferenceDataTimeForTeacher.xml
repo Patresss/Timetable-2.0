@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity PreferenceDataTimeForTeacher.
+    -->
+    <changeSet id="20180410222701" author="Patres">
+
+        <addForeignKeyConstraint baseColumnNames="lesson_id"
+                                 baseTableName="preference_data_time_for_teacher"
+                                 constraintName="fk_preference_data_time_for_teacher_lesson_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lesson"/>
+
+        <addForeignKeyConstraint baseColumnNames="teacher_id"
+                                 baseTableName="preference_data_time_for_teacher"
+                                 constraintName="fk_preference_data_time_for_teacher_teacher_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="teacher"/>
+
+    </changeSet>
+</databaseChangeLog>

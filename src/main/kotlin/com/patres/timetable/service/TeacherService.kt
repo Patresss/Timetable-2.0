@@ -1,21 +1,46 @@
 package com.patres.timetable.service
 
 import com.patres.timetable.domain.Teacher
+import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
+import com.patres.timetable.repository.LessonRepository
 import com.patres.timetable.repository.TeacherRepository
 import com.patres.timetable.service.dto.TeacherDTO
+import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
 import com.patres.timetable.service.mapper.EntityMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.DayOfWeek
 
 @Service
 @Transactional
 open class TeacherService(entityRepository: TeacherRepository, entityMapper: EntityMapper<Teacher, TeacherDTO>) : DivisionOwnerService<Teacher, TeacherDTO, TeacherRepository>(entityRepository, entityMapper) {
 
+    @Autowired
+    private lateinit var lessonRepository: LessonRepository
+
     companion object {
         private val log: Logger = LoggerFactory.getLogger(TeacherService::class.java)
     }
+//
+//    override fun save(entityDto: TeacherDTO): TeacherDTO {
+//
+//
+//        log.debug("Request to save {} : {}", getEntityName(), entityDto)
+//        var entity = entityMapper.toEntity(entityDto)
+//        lessonRepository.findByDivisionOwnerId(listOfNotNull(entityDto.divisionOwnerId)).forEach { lesson ->
+//            DayOfWeek.values().forEach { dayOfWeek ->
+//                if (!entity.preferenceDataTimeForTeachers.any { it.lesson?.id == lesson.id && it.dayOfWeek == dayOfWeek.value}) {
+//                    entity.preferenceDataTimeForTeachers.add(PreferenceDataTimeForTeacher())
+//                }
+//            }
+//        }
+//        entity = entityRepository.save(entity)
+//        return entityMapper.toDto(entity)
+//        return entityMapper.toDto(entity)
+//    }
 
     @Transactional(readOnly = true)
     override fun findOne(id: Long?): TeacherDTO? {

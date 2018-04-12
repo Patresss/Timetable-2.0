@@ -87,7 +87,7 @@ class TimetableDTO(
     }
 
     override fun toString(): String {
-        return "TimetableDTO(title=$title, startTimeString=$startTimeString, endTimeString=$endTimeString, startDate=$startDate, endDate=$endDate, date=$date, type=$type, everyWeek=$everyWeek, startWithWeek=$startWithWeek, description=$description, colorBackground=$colorBackground, colorText=$colorText, dayOfWeek=$dayOfWeek, placeId=$placeId, placeName=$placeName, subjectId=$subjectId, subjectName=$subjectName, subjectShortName=$subjectShortName, teacherId=$teacherId, teacherFullName=$teacherFullName, divisionId=$divisionId, divisionName=$divisionName, lessonId=$lessonId, lessonName=$lessonName, periodId=$periodId, periodName=$periodName)"
+        return "TimetableDTO(title=$title, startTimeString=$startTimeString, endTimeString=$endTimeString, startDate=$startDate, endDate=$endDate, date=$date, value=$type, everyWeek=$everyWeek, startWithWeek=$startWithWeek, description=$description, colorBackground=$colorBackground, colorText=$colorText, dayOfWeek=$dayOfWeek, placeId=$placeId, placeName=$placeName, subjectId=$subjectId, subjectName=$subjectName, subjectShortName=$subjectShortName, teacherId=$teacherId, teacherFullName=$teacherFullName, divisionId=$divisionId, divisionName=$divisionName, lessonId=$lessonId, lessonName=$lessonName, periodId=$periodId, periodName=$periodName)"
     }
 
 

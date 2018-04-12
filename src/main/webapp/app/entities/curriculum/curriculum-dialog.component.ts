@@ -110,7 +110,7 @@ export class CurriculumDialogComponent implements OnInit {
             .subscribe((res: ResponseWrapper) => { this.initDivisions(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
         this.lessonService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
             .subscribe((res: ResponseWrapper) => { this.initLessons(res.json)}, (res: ResponseWrapper) => this.onError(res.json));
-        this.selectedEventType = this.eventTypeSelectOption.filter( (entity) => entity.type === this.curriculum.type)
+        this.selectedEventType = this.eventTypeSelectOption.filter( (entity) => entity.value === this.curriculum.type)
     }
 
     clear() {

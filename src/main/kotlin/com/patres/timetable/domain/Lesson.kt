@@ -1,6 +1,7 @@
 package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -12,6 +13,7 @@ import javax.persistence.Entity
 import javax.persistence.OneToMany
 import javax.persistence.Table
 import javax.validation.constraints.NotNull
+import kotlin.collections.HashSet
 
 @Entity
 @Table(name = "lesson")
@@ -34,6 +36,9 @@ class Lesson(
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private var timetables: Set<Timetable> = HashSet(),
+
+    @OneToMany(mappedBy="lesson")
+    var preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacher> = HashSet(),
 
     divisionOwner: Division? = null
 

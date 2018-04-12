@@ -15,6 +15,7 @@ import {
     teacherPopupRoute,
     TeacherResolvePagingParams,
 } from './';
+import {AngularMultiSelectModule} from '../../components/angular2-multiselect-dropdown';
 
 const ENTITY_STATES = [
     ...teacherRoute,
@@ -24,7 +25,8 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         TimetableSharedModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
+        AngularMultiSelectModule
     ],
     declarations: [
         TeacherComponent,

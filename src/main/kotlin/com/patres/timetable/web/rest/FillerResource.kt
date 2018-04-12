@@ -3,10 +3,13 @@ package com.patres.timetable.web.rest
 import com.codahale.metrics.annotation.Timed
 import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.domain.enumeration.EventType
+import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import com.patres.timetable.service.*
 import com.patres.timetable.service.dto.*
+import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -307,6 +310,7 @@ open class FillerResource(
 
     @PostMapping(value = ["/fill"])
     @Timed
+    @Transactional
     @Throws(URISyntaxException::class)
     open fun fill() {
         FillerResource.log.debug("Fill database")
@@ -314,6 +318,24 @@ open class FillerResource(
         // Division Owner
         // =====================================================
         lo2 = createDivision(name = "II Liceum Ogólnokształcące im. Konstytucji 3 Maja w Krośnie", shortName = "2 LO", divisionType = DivisionType.SCHOOL, numberOfPeople = 572)
+
+
+        // =====================================================
+        // Lesson
+        // =====================================================
+        l0 = createLesson(name = "0", startTime = "07:10", endTime = "08:45", divisionOwner = lo2)
+        l1 = createLesson(name = "1", startTime = "08:00", endTime = "08:45", divisionOwner = lo2)
+        l2 = createLesson(name = "2", startTime = "08:50", endTime = "09:35", divisionOwner = lo2)
+        l3 = createLesson(name = "3", startTime = "09:45", endTime = "10:30", divisionOwner = lo2)
+        l4 = createLesson(name = "4", startTime = "10:35", endTime = "11:20", divisionOwner = lo2)
+        l5 = createLesson(name = "5", startTime = "11:25", endTime = "12:10", divisionOwner = lo2)
+        l6 = createLesson(name = "6", startTime = "12:30", endTime = "13:15", divisionOwner = lo2)
+        l7 = createLesson(name = "7", startTime = "13:20", endTime = "14:05", divisionOwner = lo2)
+        l8 = createLesson(name = "8", startTime = "14:10", endTime = "14:55", divisionOwner = lo2)
+        l9 = createLesson(name = "9", startTime = "15:00", endTime = "15:45", divisionOwner = lo2)
+        l10 = createLesson(name = "10", startTime = "15:50", endTime = "16:35", divisionOwner = lo2)
+        l11 = createLesson(name = "11", startTime = "16:40", endTime = "17:25", divisionOwner = lo2)
+
 
         // =====================================================
         // Subject
@@ -361,7 +383,8 @@ open class FillerResource(
         kijowska = createTeacher(degree = "mgr", name = "Beata", surname = "Kijowska", divisionOwner = lo2, preferredSubjects = setOf(jAngielski))
         kolanko = createTeacher(degree = "mgr", name = "Irena", surname = "Kolanko", divisionOwner = lo2, preferredSubjects = setOf(jAngielski))
         trybusGorczyca = createTeacher(degree = "mgr", name = "Agnieszka", surname = "Trybus-Gorczyca", divisionOwner = lo2, preferredSubjects = setOf(jAngielski))
-        czuba = createTeacher(degree = "mgr", name = "Beata", surname = "Czuba", divisionOwner = lo2, preferredSubjects = setOf(matematyka))
+        val preferenceDataTimeForTeacherCzuba = setOf(PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 1, points = 10))
+        czuba = createTeacher(degree = "mgr", name = "Beata", surname = "Czuba", divisionOwner = lo2, preferredSubjects = setOf(matematyka), preferenceDataTimeForTeachers = preferenceDataTimeForTeacherCzuba)
         jastrzębska = createTeacher(degree = "mgr", name = "Mariola", surname = "Jastrzębska", divisionOwner = lo2, preferredSubjects = setOf(matematyka))
         mięsowicz = createTeacher(degree = "mgr", name = "Jolanta", surname = "Mięsowicz", divisionOwner = lo2, preferredSubjects = setOf(matematyka))
         hadel = createTeacher(degree = "mgr", name = "Anna", surname = "Hadel", divisionOwner = lo2, preferredSubjects = setOf(jNiemiecki))
@@ -431,21 +454,6 @@ open class FillerResource(
         div1Gr1bDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1b))
 
 
-        // =====================================================
-        // Lesson
-        // =====================================================
-        l0 = createLesson(name = "0", startTime = "07:10", endTime = "08:45", divisionOwner = lo2)
-        l1 = createLesson(name = "1", startTime = "08:00", endTime = "08:45", divisionOwner = lo2)
-        l2 = createLesson(name = "2", startTime = "08:50", endTime = "09:35", divisionOwner = lo2)
-        l3 = createLesson(name = "3", startTime = "09:45", endTime = "10:30", divisionOwner = lo2)
-        l4 = createLesson(name = "4", startTime = "10:35", endTime = "11:20", divisionOwner = lo2)
-        l5 = createLesson(name = "5", startTime = "11:25", endTime = "12:10", divisionOwner = lo2)
-        l6 = createLesson(name = "6", startTime = "12:30", endTime = "13:15", divisionOwner = lo2)
-        l7 = createLesson(name = "7", startTime = "13:20", endTime = "14:05", divisionOwner = lo2)
-        l8 = createLesson(name = "8", startTime = "14:10", endTime = "14:55", divisionOwner = lo2)
-        l9 = createLesson(name = "9", startTime = "15:00", endTime = "15:45", divisionOwner = lo2)
-        l10 = createLesson(name = "10", startTime = "15:50", endTime = "16:35", divisionOwner = lo2)
-        l11 = createLesson(name = "11", startTime = "16:40", endTime = "17:25", divisionOwner = lo2)
 
         // =====================================================
         // Place
@@ -630,8 +638,8 @@ open class FillerResource(
         return subjectService.save(subject)
     }
 
-    private fun createTeacher(degree: String, name: String, surname: String, shortName: String? = null, divisionOwner: DivisionDTO, preferredSubjects: Set<SubjectDTO> = emptySet()): TeacherDTO {
-        val teacher = TeacherDTO(degree = degree, name = name, surname = surname, divisionOwnerId = divisionOwner.id, preferredSubjects = preferredSubjects)
+    private fun createTeacher(degree: String, name: String, surname: String, shortName: String? = null, divisionOwner: DivisionDTO, preferredSubjects: Set<SubjectDTO> = emptySet(), preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacherDTO> = emptySet()): TeacherDTO {
+        val teacher = TeacherDTO(degree = degree, name = name, surname = surname, divisionOwnerId = divisionOwner.id, preferredSubjects = preferredSubjects, preferenceDataTimeForTeachers = preferenceDataTimeForTeachers)
         return teacherService.save(teacher)
     }
 
