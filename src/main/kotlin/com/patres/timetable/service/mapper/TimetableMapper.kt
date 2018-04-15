@@ -81,7 +81,6 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             subjectShortName = timetableSubjectShortName(entity),
             startDate = entity.startDate,
             endDate = entity.endDate,
-
             everyWeek = entity.everyWeek,
             startWithWeek = entity.startWithWeek,
             description = entity.description,

@@ -1,37 +1,37 @@
 package com.patres.timetable.preference
 
-import java.util.*
+import com.patres.timetable.domain.*
+import com.patres.timetable.preference.hierarchy.*
+import java.time.DayOfWeek
 
-class Preference {
+class Preference(
+    teachersId: Set<Long> = emptySet(),
+    subjectsId: Set<Long> = emptySet(),
+    placesId: Set<Long> = emptySet(),
+    divisionsId: Set<Long> = emptySet(),
+    lessonsId: Set<Long> = emptySet()
+) {
 
-    val preferredTeacherMap = TreeMap<Long, PreferenceHierarchy>()
-    val preferredSubjectMap = TreeMap<Long, PreferenceHierarchy>()
-    val preferredPlaceMap = TreeMap<Long, PreferenceHierarchy>()
-    val preferredDivisionMap = TreeMap<Long, PreferenceHierarchy>()
-    val preferredLessonMap = TreeMap<Long, PreferenceHierarchy>()
-    val preferredDayOfWeekMap = TreeMap<Long, PreferenceHierarchy>()
+    val preferredTeacherMap = teachersId.map { it to PreferenceTeacherHierarchy() }.toMap().toSortedMap()
+    val preferredSubjectMap = subjectsId.map { it to PreferenceSubjectHierarchy() }.toMap().toSortedMap()
+    val preferredPlaceMap = placesId.map { it to PreferencePlaceHierarchy() }.toMap().toSortedMap()
+    val preferredDivisionMap = divisionsId.map { it to PreferenceDivisionHierarchy() }.toMap().toSortedMap()
+    val preferredLessonMap = lessonsId.map { it to PreferenceLessonHierarchy() }.toMap().toSortedMap()
+    val preferredDayOfWeekMap = DayOfWeek.values().forEach { it.value to PreferenceDayOfWeekHierarchy() }
+    val preferredLessonAndDayOfWeekSet = HashSet<LessonDayPreferenceElement>()
 
-    fun getTeacherPreferenceHierarchy(teachersId: Set<Long>): Collection<PreferenceHierarchy> {
-        return getPreferenceHierarchy(preferredTeacherMap, teachersId)
+    init {
+        DayOfWeek.values().forEach { dayOfWeek ->
+            lessonsId.forEach { lessonId ->
+                preferredLessonAndDayOfWeekSet.add(LessonDayPreferenceElement(dayOfWeek = dayOfWeek.value, lessonId = lessonId, preference = PreferenceLessonAndDayOfWeekHierarchy()))
+            }
+        }
     }
 
-    fun getDivisionPreferenceHierarchy(divisionsId: Set<Long>): Collection<PreferenceHierarchy> {
-        return getPreferenceHierarchy(preferredDivisionMap, divisionsId)
+    fun getPreferenceByLessonAndDay(dayOfWeek: Int, lessonId: Long): LessonDayPreferenceElement? {
+        return preferredLessonAndDayOfWeekSet.find { it.dayOfWeek == dayOfWeek && it.lessonId == lessonId }
     }
 
-    fun getSubjectPreferenceHierarchy(subjectsId: Set<Long>): Collection<PreferenceHierarchy> {
-        return getPreferenceHierarchy(preferredSubjectMap, subjectsId)
-    }
-
-    fun getPlacePreferenceHierarchy(placesId: Set<Long>): Collection<PreferenceHierarchy> {
-        return getPreferenceHierarchy(preferredPlaceMap, placesId)
-    }
-
-    private fun getPreferenceHierarchy(map: TreeMap<Long, PreferenceHierarchy>, ids: Set<Long>): Collection<PreferenceHierarchy> {
-        ids.filter { !map.contains(it) }.forEach { map[it] = PreferenceHierarchy() }
-        val filterKeys = map.filterKeys { key -> ids.contains(key) }
-        return filterKeys.values
-    }
 
 
 }

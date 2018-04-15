@@ -16,6 +16,11 @@ interface DivisionOwnerRepository<EntityType : AbstractDivisionOwner> : JpaRepos
 
     fun findByDivisionOwnerId(divisionsId: List<Long>): Set<EntityType>
 
+    fun findByDivisionOwnerId(divisionsId: Long): Set<EntityType>
+
+    @Query("select entity.id from #{#entityName} entity WHERE :divisionOwnerId = entity.divisionOwner.id")
+    fun findIdByDivisionOwnerId(@Param("divisionOwnerId") divisionOwnerId: Long): Set<Long>
+
     @Query("select distinct entity from #{#entityName} entity inner join entity.divisionOwner divisions inner join divisions.users user where user.login IN ?#{principal.username}")
     fun findByCurrentLogin(pageable: Pageable): Page<EntityType>
 

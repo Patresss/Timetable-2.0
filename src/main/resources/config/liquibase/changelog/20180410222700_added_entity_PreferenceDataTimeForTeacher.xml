@@ -30,7 +30,7 @@
             <column name="day_of_week" type="int">
                 <constraints nullable="false" />
             </column>
-            <column name="points" type="bigint">
+            <column name="points" type="int">
                 <constraints nullable="false" />
             </column>
         </createTable>

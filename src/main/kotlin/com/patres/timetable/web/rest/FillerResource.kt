@@ -383,7 +383,11 @@ open class FillerResource(
         kijowska = createTeacher(degree = "mgr", name = "Beata", surname = "Kijowska", divisionOwner = lo2, preferredSubjects = setOf(jAngielski))
         kolanko = createTeacher(degree = "mgr", name = "Irena", surname = "Kolanko", divisionOwner = lo2, preferredSubjects = setOf(jAngielski))
         trybusGorczyca = createTeacher(degree = "mgr", name = "Agnieszka", surname = "Trybus-Gorczyca", divisionOwner = lo2, preferredSubjects = setOf(jAngielski))
-        val preferenceDataTimeForTeacherCzuba = setOf(PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 1, points = 10))
+        val preferenceDataTimeForTeacherCzuba = setOf(
+            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 1, points = 10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 5, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 1, points = 5)
+        )
         czuba = createTeacher(degree = "mgr", name = "Beata", surname = "Czuba", divisionOwner = lo2, preferredSubjects = setOf(matematyka), preferenceDataTimeForTeachers = preferenceDataTimeForTeacherCzuba)
         jastrzębska = createTeacher(degree = "mgr", name = "Mariola", surname = "Jastrzębska", divisionOwner = lo2, preferredSubjects = setOf(matematyka))
         mięsowicz = createTeacher(degree = "mgr", name = "Jolanta", surname = "Mięsowicz", divisionOwner = lo2, preferredSubjects = setOf(matematyka))
@@ -452,7 +456,6 @@ open class FillerResource(
         div1bG1 = createDivision(name = "1B gr	 1", shortName = "Ang 1B gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1b))
         div1bG2 = createDivision(name = "1B gr	 2", shortName = "Ang 1B gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1b))
         div1Gr1bDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1b))
-
 
 
         // =====================================================

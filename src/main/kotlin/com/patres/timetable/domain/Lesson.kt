@@ -5,8 +5,6 @@ import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -37,7 +35,7 @@ class Lesson(
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private var timetables: Set<Timetable> = HashSet(),
 
-    @OneToMany(mappedBy="lesson")
+    @OneToMany(mappedBy = "lesson", orphanRemoval = true)
     var preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacher> = HashSet(),
 
     divisionOwner: Division? = null
