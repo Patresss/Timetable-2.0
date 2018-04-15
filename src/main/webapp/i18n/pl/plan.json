@@ -17,7 +17,8 @@
                 "period": "Wybierz okres czasu",
                 "event-type": "Wybierz typ wydarzenia",
                 "curriculums": "Wybierz plany nauczania",
-                "day-of-week": "Wybierz dzień tyogdnia"
+                "day-of-week": "Wybierz dzień tyogdnia",
+                "time": "Wybierz czas"
             },
             "type": {
                 "STUDENT": "Uczeń",

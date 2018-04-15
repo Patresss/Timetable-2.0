@@ -26,12 +26,6 @@
                 <jhi-angular2-multiselect [data]="eventTypeSelectOption" [(ngModel)]="selectedEventType" [settings]="eventTypeSelectSettings"
                                           styleClass="edit-entity-card-select" name="selectedEventType" #type="ngModel" required [blur]="false"
                                             (onSelect)="onEventTypeSelect($event)" (onDeSelect)="onEventTypeDeSelect($event)">
-                    <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
-                            This field is required.
-                        </small>
-                    </div>
             </div>
             <!--<div class="form-group">-->
             <!--<div class='row'>-->
@@ -86,7 +80,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" *ngIf="!timetable.series">
                 <div class='row'>
                     <div class='col-md-6'>
                         <label jhiTranslate="timetableApp.timetable.lesson" for="field_lesson">Lesson</label>
@@ -96,11 +90,11 @@
                     </div>
                     <div class='col-md-3'>
                         <label class="form-control-label" jhiTranslate="timetableApp.timetable.startTime" for="field_start_time">Start Time</label>
-                        <ngb-timepicker name="field_start_time" id="field_start_time" [(ngModel)]="timetable.startTime" [spinners]="false" [readonlyInputs]="true"></ngb-timepicker>
+                        <ngb-timepicker required="!timetable.lessonId" name="field_start_time" id="field_start_time" [(ngModel)]="timetable.startTime" [spinners]="false" [readonlyInputs]="timetable.lessonId"></ngb-timepicker>
                     </div>
                     <div class='col-md-3'>
                         <label class="form-control-label" jhiTranslate="timetableApp.timetable.endTime" for="field_end_time">End Time</label>
-                        <ngb-timepicker name="field_end_time" id="field_end_time" [(ngModel)]="timetable.endTime" [spinners]="false" [readonlyInputs]="true"></ngb-timepicker>
+                        <ngb-timepicker required="!timetable.lessonId" name="field_end_time" id="field_end_time" [(ngModel)]="timetable.endTime" [spinners]="false" [readonlyInputs]="timetable.lessonId"></ngb-timepicker>
                     </div>
                 </div>
             </div>
@@ -130,27 +124,52 @@
 
             <div class="form-group">
                 <label class="form-control-label" jhiTranslate="timetableApp.timetable.series" for="field_series">Series</label>
-                <input type="checkbox" class="form-control" name="series" id="field_series" [(ngModel)]="timetable.series""/>
+                <input type="checkbox" (change)="changeSeries()" class="form-control" name="series" id="field_series" [(ngModel)]="timetable.series"/>
             </div>
 
             <div *ngIf="timetable.series">
 
                 <div class="form-group">
                     <div class='row'>
-                        <div class='col-md-6'>
+                        <div class='col-md-12'>
                             <label jhiTranslate="timetableApp.timetable.period" for="field_period">Period</label>
                             <jhi-angular2-multiselect [data]="periodSelectOption" [(ngModel)]="selectedPeriod" [settings]="periodSelectSettings"
                                                       styleClass="edit-entity-card-select" id="field_period" name="selectedPeriod" #type="ngModel" required [blur]="false" (onSelect)="onPeriodSelect($event)" (onDeSelect)="onPeriodDeSelect()">
-
                         </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class='row'>
                         <div class='col-md-6'>
                             <label class="form-control-label" jhiTranslate="timetableApp.timetable.day-of-week" for="field_type">Day of week</label>
                             <jhi-angular2-multiselect [data]="dayOfWeekSelectOption" [(ngModel)]="selectedDayOfWeek" [settings]="dayOfWeekSelectSettings"
                                                       styleClass="edit-entity-card-select" name="selectedDayOfWeek" #type="ngModel" required [blur]="false"
                                                       (onSelect)="onDayOfWeekSelect($event)" (onDeSelect)="onDayOfWeekDeSelect($event)">
                         </div>
+                        <div class='col-md-6'>
+                            <label jhiTranslate="timetableApp.timetable.lesson" for="field_lesson">Lesson</label>
+                            <jhi-angular2-multiselect [data]="lessonSelectOption" [(ngModel)]="selectedLesson" [settings]="lessonSelectSettings"
+                                                      styleClass="edit-entity-card-select" name="selectedLesson" #type="ngModel" required [blur]="false" [preferenceHierarchy]="true"
+                                                      (onSelect)="onLessonSelect($event)" (onDeSelect)="onLessonDeSelect()">
+                        </div>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <div class='row'>
+                        <div class='col-md-6'> </div>
+                        <div class='col-md-3'>
+                            <label class="form-control-label" jhiTranslate="timetableApp.timetable.startTime" for="field_start_time">Start Time</label>
+                            <ngb-timepicker required="!timetable.lessonId" name="field_start_time" id="field_start_time" [(ngModel)]="timetable.startTime" [spinners]="false" [readonlyInputs]="timetable.lessonId"></ngb-timepicker>
+                        </div>
+                        <div class='col-md-3'>
+                            <label class="form-control-label" jhiTranslate="timetableApp.timetable.endTime" for="field_end_time">End Time</label>
+                            <ngb-timepicker required="!timetable.lessonId" name="field_end_time" id="field_end_time" [(ngModel)]="timetable.endTime" [spinners]="false" [readonlyInputs]="timetable.lessonId"></ngb-timepicker>
+                        </div>
+                    </div>
+                </div>
+
 
 
                 <div class="form-group">

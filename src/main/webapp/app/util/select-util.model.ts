@@ -5,7 +5,7 @@ export class SelectUtil {
     public static entityListToSelectList(entityList: any[]) {
         const selectList = [];
         entityList.forEach((entity) => {
-            const obj = {id: entity.id, itemName: entity.name, item: entity, preferenceHierarchy: new PreferenceHierarchy()};
+            const obj = {id: entity.id, itemName: entity.name,  itemTranslate: '', item: entity, preferenceHierarchy: new PreferenceHierarchy()};
             selectList.push(obj)
         });
         return selectList;
@@ -14,7 +14,7 @@ export class SelectUtil {
     public static teacherListToSelectList(entityList: any[]) {
         const selectList = [];
         entityList.forEach((entity) => {
-            const obj = {id: entity.id, itemName: entity.fullName, item: entity, preferenceHierarchy: new PreferenceHierarchy()};
+            const obj = {id: entity.id, itemName: entity.fullName, item: entity, itemTranslate: '', preferenceHierarchy: new PreferenceHierarchy()};
             selectList.push(obj)
         });
         return selectList;

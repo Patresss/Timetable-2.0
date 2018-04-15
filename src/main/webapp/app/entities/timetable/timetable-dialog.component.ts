@@ -30,8 +30,9 @@ import {PreferenceHierarchy} from '../../preference/preferecne-hierarchy.model';
 export class TimetableDialogComponent implements OnInit {
 
     timetable: Timetable;
+    onlyLessonsToSelect = [];
+    optionChooseTime = {id: null, itemName: '', itemTranslate: 'timetableApp.plan.choose.time', item: null, preferenceHierarchy: new PreferenceHierarchy()};
     isSaving: boolean;
-    dateDp: any;
 
     eventTypeSelectOption = [
         new SelectType(1, '', 'timetableApp.EventType.LESSON', EventType.LESSON),
@@ -209,10 +210,6 @@ export class TimetableDialogComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
-    changeTaken() {
-
-    }
-
 // ================================================================
 // Init select
 // ================================================================
@@ -239,7 +236,8 @@ export class TimetableDialogComponent implements OnInit {
     }
 
     private initLessons(entityList: any[]) {
-        this.lessonSelectOption = SelectUtil.entityListToSelectList(entityList);
+        this.onlyLessonsToSelect = SelectUtil.entityListToSelectList(entityList);
+        this.loadLessonTimeOption();
         this.selectedLesson = this.lessonSelectOption.filter((entity) => entity.id === this.timetable.lessonId);
 
         this.currentLoadCounter++;
@@ -276,6 +274,12 @@ export class TimetableDialogComponent implements OnInit {
         }
     }
 
+    loadLessonTimeOption() {
+        const lessonWithTimeChoose = [];
+        lessonWithTimeChoose.push(this.optionChooseTime);
+        this.lessonSelectOption = lessonWithTimeChoose.concat(this.onlyLessonsToSelect)
+    }
+
 // ================================================================
 // On select/deselect
 // ================================================================
@@ -307,8 +311,13 @@ export class TimetableDialogComponent implements OnInit {
 
     onLessonSelect(item: any) {
         this.timetable.lessonId = item.id;
-        this.timetable.startTime = item.item.startTime;
-        this.timetable.endTime = item.item.endTime;
+        if (item.id) {
+            this.timetable.startTime = item.item.startTime;
+            this.timetable.endTime = item.item.endTime;
+        } else {
+            this.timetable.startTime = null;
+            this.timetable.endTime = null;
+        }
         this.changePreference()
     }
 
@@ -348,7 +357,7 @@ export class TimetableDialogComponent implements OnInit {
     }
 
     onEventTypeSelect(item: any) {
-        this.timetable.type = item.type;
+        this.timetable.type = item.value;
     }
 
     onEventTypeDeSelect() {
@@ -361,6 +370,10 @@ export class TimetableDialogComponent implements OnInit {
 
     onDayOfWeekDeSelect() {
         this.timetable.dayOfWeek = null;
+    }
+
+    changeSeries() {
+        this.loadLessonTimeOption();
     }
 
     changePreference() {
