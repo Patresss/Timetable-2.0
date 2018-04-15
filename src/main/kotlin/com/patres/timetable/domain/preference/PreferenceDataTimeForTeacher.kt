@@ -12,7 +12,7 @@ import javax.persistence.*
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 class PreferenceDataTimeForTeacher(
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "teacher_id")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var teacher: Teacher? = null,

@@ -40,7 +40,8 @@ open class PreferenceDependencyMapper : EntityMapper<PreferenceDependency, Prefe
             date = entityDto.date,
             everyWeek = entityDto.everyWeek,
             startWithWeek = entityDto.startWithWeek,
-            divisionOwnerId = entityDto.divisionOwnerId
+            divisionOwnerId = entityDto.divisionOwnerId,
+            dayOfWeek = entityDto.dayOfWeek
         ).apply {
             if (lesson != null) {
                 startTime = lesson?.startTime
@@ -50,14 +51,13 @@ open class PreferenceDependencyMapper : EntityMapper<PreferenceDependency, Prefe
                 entityDto.endTimeString?.let { setEndTimeHHmmFormatted(it) }
             }
 
+
             if (entityDto.periodId != null) {
                 period = periodRepository.findOneWithIntervals(entityDto.periodId)
-                dayOfWeek = entityDto.dayOfWeek
-            } else {
+            } else if (entityDto.date != null) {
                 date = entityDto.date
                 dayOfWeek = date?.dayOfWeek?.value
             }
-
         }
     }
 

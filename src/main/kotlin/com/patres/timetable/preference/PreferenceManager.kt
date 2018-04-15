@@ -1,6 +1,7 @@
 package com.patres.timetable.preference
 
 import com.patres.timetable.domain.*
+import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 import com.patres.timetable.repository.*
 import com.patres.timetable.web.rest.util.TimetableDateUtil
@@ -13,6 +14,7 @@ open class PreferenceManager(
     private var subjectRepository: SubjectRepository,
     private var divisionRepository: DivisionRepository,
     private var lessonRepository: LessonRepository,
+    private var preferenceDataTimeForTeacherRepository: PreferenceDataTimeForTeacherRepository,
     private var timetableRepository: TimetableRepository
 ) {
 
@@ -31,6 +33,13 @@ open class PreferenceManager(
         preferenceDependency.place?.let { calculateByPlace(preference, it) }
         preferenceDependency.division?.let { calculateByDivision(preference, it, getIdOfTooSmallPlacesFromDatabase(it)) }
         calculateTaken(preference, getTakenTimetableFromDatabase(preferenceDependency))
+
+        val lessonId = preferenceDependency.lesson?.id
+        val dayOfWeek = preferenceDependency.dayOfWeek
+        if (lessonId != null &&  dayOfWeek != null) {
+            val preferenceDataTimeForTeacherFromDatabase = getPreferenceDataTimeForTeacherFromDatabase(dayOfWeek, lessonId)
+            calculateByLessonAndDayOfWeek(preference, preferenceDataTimeForTeacherFromDatabase)
+        }
     }
 
     private fun getTakenTimetableFromDatabase(preferenceDependency: PreferenceDependency): Set<Timetable> {
@@ -40,6 +49,10 @@ open class PreferenceManager(
             timetablesInThisTime = timetablesInThisTime.filter { it.id != preferenceDependency.notTimetableId }.toSet()
         }
         return timetablesInThisTime.filter { it.period == null || TimetableDateUtil.canAddByEveryDays(dates, it.period?.getFirstDay(), it.startWithWeek, it.everyWeek) }.toSet()
+    }
+
+    private fun getPreferenceDataTimeForTeacherFromDatabase(dayOfWeek: Int, lessonId: Long): Set<PreferenceDataTimeForTeacher> {
+        return preferenceDataTimeForTeacherRepository.findByDayOfWeekAndLessonId(dayOfWeek, lessonId)
     }
 
     fun calculateTaken(preference: Preference, takenTimetable: Set<Timetable>) {
@@ -194,6 +207,17 @@ open class PreferenceManager(
                 preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredBySubject = 0
+            }
+        }
+    }
+
+    fun calculateByLessonAndDayOfWeek(preference: Preference, preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacher>) {
+        preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
+            val preferenceDataTimeForTeacher = preferenceDataTimeForTeachers.find { it.teacher?.id == id }
+            if (preferenceDataTimeForTeacher != null) {
+                preferenceHierarchy.preferredByDataTime = preferenceDataTimeForTeacher.points
+            } else {
+                preferenceHierarchy.preferredByDataTime = 0
             }
         }
     }
