@@ -36,10 +36,221 @@ open class PreferenceManager(
 
         val lessonId = preferenceDependency.lesson?.id
         val dayOfWeek = preferenceDependency.dayOfWeek
-        if (lessonId != null &&  dayOfWeek != null) {
+        if (lessonId != null && dayOfWeek != null) {
             val preferenceDataTimeForTeacherFromDatabase = getPreferenceDataTimeForTeacherFromDatabase(dayOfWeek, lessonId)
             calculateByLessonAndDayOfWeek(preference, preferenceDataTimeForTeacherFromDatabase)
         }
+    }
+
+    fun calculateTaken(preference: Preference, takenTimetable: Set<Timetable>) {
+        val takenPlacesId = takenTimetable.mapNotNull { it.place?.id }.toSet()
+        takenPlacesId.forEach { preference.preferredPlaceMap[it]?.taken = PreferenceHierarchy.TAKEN }
+
+        val takenTeachersId = takenTimetable.mapNotNull { it.teacher?.id }.toSet()
+        takenTeachersId.forEach { preference.preferredTeacherMap[it]?.taken = PreferenceHierarchy.TAKEN }
+
+        val takenDivisionsId = takenTimetable.mapNotNull { it.division?.id }.toSet()
+        takenDivisionsId.forEach { preference.preferredDivisionMap[it]?.taken = PreferenceHierarchy.TAKEN }
+    }
+
+    fun calculateByTeacher(preference: Preference, teacher: Teacher) {
+        calculateSubjectsByTeacher(preference, teacher)
+        calculateDivisionsByTeacher(preference, teacher)
+        calculatePlacesByTeacher(preference, teacher)
+        calculateLessonAndDayOfWeekByTeacher(preference, teacher)
+    }
+
+    fun calculateByPlace(preference: Preference, place: Place) {
+        calculateTeachersByPlace(preference, place)
+        calculateDivisionsByPlace(preference, place)
+        calculateSubjectsByPlace(preference, place)
+    }
+
+    fun calculateByDivision(preference: Preference, division: Division, idOfTooSmallPlaces: Set<Long>) {
+        calculateTeachersByDivision(preference, division)
+        calculatePlacesByDivision(preference, division)
+        calculateSubjectsByDivision(preference, division)
+        calculateTooSmallPlace(preference, idOfTooSmallPlaces)
+    }
+
+    fun calculateBySubject(preference: Preference, subject: Subject) {
+        calculateTeachersBySubject(preference, subject)
+        calculateDivisionsBySubject(preference, subject)
+        calculatePlacesBySubject(preference, subject)
+    }
+
+    fun calculateTooSmallPlace(preference: Preference, idOfTooSmallPlaces: Set<Long>) {
+        preference.preferredPlaceMap.forEach { id, preferenceHierarchy ->
+            if (idOfTooSmallPlaces.contains(id)) {
+                preferenceHierarchy.tooSmallPlace = PreferenceHierarchy.TOO_SMALL_PLACE
+            } else {
+                preferenceHierarchy.tooSmallPlace = 0
+            }
+        }
+    }
+
+    fun calculateByLessonAndDayOfWeek(preference: Preference, preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacher>) {
+        preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
+            val preferenceDataTimeForTeacher = preferenceDataTimeForTeachers.find { it.teacher?.id == id }
+            if (preferenceDataTimeForTeacher != null) {
+                preferenceHierarchy.preferredByDataTime = preferenceDataTimeForTeacher.points
+            } else {
+                preferenceHierarchy.preferredByDataTime = 0
+            }
+        }
+    }
+
+
+    private fun calculateLessonAndDayOfWeekByTeacher(preference: Preference, teacher: Teacher) {
+        preference.preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
+            val preferenceDataTimeForTeacher = teacher.preferenceDataTimeForTeachers
+                .find { teacherPreference -> teacherPreference.lesson?.id == lessonDayPreferenceElement.lessonId && teacherPreference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
+            if (preferenceDataTimeForTeacher != null) {
+                lessonDayPreferenceElement.preference.preferredByTeacher = preferenceDataTimeForTeacher.points
+            } else {
+                lessonDayPreferenceElement.preference.preferredByTeacher = 0
+            }
+        }
+    }
+
+    private fun calculatePlacesByTeacher(preference: Preference, teacher: Teacher) {
+        val preferredPlaces = teacher.preferredPlaces.mapNotNull { it.id }.toSet()
+        preference.preferredPlaceMap.forEach { id, preferenceHierarchy ->
+            if (preferredPlaces.contains(id)) {
+                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS
+            } else {
+                preferenceHierarchy.preferredByTeacher = 0
+            }
+        }
+    }
+
+    private fun calculateDivisionsByTeacher(preference: Preference, teacher: Teacher) {
+        val preferredDivisions = teacher.preferredDivisions.mapNotNull { it.id }.toSet()
+        preference.preferredDivisionMap.forEach { id, preferenceHierarchy ->
+            if (preferredDivisions.contains(id)) {
+                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS
+            } else {
+                preferenceHierarchy.preferredByTeacher = 0
+            }
+        }
+    }
+
+    private fun calculateSubjectsByTeacher(preference: Preference, teacher: Teacher) {
+        val preferredSubjects = teacher.preferredSubjects.mapNotNull { it.id }.toSet()
+        preference.preferredSubjectMap.forEach { id, preferenceHierarchy ->
+            if (preferredSubjects.contains(id)) {
+                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS
+            } else {
+                preferenceHierarchy.preferredByTeacher = 0
+            }
+        }
+    }
+
+    private fun calculateSubjectsByPlace(preference: Preference, place: Place) {
+        val preferredSubjects = place.preferredSubjects.mapNotNull { it.id }.toSet()
+        preference.preferredSubjectMap.forEach { id, preferenceHierarchy ->
+            if (preferredSubjects.contains(id)) {
+                preferenceHierarchy.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS
+            } else {
+                preferenceHierarchy.preferredByPlace = 0
+            }
+        }
+    }
+
+    private fun calculateDivisionsByPlace(preference: Preference, place: Place) {
+        val preferredDivisions = place.preferredDivisions.mapNotNull { it.id }.toSet()
+        preference.preferredDivisionMap.forEach { id, preferenceHierarchy ->
+            if (preferredDivisions.contains(id)) {
+                preferenceHierarchy.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS
+            } else {
+                preferenceHierarchy.preferredByPlace = 0
+            }
+        }
+    }
+
+    private fun calculateTeachersByPlace(preference: Preference, place: Place) {
+        val preferredTeachers = place.preferredTeachers.mapNotNull { it.id }.toSet()
+        preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
+            if (preferredTeachers.contains(id)) {
+                preferenceHierarchy.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS
+            } else {
+                preferenceHierarchy.preferredByPlace = 0
+            }
+        }
+    }
+
+    private fun calculateSubjectsByDivision(preference: Preference, division: Division) {
+        val preferredSubjects = division.preferredSubjects.mapNotNull { it.id }.toSet()
+        preference.preferredSubjectMap.forEach { id, preferenceHierarchy ->
+            if (preferredSubjects.contains(id)) {
+                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFFERRED_POINTS
+            } else {
+                preferenceHierarchy.preferredByDivision = 0
+            }
+        }
+    }
+
+    private fun calculatePlacesByDivision(preference: Preference, division: Division) {
+        val preferredPlaces = division.preferredPlaces.mapNotNull { it.id }.toSet()
+        preference.preferredPlaceMap.forEach { id, preferenceHierarchy ->
+            if (preferredPlaces.contains(id)) {
+                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFFERRED_POINTS
+            } else {
+                preferenceHierarchy.preferredByDivision = 0
+            }
+        }
+    }
+
+    private fun calculateTeachersByDivision(preference: Preference, division: Division) {
+        val preferredTeachers = division.preferredTeachers.mapNotNull { it.id }.toSet()
+        preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
+            if (preferredTeachers.contains(id)) {
+                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFFERRED_POINTS
+            } else {
+                preferenceHierarchy.preferredByDivision = 0
+            }
+        }
+    }
+
+    private fun calculatePlacesBySubject(preference: Preference, subject: Subject) {
+        val preferredPlaces = subject.preferredPlaces.mapNotNull { it.id }.toSet()
+        preference.preferredPlaceMap.forEach { id, preferenceHierarchy ->
+            if (preferredPlaces.contains(id)) {
+                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS
+            } else {
+                preferenceHierarchy.preferredBySubject = 0
+            }
+        }
+    }
+
+    private fun calculateDivisionsBySubject(preference: Preference, subject: Subject) {
+        val preferredDivisions = subject.preferredDivisions.mapNotNull { it.id }.toSet()
+        preference.preferredDivisionMap.forEach { id, preferenceHierarchy ->
+            if (preferredDivisions.contains(id)) {
+                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS
+            } else {
+                preferenceHierarchy.preferredBySubject = 0
+            }
+        }
+    }
+
+    private fun calculateTeachersBySubject(preference: Preference, subject: Subject) {
+        val preferredTeachers = subject.preferredTeachers.mapNotNull { it.id }.toSet()
+        preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
+            if (preferredTeachers.contains(id)) {
+                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS
+            } else {
+                preferenceHierarchy.preferredBySubject = 0
+            }
+        }
+    }
+
+
+    private fun getIdOfTooSmallPlacesFromDatabase(division: Division): Set<Long> {
+        division.numberOfPeople?.let { numberOfPeople ->
+            return placeRepository.findIdByDivisionOwnerIdAndNumberOfSeatsLessThan(division.divisionOwner?.id, numberOfPeople)
+        }
+        return emptySet()
     }
 
     private fun getTakenTimetableFromDatabase(preferenceDependency: PreferenceDependency): Set<Timetable> {
@@ -55,171 +266,5 @@ open class PreferenceManager(
         return preferenceDataTimeForTeacherRepository.findByDayOfWeekAndLessonId(dayOfWeek, lessonId)
     }
 
-    fun calculateTaken(preference: Preference, takenTimetable: Set<Timetable>) {
-        val takenPlacesId = takenTimetable.mapNotNull { it.place?.id }.toSet()
-        takenPlacesId.forEach { preference.preferredPlaceMap[it]?.taken = PreferenceHierarchy.TAKEN }
-
-        val takenTeachersId = takenTimetable.mapNotNull { it.teacher?.id }.toSet()
-        takenTeachersId.forEach { preference.preferredTeacherMap[it]?.taken = PreferenceHierarchy.TAKEN }
-
-        val takenDivisionsId = takenTimetable.mapNotNull { it.division?.id }.toSet()
-        takenDivisionsId.forEach { preference.preferredDivisionMap[it]?.taken = PreferenceHierarchy.TAKEN }
-    }
-
-    fun calculateByTeacher(preference: Preference, teacher: Teacher) {
-        val preferredSubjects = teacher.preferredSubjects.mapNotNull { it.id }.toSet()
-        preference.preferredSubjectMap.forEach { id, preferenceHierarchy ->
-            if (preferredSubjects.contains(id)) {
-                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS
-            } else {
-                preferenceHierarchy.preferredByTeacher = 0
-            }
-        }
-
-        val preferredDivisions = teacher.preferredDivisions.mapNotNull { it.id }.toSet()
-        preference.preferredDivisionMap.forEach { id, preferenceHierarchy ->
-            if (preferredDivisions.contains(id)) {
-                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS
-            } else {
-                preferenceHierarchy.preferredByTeacher = 0
-            }
-        }
-
-        val preferredPlaces = teacher.preferredPlaces.mapNotNull { it.id }.toSet()
-        preference.preferredPlaceMap.forEach { id, preferenceHierarchy ->
-            if (preferredPlaces.contains(id)) {
-                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS
-            } else {
-                preferenceHierarchy.preferredByTeacher = 0
-            }
-        }
-
-        preference.preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
-            val preferenceDataTimeForTeacher = teacher.preferenceDataTimeForTeachers
-                .find { teacherPreference -> teacherPreference.lesson?.id == lessonDayPreferenceElement.lessonId && teacherPreference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
-            if (preferenceDataTimeForTeacher != null) {
-                lessonDayPreferenceElement.preference.preferredByTeacher = preferenceDataTimeForTeacher.points
-            } else {
-                lessonDayPreferenceElement.preference.preferredByTeacher = 0
-            }
-        }
-    }
-
-    fun calculateByPlace(preference: Preference, place: Place) {
-        val preferredTeachers = place.preferredTeachers.mapNotNull { it.id }.toSet()
-        preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            if (preferredTeachers.contains(id)) {
-                preferenceHierarchy.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS
-            } else {
-                preferenceHierarchy.preferredByPlace = 0
-            }
-        }
-
-        val preferredDivisions = place.preferredDivisions.mapNotNull { it.id }.toSet()
-        preference.preferredDivisionMap.forEach { id, preferenceHierarchy ->
-            if (preferredDivisions.contains(id)) {
-                preferenceHierarchy.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS
-            } else {
-                preferenceHierarchy.preferredByPlace = 0
-            }
-        }
-
-        val preferredSubjects = place.preferredSubjects.mapNotNull { it.id }.toSet()
-        preference.preferredSubjectMap.forEach { id, preferenceHierarchy ->
-            if (preferredSubjects.contains(id)) {
-                preferenceHierarchy.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS
-            } else {
-                preferenceHierarchy.preferredByPlace = 0
-            }
-        }
-    }
-
-
-    fun calculateByDivision(preference: Preference, division: Division, idOfTooSmallPlaces: Set<Long>) {
-        val preferredTeachers = division.preferredTeachers.mapNotNull { it.id }.toSet()
-        preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            if (preferredTeachers.contains(id)) {
-                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFFERRED_POINTS
-            } else {
-                preferenceHierarchy.preferredByDivision = 0
-            }
-        }
-
-        val preferredPlaces = division.preferredPlaces.mapNotNull { it.id }.toSet()
-        preference.preferredPlaceMap.forEach { id, preferenceHierarchy ->
-            if (preferredPlaces.contains(id)) {
-                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFFERRED_POINTS
-            } else {
-                preferenceHierarchy.preferredByDivision = 0
-            }
-        }
-
-        val preferredSubjects = division.preferredSubjects.mapNotNull { it.id }.toSet()
-        preference.preferredSubjectMap.forEach { id, preferenceHierarchy ->
-            if (preferredSubjects.contains(id)) {
-                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFFERRED_POINTS
-            } else {
-                preferenceHierarchy.preferredByDivision = 0
-            }
-        }
-        calculateTooSmallPlace(preference, idOfTooSmallPlaces)
-    }
-
-    fun getIdOfTooSmallPlacesFromDatabase(division: Division): Set<Long> {
-        division.numberOfPeople?.let { numberOfPeople ->
-            return placeRepository.findIdByDivisionOwnerIdAndNumberOfSeatsLessThan(division.divisionOwner?.id, numberOfPeople)
-        }
-        return emptySet()
-    }
-
-    fun calculateTooSmallPlace(preference: Preference, idOfTooSmallPlaces: Set<Long>) {
-        preference.preferredPlaceMap.forEach { id, preferenceHierarchy ->
-            if (idOfTooSmallPlaces.contains(id)) {
-                preferenceHierarchy.tooSmallPlace = PreferenceHierarchy.TOO_SMALL_PLACE
-            } else {
-                preferenceHierarchy.tooSmallPlace = 0
-            }
-        }
-    }
-
-    fun calculateBySubject(preference: Preference, subject: Subject) {
-        val preferredTeachers = subject.preferredTeachers.mapNotNull { it.id }.toSet()
-        preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            if (preferredTeachers.contains(id)) {
-                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS
-            } else {
-                preferenceHierarchy.preferredBySubject = 0
-            }
-        }
-
-        val preferredDivisions = subject.preferredDivisions.mapNotNull { it.id }.toSet()
-        preference.preferredDivisionMap.forEach { id, preferenceHierarchy ->
-            if (preferredDivisions.contains(id)) {
-                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS
-            } else {
-                preferenceHierarchy.preferredBySubject = 0
-            }
-        }
-
-        val preferredPlaces = subject.preferredPlaces.mapNotNull { it.id }.toSet()
-        preference.preferredPlaceMap.forEach { id, preferenceHierarchy ->
-            if (preferredPlaces.contains(id)) {
-                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS
-            } else {
-                preferenceHierarchy.preferredBySubject = 0
-            }
-        }
-    }
-
-    fun calculateByLessonAndDayOfWeek(preference: Preference, preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacher>) {
-        preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            val preferenceDataTimeForTeacher = preferenceDataTimeForTeachers.find { it.teacher?.id == id }
-            if (preferenceDataTimeForTeacher != null) {
-                preferenceHierarchy.preferredByDataTime = preferenceDataTimeForTeacher.points
-            } else {
-                preferenceHierarchy.preferredByDataTime = 0
-            }
-        }
-    }
 
 }
