@@ -10,6 +10,6 @@ class PreferenceLessonAndDayOfWeekHierarchy : PreferenceHierarchy() {
     var taken = 0
 
     override var points = 0
-        get() = preferredByDivision + preferredByTeacher + preferredBySubject + preferredByPlace + preferredByTeacher + taken
+        get() = preferredByDivision + preferredBySubject + preferredByPlace + preferredByTeacher + taken
 
 }
