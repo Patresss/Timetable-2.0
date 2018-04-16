@@ -18,7 +18,8 @@
                 "event-type": "Wybierz typ wydarzenia",
                 "curriculums": "Wybierz plany nauczania",
                 "day-of-week": "Wybierz dzień tyogdnia",
-                "time": "Wybierz czas"
+                "time": "Wybierz czas",
+                "dayOfWeekAndLesson": "Wybierz dzień tygodnia i lekcje"
             },
             "type": {
                 "STUDENT": "Uczeń",

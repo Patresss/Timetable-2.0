@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter,
-    forwardRef, Input, NgModule, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, forwardRef,
+    Input, NgModule, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormControl, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {ListItem, MyException} from './multiselect.model';
@@ -32,8 +32,9 @@ const noop = () => {
 })
 export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor, OnChanges, Validator, DoCheck, AfterViewInit {
 
-    public static MAX_POSITIVE_HIERARCHY_POINTS = 10.0;
-    public static MAX_NEGATIVE_HIERARCHY_POINTS = -20.0;
+    public static MAX_POSITIVE_HIERARCHY_POINTS = 50.0;
+    public static MAX_NEGATIVE_HIERARCHY_POINTS = -50.0;
+    public static OPACITY_VALUE = 0.5;
 
     @Input()
     data: Array<ListItem>;
@@ -393,14 +394,34 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
         }
     }
 
-    getStyle(item: any) {
-        if (item.preferenceHierarchy.points > 0) {
-            return {'background': 'rgba(40, 167, 69, ' + item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_POSITIVE_HIERARCHY_POINTS + ')'};
-        } else if (item.preferenceHierarchy.points < 0) {
-            return {'background': 'rgba(220, 53, 69, ' + item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_NEGATIVE_HIERARCHY_POINTS / 5.0 + ')'};
-        } else {
-            return {}
+    getBackgroundStyle(item: any) {
+        if (this.preferenceHierarchy && item.preferenceHierarchy) {
+            let color = 'transparent';
+            if (item.preferenceHierarchy.points > 0) {
+                color = 'rgba(40, 167, 69, ';
+            } else if (item.preferenceHierarchy.points < 0) {
+                color = 'rgba(220, 53, 69, ';
+            }
+            color += item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_POSITIVE_HIERARCHY_POINTS * AngularMultiSelectComponent.OPACITY_VALUE + ')';
+            return {'background': color};
         }
+        return {}
+    }
+
+    getBorderStyle() {
+        if (this.preferenceHierarchy && this.settings.singleSelection) {
+            if (this.selectedItems && this.selectedItems[0] && this.selectedItems[0].preferenceHierarchy) {
+                const item = this.selectedItems[0];
+                let color = 'transparent';
+                if (item.preferenceHierarchy.points > 0) {
+                    color = 'rgba(40, 167, 69, ' + item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_POSITIVE_HIERARCHY_POINTS + ')';
+                } else if (item.preferenceHierarchy.points < 0) {
+                    color = 'rgba(220, 53, 69, ' + item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_NEGATIVE_HIERARCHY_POINTS + ')';
+                }
+                return {'border-left': '5px solid ' + color};
+            }
+        }
+        return {};
     }
 }
 

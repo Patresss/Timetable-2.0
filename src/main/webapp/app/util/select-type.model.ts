@@ -5,6 +5,8 @@ export class SelectType {
     constructor(public id: number,
                 public itemName: String,
                 public itemTranslate: String,
-                public value: any) {
+                public value: any = null,
+                public itemObject: any = null,
+                public preferenceHierarchy = null) {
     }
 }

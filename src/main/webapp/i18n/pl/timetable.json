@@ -35,7 +35,8 @@
             "period": "Okres czasu",
             "time": "Czas",
             "series": "Seria",
-            "day-of-week": "Dzień tygodnia"
+            "day-of-week": "Dzień tygodnia",
+            "dayOfWeekAndLesson": "Dzień tygodnia i lekcja"
         }
     }
 }

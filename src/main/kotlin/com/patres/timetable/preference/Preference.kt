@@ -1,6 +1,5 @@
 package com.patres.timetable.preference
 
-import com.patres.timetable.domain.*
 import com.patres.timetable.preference.hierarchy.*
 import java.time.DayOfWeek
 
@@ -18,17 +17,17 @@ class Preference(
     val preferredDivisionMap = divisionsId.map { it to PreferenceDivisionHierarchy() }.toMap().toSortedMap()
     val preferredLessonMap = lessonsId.map { it to PreferenceLessonHierarchy() }.toMap().toSortedMap()
     val preferredDayOfWeekMap = DayOfWeek.values().forEach { it.value to PreferenceDayOfWeekHierarchy() }
-    val preferredLessonAndDayOfWeekSet = HashSet<LessonDayPreferenceElement>()
+    val preferredLessonAndDayOfWeekSet = HashSet<LessonDayOfWeekPreferenceElement>()
 
     init {
         DayOfWeek.values().forEach { dayOfWeek ->
             lessonsId.forEach { lessonId ->
-                preferredLessonAndDayOfWeekSet.add(LessonDayPreferenceElement(dayOfWeek = dayOfWeek.value, lessonId = lessonId, preference = PreferenceLessonAndDayOfWeekHierarchy()))
+                preferredLessonAndDayOfWeekSet.add(LessonDayOfWeekPreferenceElement(dayOfWeek = dayOfWeek.value, lessonId = lessonId, preference = PreferenceLessonAndDayOfWeekHierarchy()))
             }
         }
     }
 
-    fun getPreferenceByLessonAndDay(dayOfWeek: Int, lessonId: Long): LessonDayPreferenceElement? {
+    fun getPreferenceByLessonAndDay(dayOfWeek: Int, lessonId: Long): LessonDayOfWeekPreferenceElement? {
         return preferredLessonAndDayOfWeekSet.find { it.dayOfWeek == dayOfWeek && it.lessonId == lessonId }
     }
 

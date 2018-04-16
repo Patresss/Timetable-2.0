@@ -117,7 +117,7 @@ open class PreferenceManager(
         val preferredPlaces = teacher.preferredPlaces.mapNotNull { it.id }.toSet()
         preference.preferredPlaceMap.forEach { id, preferenceHierarchy ->
             if (preferredPlaces.contains(id)) {
-                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS
+                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredByTeacher = 0
             }
@@ -128,7 +128,7 @@ open class PreferenceManager(
         val preferredDivisions = teacher.preferredDivisions.mapNotNull { it.id }.toSet()
         preference.preferredDivisionMap.forEach { id, preferenceHierarchy ->
             if (preferredDivisions.contains(id)) {
-                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS
+                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredByTeacher = 0
             }
@@ -139,7 +139,7 @@ open class PreferenceManager(
         val preferredSubjects = teacher.preferredSubjects.mapNotNull { it.id }.toSet()
         preference.preferredSubjectMap.forEach { id, preferenceHierarchy ->
             if (preferredSubjects.contains(id)) {
-                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFFERRED_POINTS
+                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredByTeacher = 0
             }
@@ -150,7 +150,7 @@ open class PreferenceManager(
         val preferredSubjects = place.preferredSubjects.mapNotNull { it.id }.toSet()
         preference.preferredSubjectMap.forEach { id, preferenceHierarchy ->
             if (preferredSubjects.contains(id)) {
-                preferenceHierarchy.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS
+                preferenceHierarchy.preferredByPlace = PreferenceHierarchy.PREFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredByPlace = 0
             }
@@ -161,7 +161,7 @@ open class PreferenceManager(
         val preferredDivisions = place.preferredDivisions.mapNotNull { it.id }.toSet()
         preference.preferredDivisionMap.forEach { id, preferenceHierarchy ->
             if (preferredDivisions.contains(id)) {
-                preferenceHierarchy.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS
+                preferenceHierarchy.preferredByPlace = PreferenceHierarchy.PREFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredByPlace = 0
             }
@@ -172,7 +172,7 @@ open class PreferenceManager(
         val preferredTeachers = place.preferredTeachers.mapNotNull { it.id }.toSet()
         preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
             if (preferredTeachers.contains(id)) {
-                preferenceHierarchy.preferredByPlace = PreferenceHierarchy.PREFFERRED_POINTS
+                preferenceHierarchy.preferredByPlace = PreferenceHierarchy.PREFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredByPlace = 0
             }
@@ -183,7 +183,7 @@ open class PreferenceManager(
         val preferredSubjects = division.preferredSubjects.mapNotNull { it.id }.toSet()
         preference.preferredSubjectMap.forEach { id, preferenceHierarchy ->
             if (preferredSubjects.contains(id)) {
-                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFFERRED_POINTS
+                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredByDivision = 0
             }
@@ -194,7 +194,7 @@ open class PreferenceManager(
         val preferredPlaces = division.preferredPlaces.mapNotNull { it.id }.toSet()
         preference.preferredPlaceMap.forEach { id, preferenceHierarchy ->
             if (preferredPlaces.contains(id)) {
-                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFFERRED_POINTS
+                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredByDivision = 0
             }
@@ -205,7 +205,7 @@ open class PreferenceManager(
         val preferredTeachers = division.preferredTeachers.mapNotNull { it.id }.toSet()
         preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
             if (preferredTeachers.contains(id)) {
-                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFFERRED_POINTS
+                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredByDivision = 0
             }
@@ -216,7 +216,7 @@ open class PreferenceManager(
         val preferredPlaces = subject.preferredPlaces.mapNotNull { it.id }.toSet()
         preference.preferredPlaceMap.forEach { id, preferenceHierarchy ->
             if (preferredPlaces.contains(id)) {
-                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS
+                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredBySubject = 0
             }
@@ -227,7 +227,7 @@ open class PreferenceManager(
         val preferredDivisions = subject.preferredDivisions.mapNotNull { it.id }.toSet()
         preference.preferredDivisionMap.forEach { id, preferenceHierarchy ->
             if (preferredDivisions.contains(id)) {
-                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS
+                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredBySubject = 0
             }
@@ -238,7 +238,7 @@ open class PreferenceManager(
         val preferredTeachers = subject.preferredTeachers.mapNotNull { it.id }.toSet()
         preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
             if (preferredTeachers.contains(id)) {
-                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFFERRED_POINTS
+                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFERRED_POINTS
             } else {
                 preferenceHierarchy.preferredBySubject = 0
             }

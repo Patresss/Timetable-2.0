@@ -23,6 +23,9 @@ import {PreferenceDependency} from '../../preference/preferecne-dependency.model
 import {Preference} from '../../preference/preferecne.model';
 import {PreferenceHierarchy} from '../../preference/preferecne-hierarchy.model';
 
+import {TranslateService} from '@ngx-translate/core';
+import {LessonDayOfWeekPreferenceElement} from '../../preference/lesson-day-of-week-element.model';
+
 @Component({
     selector: 'jhi-timetable-dialog',
     templateUrl: './timetable-dialog.component.html'
@@ -30,9 +33,11 @@ import {PreferenceHierarchy} from '../../preference/preferecne-hierarchy.model';
 export class TimetableDialogComponent implements OnInit {
 
     timetable: Timetable;
+    lessons = [];
     onlyLessonsToSelect = [];
     optionChooseTime = {id: null, itemName: '', itemTranslate: 'timetableApp.plan.choose.time', item: null, preferenceHierarchy: new PreferenceHierarchy()};
     isSaving: boolean;
+    dateDp: any;
 
     eventTypeSelectOption = [
         new SelectType(1, '', 'timetableApp.EventType.LESSON', EventType.LESSON),
@@ -59,6 +64,14 @@ export class TimetableDialogComponent implements OnInit {
         singleSelection: true,
         text: 'timetableApp.plan.choose.day-of-week',
         enableSearchFilter: false
+    };
+
+    dayOfWeekAndLessonSelectOption: SelectType[] = [];
+    selectedDayOfWeekAndLesson = [];
+    dayOfWeekAndLessonSelectSettings = {
+        singleSelection: true,
+        text: 'timetableApp.plan.choose.dayOfWeekAndLesson',
+        enableSearchFilter: true
     };
 
     schoolSelectOption = [];
@@ -131,7 +144,8 @@ export class TimetableDialogComponent implements OnInit {
         private lessonService: LessonService,
         private periodService: PeriodService,
         private preferenceService: PreferenceService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private translateService: TranslateService
     ) {
     }
 
@@ -143,6 +157,8 @@ export class TimetableDialogComponent implements OnInit {
         this.timetable.series = this.timetable.periodId != null;
         this.selectedEventType = this.eventTypeSelectOption.filter((entity) => entity.value === this.timetable.type);
         this.selectedDayOfWeek = this.dayOfWeekSelectOption.filter((entity) => entity.day === this.timetable.dayOfWeek);
+
+        this.loadSelectDayOfWeekAndLesson();
     }
 
     reloadSchool() {
@@ -236,10 +252,12 @@ export class TimetableDialogComponent implements OnInit {
     }
 
     private initLessons(entityList: any[]) {
+        this.lessons = entityList;
         this.onlyLessonsToSelect = SelectUtil.entityListToSelectList(entityList);
         this.loadLessonTimeOption();
+        this.loadDayOfWeekAndLessonSelectOption();
         this.selectedLesson = this.lessonSelectOption.filter((entity) => entity.id === this.timetable.lessonId);
-
+        this.loadSelectDayOfWeekAndLesson();
         this.currentLoadCounter++;
         this.changePreferenceAfterLoadEntities()
     }
@@ -280,6 +298,20 @@ export class TimetableDialogComponent implements OnInit {
         this.lessonSelectOption = lessonWithTimeChoose.concat(this.onlyLessonsToSelect)
     }
 
+    loadDayOfWeekAndLessonSelectOption() {
+        const translatedLesson = this.translateService.instant('timetableApp.timetable.lesson');
+        const translatedDayOfWeek = this.translateService.instant('timetableApp.timetable.day-of-week');
+        let id = 1;
+        for (const dayOfWeekSelect of this.dayOfWeekSelectOption) {
+            for (const lesson of this.lessons) {
+                const translatedCurrentDayOfWeek = this.translateService.instant(dayOfWeekSelect.itemTranslate);
+                const itemName = translatedDayOfWeek + ': ' + translatedCurrentDayOfWeek + '\t - ' + translatedLesson + ': ' + lesson.name;
+                const dayOfWeekAndLesson = new SelectType(id++, itemName, '', null, new LessonDayOfWeekPreferenceElement(dayOfWeekSelect.day.valueOf(), lesson.id));
+                this.dayOfWeekAndLessonSelectOption.push(dayOfWeekAndLesson);
+            }
+        }
+    }
+
 // ================================================================
 // On select/deselect
 // ================================================================
@@ -311,18 +343,24 @@ export class TimetableDialogComponent implements OnInit {
 
     onLessonSelect(item: any) {
         this.timetable.lessonId = item.id;
-        if (item.id) {
-            this.timetable.startTime = item.item.startTime;
-            this.timetable.endTime = item.item.endTime;
+        this.reloadLessonTime();
+        this.loadSelectDayOfWeekAndLesson();
+        this.changePreference()
+    }
+
+    private reloadLessonTime() {
+        if (this.timetable.lessonId && this.selectedLesson[0] && this.selectedLesson[0].item) {
+            this.timetable.startTime = this.selectedLesson[0].item.startTime;
+            this.timetable.endTime = this.selectedLesson[0].item.endTime;
         } else {
             this.timetable.startTime = null;
             this.timetable.endTime = null;
         }
-        this.changePreference()
     }
 
     onLessonDeSelect() {
         this.timetable.lessonId = null;
+        this.selectedDayOfWeekAndLesson = [];
         this.changePreference()
     }
 
@@ -366,10 +404,44 @@ export class TimetableDialogComponent implements OnInit {
 
     onDayOfWeekSelect(item: any) {
         this.timetable.dayOfWeek = item.day;
+        this.loadSelectDayOfWeekAndLesson();
+        this.changePreference();
     }
 
     onDayOfWeekDeSelect() {
         this.timetable.dayOfWeek = null;
+        this.selectedDayOfWeekAndLesson = [];
+        this.changePreference();
+    }
+
+    onDayOfWeekAndLessonSelect(item: any) {
+        this.onLessonSelect(item.itemObject.dayOfWeek);
+        this.onDayOfWeekSelect(item.itemObject.dayOfWeek);
+
+        this.timetable.dayOfWeek = item.itemObject.dayOfWeek;
+        this.timetable.lessonId = item.itemObject.lessonId;
+
+        this.selectedDayOfWeek = this.dayOfWeekSelectOption.filter((entity) => entity.id === this.timetable.dayOfWeek);
+        this.selectedLesson = this.lessonSelectOption.filter((entity) => entity.id === this.timetable.lessonId);
+        this.reloadLessonTime();
+        this.loadSelectDayOfWeekAndLesson();
+        this.changePreference();
+    }
+
+    onDayOfWeekAndLessonDeSelect() {
+        this.timetable.dayOfWeek = null;
+        this.timetable.lessonId = null;
+        this.selectedLesson = [];
+        this.selectedDayOfWeek = [];
+        this.changePreference();
+    }
+
+    private loadSelectDayOfWeekAndLesson() {
+        if (this.timetable.lessonId && this.timetable.dayOfWeek) {
+            this.selectedDayOfWeekAndLesson = this.getDayOfWeekAndLessonSelectOption(this.timetable.lessonId, this.timetable.dayOfWeek)
+        } else {
+            this.selectedDayOfWeekAndLesson = [];
+        }
     }
 
     changeSeries() {
@@ -407,6 +479,20 @@ export class TimetableDialogComponent implements OnInit {
         this.entitySelectSort(this.subjectSelectOption);
         this.updateSelectListsByPreference(preference.preferredDivisionMap, this.divisionSelectOption);
         this.entitySelectSort(this.divisionSelectOption);
+
+        for (const element of preference.preferredLessonAndDayOfWeekSet) {
+            this.updateDayOfWeekAndLessonSelectOption(element.lessonId, element.dayOfWeek, element.preference)
+        }
+        this.dayOfWeekAndLessonSelectSort(this.dayOfWeekAndLessonSelectOption);
+    }
+
+    private updateDayOfWeekAndLessonSelectOption(lessonId: number, dayOfWeek: number, preferenceToUpdate: any) {
+        this.getDayOfWeekAndLessonSelectOption(lessonId, dayOfWeek)
+            .forEach((option) => option.preferenceHierarchy = preferenceToUpdate)
+    }
+
+    private getDayOfWeekAndLessonSelectOption(lessonId: number, dayOfWeek: number): any[] {
+        return this.dayOfWeekAndLessonSelectOption.filter((option) => option.itemObject.lessonId === lessonId && option.itemObject.dayOfWeek === dayOfWeek)
     }
 
     updateSelectListsByPreference(profferedMap: Map<number, PreferenceHierarchy>, selectOption: any) {
@@ -420,12 +506,24 @@ export class TimetableDialogComponent implements OnInit {
         });
     }
 
+    private dayOfWeekAndLessonSelectSort(selectOption: any) {
+        selectOption.sort((a: any, b: any) => {
+            if (b.preferenceHierarchy.points === a.preferenceHierarchy.points) {
+                if (b.itemObject.dayOfWeek === a.itemObject.dayOfWeek) {
+                    return a.itemName.localeCompare(b.itemName);
+                }
+                return a.itemObject.dayOfWeek - b.itemObject.dayOfWeek;
+            }
+            return b.preferenceHierarchy.points - a.preferenceHierarchy.points;
+        });
+    }
+
     entitySelectSort(selectOption: any) {
         selectOption.sort((a: any, b: any) => {
             if (b.preferenceHierarchy.points === a.preferenceHierarchy.points) {
-                return a.itemName.localeCompare(b.itemName)
+                return a.itemName.localeCompare(b.itemName);
             }
-            return b.preferenceHierarchy.points - a.preferenceHierarchy.points
+            return b.preferenceHierarchy.points - a.preferenceHierarchy.points;
         });
     }
 

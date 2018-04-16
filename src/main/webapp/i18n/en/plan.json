@@ -18,7 +18,8 @@
                 "event-type": "Choose an event type",
                 "curriculums": "Choose curriculums",
                 "day-of-week": "Choose a day of week",
-                "time": "Choose a time"
+                "time": "Choose a time",
+                "dayOfWeekAndLesson": "Choose a day of week and lesson"
             },
             "type": {
                 "STUDENT": "Student",

@@ -1,6 +1,10 @@
 export class ListItem {
     id: Number;
-    itemName: String
+    itemName: String;
+    itemTranslate: String;
+    value: any = null;
+    itemObject: any = null;
+    preferenceHierarchy = null;
 }
 
 export class MyException {

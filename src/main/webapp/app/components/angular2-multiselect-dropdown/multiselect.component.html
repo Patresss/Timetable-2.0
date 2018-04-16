@@ -3,7 +3,7 @@
         <div *ngIf="blur" class="select-blur"></div>
         <div class="select-body">
             <div class="selected-list">
-                <div class="c-btn" (click)="toggleDropdown($event)" [ngClass]="{'disabled': settings.disabled}">
+                <div class="c-btn" (click)="toggleDropdown($event)" [ngClass]="{'disabled': settings.disabled}" [ngStyle]="getBorderStyle()">
                     <span *ngIf="selectedItems?.length == 0" jhiTranslate="{{settings.text}}">{{settings.text}}</span>
                     <span *ngIf="settings.singleSelection">
                 <span *ngFor="let item of selectedItems;trackBy: trackByFn;">
@@ -56,7 +56,7 @@
                                 </li>
                             </span>
                             <span *ngIf="preferenceHierarchy">
-                                <li *ngFor="let item of data | listFilter:filter; let i = index;" (click)="onItemClick(item,i,$event)" class="pure-checkbox" [ngStyle]="getStyle(item)">
+                                <li *ngFor="let item of data | listFilter:filter; let i = index;" (click)="onItemClick(item,i,$event)" class="pure-checkbox" [ngStyle]="getBackgroundStyle(item)">
                                         <input *ngIf="settings.showCheckbox" type="checkbox" [checked]="isSelected(item)" [disabled]="settings.limitSelection == selectedItems?.length && !isSelected(item)"/>
                                         <label *ngIf="!item.itemTranslate">{{item.itemName}}</label>
                                         <label *ngIf="item.itemTranslate !== ''">{{item.itemTranslate | translate}}</label>

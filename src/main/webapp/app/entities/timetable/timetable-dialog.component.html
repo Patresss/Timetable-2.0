@@ -123,8 +123,10 @@
             </div>
 
             <div class="form-group">
-                <label class="form-control-label" jhiTranslate="timetableApp.timetable.series" for="field_series">Series</label>
-                <input type="checkbox" (change)="changeSeries()" class="form-control" name="series" id="field_series" [(ngModel)]="timetable.series"/>
+                <div class="pure-checkbox">
+                    <input type="checkbox" (change)="changeSeries()" class="form-control" name="series" id="field_series" [(ngModel)]="timetable.series"/>
+                    <label class="form-control-label" jhiTranslate="timetableApp.timetable.series" for="field_series">Series</label>
+                </div>
             </div>
 
             <div *ngIf="timetable.series">
@@ -135,6 +137,16 @@
                             <label jhiTranslate="timetableApp.timetable.period" for="field_period">Period</label>
                             <jhi-angular2-multiselect [data]="periodSelectOption" [(ngModel)]="selectedPeriod" [settings]="periodSelectSettings"
                                                       styleClass="edit-entity-card-select" id="field_period" name="selectedPeriod" #type="ngModel" required [blur]="false" (onSelect)="onPeriodSelect($event)" (onDeSelect)="onPeriodDeSelect()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class='row'>
+                        <div class='col-md-12'>
+                            <label jhiTranslate="timetableApp.timetable.dayOfWeekAndLesson" for="field_dayOfWeekAndLesson">Day of week and Lesson</label>
+                            <jhi-angular2-multiselect [data]="dayOfWeekAndLessonSelectOption" [(ngModel)]="selectedDayOfWeekAndLesson" [settings]="dayOfWeekAndLessonSelectSettings" [preferenceHierarchy]="true"
+                                                      styleClass="edit-entity-card-select" id="field_dayOfWeekAndLesson" name="selectedDayOfWeekAndLesson" #type="ngModel" required [blur]="false" (onSelect)="onDayOfWeekAndLessonSelect($event)" (onDeSelect)="onDayOfWeekAndLessonDeSelect()">
                         </div>
                     </div>
                 </div>

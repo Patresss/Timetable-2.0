@@ -35,7 +35,8 @@
             "period": "Period",
             "time": "Time",
             "series": "Series",
-            "day-of-week": "Day of week"
+            "day-of-week": "Day of week",
+            "dayOfWeekAndLesson": "Day of week and lesson"
         }
     }
 }
