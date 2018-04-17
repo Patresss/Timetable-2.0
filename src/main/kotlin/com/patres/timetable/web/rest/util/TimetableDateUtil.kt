@@ -60,13 +60,13 @@ object TimetableDateUtil {
     private fun getDatesFromPeriod(period: Period): Set<LocalDate> {
         val dates = HashSet<LocalDate>()
         val intervals = period.intervalTimes
-        intervals.sortedBy { it.included }
+        intervals.sortedBy { it.includedState }
 
         intervals.forEach { interval ->
             if (interval.startDate != null && interval.endDate != null) {
                 var date = interval.startDate
                 while (date?.isBefore(interval.endDate) == true) {
-                    if (interval.included) {
+                    if (interval.includedState) {
                         dates.add(date)
                     } else {
                         dates.remove(date)
@@ -84,7 +84,7 @@ object TimetableDateUtil {
             val everyWeek = preferenceDependency.everyWeek
             val datesFromPeriod = getDatesFromPeriod(period)
             val availableDates = HashSet<LocalDate>()
-            val firstDateFromPeriod = period.intervalTimes.filter { it.included }.sortedBy { it.startDate }.first().startDate
+            val firstDateFromPeriod = period.intervalTimes.filter { it.includedState }.sortedBy { it.startDate }.first().startDate
             if (firstDateFromPeriod != null) {
                 var firstMonday = if (firstDateFromPeriod.dayOfWeek == DayOfWeek.MONDAY) {
                     firstDateFromPeriod

@@ -34,7 +34,7 @@ class Period(
 ) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
 
     fun getFirstDay(): LocalDate? {
-        return intervalTimes.filter { it.included }.sortedBy { it.startDate }.first().startDate
+        return intervalTimes.filter { it.includedState }.sortedBy { it.startDate }.first().startDate
     }
 
     override fun toString(): String {

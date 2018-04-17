@@ -181,7 +181,7 @@ open class TimetableResource(
 
         val periodIdIntervalMap = HashMap<Long, Interval>()
         val periodsId = timetablesWithPeriod.map { it.periodId }.toSet()
-        periodsId.filterNotNull().forEach { periodIdIntervalMap[it] = intervalRepository.findFirstByPeriodIdAndIncludedTrueOrderByStartDate(it) }
+        periodsId.filterNotNull().forEach { periodIdIntervalMap[it] = intervalRepository.findFirstByPeriodIdAndIncludedStateTrueOrderByStartDate(it) }
 
         timetablesWithPeriod = timetablesWithPeriod.filter { TimetableDateUtil.canAddByEveryDays(setOf(localDate), periodIdIntervalMap[it.periodId]?.startDate, it.startWithWeek, it.everyWeek) }
 

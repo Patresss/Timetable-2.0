@@ -90,7 +90,7 @@ name String required
 }
 
 entity Interval {
-included Boolean,
+includedState Boolean,
 startDate LocalDate,
 endDate LocalDate
 }

@@ -90,15 +90,15 @@ export class PeriodDialogComponent implements OnInit {
         }
     }
 
-    addIntervalTime(included: boolean) {
+    addIntervalTime(includedState: boolean) {
         const interval = new Interval();
-        interval.included = included;
+        interval.includedState = includedState;
         this.period.intervalTimes.push(interval);
     }
 
-    intervalsExists(included: boolean) {
+    intervalsExists(includedState: boolean) {
         for (const interval of this.period.intervalTimes) {
-            if (interval.included === included) {
+            if (interval.includedState === includedState) {
                 return true;
             }
         }

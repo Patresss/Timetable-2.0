@@ -300,13 +300,13 @@ open class TimetableResourceIntTest {
 
         val period1 = Period(name = "Semestr zimowy 2016/2017", divisionOwner = lo2)
         periodRepository.saveAndFlush(period1)
-        val interval = Interval(startDate = LocalDate.parse("2016-09-01"), endDate = LocalDate.parse("2017-02-01"), included = true, period = period1)
+        val interval = Interval(startDate = LocalDate.parse("2016-09-01"), endDate = LocalDate.parse("2017-02-01"), includedState = true, period = period1)
         intervalRepository.saveAndFlush(interval)
 
 
         val period2 = Period(name = "Semestr letni 2017", divisionOwner = lo2)
         periodRepository.saveAndFlush(period2)
-        val interval2 = Interval(startDate = LocalDate.parse("2017-02-02"), endDate = LocalDate.parse("2017-06-30"), included = true, period = period2)
+        val interval2 = Interval(startDate = LocalDate.parse("2017-02-02"), endDate = LocalDate.parse("2017-06-30"), includedState = true, period = period2)
         intervalRepository.saveAndFlush(interval2)
 
         val timetableWithPeriod = createEntity().apply {
@@ -367,7 +367,7 @@ open class TimetableResourceIntTest {
 
         val period1 = Period(name = "Semestr zimowy 2016/2017", divisionOwner = lo2)
         periodRepository.saveAndFlush(period1)
-        val interval = Interval(startDate = LocalDate.parse("2016-09-01"), endDate = LocalDate.parse("2017-02-01"), included = true, period = period1)
+        val interval = Interval(startDate = LocalDate.parse("2016-09-01"), endDate = LocalDate.parse("2017-02-01"), includedState = true, period = period1)
         intervalRepository.saveAndFlush(interval)
 
         val timetableWithEvery2WeekStartWith1Week = createEntity().apply {

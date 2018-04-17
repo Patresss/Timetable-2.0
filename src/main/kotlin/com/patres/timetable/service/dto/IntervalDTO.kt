@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 class IntervalDTO(
 
-    var included: Boolean = true,
+    var includedState: Boolean = true,
 
     var startDate: LocalDate? = null,
 

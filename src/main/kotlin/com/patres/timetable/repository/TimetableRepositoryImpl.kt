@@ -35,9 +35,9 @@ open class TimetableRepositoryImpl : TimetableCustomRepository {
         const val TAKEN_TIMETABLE_DATE_CRITERIA_SQL = """
                        ( timetable.date = '$DATE_PARAMETER_NAME' OR (
                         timetable.dayOfWeek = :dayOfWeek AND
-                       interval.included = true AND
+                       interval.includedState = true AND
                         '$DATE_PARAMETER_NAME' BETWEEN interval.startDate AND interval.endDate) AND
-                       interval.period NOT IN (SELECT intervalGlobal.period FROM Interval intervalGlobal WHERE intervalGlobal.included = false AND '$DATE_PARAMETER_NAME' BETWEEN intervalGlobal.startDate AND intervalGlobal.endDate) )
+                       interval.period NOT IN (SELECT intervalGlobal.period FROM Interval intervalGlobal WHERE intervalGlobal.includedState = false AND '$DATE_PARAMETER_NAME' BETWEEN intervalGlobal.startDate AND intervalGlobal.endDate) )
             """
     }
 

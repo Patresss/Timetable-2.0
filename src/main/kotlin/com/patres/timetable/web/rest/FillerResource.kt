@@ -371,7 +371,74 @@ open class FillerResource(
         urbanek = createTeacher(degree = "mgr", name = "Jadwiga", surname = "Urbanek", divisionOwner = lo2)
         gierlach = createTeacher(degree = "mgr", name = "Anna", surname = "Gierlach", divisionOwner = lo2, preferredSubjects = setOf(jPolski))
         klein = createTeacher(degree = "mgr", name = "Lucyna", surname = "Klein", divisionOwner = lo2, preferredSubjects = setOf(jPolski))
-        pernal = createTeacher(degree = "mgr", name = "Renata", surname = "Pernal", divisionOwner = lo2, preferredSubjects = setOf(jPolski))
+        val preferenceDataTimeForTeacherPernal = setOf(
+            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 1, points = -10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 1, points = 10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 1, points = 5),
+            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 1, points = 3),
+            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 1, points = 1),
+            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 1, points = -10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 1, points = -10),
+
+            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 2, points = -10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 2, points = 10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 2, points = 5),
+            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 2, points = 3),
+            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 2, points = 1),
+            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 2, points = -10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 2, points = -10),
+
+            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 3, points = -10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 3, points = 10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 3, points = 5),
+            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 3, points = 3),
+            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 3, points = 1),
+            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 3, points = -10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 3, points = -10),
+
+            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 4, points = -10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 4, points = 10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 4, points = 5),
+            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 4, points = 3),
+            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 4, points = 1),
+            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 4, points = -10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 4, points = -10),
+
+            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 5, points = -10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 5, points = 10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 5, points = 5),
+            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 5, points = 3),
+            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 5, points = 1),
+            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 5, points = -10),
+            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 5, points = -10),
+
+            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l5.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l6.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l7.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l8.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l9.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 6, points = -10000),
+
+            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l5.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l6.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l7.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l8.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l9.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 7, points = -10000)
+        )
+        pernal = createTeacher(degree = "mgr", name = "Renata", surname = "Pernal", divisionOwner = lo2, preferredSubjects = setOf(jPolski), preferenceDataTimeForTeachers = preferenceDataTimeForTeacherPernal)
         grodeckaZaremba = createTeacher(degree = "mgr", name = "Tamara", surname = "Grodecka-Zaremba", divisionOwner = lo2, preferredSubjects = setOf(jPolski))
         prajsnar = createTeacher(degree = "mgr", name = "Arkadiusz", surname = "Prajsnar", divisionOwner = lo2, preferredSubjects = setOf(jPolski))
         dynowski = createTeacher(degree = "mgr", name = "Lucjan", surname = "Dynowski", divisionOwner = lo2, preferredSubjects = setOf(historia, wiedzaOSpołeczeństwie))
@@ -492,7 +559,7 @@ open class FillerResource(
         // =====================================================
         // Period Interval
         // =====================================================
-        interval = IntervalDTO(startDate = LocalDate.parse("2018-02-26"), endDate = LocalDate.parse("2018-07-01"), included = true)
+        interval = IntervalDTO(startDate = LocalDate.parse("2018-02-26"), endDate = LocalDate.parse("2018-07-01"), includedState = true)
         semestLetniPeriod = PeriodDTO(name = "Semestr letni 2018", intervalTimes = setOf(interval), divisionOwnerId = lo2.id)
         semestLetniPeriod = periodService.save(semestLetniPeriod)
 

@@ -15,8 +15,8 @@ import javax.persistence.Table
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 class Interval(
 
-    @Column(name = "included")
-    var included: Boolean = true,
+    @Column(name = "included_state")
+    var includedState: Boolean = true,
 
     @Column(name = "start_date")
     var startDate: LocalDate? = null,
@@ -32,7 +32,7 @@ class Interval(
     override fun toString(): String {
         return "Interval{" +
             "id= '$id'" +
-            ", included='$included" +
+            ", includedState='$includedState" +
             ", startDate='$startDate'" +
             ", endDate='$endDate'" +
             "}"

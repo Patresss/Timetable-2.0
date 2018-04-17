@@ -15,7 +15,7 @@ open class IntervalMapper : EntityMapper<Interval, IntervalDTO>() {
     override fun toEntity(entityDto: IntervalDTO): Interval {
         return Interval()
             .apply {
-                included = entityDto.included
+                includedState = entityDto.includedState
                 startDate = entityDto.startDate
                 endDate = entityDto.endDate
                 entityDto.periodId?.let { period = periodRepository.getOne(entityDto.periodId) }
@@ -26,7 +26,7 @@ open class IntervalMapper : EntityMapper<Interval, IntervalDTO>() {
     override fun toDto(entity: Interval): IntervalDTO {
         return IntervalDTO()
             .apply {
-                included = entity.included
+                includedState = entity.includedState
                 startDate = entity.startDate
                 endDate = entity.endDate
                 periodId = intervalPeriodId(entity)

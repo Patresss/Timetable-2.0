@@ -14,6 +14,6 @@ interface IntervalRepository : JpaRepository<Interval, Long> {
 
     fun findByPeriodId(periodId: Long): Set<Interval>
 
-    fun findFirstByPeriodIdAndIncludedTrueOrderByStartDate(periodId: Long): Interval
+    fun findFirstByPeriodIdAndIncludedStateTrueOrderByStartDate(periodId: Long): Interval
 
 }

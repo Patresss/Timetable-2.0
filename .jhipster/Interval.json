@@ -10,7 +10,7 @@
     ],
     "fields": [
         {
-            "fieldName": "included",
+            "fieldName": "includedState",
             "fieldType": "Boolean"
         },
         {
