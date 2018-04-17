@@ -394,22 +394,23 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
         }
     }
 
-    getBackgroundStyle(item: any) {
+    getOptionHierarchyStyle(item: any) {
         let color = 'transparent';
         if (this.preferenceHierarchy && item.preferenceHierarchy) {
-            const colorAlpha = item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_POSITIVE_HIERARCHY_POINTS * AngularMultiSelectComponent.OPACITY_VALUE;
             if (item.preferenceHierarchy.points > 0) {
+                const colorAlpha = item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_POSITIVE_HIERARCHY_POINTS;
                 color = 'rgba(40, 167, 69, ' + colorAlpha + ')';
-                return {'background': color};
+                return {'border-left': '10px solid ' + color};
             } else if (item.preferenceHierarchy.points < 0) {
+                const colorAlpha = item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_NEGATIVE_HIERARCHY_POINTS;
                 color = 'rgba(220, 53, 69, ' + colorAlpha + ')';
-                return {'background': color};
+                return {'border-left': '10px solid ' + color};
             }
         }
-        return {};
+        return {'border-left': '10px solid ' + color};
     }
 
-    getBorderStyle() {
+    getSelectedHierarchyStyle() {
         if (this.preferenceHierarchy && this.settings.singleSelection) {
             if (this.selectedItems && this.selectedItems[0] && this.selectedItems[0].preferenceHierarchy) {
                 const item = this.selectedItems[0];
