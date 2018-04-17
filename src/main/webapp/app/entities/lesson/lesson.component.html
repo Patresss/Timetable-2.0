@@ -28,8 +28,8 @@
             <tr *ngFor="let lesson of lessons ;trackBy: trackId">
                 <td><a [routerLink]="['../lesson', lesson.id ]">{{lesson.id}}</a></td>
                 <td>{{lesson.name}}</td>
-                <td>{{lesson.startTime}}</td>
-                <td>{{lesson.endTime}}</td>
+                <td>{{lesson.startTime.getFormatted()}}</td>
+                <td>{{lesson.endTime.getFormatted()}}</td>
                 <td>
                     <div *ngIf="lesson.divisionOwnerId">
                         <a [routerLink]="['../division', lesson.divisionOwnerId  ]" >{{lesson.divisionOwnerName}}</a>
