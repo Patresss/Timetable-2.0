@@ -2,18 +2,18 @@
     "timetableApp": {
         "timetable" : {
             "home": {
-                "title": "Timetables",
-                "createLabel": "Dodaj Timetable",
-                "createOrEditLabel": "Dodaj lub edytuj: Timetable"
+                "title": "Wydarzenia",
+                "createLabel": "Dodaj wydarzenie",
+                "createOrEditLabel": "Dodaj lub edytuj: Wydarzenie"
             },
-            "created": "Utworzono nowy Timetable z identyfikatorem {{ param }}",
-            "updated": "Uaktualniono Timetable z identyfikatorem {{ param }}",
-            "deleted": "Usunięto Timetable z identyfikatorem {{ param }}",
+            "created": "Utworzono nowe wydarzenie z ID {{ param }}",
+            "updated": "Uaktualniono wydarzenie z ID {{ param }}",
+            "deleted": "Usunięto wydarzenie z ID {{ param }}",
             "delete": {
-                "question": "Czy na pewno chcesz usunąć Timetable {{ id }}?"
+                "question": "Czy na pewno chcesz usunąć wydarzenie {{ id }}?"
             },
             "detail": {
-                "title": "Timetable"
+                "title": "Wydarzneie"
             },
             "title": "Tytuł",
             "startTime": "Czas rozpoczęcia",

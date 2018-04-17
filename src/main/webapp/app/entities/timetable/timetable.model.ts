@@ -35,6 +35,7 @@ export class Timetable implements BaseEntity {
                 public dayOfWeek?: number,
                 public placeId?: number,
                 public placeName?: string,
+                public placeShortName?: string,
                 public subjectId?: number,
                 public subjectName?: string,
                 public subjectShortName?: string,

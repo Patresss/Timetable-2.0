@@ -84,22 +84,4 @@ class User : AbstractAuditingEntity(), Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var divisions: Set<Division> = HashSet()
 
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-        if (other == null || javaClass != other.javaClass) {
-            return false
-        }
-
-        val user = other as User?
-        return !(user!!.id == null || id == null) && id == user.id
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hashCode(id)
-    }
-
-
 }

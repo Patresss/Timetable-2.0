@@ -58,22 +58,4 @@ class Teacher(
 
     fun getFullName() = "${degree?: ""} ${name?: ""} ${surname?: ""}"
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-        if (other == null || javaClass != other.javaClass) {
-            return false
-        }
-        val teacher = other as Teacher?
-        if (teacher!!.id == null || id == null) {
-            return false
-        }
-        return id == teacher.id
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hashCode(id)
-    }
-
 }

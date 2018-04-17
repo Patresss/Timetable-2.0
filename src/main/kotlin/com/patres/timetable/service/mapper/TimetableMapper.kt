@@ -67,11 +67,11 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
         return TimetableDTO(
             title = entity.title,
             type = entity.type,
-
             teacherId = entity.teacher?.id,
             teacherFullName = entity.teacher?.getFullName(),
             placeId = entity.place?.id,
             placeName = entity.place?.name,
+            placeShortName = entity.place?.shortName,
             lessonId = entity.lesson?.id,
             lessonName = entity.lesson?.name,
             divisionId = entity.division?.id,

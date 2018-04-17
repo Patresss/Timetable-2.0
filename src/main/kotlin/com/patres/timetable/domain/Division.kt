@@ -99,24 +99,6 @@ class Division(
 
 ) : AbstractDivisionOwner(divisionOwner), Serializable {
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-        if (other == null || javaClass != other.javaClass) {
-            return false
-        }
-        val division = other as Division?
-        if (division!!.id == null || id == null) {
-            return false
-        }
-        return id == division.id
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hashCode(id)
-    }
-
     override fun toString(): String {
         return "Division{" +
             "id= $id" +

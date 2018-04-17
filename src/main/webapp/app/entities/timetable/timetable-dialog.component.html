@@ -188,11 +188,11 @@
                     <div class='row'>
                         <div class='col-md-6'>
                             <label class="form-control-label" jhiTranslate="timetableApp.timetable.everyWeek" for="field_everyWeek">Every Week</label>
-                            <input type="number" class="form-control" name="everyWeek" id="field_everyWeek" [(ngModel)]="timetable.everyWeek"/>
+                            <input type="number" class="form-control" name="everyWeek" id="field_everyWeek" [(ngModel)]="timetable.everyWeek" (input)="changePreference()" />
                         </div>
                         <div class='col-md-6'>
                             <label class="form-control-label" jhiTranslate="timetableApp.timetable.startWithWeek" for="field_startWithWeek">Start With Week</label>
-                            <input type="number" class="form-control" name="startWithWeek" id="field_startWithWeek" [(ngModel)]="timetable.startWithWeek"/>
+                            <input type="number" class="form-control" name="startWithWeek" id="field_startWithWeek" [(ngModel)]="timetable.startWithWeek" (input)="changePreference()" />
                         </div>
                     </div>
                 </div>

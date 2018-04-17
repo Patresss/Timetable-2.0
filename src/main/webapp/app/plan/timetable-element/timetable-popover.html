@@ -50,5 +50,5 @@
 
 
 <a class="event" [ngbPopover]="popContent" #popoverRef="ngbPopover" (click)="setCurrentPopoverOpen(popoverRef)">
-    {{timetable.subjectShortName}} ({{timetable.placeName}})
+    {{timetable.subjectShortName}} ({{timetable.placeShortName ? timetable.placeShortName : timetable.placeName}})
 </a>

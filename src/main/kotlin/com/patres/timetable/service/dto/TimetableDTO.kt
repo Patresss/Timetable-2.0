@@ -41,6 +41,8 @@ class TimetableDTO(
 
     var placeName: String? = null,
 
+    var placeShortName: String? = null,
+
     var subjectId: Long? = null,
 
     var subjectName: String? = null,

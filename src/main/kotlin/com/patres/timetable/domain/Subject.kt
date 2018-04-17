@@ -46,25 +46,4 @@ class Subject(
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferredPlaces: Set<Place> = HashSet()
 
-) : AbstractDivisionOwner(), Serializable {
-
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-        if (other == null || javaClass != other.javaClass) {
-            return false
-        }
-        val subject = other as Subject?
-        if (subject!!.id == null || id == null) {
-            return false
-        }
-        return id == subject.id
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hashCode(id)
-    }
-
-}
+) : AbstractDivisionOwner(), Serializable

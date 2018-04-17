@@ -37,24 +37,6 @@ class Period(
         return intervalTimes.filter { it.included }.sortedBy { it.startDate }.first().startDate
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-        if (other == null || javaClass != other.javaClass) {
-            return false
-        }
-        val period = other as Period?
-        if (period!!.id == null || id == null) {
-            return false
-        }
-        return id == period.id
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hashCode(id)
-    }
-
     override fun toString(): String {
         return "Period{" +
             "id='$id'" +

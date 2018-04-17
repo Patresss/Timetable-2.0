@@ -480,6 +480,8 @@ export class TimetableDialogComponent implements OnInit {
         this.updateSelectListsByPreference(preference.preferredDivisionMap, this.divisionSelectOption);
         this.entitySelectSort(this.divisionSelectOption);
 
+        this.entityLessonSelectSort(this.lessonSelectOption);
+
         for (const element of preference.preferredLessonAndDayOfWeekSet) {
             this.updateDayOfWeekAndLessonSelectOption(element.lessonId, element.dayOfWeek, element.preference)
         }
@@ -522,6 +524,23 @@ export class TimetableDialogComponent implements OnInit {
         selectOption.sort((a: any, b: any) => {
             if (b.preferenceHierarchy.points === a.preferenceHierarchy.points) {
                 return a.itemName.localeCompare(b.itemName);
+            }
+            return b.preferenceHierarchy.points - a.preferenceHierarchy.points;
+        });
+    }
+
+    entityLessonSelectSort(selectOption: any) {
+        selectOption.sort((a: any, b: any) => {
+            if (b.preferenceHierarchy.points === a.preferenceHierarchy.points) {
+                if (!isNaN(Number(a.itemName)) && isNaN(Number(b.itemName))) {
+                    return -1;
+                } else if (isNaN(Number(a.itemName)) && !isNaN(Number(b.itemName))) {
+                    return 1;
+                } else if (!isNaN(Number(a.itemName)) && !isNaN(Number(b.itemName))) {
+                    return Number(a.itemName) - Number(b.itemName)
+                } else {
+                    return a.itemName.localeCompare(b.itemName);
+                }
             }
             return b.preferenceHierarchy.points - a.preferenceHierarchy.points;
         });

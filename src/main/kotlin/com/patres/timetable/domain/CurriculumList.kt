@@ -27,24 +27,4 @@ class CurriculumList(
 
     divisionOwner: Division? = null
 
-) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-        if (other == null || javaClass != other.javaClass) {
-            return false
-        }
-        val curriculumList = other as CurriculumList?
-        if (curriculumList!!.id == null || id == null) {
-            return false
-        }
-        return id == curriculumList.id
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hashCode(id)
-    }
-
-}
+) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable

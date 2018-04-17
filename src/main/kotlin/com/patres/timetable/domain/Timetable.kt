@@ -93,22 +93,4 @@ class Timetable(
         endTime = getSecondsFromString(time)
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-        if (other == null || javaClass != other.javaClass) {
-            return false
-        }
-        val timetable = other as Timetable?
-        if (timetable!!.id == null || id == null) {
-            return false
-        }
-        return id == timetable.id
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hashCode(id)
-    }
-
 }

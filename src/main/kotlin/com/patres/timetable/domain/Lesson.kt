@@ -57,23 +57,4 @@ class Lesson(
     fun setEndTimeHHmmFormatted(time: String) {
         endTime = getSecondsFromString(time)
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-        if (other == null || javaClass != other.javaClass) {
-            return false
-        }
-        val lesson = other as Lesson?
-        if (lesson!!.id == null || id == null) {
-            return false
-        }
-        return id == lesson.id
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hashCode(id)
-    }
-
 }
