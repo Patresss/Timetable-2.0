@@ -7,9 +7,11 @@ class PreferenceLessonAndDayOfWeekHierarchy : PreferenceHierarchy() {
     var preferredByTeacher = 0
     var preferredByDivision = 0
 
-    var taken = 0
+    var takenByPlace = 0
+    var takenByTeacher = 0
+    var takenByDivision = 0
 
     override var points = 0
-        get() = preferredByDivision + preferredBySubject + preferredByPlace + preferredByTeacher + taken
+        get() = preferredByDivision + preferredBySubject + preferredByPlace + preferredByTeacher + takenByPlace + takenByTeacher + takenByDivision
 
 }

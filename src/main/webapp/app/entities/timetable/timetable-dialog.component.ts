@@ -415,9 +415,6 @@ export class TimetableDialogComponent implements OnInit {
     }
 
     onDayOfWeekAndLessonSelect(item: any) {
-        this.onLessonSelect(item.itemObject.dayOfWeek);
-        this.onDayOfWeekSelect(item.itemObject.dayOfWeek);
-
         this.timetable.dayOfWeek = item.itemObject.dayOfWeek;
         this.timetable.lessonId = item.itemObject.lessonId;
 

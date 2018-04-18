@@ -18,30 +18,30 @@ interface TimetableRepository : DivisionOwnerRepository<Timetable>, TimetableCus
 
     @Query("select distinct timetable from Timetable timetable left join fetch timetable.period  period left join fetch period.intervalTimes interval left join fetch timetable.teacher teacher WHERE teacher.id = :teacherId AND (timetable.date = :date OR (interval.includedState is true AND :date BETWEEN interval.startDate AND interval.endDate)  AND interval.period NOT IN (SELECT interval.period from interval WHERE interval.includedState is false AND :date BETWEEN interval.startDate AND interval.endDate))")
     fun findByTeacherIdAndDateFromPeriod(@Param("date") date: LocalDate, @Param("teacherId") teacherId: Long?): Set<Timetable>
-//
-//    @Query("""
-//        select distinct
-//            timetable
-//        from
-//            Timetable timetable
-//            left join fetch timetable.period period
-//            left join fetch period.intervalTimes interval
-//            left join fetch timetable.lesson lesson
-//        WHERE
-//            divisionOwner.id = :divisionOwnerId AND
-//            period.id = :periodId AND (
-//                teacher.id = :teacherId OR
-//                division.id = :divisionId OR
-//                place.id = :placeId OR
-//                subject.id = :subjectId
-//                )""")
-//    fun findTakenByPeriod(
-//        @Param("divisionOwnerId") divisionOwnerId: Long?,
-//        @Param("periodId") periodId: Long?,
-//        @Param("teacherId") teacherId: Long?,
-//        @Param("divisionId") divisionId: Long?,
-//        @Param("placeId") placeId: Long?,
-//        @Param("subjectId") subjectId: Long?
-//    ): Set<Timetable>
+
+    @Query("""
+        select distinct
+            timetable
+        from
+            Timetable timetable
+            left join fetch timetable.period period
+            left join fetch period.intervalTimes interval
+            left join fetch timetable.lesson lesson
+        WHERE
+            timetable.divisionOwner.id = :divisionOwnerId AND
+            period.id = :periodId AND (
+                timetable.teacher.id = :teacherId OR
+                timetable.division.id = :divisionId OR
+                timetable.place.id = :placeId OR
+                timetable.subject.id = :subjectId)
+                """)
+    fun findTakenByPeriod(
+        @Param("divisionOwnerId") divisionOwnerId: Long?,
+        @Param("periodId") periodId: Long?,
+        @Param("teacherId") teacherId: Long?,
+        @Param("divisionId") divisionId: Long?,
+        @Param("placeId") placeId: Long?,
+        @Param("subjectId") subjectId: Long?
+    ): Set<Timetable>
 
 }
