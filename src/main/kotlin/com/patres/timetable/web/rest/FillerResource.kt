@@ -7,6 +7,7 @@ import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import com.patres.timetable.service.*
 import com.patres.timetable.service.dto.*
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
+import com.patres.timetable.service.dto.preference.PreferenceSubjectByTeacherDTO
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.transaction.annotation.Transactional
@@ -695,6 +696,13 @@ open class FillerResource(
         createCurriculum(division = class1aGenerate, subject = godzWych, teacher = czuba, place = p22, numberOfActivities = 1)
         createCurriculum(division = class1aGenerate, subject = wychowanieFizyczne, teacher = wilk, place = pds, numberOfActivities = 2)
 
+
+
+
+        // =====================================================
+        // Preference
+        // =====================================================
+
     }
 
 
@@ -709,7 +717,8 @@ open class FillerResource(
     }
 
     private fun createTeacher(degree: String, name: String, surname: String, shortName: String? = null, divisionOwner: DivisionDTO, preferredSubjects: Set<SubjectDTO> = emptySet(), preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacherDTO> = emptySet()): TeacherDTO {
-        val teacher = TeacherDTO(degree = degree, name = name, surname = surname, divisionOwnerId = divisionOwner.id, preferredSubjects = preferredSubjects, preferenceDataTimeForTeachers = preferenceDataTimeForTeachers)
+        val preferenceSubjectByTeacher = preferredSubjects.map { PreferenceSubjectByTeacherDTO(subjectId = it.id, points = 10) }.toSet()
+        val teacher = TeacherDTO(degree = degree, name = name, surname = surname, divisionOwnerId = divisionOwner.id, preferenceSubjectByTeacher = preferenceSubjectByTeacher, preferenceDataTimeForTeachers = preferenceDataTimeForTeachers)
         return teacherService.save(teacher)
     }
 

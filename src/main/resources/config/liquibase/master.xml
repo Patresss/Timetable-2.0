@@ -17,6 +17,7 @@
     <include file="config/liquibase/changelog/20180226141800_added_entity_CurriculumList.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180226141400_added_entity_Curriculum.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180410222700_added_entity_PreferenceDataTimeForTeacher.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180417220320_added_entity_PreferenceSubjectByTeacher.xml" relativeToChangelogFile="false"/>
 
     <include file="config/liquibase/changelog/20170731144135_added_entity_constraints_Division.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170731144136_added_entity_constraints_Property.xml" relativeToChangelogFile="false"/>
@@ -31,4 +32,5 @@
     <include file="config/liquibase/changelog/20180226141600_added_entity_constraints_Curriculum.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180226141600_added_entity_constraints_Curriculum.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180410222700_added_entity_contstraints_PreferenceDataTimeForTeacher.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180417220310_added_entity_contstraints_PreferenceSubjectByTeacher.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

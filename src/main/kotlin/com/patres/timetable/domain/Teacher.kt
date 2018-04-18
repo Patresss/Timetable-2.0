@@ -2,6 +2,7 @@ package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
+import com.patres.timetable.domain.preference.PreferenceSubjectByTeacher
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -33,10 +34,9 @@ class Teacher(
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var timetables: Set<Timetable> = HashSet(),
 
-    @ManyToMany
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "teacher", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "teacher_preferred_subject", joinColumns = [(JoinColumn(name = "teachers_id", referencedColumnName = "id"))], inverseJoinColumns = [(JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id"))])
-    var preferredSubjects: Set<Subject> = HashSet(),
+    var preferenceSubjectByTeacher: Set<PreferenceSubjectByTeacher> = HashSet(),
 
     @ManyToMany(mappedBy = "preferredTeachers")
     @JsonIgnore
@@ -48,7 +48,7 @@ class Teacher(
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferredPlaces: Set<Place> = HashSet(),
 
-    @OneToMany(cascade = [(CascadeType.ALL)], orphanRemoval = true, mappedBy = "teacher")
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "teacher", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacher> = HashSet(),
 
@@ -56,6 +56,6 @@ class Teacher(
 
 ) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
 
-    fun getFullName() = "${degree?: ""} ${name?: ""} ${surname?: ""}"
+    fun getFullName() = "${degree ?: ""} ${name ?: ""} ${surname ?: ""}"
 
 }

@@ -321,36 +321,4 @@ open class LessonResourceIntTest {
         assertThat(lessonList).hasSize(databaseSizeBeforeDelete - 1)
     }
 
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun equalsVerifier() {
-        val lesson1 = createEntity()
-        lesson1.id = 1L
-        val lesson2 = createEntity()
-        lesson2.id = lesson1.id
-        assertThat(lesson1).isEqualTo(lesson2)
-        lesson2.id = 2L
-        assertThat(lesson1).isNotEqualTo(lesson2)
-        lesson1.id = null
-        assertThat(lesson1).isNotEqualTo(lesson2)
-    }
-
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun dtoEqualsVerifier() {
-        val lessonDTO1 = createEntityDto()
-        lessonDTO1.id = 1L
-        val lessonDTO2 = createEntityDto()
-        assertThat(lessonDTO1).isNotEqualTo(lessonDTO2)
-        lessonDTO2.id = lessonDTO1.id
-        assertThat(lessonDTO1).isEqualTo(lessonDTO2)
-        lessonDTO2.id = 2L
-        assertThat(lessonDTO1).isNotEqualTo(lessonDTO2)
-        lessonDTO1.id = null
-        assertThat(lessonDTO1).isNotEqualTo(lessonDTO2)
-    }
-
-
 }

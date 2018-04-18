@@ -40,6 +40,8 @@ open class PreferenceManager(
             val preferenceDataTimeForTeacherFromDatabase = getPreferenceDataTimeForTeacherFromDatabase(dayOfWeek, lessonId)
             calculateByLessonAndDayOfWeek(preference, preferenceDataTimeForTeacherFromDatabase)
         }
+
+       // calculateTakenLessonAndDayOfWeek(preference, getTakenTimetableForLessonAndDayOfWeekFromDatabase(preferenceDependency))
     }
 
     fun calculateTaken(preference: Preference, takenTimetable: Set<Timetable>) {
@@ -52,6 +54,15 @@ open class PreferenceManager(
         val takenDivisionsId = takenTimetable.mapNotNull { it.division?.id }.toSet()
         takenDivisionsId.forEach { preference.preferredDivisionMap[it]?.taken = PreferenceHierarchy.TAKEN }
     }
+
+//    // TODO
+//    fun calculateTakenLessonAndDayOfWeek(preference: Preference, preferenceDependency: PreferenceDependency, takenTimetable: Set<Timetable>) {
+//        preference.preferredLessonAndDayOfWeekSet.forEach { preferredLessonAndDayOfWeek ->
+//            val timetableByLessonAndDayOfWeek = takenTimetable.filter { timetable -> timetable.dayOfWeek == preferredLessonAndDayOfWeek.dayOfWeek && timetable.lesson?.id == preferredLessonAndDayOfWeek.lessonId }
+//            if (timetableByLessonAndDayOfWeek.any { it.teacher?.id == preferenceDependency.teacher?.id })
+//                preferredLessonAndDayOfWeek.preference.preferredByTeacher = PreferenceHierarchy.TAKEN
+//        }
+//    }
 
     fun calculateByTeacher(preference: Preference, teacher: Teacher) {
         calculateSubjectsByTeacher(preference, teacher)
@@ -136,10 +147,10 @@ open class PreferenceManager(
     }
 
     private fun calculateSubjectsByTeacher(preference: Preference, teacher: Teacher) {
-        val preferredSubjects = teacher.preferredSubjects.mapNotNull { it.id }.toSet()
         preference.preferredSubjectMap.forEach { id, preferenceHierarchy ->
-            if (preferredSubjects.contains(id)) {
-                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFERRED_POINTS
+            val preferenceSubject = teacher.preferenceSubjectByTeacher.find { it.subject?.id == id }
+            if (preferenceSubject != null) {
+                preferenceHierarchy.preferredByTeacher = preferenceSubject.points
             } else {
                 preferenceHierarchy.preferredByTeacher = 0
             }
@@ -235,7 +246,7 @@ open class PreferenceManager(
     }
 
     private fun calculateTeachersBySubject(preference: Preference, subject: Subject) {
-        val preferredTeachers = subject.preferredTeachers.mapNotNull { it.id }.toSet()
+        val preferredTeachers = subject.preferenceSubjectByTeacher.mapNotNull { it.id }.toSet()
         preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
             if (preferredTeachers.contains(id)) {
                 preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFERRED_POINTS
@@ -261,6 +272,18 @@ open class PreferenceManager(
         }
         return timetablesInThisTime.filter { it.period == null || TimetableDateUtil.canAddByEveryDays(dates, it.period?.getFirstDay(), it.startWithWeek, it.everyWeek) }.toSet()
     }
+//
+//    private fun getTakenTimetableForLessonAndDayOfWeekFromDatabase(preferenceDependency: PreferenceDependency): Set<Timetable> {
+//        preferenceDependency.period?.id?.let {periodId ->
+//            val dates = TimetableDateUtil.getAllDatesByPreferenceDependency(preferenceDependency)
+//            var timetablesInThisTime = timetableRepository.findTakenByPeriod(preferenceDependency.divisionOwnerId, periodId, preferenceDependency.teacher?.id, preferenceDependency.division?.id, preferenceDependency.place?.id,  preferenceDependency.subject?.id)
+//            if (preferenceDependency.notTimetableId != null) {
+//                timetablesInThisTime = timetablesInThisTime.filter { it.id != preferenceDependency.notTimetableId }.toSet()
+//            }
+//            return timetablesInThisTime.filter { it.period == null || TimetableDateUtil.canAddByEveryDays(dates, it.period?.getFirstDay(), it.startWithWeek, it.everyWeek) }.toSet()
+//        }
+//      return emptySet()
+//    }
 
     private fun getPreferenceDataTimeForTeacherFromDatabase(dayOfWeek: Int, lessonId: Long): Set<PreferenceDataTimeForTeacher> {
         return preferenceDataTimeForTeacherRepository.findByDayOfWeekAndLessonId(dayOfWeek, lessonId)

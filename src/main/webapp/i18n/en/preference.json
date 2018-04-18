@@ -2,6 +2,8 @@
     "timetableApp": {
         "preference": {
             "preferenceLessonAndDate" : "Preference lesson and date",
+            "preferredSubjects" : "Preferred subjects",
+            "preference" : "Preference",
             "hierarchy": {
                 "10": "10",
                 "5": "5",

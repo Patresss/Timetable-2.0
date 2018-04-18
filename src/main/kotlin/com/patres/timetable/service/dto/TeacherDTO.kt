@@ -2,6 +2,7 @@ package com.patres.timetable.service.dto
 
 
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
+import com.patres.timetable.service.dto.preference.PreferenceSubjectByTeacherDTO
 import java.io.Serializable
 import java.util.*
 import javax.validation.constraints.NotNull
@@ -20,7 +21,7 @@ class TeacherDTO(
 
     var fullName: String? = null,
 
-    var preferredSubjects: Set<SubjectDTO> = HashSet(),
+    var preferenceSubjectByTeacher: Set<PreferenceSubjectByTeacherDTO> = HashSet(),
 
     var preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacherDTO> = HashSet(),
 

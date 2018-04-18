@@ -16,7 +16,7 @@
         <td>{{preferenceDataTimeByLesson.lesson.name}}</td>
         <td>
             <select class="form-control" name="preference_{{preferenceDataTimeByLesson.preference[1].dayOfWeek}}{{preferenceDataTimeByLesson.lesson.name}}" [(ngModel)]="preferenceDataTimeByLesson.preference[1].points">
-                <option *ngFor="let preferenceDataTime of preferenceDataTimeSelectOption" [ngValue]="preferenceDataTime.value" jhiTranslate="{{preferenceDataTime.itemTranslate}}">{{preferenceDataTime.value}}</option>
+                <option  *ngFor="let preferenceDataTime of preferenceDataTimeSelectOption" [ngValue]="preferenceDataTime.value" jhiTranslate="{{preferenceDataTime.itemTranslate}}">{{preferenceDataTime.value}}</option>
             </select>
         </td>
         <td>

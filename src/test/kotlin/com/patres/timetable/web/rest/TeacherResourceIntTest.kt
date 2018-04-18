@@ -319,36 +319,4 @@ open class TeacherResourceIntTest {
         assertThat(teacherList).hasSize(databaseSizeBeforeDelete - 1)
     }
 
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun equalsVerifier() {
-        val teacher1 = createEntity()
-        teacher1.id = 1L
-        val teacher2 = createEntity()
-        teacher2.id = teacher1.id
-        assertThat(teacher1).isEqualTo(teacher2)
-        teacher2.id = 2L
-        assertThat(teacher1).isNotEqualTo(teacher2)
-        teacher1.id = null
-        assertThat(teacher1).isNotEqualTo(teacher2)
-    }
-
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun dtoEqualsVerifier() {
-        val teacherDTO1 = createEntityDto()
-        teacherDTO1.id = 1L
-        val teacherDTO2 = createEntityDto()
-        assertThat(teacherDTO1).isNotEqualTo(teacherDTO2)
-        teacherDTO2.id = teacherDTO1.id
-        assertThat(teacherDTO1).isEqualTo(teacherDTO2)
-        teacherDTO2.id = 2L
-        assertThat(teacherDTO1).isNotEqualTo(teacherDTO2)
-        teacherDTO1.id = null
-        assertThat(teacherDTO1).isNotEqualTo(teacherDTO2)
-    }
-
-
 }

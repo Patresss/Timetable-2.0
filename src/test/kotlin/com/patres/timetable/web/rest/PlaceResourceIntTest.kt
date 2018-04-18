@@ -308,36 +308,4 @@ open class PlaceResourceIntTest {
         assertThat(placeList).hasSize(databaseSizeBeforeDelete - 1)
     }
 
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun equalsVerifier() {
-        val place1 = createEntity()
-        place1.id = 1L
-        val place2 = createEntity()
-        place2.id = place1.id
-        assertThat(place1).isEqualTo(place2)
-        place2.id = 2L
-        assertThat(place1).isNotEqualTo(place2)
-        place1.id = null
-        assertThat(place1).isNotEqualTo(place2)
-    }
-
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun dtoEqualsVerifier() {
-        val placeDTO1 = createEntityDto()
-        placeDTO1.id = 1L
-        val placeDTO2 = createEntityDto()
-        assertThat(placeDTO1).isNotEqualTo(placeDTO2)
-        placeDTO2.id = placeDTO1.id
-        assertThat(placeDTO1).isEqualTo(placeDTO2)
-        placeDTO2.id = 2L
-        assertThat(placeDTO1).isNotEqualTo(placeDTO2)
-        placeDTO1.id = null
-        assertThat(placeDTO1).isNotEqualTo(placeDTO2)
-    }
-
-
 }

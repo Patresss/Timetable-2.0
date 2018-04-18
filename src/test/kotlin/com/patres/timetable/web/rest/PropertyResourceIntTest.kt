@@ -273,36 +273,4 @@ open class PropertyResourceIntTest {
         assertThat(propertyList).hasSize(databaseSizeBeforeDelete - 1)
     }
 
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun equalsVerifier() {
-        val property1 = createEntity()
-        property1.id = 1L
-        val property2 = createEntity()
-        property2.id = property1.id
-        assertThat(property1).isEqualTo(property2)
-        property2.id = 2L
-        assertThat(property1).isNotEqualTo(property2)
-        property1.id = null
-        assertThat(property1).isNotEqualTo(property2)
-    }
-
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun dtoEqualsVerifier() {
-        val propertyDTO1 = createEntityDto()
-        propertyDTO1.id = 1L
-        val propertyDTO2 = createEntityDto()
-        assertThat(propertyDTO1).isNotEqualTo(propertyDTO2)
-        propertyDTO2.id = propertyDTO1.id
-        assertThat(propertyDTO1).isEqualTo(propertyDTO2)
-        propertyDTO2.id = 2L
-        assertThat(propertyDTO1).isNotEqualTo(propertyDTO2)
-        propertyDTO1.id = null
-        assertThat(propertyDTO1).isNotEqualTo(propertyDTO2)
-    }
-
-
 }

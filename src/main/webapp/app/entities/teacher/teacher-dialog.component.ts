@@ -16,7 +16,7 @@ import {ResponseWrapper} from '../../shared';
 import {Lesson, LessonService} from '../lesson';
 import {SelectType} from '../../util/select-type.model';
 import {DayOfWeek} from '../timetable/timetable.model';
-import {PreferenceForDataTimeForTeacherModel} from '../../preference/preference-for-data-time-for-teacher.model';
+import {Preference} from '../../preference/preferecne.model';
 
 @Component({
     selector: 'jhi-teacher-dialog',
@@ -34,6 +34,7 @@ export class TeacherDialogComponent implements OnInit {
     places: Place[];
 
     preferenceDataTimeByLessonList = [];
+    preferenceSelectTypes = Preference.preferenceSelectTypes;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -81,15 +82,10 @@ export class TeacherDialogComponent implements OnInit {
                     const numberDayOfWeek = Number(dayOfWeek);
                     if (!isNaN(numberDayOfWeek)) {
                         const preferenceForDataTimeModals = this.teacher.preferenceDataTimeForTeachers
-                                    .filter((preference) => preference.lessonId === preferenceDataTimeByLesson.lesson.id && preference.dayOfWeek === numberDayOfWeek);
-                        let preferenceForDataTime;
+                            .filter((preference) => preference.lessonId === preferenceDataTimeByLesson.lesson.id && preference.dayOfWeek === numberDayOfWeek);
                         if (preferenceForDataTimeModals.length > 0) {
-                            preferenceForDataTime = preferenceForDataTimeModals[0];
-                        } else {
-                            preferenceForDataTime = new PreferenceForDataTimeForTeacherModel(null, this.teacher.id, preferenceDataTimeByLesson.lesson.id, numberDayOfWeek, 0);
-                            this.teacher.preferenceDataTimeForTeachers.push(preferenceForDataTime);
+                            preferenceDataTimeByLesson.preference[numberDayOfWeek] = preferenceForDataTimeModals[0];
                         }
-                        preferenceDataTimeByLesson.preference[numberDayOfWeek] = preferenceForDataTime;
                     }
                 }
             }
@@ -148,6 +144,8 @@ export class TeacherDialogComponent implements OnInit {
         }
         return option;
     }
+
+
 }
 
 @Component({

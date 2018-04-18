@@ -503,36 +503,4 @@ open class TimetableResourceIntTest {
         assertThat(timetableList).hasSize(databaseSizeBeforeDelete - 1)
     }
 
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun equalsVerifier() {
-        val timetable1 = createEntity()
-        timetable1.id = 1L
-        val timetable2 = createEntity()
-        timetable2.id = timetable1.id
-        assertThat(timetable1).isEqualTo(timetable2)
-        timetable2.id = 2L
-        assertThat(timetable1).isNotEqualTo(timetable2)
-        timetable1.id = null
-        assertThat(timetable1).isNotEqualTo(timetable2)
-    }
-
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun dtoEqualsVerifier() {
-        val timetableDTO1 = createEntityDto()
-        timetableDTO1.id = 1L
-        val timetableDTO2 = createEntityDto()
-        assertThat(timetableDTO1).isNotEqualTo(timetableDTO2)
-        timetableDTO2.id = timetableDTO1.id
-        assertThat(timetableDTO1).isEqualTo(timetableDTO2)
-        timetableDTO2.id = 2L
-        assertThat(timetableDTO1).isNotEqualTo(timetableDTO2)
-        timetableDTO1.id = null
-        assertThat(timetableDTO1).isNotEqualTo(timetableDTO2)
-    }
-
-
 }

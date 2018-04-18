@@ -543,21 +543,6 @@ open class UserResourceIntTest {
                 .andExpect(jsonPath("$").value(containsInAnyOrder("ROLE_SCHOOL_ADMIN", "ROLE_ADMIN", "ROLE_TEACHER", "ROLE_TIMETABLE_WATCHER")))
     }
 
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun testUserEquals() {
-        val user1 = User()
-        user1.id = 1L
-        val user2 = User()
-        user2.id = user1.id
-        assertThat(user1).isEqualTo(user2)
-        user2.id = 2L
-        assertThat(user1).isNotEqualTo(user2)
-        user1.id = null
-        assertThat(user1).isNotEqualTo(user2)
-    }
-
 
     @Test
     open fun testUserDTOtoUser() {

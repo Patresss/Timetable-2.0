@@ -260,38 +260,4 @@ open class PeriodResourceIntTest {
         assertThat(periodList).hasSize(databaseSizeBeforeDelete - 1)
     }
 
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun equalsVerifier() {
-        val period1 = createEntity()
-        period1.id = 1L
-        val period2 = createEntity()
-        period2.id = period1.id
-        assertThat(period1).isEqualTo(period2)
-        period2.id = 2L
-        assertThat(period1).isNotEqualTo(period2)
-        period1.id = null
-        assertThat(period1).isNotEqualTo(period2)
-    }
-
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun dtoEqualsVerifier() {
-        val periodDTO1 = createEntityDto()
-        periodDTO1.id = 1L
-        val periodDTO2 = createEntityDto()
-        assertThat(periodDTO1).isNotEqualTo(periodDTO2)
-        periodDTO2.id = periodDTO1.id
-        assertThat(periodDTO1).isEqualTo(periodDTO2)
-        periodDTO2.id = 2L
-        assertThat(periodDTO1).isNotEqualTo(periodDTO2)
-        periodDTO1.id = null
-        assertThat(periodDTO1).isNotEqualTo(periodDTO2)
-    }
-
-
-
-
 }

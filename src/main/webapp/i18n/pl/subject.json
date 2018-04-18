@@ -2,19 +2,20 @@
     "timetableApp": {
         "subject" : {
             "home": {
-                "title": "Subjects",
-                "createLabel": "Dodaj Subject",
-                "createOrEditLabel": "Dodaj lub edytuj: Subject"
+                "title": "Przedmioty",
+                "createLabel": "Dodaj przedmioty",
+                "createOrEditLabel": "Dodaj lub edytuj: Przedmiot"
             },
-            "created": "Utworzono nowy Subject z identyfikatorem {{ param }}",
-            "updated": "Uaktualniono Subject z identyfikatorem {{ param }}",
-            "deleted": "Usunięto Subject z identyfikatorem {{ param }}",
+            "created": "Utworzono nowy przedmiot z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono przedmiot z identyfikatorem {{ param }}",
+            "deleted": "Usunięto przedmiot z identyfikatorem {{ param }}",
             "delete": {
-                "question": "Czy na pewno chcesz usunąć Subject {{ id }}?"
+                "question": "Czy na pewno chcesz usunąć przedmiot {{ id }}?"
             },
             "detail": {
-                "title": "Subject"
+                "title": "Przedmiot"
             },
+            "main": "Przedmiot",
             "name": "Name",
             "shortName": "Short Name",
             "colorBackground": "Color Background",

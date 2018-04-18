@@ -36,7 +36,7 @@ class Authority(
 
         val authority = other as Authority?
 
-        return !if (true) name != authority!!.name else true
+        return name == authority!!.name
     }
 
     override fun hashCode(): Int {

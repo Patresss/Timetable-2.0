@@ -1,11 +1,16 @@
 package com.patres.timetable.service.mapper
 
 import com.patres.timetable.domain.Teacher
+import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import com.patres.timetable.repository.DivisionRepository
+import com.patres.timetable.repository.LessonRepository
+import com.patres.timetable.repository.SubjectRepository
 import com.patres.timetable.service.dto.TeacherDTO
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
+import com.patres.timetable.service.dto.preference.PreferenceSubjectByTeacherDTO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.time.DayOfWeek
 
 @Service
 open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
@@ -17,10 +22,19 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
     private lateinit var preferenceDataTimeForTeacherMapper: PreferenceDataTimeForTeacherMapper
 
     @Autowired
+    private lateinit var preferenceSubjectByTeacherMapper: PreferenceSubjectByTeacherMapper
+
+    @Autowired
     private lateinit var divisionMapper: DivisionMapper
 
     @Autowired
     private lateinit var divisionRepository: DivisionRepository
+
+    @Autowired
+    private lateinit var subjectRepository: SubjectRepository
+
+    @Autowired
+    private lateinit var lessonRepository: LessonRepository
 
     override fun toEntity(entityDto: TeacherDTO): Teacher {
         return Teacher(
@@ -31,7 +45,8 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             id = entityDto.id
             degree = entityDto.degree
             shortName = entityDto.shortName
-            preferredSubjects = subjectMapper.entityDTOSetToEntitySet(entityDto.preferredSubjects)
+            preferenceSubjectByTeacher = preferenceSubjectByTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceSubjectByTeacher)
+            preferenceSubjectByTeacher.forEach { it.teacher = this }
             preferenceDataTimeForTeachers = preferenceDataTimeForTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceDataTimeForTeachers)
             preferenceDataTimeForTeachers.forEach { it.teacher = this }
         }
@@ -48,9 +63,40 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             degree = entity.degree
             shortName = entity.shortName
             fullName = "$degree $name $surname"
-            preferredSubjects = subjectMapper.entitySetToEntityDTOSet(entity.preferredSubjects)
+            preferenceSubjectByTeacher = preferenceSubjectByTeacherMapper.entitySetToEntityDTOSet(entity.preferenceSubjectByTeacher)
+            addNeutralPreferenceSubjectByTeacher()
             preferenceDataTimeForTeachers = preferenceDataTimeForTeacherMapper.entitySetToEntityDTOSet(entity.preferenceDataTimeForTeachers)
+            addNeutralPreferenceDataTimeForTeachers()
         }
     }
 
+    private fun TeacherDTO.addNeutralPreferenceSubjectByTeacher() {
+        divisionOwnerId?.let {
+            val subjects = subjectRepository.findByDivisionOwnerId(it)
+            val neutralPreferenceSubjectByTeacherToAdd =
+                subjects
+                    .filter { subject -> !preferenceSubjectByTeacher.any { preference -> id == preference.teacherId && subject.id == preference.subjectId } }
+                    .map { subject -> PreferenceSubjectByTeacherDTO(teacherId = id, teacherFullName = fullName ?: "", subjectId = subject.id, subjectName = subject.name ?: "") }
+            preferenceSubjectByTeacher += neutralPreferenceSubjectByTeacherToAdd
+            preferenceSubjectByTeacher = preferenceSubjectByTeacher.sortedBy { it.subjectName }.toSet()
+        }
+    }
+
+    private fun TeacherDTO.addNeutralPreferenceDataTimeForTeachers() {
+        val neutralPreferenceDataTimeForTeachersToAdd = HashSet<PreferenceDataTimeForTeacherDTO>()
+        divisionOwnerId?.let {
+            val lessons = lessonRepository.findByDivisionOwnerId(it)
+            val daysOfWeeks = DayOfWeek.values().map { it.value }
+            for (lesson in lessons) {
+                for (dayOfWeek in daysOfWeeks) {
+                    if (!preferenceDataTimeForTeachers.any { it.dayOfWeek == dayOfWeek && it.lessonId == lesson.id }) {
+                        neutralPreferenceDataTimeForTeachersToAdd.add(PreferenceDataTimeForTeacherDTO(teacherId = id, teacherFullName = fullName?: "", lessonId = lesson.id, lessonName = lesson.name?: "", dayOfWeek = dayOfWeek, points = 0))
+                    }
+                }
+            }
+            preferenceDataTimeForTeachers += neutralPreferenceDataTimeForTeachersToAdd
+            preferenceDataTimeForTeachers = preferenceDataTimeForTeachers.sortedBy { it.dayOfWeek }.toSet()
+        }
+    }
 }
+

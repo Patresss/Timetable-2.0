@@ -402,36 +402,4 @@ open class DivisionResourceIntTest {
         assertThat(divisionList).hasSize(databaseSizeBeforeDelete - 1)
     }
 
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun `Equals verifier`() {
-        val division1 = createEntity()
-        division1.id = 1L
-        val division2 = createEntity()
-        division2.id = division1.id
-        assertThat(division1).isEqualTo(division2)
-        division2.id = 2L
-        assertThat(division1).isNotEqualTo(division2)
-        division1.id = null
-        assertThat(division1).isNotEqualTo(division2)
-    }
-
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun `Dto equals Verifier`() {
-        val divisionDTO1 = createEntityDto()
-        divisionDTO1.id = 1L
-        val divisionDTO2 = createEntityDto()
-        assertThat(divisionDTO1).isNotEqualTo(divisionDTO2)
-        divisionDTO2.id = divisionDTO1.id
-        assertThat(divisionDTO1).isEqualTo(divisionDTO2)
-        divisionDTO2.id = 2L
-        assertThat(divisionDTO1).isNotEqualTo(divisionDTO2)
-        divisionDTO1.id = null
-        assertThat(divisionDTO1).isNotEqualTo(divisionDTO2)
-    }
-
-
 }

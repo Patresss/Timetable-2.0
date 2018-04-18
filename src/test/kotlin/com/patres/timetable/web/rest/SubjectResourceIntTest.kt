@@ -297,37 +297,4 @@ open class SubjectResourceIntTest {
         assertThat(subjectList).hasSize(databaseSizeBeforeDelete - 1)
     }
 
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun equalsVerifier() {
-        val subject1 = createEntity()
-        subject1.id = 1L
-        val subject2 = createEntity()
-        subject2.id = subject1.id
-        assertThat(subject1).isEqualTo(subject2)
-        subject2.id = 2L
-        assertThat(subject1).isNotEqualTo(subject2)
-        subject1.id = null
-        assertThat(subject1).isNotEqualTo(subject2)
-    }
-
-    @Test
-    @Transactional
-    @Throws(Exception::class)
-    open fun dtoEqualsVerifier() {
-        val subjectDTO1 = createEntityDto()
-        subjectDTO1.id = 1L
-        val subjectDTO2 = createEntityDto()
-        assertThat(subjectDTO1).isNotEqualTo(subjectDTO2)
-        subjectDTO2.id = subjectDTO1.id
-        assertThat(subjectDTO1).isEqualTo(subjectDTO2)
-        subjectDTO2.id = 2L
-        assertThat(subjectDTO1).isNotEqualTo(subjectDTO2)
-        subjectDTO1.id = null
-        assertThat(subjectDTO1).isNotEqualTo(subjectDTO2)
-    }
-
-
-
 }

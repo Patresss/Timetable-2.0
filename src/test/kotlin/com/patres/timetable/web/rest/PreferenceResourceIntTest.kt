@@ -80,9 +80,8 @@ open class PreferenceResourceIntTest {
     @Transactional
     @Throws(Exception::class)
     open fun `Test preference`() {
-        // Initialize the database
         // Get the Preference
-        restPreferenceMockMvc.perform(get("/api/preferences"))
+        restPreferenceMockMvc.perform(get("/api/preferences?divisionOwnerId=1"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
     }

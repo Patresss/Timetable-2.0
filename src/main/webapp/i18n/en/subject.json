@@ -15,6 +15,7 @@
             "detail": {
                 "title": "Subject"
             },
+            "main": "Subject",
             "name": "Name",
             "shortName": "Short Name",
             "colorBackground": "Color Background",
