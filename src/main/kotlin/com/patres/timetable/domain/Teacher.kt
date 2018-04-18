@@ -2,7 +2,9 @@ package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
+import com.patres.timetable.domain.preference.PreferenceSubjectByPlace
 import com.patres.timetable.domain.preference.PreferenceSubjectByTeacher
+import com.patres.timetable.domain.preference.PreferenceTeacherByPlace
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -43,10 +45,10 @@ class Teacher(
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferredDivisions: Set<Division> = HashSet(),
 
-    @ManyToMany(mappedBy = "preferredTeachers")
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "teacher", orphanRemoval = true)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferredPlaces: Set<Place> = HashSet(),
+    var preferenceTeacherByPlace: Set<PreferenceTeacherByPlace> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "teacher", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

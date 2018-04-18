@@ -1,13 +1,14 @@
 package com.patres.timetable.service.mapper
 
 import com.patres.timetable.domain.Teacher
-import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import com.patres.timetable.repository.DivisionRepository
 import com.patres.timetable.repository.LessonRepository
 import com.patres.timetable.repository.SubjectRepository
 import com.patres.timetable.service.dto.TeacherDTO
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
 import com.patres.timetable.service.dto.preference.PreferenceSubjectByTeacherDTO
+import com.patres.timetable.service.mapper.preference.PreferenceDataTimeForTeacherMapper
+import com.patres.timetable.service.mapper.preference.PreferenceSubjectByTeacherMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.DayOfWeek
@@ -46,9 +47,7 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             degree = entityDto.degree
             shortName = entityDto.shortName
             preferenceSubjectByTeacher = preferenceSubjectByTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceSubjectByTeacher)
-            preferenceSubjectByTeacher.forEach { it.teacher = this }
             preferenceDataTimeForTeachers = preferenceDataTimeForTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceDataTimeForTeachers)
-            preferenceDataTimeForTeachers.forEach { it.teacher = this }
         }
     }
 

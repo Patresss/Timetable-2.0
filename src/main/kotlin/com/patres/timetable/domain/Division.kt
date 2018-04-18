@@ -2,6 +2,8 @@ package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.patres.timetable.domain.enumeration.DivisionType
+import com.patres.timetable.domain.preference.PreferenceDivisionByPlace
+import com.patres.timetable.domain.preference.PreferenceTeacherByPlace
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -90,10 +92,10 @@ class Division(
     @JoinTable(name = "division_preferred_subject", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id")))
     var preferredSubjects: Set<Subject> = HashSet(),
 
-    @ManyToMany(mappedBy = "preferredDivisions")
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "division", orphanRemoval = true)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferredPlaces: Set<Place> = HashSet(),
+    var preferenceDivisionByPlace: Set<PreferenceDivisionByPlace> = HashSet(),
 
     divisionOwner: Division? = null
 

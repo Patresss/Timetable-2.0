@@ -1,6 +1,10 @@
 package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
+import com.patres.timetable.domain.preference.PreferenceDivisionByPlace
+import com.patres.timetable.domain.preference.PreferenceSubjectByPlace
+import com.patres.timetable.domain.preference.PreferenceTeacherByPlace
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -34,20 +38,17 @@ class Place(
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var timetables: Set<Timetable> = HashSet(),
 
-    @ManyToMany
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "place_preferred_subject", joinColumns = arrayOf(JoinColumn(name = "places_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id")))
-    var preferredSubjects: Set<Subject> = HashSet(),
+    var preferenceSubjectByPlace: Set<PreferenceSubjectByPlace> = HashSet(),
 
-    @ManyToMany
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "place_preferred_division", joinColumns = arrayOf(JoinColumn(name = "places_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_divisions_id", referencedColumnName = "id")))
-    var preferredDivisions: Set<Division> = HashSet(),
+    var preferenceTeacherByPlace: Set<PreferenceTeacherByPlace> = HashSet(),
 
-    @ManyToMany
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "place_preferred_teacher", joinColumns = arrayOf(JoinColumn(name = "places_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_teachers_id", referencedColumnName = "id")))
-    var preferredTeachers: Set<Teacher> = HashSet(),
+    var preferenceDivisionByPlace: Set<PreferenceDivisionByPlace> = HashSet(),
 
     divisionOwner: Division? = null
 

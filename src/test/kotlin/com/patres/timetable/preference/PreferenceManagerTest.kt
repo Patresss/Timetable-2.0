@@ -5,7 +5,7 @@ import com.patres.timetable.repository.PlaceRepository
 import com.patres.timetable.repository.TimetableRepository
 import com.patres.timetable.service.*
 import com.patres.timetable.service.dto.PreferenceDependencyDTO
-import com.patres.timetable.service.mapper.PreferenceDependencyMapper
+import com.patres.timetable.service.mapper.preference.PreferenceDependencyMapper
 import com.patres.timetable.web.rest.FillerResource
 import junit.framework.Assert.*
 import org.junit.Assert.assertNotEquals

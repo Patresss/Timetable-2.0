@@ -8,10 +8,24 @@ import org.springframework.stereotype.Repository
 @Repository
 interface TeacherRepository : DivisionOwnerRepository<Teacher> {
 
-    @Query("select distinct teacher from Teacher teacher left join fetch teacher.preferenceDataTimeForTeachers")
+    @Query("""
+        select distinct
+            teacher
+        from
+            Teacher teacher
+            left join fetch teacher.preferenceDataTimeForTeachers
+        """)
     fun findAllWithEagerRelationships(): List<Teacher>
 
-    @Query("select teacher from Teacher teacher left join fetch teacher.preferenceDataTimeForTeachers where teacher.id =:id")
+    @Query("""
+        select
+            teacher
+        from
+            Teacher teacher
+            left join fetch teacher.preferenceDataTimeForTeachers
+        where
+            teacher.id =:id
+        """)
     fun findOneWithEagerRelationships(@Param("id") id: Long?): Teacher?
 
     @Query("""
@@ -21,7 +35,7 @@ interface TeacherRepository : DivisionOwnerRepository<Teacher> {
             Teacher teacher
             left join fetch teacher.preferenceDataTimeForTeachers
             left join fetch teacher.preferredDivisions
-            left join fetch teacher.preferredPlaces
+            left join fetch teacher.preferenceTeacherByPlace
             left join fetch teacher.preferenceSubjectByTeacher
         where
             teacher.id =:id

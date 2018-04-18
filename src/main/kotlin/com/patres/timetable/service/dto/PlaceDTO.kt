@@ -1,8 +1,10 @@
 package com.patres.timetable.service.dto
 
-
+import com.patres.timetable.service.dto.preference.PreferenceDivisionByPlaceDTO
+import com.patres.timetable.service.dto.preference.PreferenceSubjectByPlaceDTO
+import com.patres.timetable.service.dto.preference.PreferenceTeacherByPlaceDTO
 import java.io.Serializable
-import java.util.HashSet
+import java.util.*
 import javax.validation.constraints.NotNull
 
 class PlaceDTO(
@@ -18,11 +20,11 @@ class PlaceDTO(
 
     var colorText: String? = null,
 
-    var preferredSubjects: Set<SubjectDTO> = HashSet(),
+    var preferenceSubjectByPlace: Set<PreferenceSubjectByPlaceDTO> = HashSet(),
 
-    var preferredDivisions: Set<DivisionDTO> = HashSet(),
+    var preferenceTeacherByPlace: Set<PreferenceTeacherByPlaceDTO> = HashSet(),
 
-    var preferredTeachers: Set<TeacherDTO> = HashSet(),
+    var preferenceDivisionByPlace: Set<PreferenceDivisionByPlaceDTO> = HashSet(),
 
     divisionOwnerId: Long? = null
 

@@ -8,16 +8,52 @@ import org.springframework.stereotype.Repository
 @Repository
 interface PlaceRepository : DivisionOwnerRepository<Place> {
 
-    @Query("select distinct place from Place place left join fetch place.preferredSubjects left join fetch place.preferredDivisions left join fetch place.preferredTeachers")
+    @Query("""
+        select distinct
+            place
+        from
+            Place place
+            left join fetch place.preferenceSubjectByPlace
+            left join fetch place.preferenceDivisionByPlace
+            left join fetch place.preferenceTeacherByPlace
+        """)
     fun findAllWithEagerRelationships(): List<Place>
 
-    @Query("select place from Place place left join fetch place.preferredSubjects left join fetch place.preferredDivisions left join fetch place.preferredTeachers where place.id =:id")
+    @Query("""
+        select
+            place
+        from
+            Place place
+            left join fetch place.preferenceSubjectByPlace
+            left join fetch place.preferenceDivisionByPlace
+            left join fetch place.preferenceTeacherByPlace
+        where
+            place.id =:id
+        """)
     fun findOneWithEagerRelationships(@Param("id") id: Long?): Place?
 
-    @Query("select place from Place place left join fetch place.preferredSubjects left join fetch place.preferredDivisions left join fetch place.preferredTeachers left join fetch place.preferredTeachers where place.id =:id")
+    @Query("""
+        select
+            place
+        from
+            Place place
+            left join fetch place.preferenceSubjectByPlace
+            left join fetch place.preferenceDivisionByPlace
+            left join fetch place.preferenceTeacherByPlace
+        where
+            place.id =:id
+            """)
     fun findOneWithPreference(@Param("id") id: Long?): Place?
 
-    @Query("select place.id from Place place where place.divisionOwner.id = :divisionOwnerId and place.numberOfSeats < :numberOfSeats")
+    @Query("""
+        select
+            place.id
+        from
+            Place place
+        where
+            place.divisionOwner.id = :divisionOwnerId and
+            place.numberOfSeats < :numberOfSeats
+        """)
     fun findIdByDivisionOwnerIdAndNumberOfSeatsLessThan(@Param("divisionOwnerId") divisionOwnerId: Long?, @Param("numberOfSeats") numberOfSeats: Long?): Set<Long>
 
 }

@@ -4,7 +4,7 @@ import com.codahale.metrics.annotation.Timed
 import com.patres.timetable.preference.Preference
 import com.patres.timetable.preference.PreferenceManager
 import com.patres.timetable.service.dto.PreferenceDependencyDTO
-import com.patres.timetable.service.mapper.PreferenceDependencyMapper
+import com.patres.timetable.service.mapper.preference.PreferenceDependencyMapper
 import io.github.jhipster.web.util.ResponseUtil
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

@@ -3,11 +3,9 @@ package com.patres.timetable.web.rest
 import com.codahale.metrics.annotation.Timed
 import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.domain.enumeration.EventType
-import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import com.patres.timetable.service.*
 import com.patres.timetable.service.dto.*
-import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
-import com.patres.timetable.service.dto.preference.PreferenceSubjectByTeacherDTO
+import com.patres.timetable.service.dto.preference.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.transaction.annotation.Transactional
@@ -366,131 +364,59 @@ open class FillerResource(
         // =====================================================
         // Teacher
         // =====================================================
-        deptuch = createTeacher(degree = "mgr", name = "Witold", surname = "Deptuch", divisionOwner = lo2, preferredSubjects = setOf(biologia))
-        janusz = createTeacher(degree = "mgr", name = "Edyta", surname = "Janusz", divisionOwner = lo2, preferredSubjects = setOf(jFrancuski))
+        deptuch = createTeacher(degree = "mgr", name = "Witold", surname = "Deptuch", divisionOwner = lo2)
+        janusz = createTeacher(degree = "mgr", name = "Edyta", surname = "Janusz", divisionOwner = lo2)
         stasik = createTeacher(degree = "mgr", name = "Bogusława", surname = "Stasik", divisionOwner = lo2)
         urbanek = createTeacher(degree = "mgr", name = "Jadwiga", surname = "Urbanek", divisionOwner = lo2)
-        gierlach = createTeacher(degree = "mgr", name = "Anna", surname = "Gierlach", divisionOwner = lo2, preferredSubjects = setOf(jPolski))
-        klein = createTeacher(degree = "mgr", name = "Lucyna", surname = "Klein", divisionOwner = lo2, preferredSubjects = setOf(jPolski))
-        val preferenceDataTimeForTeacherPernal = setOf(
-            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 1, points = -10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 1, points = 10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 1, points = 5),
-            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 1, points = 3),
-            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 1, points = 1),
-            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 1, points = -10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 1, points = -10),
-
-            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 2, points = -10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 2, points = 10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 2, points = 5),
-            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 2, points = 3),
-            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 2, points = 1),
-            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 2, points = -10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 2, points = -10),
-
-            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 3, points = -10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 3, points = 10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 3, points = 5),
-            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 3, points = 3),
-            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 3, points = 1),
-            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 3, points = -10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 3, points = -10),
-
-            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 4, points = -10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 4, points = 10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 4, points = 5),
-            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 4, points = 3),
-            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 4, points = 1),
-            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 4, points = -10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 4, points = -10),
-
-            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 5, points = -10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 5, points = 10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 5, points = 5),
-            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 5, points = 3),
-            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 5, points = 1),
-            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 5, points = -10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 5, points = -10),
-
-            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 6, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 6, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 6, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 6, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 6, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l5.id, dayOfWeek = 6, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l6.id, dayOfWeek = 6, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l7.id, dayOfWeek = 6, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l8.id, dayOfWeek = 6, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l9.id, dayOfWeek = 6, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 6, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 6, points = -10000),
-
-            PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 7, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 7, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 7, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 7, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 7, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l5.id, dayOfWeek = 7, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l6.id, dayOfWeek = 7, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l7.id, dayOfWeek = 7, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l8.id, dayOfWeek = 7, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l9.id, dayOfWeek = 7, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 7, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 7, points = -10000)
-        )
-        pernal = createTeacher(degree = "mgr", name = "Renata", surname = "Pernal", divisionOwner = lo2, preferredSubjects = setOf(jPolski), preferenceDataTimeForTeachers = preferenceDataTimeForTeacherPernal)
-        grodeckaZaremba = createTeacher(degree = "mgr", name = "Tamara", surname = "Grodecka-Zaremba", divisionOwner = lo2, preferredSubjects = setOf(jPolski))
-        prajsnar = createTeacher(degree = "mgr", name = "Arkadiusz", surname = "Prajsnar", divisionOwner = lo2, preferredSubjects = setOf(jPolski))
-        dynowski = createTeacher(degree = "mgr", name = "Lucjan", surname = "Dynowski", divisionOwner = lo2, preferredSubjects = setOf(historia, wiedzaOSpołeczeństwie))
-        longosz = createTeacher(degree = "dr", name = "Elżbieta", surname = "Longosz", divisionOwner = lo2, preferredSubjects = setOf(historia, wiedzaOSpołeczeństwie))
-        świstak = createTeacher(degree = "mgr", name = "Elżbieta", surname = "Świstak", divisionOwner = lo2, preferredSubjects = setOf(historia, wiedzaOSpołeczeństwie))
-        baran = createTeacher(degree = "mgr", name = "Elżbieta", surname = "Baran", divisionOwner = lo2, preferredSubjects = setOf(jAngielski))
-        karnas = createTeacher(degree = "mgr", name = "Monika", surname = "Karnas", divisionOwner = lo2, preferredSubjects = setOf(jAngielski))
-        kasprzyk = createTeacher(degree = "mgr", name = "Tomasz", surname = "Kasprzyk", divisionOwner = lo2, preferredSubjects = setOf(jAngielski))
-        kijowska = createTeacher(degree = "mgr", name = "Beata", surname = "Kijowska", divisionOwner = lo2, preferredSubjects = setOf(jAngielski))
-        kolanko = createTeacher(degree = "mgr", name = "Irena", surname = "Kolanko", divisionOwner = lo2, preferredSubjects = setOf(jAngielski))
-        trybusGorczyca = createTeacher(degree = "mgr", name = "Agnieszka", surname = "Trybus-Gorczyca", divisionOwner = lo2, preferredSubjects = setOf(jAngielski))
-        val preferenceDataTimeForTeacherCzuba = setOf(
-            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 1, points = 10),
-            PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 5, points = -10000),
-            PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 1, points = 5)
-        )
-        czuba = createTeacher(degree = "mgr", name = "Beata", surname = "Czuba", divisionOwner = lo2, preferredSubjects = setOf(matematyka), preferenceDataTimeForTeachers = preferenceDataTimeForTeacherCzuba)
-        jastrzębska = createTeacher(degree = "mgr", name = "Mariola", surname = "Jastrzębska", divisionOwner = lo2, preferredSubjects = setOf(matematyka))
-        mięsowicz = createTeacher(degree = "mgr", name = "Jolanta", surname = "Mięsowicz", divisionOwner = lo2, preferredSubjects = setOf(matematyka))
-        hadel = createTeacher(degree = "mgr", name = "Anna", surname = "Hadel", divisionOwner = lo2, preferredSubjects = setOf(jNiemiecki))
-        przybyłowicz = createTeacher(degree = "mgr", name = "Anna", surname = "Przybyłowicz", divisionOwner = lo2, preferredSubjects = setOf(jNiemiecki))
-        przybyłowiczCiszewska = createTeacher(degree = "mgr", name = "Katarzyna", surname = "Przybyłowicz-Ciszewska", divisionOwner = lo2, preferredSubjects = setOf(jNiemiecki))
-        rachwał = createTeacher(degree = "mgr", name = "Beata", surname = "Rachwał", divisionOwner = lo2, preferredSubjects = setOf(jFrancuski))
-        chodorowiczBąk = createTeacher(degree = "dr", name = "Agata", surname = "Chodorowicz-Bąk", divisionOwner = lo2, preferredSubjects = setOf(chemia))
-        serwatka = createTeacher(degree = "mgr", name = "Monika", surname = "Serwatka", divisionOwner = lo2, preferredSubjects = setOf(chemia))
-        gonet = createTeacher(degree = "mgr", name = "Tatiana", surname = "Gonet", divisionOwner = lo2, preferredSubjects = setOf(geografia))
-        guzik = createTeacher(degree = "mgr", name = "Maciej", surname = "Guzik", divisionOwner = lo2, preferredSubjects = setOf(biologia))
-        szarłowicz = createTeacher(degree = "mgr", name = "Tomasz", surname = "Szarłowicz", divisionOwner = lo2, preferredSubjects = setOf(biologia))
-        dawidkoJ = createTeacher(degree = "mgr", name = "Jacek", surname = "Dawidko", divisionOwner = lo2, preferredSubjects = setOf(wychowanieFizyczne))
-        wilk = createTeacher(degree = "mgr", name = "Wojciech", surname = "Wilk", divisionOwner = lo2, preferredSubjects = setOf(wychowanieFizyczne))
-        zając = createTeacher(degree = "mgr", name = "Tomasz", surname = "Zając", divisionOwner = lo2, preferredSubjects = setOf(wychowanieFizyczne))
-        dawidkoR = createTeacher(degree = "mgr", name = "Renata", surname = "Dawidko", divisionOwner = lo2, preferredSubjects = setOf(wychowanieFizyczne))
-        rachfał = createTeacher(degree = "mgr", name = "Maria", surname = "Rachfał", divisionOwner = lo2, preferredSubjects = setOf(wychowanieFizyczne))
-        bloch = createTeacher(degree = "mgr inż	", name = "Sławomir", surname = "Bloch", divisionOwner = lo2, preferredSubjects = setOf(fizyka))
-        józefczyk = createTeacher(degree = "mgr", name = "Stanisław", surname = "Józefczyk", divisionOwner = lo2, preferredSubjects = setOf(fizyka))
-        szott = createTeacher(degree = "mgr", name = "Irma", surname = "Szott", divisionOwner = lo2, preferredSubjects = setOf(fizyka))
-        dzierwa = createTeacher(degree = "mgr", name = "Małgorzata", surname = "Dzierwa", divisionOwner = lo2, preferredSubjects = setOf(informatyka))
-        solecki = createTeacher(degree = "mgr", name = "Ryszard", surname = "Solecki", divisionOwner = lo2, preferredSubjects = setOf(informatyka))
-        kudroń = createTeacher(degree = "mgr", name = "Katarzyna", surname = "Kudroń", divisionOwner = lo2, preferredSubjects = setOf(jLaciński))
-        pPiernal = createTeacher(degree = "ks	 mgr", name = "Pernal", surname = "Piotr", divisionOwner = lo2, preferredSubjects = setOf(religia))
-        tPiwinski = createTeacher(degree = "ks	 mgr", name = "Piwiński", surname = "Tadeusz", divisionOwner = lo2, preferredSubjects = setOf(religia))
+        gierlach = createTeacher(degree = "mgr", name = "Anna", surname = "Gierlach", divisionOwner = lo2)
+        klein = createTeacher(degree = "mgr", name = "Lucyna", surname = "Klein", divisionOwner = lo2)
+        pernal = createTeacher(degree = "mgr", name = "Renata", surname = "Pernal", divisionOwner = lo2)
+        grodeckaZaremba = createTeacher(degree = "mgr", name = "Tamara", surname = "Grodecka-Zaremba", divisionOwner = lo2)
+        prajsnar = createTeacher(degree = "mgr", name = "Arkadiusz", surname = "Prajsnar", divisionOwner = lo2)
+        dynowski = createTeacher(degree = "mgr", name = "Lucjan", surname = "Dynowski", divisionOwner = lo2)
+        longosz = createTeacher(degree = "dr", name = "Elżbieta", surname = "Longosz", divisionOwner = lo2)
+        świstak = createTeacher(degree = "mgr", name = "Elżbieta", surname = "Świstak", divisionOwner = lo2)
+        baran = createTeacher(degree = "mgr", name = "Elżbieta", surname = "Baran", divisionOwner = lo2)
+        karnas = createTeacher(degree = "mgr", name = "Monika", surname = "Karnas", divisionOwner = lo2)
+        kasprzyk = createTeacher(degree = "mgr", name = "Tomasz", surname = "Kasprzyk", divisionOwner = lo2)
+        kijowska = createTeacher(degree = "mgr", name = "Beata", surname = "Kijowska", divisionOwner = lo2)
+        kolanko = createTeacher(degree = "mgr", name = "Irena", surname = "Kolanko", divisionOwner = lo2)
+        trybusGorczyca = createTeacher(degree = "mgr", name = "Agnieszka", surname = "Trybus-Gorczyca", divisionOwner = lo2)
+        czuba = createTeacher(degree = "mgr", name = "Beata", surname = "Czuba", divisionOwner = lo2)
+        jastrzębska = createTeacher(degree = "mgr", name = "Mariola", surname = "Jastrzębska", divisionOwner = lo2)
+        mięsowicz = createTeacher(degree = "mgr", name = "Jolanta", surname = "Mięsowicz", divisionOwner = lo2)
+        hadel = createTeacher(degree = "mgr", name = "Anna", surname = "Hadel", divisionOwner = lo2)
+        przybyłowicz = createTeacher(degree = "mgr", name = "Anna", surname = "Przybyłowicz", divisionOwner = lo2)
+        przybyłowiczCiszewska = createTeacher(degree = "mgr", name = "Katarzyna", surname = "Przybyłowicz-Ciszewska", divisionOwner = lo2)
+        rachwał = createTeacher(degree = "mgr", name = "Beata", surname = "Rachwał", divisionOwner = lo2)
+        chodorowiczBąk = createTeacher(degree = "dr", name = "Agata", surname = "Chodorowicz-Bąk", divisionOwner = lo2)
+        serwatka = createTeacher(degree = "mgr", name = "Monika", surname = "Serwatka", divisionOwner = lo2)
+        gonet = createTeacher(degree = "mgr", name = "Tatiana", surname = "Gonet", divisionOwner = lo2)
+        guzik = createTeacher(degree = "mgr", name = "Maciej", surname = "Guzik", divisionOwner = lo2)
+        szarłowicz = createTeacher(degree = "mgr", name = "Tomasz", surname = "Szarłowicz", divisionOwner = lo2)
+        dawidkoJ = createTeacher(degree = "mgr", name = "Jacek", surname = "Dawidko", divisionOwner = lo2)
+        wilk = createTeacher(degree = "mgr", name = "Wojciech", surname = "Wilk", divisionOwner = lo2)
+        zając = createTeacher(degree = "mgr", name = "Tomasz", surname = "Zając", divisionOwner = lo2)
+        dawidkoR = createTeacher(degree = "mgr", name = "Renata", surname = "Dawidko", divisionOwner = lo2)
+        rachfał = createTeacher(degree = "mgr", name = "Maria", surname = "Rachfał", divisionOwner = lo2)
+        bloch = createTeacher(degree = "mgr inż	", name = "Sławomir", surname = "Bloch", divisionOwner = lo2)
+        józefczyk = createTeacher(degree = "mgr", name = "Stanisław", surname = "Józefczyk", divisionOwner = lo2)
+        szott = createTeacher(degree = "mgr", name = "Irma", surname = "Szott", divisionOwner = lo2)
+        dzierwa = createTeacher(degree = "mgr", name = "Małgorzata", surname = "Dzierwa", divisionOwner = lo2)
+        solecki = createTeacher(degree = "mgr", name = "Ryszard", surname = "Solecki", divisionOwner = lo2)
+        kudroń = createTeacher(degree = "mgr", name = "Katarzyna", surname = "Kudroń", divisionOwner = lo2)
+        pPiernal = createTeacher(degree = "ks	 mgr", name = "Pernal", surname = "Piotr", divisionOwner = lo2)
+        tPiwinski = createTeacher(degree = "ks	 mgr", name = "Piwiński", surname = "Tadeusz", divisionOwner = lo2)
         matwiej = createTeacher(degree = "mgr", name = "Wojciech", surname = "Matwiej", divisionOwner = lo2)
-        twardzikWilk = createTeacher(degree = "mgr", name = "Małgorzata", surname = "Twardzik-Wilk", divisionOwner = lo2, preferredSubjects = setOf(wiedzaOKulturze))
-        suchodolski = createTeacher(degree = "mgr inż	", name = "Zbigniew", surname = "Suchodolski", divisionOwner = lo2, preferredSubjects = setOf(podstawyPrzedsiębiorczości))
-        mSuchodolski = createTeacher(degree = "mgr", name = "Mateusz", surname = "Suchodolski", divisionOwner = lo2, preferredSubjects = setOf(podstawyPrzedsiębiorczości))
-        łopuszańska = createTeacher(degree = "mgr", name = "Dorota ", surname = "Łopuszańska-Patrylak", divisionOwner = lo2, preferredSubjects = setOf(jRosyjski))
+        twardzikWilk = createTeacher(degree = "mgr", name = "Małgorzata", surname = "Twardzik-Wilk", divisionOwner = lo2)
+        suchodolski = createTeacher(degree = "mgr inż	", name = "Zbigniew", surname = "Suchodolski", divisionOwner = lo2)
+        mSuchodolski = createTeacher(degree = "mgr", name = "Mateusz", surname = "Suchodolski", divisionOwner = lo2)
+        łopuszańska = createTeacher(degree = "mgr", name = "Dorota ", surname = "Łopuszańska-Patrylak", divisionOwner = lo2)
 
         // =====================================================
         // Division
         // =====================================================
-        val preferredSubjects = setOf(historia, wiedzaOSpołeczeństwie, wiedzaOKulturze, matematyka, podstawyPrzedsiębiorczości, informatyka, biologia, chemia, geografia, fizyka, jPolski, jAngielski, jNiemiecki, jFrancuski, jRosyjski, godzWych, edukacjaDoBezpieczeństwa, wychowanieFizyczne, religia, wychowaniedoZyciaWRodzinie )
+        val preferredSubjects = setOf(historia, wiedzaOSpołeczeństwie, wiedzaOKulturze, matematyka, podstawyPrzedsiębiorczości, informatyka, biologia, chemia, geografia, fizyka, jPolski, jAngielski, jNiemiecki, jFrancuski, jRosyjski, godzWych, edukacjaDoBezpieczeństwa, wychowanieFizyczne, religia, wychowaniedoZyciaWRodzinie)
         class1a = createDivision(name = "1 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2), preferredTeachers = setOf(czuba), preferredSubjects = preferredSubjects)
         class1aGenerate = createDivision(name = "1 A generate", shortName = "1 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
         class1b = createDivision(name = "1 B", shortName = "1 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
@@ -529,25 +455,25 @@ open class FillerResource(
         // =====================================================
         // Place
         // =====================================================
-        p4 = createPlace(name = "4", numberOfSeats = 34, preferredSubjects = setOf(informatyka), division = lo2)
+        p4 = createPlace(name = "4", numberOfSeats = 34, division = lo2)
         p5 = createPlace(name = "5", numberOfSeats = 34, division = lo2)
         p6 = createPlace(name = "6", numberOfSeats = 34, division = lo2)
         p7 = createPlace(name = "7", numberOfSeats = 34, division = lo2)
         p7g = createPlace(name = "7g", numberOfSeats = 16, division = lo2)
-        p8 = createPlace(name = "8", numberOfSeats = 34, preferredSubjects = setOf(biologia), division = lo2)
+        p8 = createPlace(name = "8", numberOfSeats = 34, division = lo2)
         p10 = createPlace(name = "10", numberOfSeats = 34, division = lo2)
         p11 = createPlace(name = "11", numberOfSeats = 34, division = lo2)
         p12 = createPlace(name = "12", numberOfSeats = 34, division = lo2)
         p13 = createPlace(name = "13", numberOfSeats = 34, division = lo2)
         p14 = createPlace(name = "14", numberOfSeats = 34, division = lo2)
-        p15 = createPlace(name = "15", numberOfSeats = 34, preferredSubjects = setOf(fizyka), division = lo2)
+        p15 = createPlace(name = "15", numberOfSeats = 34, division = lo2)
         p16 = createPlace(name = "16", numberOfSeats = 34, division = lo2)
-        p20 = createPlace(name = "20", numberOfSeats = 34, preferredSubjects = setOf(geografia), division = lo2)
+        p20 = createPlace(name = "20", numberOfSeats = 34, division = lo2)
         p21 = createPlace(name = "21", numberOfSeats = 34, division = lo2)
-        p22 = createPlace(name = "22", numberOfSeats = 34, preferredSubjects = setOf(matematyka), preferredTeachers = setOf(czuba), preferredDivisions = setOf(class1a), division = lo2)
-        p24 = createPlace(name = "24", numberOfSeats = 34, preferredSubjects = setOf(chemia), division = lo2)
+        p22 = createPlace(name = "22", numberOfSeats = 34, division = lo2)
+        p24 = createPlace(name = "24", numberOfSeats = 34, division = lo2)
         p25 = createPlace(name = "25", numberOfSeats = 34, division = lo2)
-        p31 = createPlace(name = "31", numberOfSeats = 34, preferredSubjects = setOf(edukacjaDoBezpieczeństwa), division = lo2)
+        p31 = createPlace(name = "31", numberOfSeats = 34, division = lo2)
         p35 = createPlace(name = "35", numberOfSeats = 34, division = lo2)
         p36 = createPlace(name = "36", numberOfSeats = 34, division = lo2)
         pds = createPlace(name = "Duża Sala", shortName = "DS", numberOfSeats = 180, division = lo2)
@@ -696,18 +622,1489 @@ open class FillerResource(
         createCurriculum(division = class1aGenerate, subject = godzWych, teacher = czuba, place = p22, numberOfActivities = 1)
         createCurriculum(division = class1aGenerate, subject = wychowanieFizyczne, teacher = wilk, place = pds, numberOfActivities = 2)
 
+        // =====================================================
+        // Preference Teacher
+        // =====================================================
+        deptuch.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = -10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = 5),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        janusz.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = 5),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        stasik.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        urbanek.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        gierlach.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        klein.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        pernal.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
 
+            preferenceDataTimeForTeachers = setOf(
+                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 1, points = -10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 1, points = 10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 1, points = 5),
+                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 1, points = 3),
+                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 1, points = 1),
+                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 1, points = -10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 1, points = -10),
+
+                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 2, points = -10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 2, points = 10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 2, points = 5),
+                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 2, points = 3),
+                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 2, points = 1),
+                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 2, points = -10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 2, points = -10),
+
+                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 3, points = -10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 3, points = 10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 3, points = 5),
+                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 3, points = 3),
+                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 3, points = 1),
+                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 3, points = -10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 3, points = -10),
+
+                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 4, points = -10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 4, points = 10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 4, points = 5),
+                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 4, points = 3),
+                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 4, points = 1),
+                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 4, points = -10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 4, points = -10),
+
+                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 5, points = -10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 5, points = 10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 5, points = 5),
+                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 5, points = 3),
+                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 5, points = 1),
+                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 5, points = -10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 5, points = -10),
+
+                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l5.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l6.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l7.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l8.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l9.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 6, points = -10000),
+
+                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l5.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l6.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l7.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l8.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l9.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 7, points = -10000)
+            )
+
+            teacherService.save(this)
+        }
+        grodeckaZaremba.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        prajsnar.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        dynowski.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        longosz.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        świstak.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        baran.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        karnas.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        kasprzyk.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        kijowska.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        kolanko.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+                teacherService.save(this)
+        }
+        trybusGorczyca.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        czuba.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            preferenceDataTimeForTeachers = setOf(
+                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 1, points = 10),
+                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 5, points = -10000),
+                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 1, points = 5))
+            teacherService.save(this)
+        }
+        jastrzębska.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = 5),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        mięsowicz.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        hadel.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        przybyłowicz.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        przybyłowiczCiszewska.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        rachwał.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        chodorowiczBąk.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        serwatka.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        gonet.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        guzik.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        szarłowicz.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        dawidkoJ.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        wilk.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        zając.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        dawidkoR.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        rachfał.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        bloch.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = 5),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        józefczyk.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = 5),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        szott.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        dzierwa.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        solecki.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = 5))
+            teacherService.save(this)
+        }
+        kudroń.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        pPiernal.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        tPiwinski.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        matwiej.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        twardzikWilk.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        suchodolski.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        mSuchodolski.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
+        łopuszańska.apply {
+            preferenceSubjectByTeacher = setOf(
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = jRosyjski.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            teacherService.save(this)
+        }
 
 
         // =====================================================
-        // Preference
+        // Preference Place
         // =====================================================
+        p4.apply {
+            preferenceSubjectByPlace = setOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = 10),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p5.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
 
+        p6.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p7.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p7g.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p8.apply {
+            preferenceSubjectByPlace = setOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = biologia.id, points = 10),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p10.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p13.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p14.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p15.apply {
+            preferenceSubjectByPlace = setOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizyka.id, points = 10),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p16.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p20.apply {
+            preferenceSubjectByPlace = setOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = geografia.id, points = 10),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p21.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p22.apply {
+            preferenceSubjectByPlace = setOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = matematyka.id, points = 10),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+
+            preferenceTeacherByPlace = setOf(PreferenceTeacherByPlaceDTO(placeId = this.id, teacherId = czuba.id, points = 5))
+
+            preferenceDivisionByPlace = setOf(PreferenceDivisionByPlaceDTO(placeId = this.id, divisionId = class1a.id, points = 5))
+            placeService.save(this)
+        }
+        p24.apply {
+            preferenceSubjectByPlace = setOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = chemia.id, points = 10),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p25.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p31.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p35.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        p36.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
+        pds.apply {
+            preferenceSubjectByPlace = setOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = godzWych.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            placeService.save(this)
+        }
+        pS.apply {
+            preferenceSubjectByPlace = setOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = godzWych.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            placeService.save(this)
+        }
+        pb.apply {
+            preferenceSubjectByPlace = setOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = godzWych.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            placeService.save(this)
+        }
+        ph.apply {
+            preferenceSubjectByPlace = setOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jLaciński.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = godzWych.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
+            placeService.save(this)
+        }
+        pG4.apply {
+            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            placeService.save(this)
+        }
     }
 
 
-    private fun createPlace(name: String, shortName: String? = null, numberOfSeats: Long?, preferredSubjects: Set<SubjectDTO> = emptySet(), preferredTeachers: Set<TeacherDTO> = emptySet(), preferredDivisions: Set<DivisionDTO> = emptySet(), division: DivisionDTO): PlaceDTO {
-        val place = PlaceDTO(name = name, shortName = shortName, numberOfSeats = numberOfSeats, preferredSubjects = preferredSubjects, preferredTeachers = preferredTeachers, preferredDivisions = preferredDivisions, divisionOwnerId = division.id)
+    private fun createPlace(name: String, shortName: String? = null, numberOfSeats: Long?, division: DivisionDTO): PlaceDTO {
+        val place = PlaceDTO(name = name, shortName = shortName, numberOfSeats = numberOfSeats, divisionOwnerId = division.id)
         return placeService.save(place)
     }
 
@@ -716,9 +2113,8 @@ open class FillerResource(
         return subjectService.save(subject)
     }
 
-    private fun createTeacher(degree: String, name: String, surname: String, shortName: String? = null, divisionOwner: DivisionDTO, preferredSubjects: Set<SubjectDTO> = emptySet(), preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacherDTO> = emptySet()): TeacherDTO {
-        val preferenceSubjectByTeacher = preferredSubjects.map { PreferenceSubjectByTeacherDTO(subjectId = it.id, points = 10) }.toSet()
-        val teacher = TeacherDTO(degree = degree, name = name, surname = surname, divisionOwnerId = divisionOwner.id, preferenceSubjectByTeacher = preferenceSubjectByTeacher, preferenceDataTimeForTeachers = preferenceDataTimeForTeachers)
+    private fun createTeacher(degree: String, name: String, surname: String, shortName: String? = null, divisionOwner: DivisionDTO): TeacherDTO {
+        val teacher = TeacherDTO(degree = degree, name = name, surname = surname, divisionOwnerId = divisionOwner.id)
         return teacherService.save(teacher)
     }
 

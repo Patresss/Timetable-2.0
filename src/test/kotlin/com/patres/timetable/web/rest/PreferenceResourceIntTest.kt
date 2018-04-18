@@ -3,11 +3,8 @@ package com.patres.timetable.web.rest
 import com.patres.timetable.TimetableApp
 import com.patres.timetable.preference.PreferenceManager
 import com.patres.timetable.service.*
-import com.patres.timetable.service.dto.PreferenceDependencyDTO
-import com.patres.timetable.service.mapper.PreferenceDependencyMapper
+import com.patres.timetable.service.mapper.preference.PreferenceDependencyMapper
 import com.patres.timetable.web.rest.errors.ExceptionTranslator
-import org.hamcrest.Matchers
-import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

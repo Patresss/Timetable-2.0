@@ -2,6 +2,7 @@ package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
+import com.patres.timetable.domain.preference.PreferenceSubjectByPlace
 import com.patres.timetable.domain.preference.PreferenceSubjectByTeacher
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
@@ -33,18 +34,19 @@ class Subject(
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var timetables: Set<Timetable> = HashSet(),
 
-    @OneToMany(mappedBy = "teacher", orphanRemoval = true)
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "subject", orphanRemoval = true)
     @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferenceSubjectByTeacher: Set<PreferenceSubjectByTeacher> = HashSet(),
 
-    @ManyToMany(mappedBy = "preferredSubjects")
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "subject", orphanRemoval = true)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferredDivisions: Set<Division> = HashSet(),
+    var preferenceSubjectByPlace: Set<PreferenceSubjectByPlace> = HashSet(),
 
     @ManyToMany(mappedBy = "preferredSubjects")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferredPlaces: Set<Place> = HashSet()
+    var preferredDivisions: Set<Division> = HashSet()
 
 ) : AbstractDivisionOwner(), Serializable

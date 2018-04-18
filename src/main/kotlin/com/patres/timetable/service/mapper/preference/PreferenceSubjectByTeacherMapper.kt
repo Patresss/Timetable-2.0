@@ -1,9 +1,10 @@
-package com.patres.timetable.service.mapper
+package com.patres.timetable.service.mapper.preference
 
 import com.patres.timetable.domain.preference.PreferenceSubjectByTeacher
 import com.patres.timetable.repository.SubjectRepository
 import com.patres.timetable.repository.TeacherRepository
 import com.patres.timetable.service.dto.preference.PreferenceSubjectByTeacherDTO
+import com.patres.timetable.service.mapper.EntityMapper
 import com.patres.timetable.service.util.getOneOrNull
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
