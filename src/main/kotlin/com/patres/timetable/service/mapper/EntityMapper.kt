@@ -1,6 +1,8 @@
 package com.patres.timetable.service.mapper
 
 import com.patres.timetable.domain.AbstractApplicationEntity
+import com.patres.timetable.domain.Teacher
+import com.patres.timetable.service.dto.TeacherDTO
 
 import java.util.ArrayList
 import java.util.HashSet
@@ -37,6 +39,7 @@ abstract class EntityMapper<EntityType, EntityDtoType> {
     }
 
 
+
     fun entitySetToEntityDTOSet(entitySet: Set<EntityType>?): Set<EntityDtoType> {
         if (entitySet == null) {
             return HashSet()
@@ -44,7 +47,7 @@ abstract class EntityMapper<EntityType, EntityDtoType> {
 
         val entityDtoTypes = entitySet
             .map { toDto(it) }
-            .toSet()
+            .toHashSet()
 
         return entityDtoTypes
     }
@@ -56,7 +59,7 @@ abstract class EntityMapper<EntityType, EntityDtoType> {
 
         val entitySet = entityDtoSet
             .map { toEntity(it) }
-            .toSet()
+            .toHashSet()
 
         return entitySet
     }
@@ -64,5 +67,9 @@ abstract class EntityMapper<EntityType, EntityDtoType> {
     abstract fun toEntity(entityDto: EntityDtoType): EntityType
 
     abstract fun toDto(entity: EntityType): EntityDtoType
+
+    open fun toDtoWithSampleForm(entity: EntityType): EntityDtoType {
+        return toDto(entity)
+    }
 
 }

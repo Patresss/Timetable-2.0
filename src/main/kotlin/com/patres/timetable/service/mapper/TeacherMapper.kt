@@ -69,6 +69,20 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
         }
     }
 
+    override fun toDtoWithSampleForm(entity: Teacher): TeacherDTO {
+        return TeacherDTO(
+            name = entity.name,
+            surname = entity.surname
+        ).apply {
+            divisionOwnerId = divisionMapper.getDivisionOwnerId(entity.divisionOwner)
+            divisionOwnerName = divisionMapper.getDivisionOwnerName(entity.divisionOwner)
+            id = entity.id
+            degree = entity.degree
+            shortName = entity.shortName
+            fullName = "$degree $name $surname"
+        }
+    }
+
     private fun TeacherDTO.addNeutralPreferenceSubjectByTeacher() {
         divisionOwnerId?.let {
             val subjects = subjectRepository.findByDivisionOwnerId(it)

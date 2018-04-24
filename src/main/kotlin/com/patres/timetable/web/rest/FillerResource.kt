@@ -416,40 +416,40 @@ open class FillerResource(
         // =====================================================
         // Division
         // =====================================================
-        val preferredSubjects = setOf(historia, wiedzaOSpołeczeństwie, wiedzaOKulturze, matematyka, podstawyPrzedsiębiorczości, informatyka, biologia, chemia, geografia, fizyka, jPolski, jAngielski, jNiemiecki, jFrancuski, jRosyjski, godzWych, edukacjaDoBezpieczeństwa, wychowanieFizyczne, religia, wychowaniedoZyciaWRodzinie)
-        class1a = createDivision(name = "1 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2), preferredTeachers = setOf(czuba), preferredSubjects = preferredSubjects)
-        class1aGenerate = createDivision(name = "1 A generate", shortName = "1 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class1b = createDivision(name = "1 B", shortName = "1 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class1c = createDivision(name = "1 C", shortName = "1 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class1d = createDivision(name = "1 D", shortName = "1 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class1e = createDivision(name = "1 E", shortName = "1 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class1f = createDivision(name = "1 F", shortName = "1 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class2a = createDivision(name = "2 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class2b = createDivision(name = "2 B", shortName = "2 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class2c = createDivision(name = "2 C", shortName = "2 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class2d = createDivision(name = "2 D", shortName = "2 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class2e = createDivision(name = "2 E", shortName = "2 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class2f = createDivision(name = "2 F", shortName = "2 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class3a = createDivision(name = "3 A", shortName = "3 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class3b = createDivision(name = "3 B", shortName = "3 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class3c = createDivision(name = "3 C", shortName = "3 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class3d = createDivision(name = "3 D", shortName = "3 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class3e = createDivision(name = "3 E", shortName = "3 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        class3f = createDivision(name = "3 F", shortName = "3 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = setOf(lo2))
-        div1aG1 = createDivision(name = "1A gr	 1", shortName = "Ang 1A gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1a))
-        div1aG2 = createDivision(name = "1A gr	 2", shortName = "Ang 1A gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1a))
-        divNie1G1 = createDivision(name = "Niemiecki 1 gr	 1", shortName = "Niem 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1a))
-        divNie1G2 = createDivision(name = "Niemiecki 1 gr	 2", shortName = "Niem 1 gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1b))
-        divFra1G1 = createDivision(name = "Francuski 1 gr	 1", shortName = "Fra 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1a))
-        divRos1G1 = createDivision(name = "Rosyjski 1 gr	 1", shortName = "Ros 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1a))
-        divRos1G2 = createDivision(name = "Rosyjski 1 gr	 2", shortName = "Ros 1 gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1a))
-        div1GrCh1 = createDivision(name = "WF 1 gr	 Chłopcy 1", shortName = "WF 1 gr	 Ch 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1a))
-        div1GrCh2 = createDivision(name = "WF 1 gr	 Chłopcy 2", shortName = "WF 1 gr	 Ch 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1b, class1c))
-        div1GrDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1a, class1c))
-        div1GrDz2 = createDivision(name = "WF 1 gr	 Dziewczyny 2", shortName = "WF 1 gr	 Dz 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1c))
-        div1bG1 = createDivision(name = "1B gr	 1", shortName = "Ang 1B gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1b))
-        div1bG2 = createDivision(name = "1B gr	 2", shortName = "Ang 1B gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1b))
-        div1Gr1bDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = setOf(class1b))
+        val preferredSubjects = hashSetOf(historia, wiedzaOSpołeczeństwie, wiedzaOKulturze, matematyka, podstawyPrzedsiębiorczości, informatyka, biologia, chemia, geografia, fizyka, jPolski, jAngielski, jNiemiecki, jFrancuski, jRosyjski, godzWych, edukacjaDoBezpieczeństwa, wychowanieFizyczne, religia, wychowaniedoZyciaWRodzinie)
+        class1a = createDivision(name = "1 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2), preferredTeachers = hashSetOf(czuba), preferredSubjects = preferredSubjects)
+        class1aGenerate = createDivision(name = "1 A generate", shortName = "1 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class1b = createDivision(name = "1 B", shortName = "1 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class1c = createDivision(name = "1 C", shortName = "1 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class1d = createDivision(name = "1 D", shortName = "1 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class1e = createDivision(name = "1 E", shortName = "1 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class1f = createDivision(name = "1 F", shortName = "1 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class2a = createDivision(name = "2 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class2b = createDivision(name = "2 B", shortName = "2 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class2c = createDivision(name = "2 C", shortName = "2 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class2d = createDivision(name = "2 D", shortName = "2 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class2e = createDivision(name = "2 E", shortName = "2 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class2f = createDivision(name = "2 F", shortName = "2 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class3a = createDivision(name = "3 A", shortName = "3 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class3b = createDivision(name = "3 B", shortName = "3 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class3c = createDivision(name = "3 C", shortName = "3 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class3d = createDivision(name = "3 D", shortName = "3 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class3e = createDivision(name = "3 E", shortName = "3 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class3f = createDivision(name = "3 F", shortName = "3 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        div1aG1 = createDivision(name = "1A gr	 1", shortName = "Ang 1A gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
+        div1aG2 = createDivision(name = "1A gr	 2", shortName = "Ang 1A gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
+        divNie1G1 = createDivision(name = "Niemiecki 1 gr	 1", shortName = "Niem 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
+        divNie1G2 = createDivision(name = "Niemiecki 1 gr	 2", shortName = "Niem 1 gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1b))
+        divFra1G1 = createDivision(name = "Francuski 1 gr	 1", shortName = "Fra 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
+        divRos1G1 = createDivision(name = "Rosyjski 1 gr	 1", shortName = "Ros 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
+        divRos1G2 = createDivision(name = "Rosyjski 1 gr	 2", shortName = "Ros 1 gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
+        div1GrCh1 = createDivision(name = "WF 1 gr	 Chłopcy 1", shortName = "WF 1 gr	 Ch 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
+        div1GrCh2 = createDivision(name = "WF 1 gr	 Chłopcy 2", shortName = "WF 1 gr	 Ch 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1b, class1c))
+        div1GrDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a, class1c))
+        div1GrDz2 = createDivision(name = "WF 1 gr	 Dziewczyny 2", shortName = "WF 1 gr	 Dz 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1c))
+        div1bG1 = createDivision(name = "1B gr	 1", shortName = "Ang 1B gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1b))
+        div1bG2 = createDivision(name = "1B gr	 2", shortName = "Ang 1B gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1b))
+        div1Gr1bDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1b))
 
 
         // =====================================================
@@ -487,7 +487,7 @@ open class FillerResource(
         // Period Interval
         // =====================================================
         interval = IntervalDTO(startDate = LocalDate.parse("2018-02-26"), endDate = LocalDate.parse("2018-07-01"), includedState = true)
-        semestLetniPeriod = PeriodDTO(name = "Semestr letni 2018", intervalTimes = setOf(interval), divisionOwnerId = lo2.id)
+        semestLetniPeriod = PeriodDTO(name = "Semestr letni 2018", intervalTimes = hashSetOf(interval), divisionOwnerId = lo2.id)
         semestLetniPeriod = periodService.save(semestLetniPeriod)
 
         // =====================================================
@@ -626,7 +626,7 @@ open class FillerResource(
         // Preference Teacher
         // =====================================================
         deptuch.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = -10),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -648,10 +648,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        deptuch = teacherService.save(deptuch)
+
         janusz.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -673,10 +674,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        janusz = teacherService.save(janusz)
+
         stasik.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -698,10 +700,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        stasik  = teacherService.save(stasik)
+
         urbanek.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -723,10 +726,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        urbanek = teacherService.save(urbanek)
+
         gierlach.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -748,10 +752,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        gierlach = teacherService.save(gierlach)
+
         klein.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -773,10 +778,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        klein = teacherService.save(klein)
+
         pernal.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -799,78 +805,77 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
 
-            preferenceDataTimeForTeachers = setOf(
-                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 1, points = -10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 1, points = 10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 1, points = 5),
-                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 1, points = 3),
-                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 1, points = 1),
-                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 1, points = -10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 1, points = -10),
+            preferenceDataTimeForTeachers = hashSetOf(
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l0.id, dayOfWeek = 1, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l1.id, dayOfWeek = 1, points = 10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l2.id, dayOfWeek = 1, points = 5),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l3.id, dayOfWeek = 1, points = 3),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l4.id, dayOfWeek = 1, points = 1),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l10.id, dayOfWeek = 1, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l11.id, dayOfWeek = 1, points = -10),
 
-                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 2, points = -10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 2, points = 10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 2, points = 5),
-                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 2, points = 3),
-                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 2, points = 1),
-                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 2, points = -10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 2, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l0.id, dayOfWeek = 2, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l1.id, dayOfWeek = 2, points = 10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l2.id, dayOfWeek = 2, points = 5),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l3.id, dayOfWeek = 2, points = 3),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l4.id, dayOfWeek = 2, points = 1),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l10.id, dayOfWeek = 2, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l11.id, dayOfWeek = 2, points = -10),
 
-                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 3, points = -10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 3, points = 10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 3, points = 5),
-                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 3, points = 3),
-                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 3, points = 1),
-                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 3, points = -10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 3, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l0.id, dayOfWeek = 3, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l1.id, dayOfWeek = 3, points = 10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l2.id, dayOfWeek = 3, points = 5),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l3.id, dayOfWeek = 3, points = 3),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l4.id, dayOfWeek = 3, points = 1),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l10.id, dayOfWeek = 3, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l11.id, dayOfWeek = 3, points = -10),
 
-                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 4, points = -10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 4, points = 10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 4, points = 5),
-                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 4, points = 3),
-                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 4, points = 1),
-                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 4, points = -10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 4, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l0.id, dayOfWeek = 4, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l1.id, dayOfWeek = 4, points = 10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l2.id, dayOfWeek = 4, points = 5),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l3.id, dayOfWeek = 4, points = 3),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l4.id, dayOfWeek = 4, points = 1),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l10.id, dayOfWeek = 4, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l11.id, dayOfWeek = 4, points = -10),
 
-                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 5, points = -10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 5, points = 10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 5, points = 5),
-                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 5, points = 3),
-                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 5, points = 1),
-                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 5, points = -10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 5, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l0.id, dayOfWeek = 5, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l1.id, dayOfWeek = 5, points = 10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l2.id, dayOfWeek = 5, points = 5),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l3.id, dayOfWeek = 5, points = 3),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l4.id, dayOfWeek = 5, points = 1),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l10.id, dayOfWeek = 5, points = -10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l11.id, dayOfWeek = 5, points = -10),
 
-                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l5.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l6.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l7.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l8.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l9.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l0.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l1.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l2.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l3.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l4.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l5.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l6.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l7.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l8.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l9.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l10.id, dayOfWeek = 6, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l11.id, dayOfWeek = 6, points = -10000),
 
-                PreferenceDataTimeForTeacherDTO(lessonId = l0.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l3.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l4.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l5.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l6.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l7.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l8.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l9.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l10.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l11.id, dayOfWeek = 7, points = -10000)
-            )
-
-            teacherService.save(this)
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l0.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l1.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l2.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l3.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l4.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l5.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l6.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l7.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l8.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l9.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l10.id, dayOfWeek = 7, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l11.id, dayOfWeek = 7, points = -10000))
         }
+        pernal  = teacherService.save(pernal)
+
         grodeckaZaremba.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -892,10 +897,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        grodeckaZaremba = teacherService.save(grodeckaZaremba)
+
         prajsnar.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -917,10 +923,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        prajsnar = teacherService.save(prajsnar)
+
         dynowski.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = 10),
@@ -942,10 +949,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        dynowski = teacherService.save(dynowski)
+
         longosz.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = 10),
@@ -967,10 +975,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        longosz  = teacherService.save(longosz)
+
         świstak.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = 10),
@@ -992,10 +1001,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        świstak = teacherService.save(świstak)
+
         baran.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1017,10 +1027,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        baran = teacherService.save(baran)
+
         karnas.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1042,10 +1053,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        karnas = teacherService.save(karnas)
+
         kasprzyk.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1067,10 +1079,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        kasprzyk = teacherService.save(kasprzyk)
+
         kijowska.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1092,10 +1105,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        kijowska  = teacherService.save(kijowska)
+
         kolanko.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1117,10 +1131,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-                teacherService.save(this)
         }
+        kolanko = teacherService.save(kolanko)
+
         trybusGorczyca.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1142,10 +1157,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        trybusGorczyca  = teacherService.save(trybusGorczyca)
+
         czuba.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1167,14 +1183,15 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            preferenceDataTimeForTeachers = setOf(
-                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 1, points = 10),
-                PreferenceDataTimeForTeacherDTO(lessonId = l1.id, dayOfWeek = 5, points = -10000),
-                PreferenceDataTimeForTeacherDTO(lessonId = l2.id, dayOfWeek = 1, points = 5))
-            teacherService.save(this)
+            preferenceDataTimeForTeachers = hashSetOf(
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l1.id, dayOfWeek = 1, points = 10),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l1.id, dayOfWeek = 5, points = -10000),
+                PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l2.id, dayOfWeek = 1, points = 5))
         }
+        czuba = teacherService.save(czuba)
+
         jastrzębska.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1196,10 +1213,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        jastrzębska  = teacherService.save(jastrzębska)
+
         mięsowicz.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1221,10 +1239,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        mięsowicz = teacherService.save(mięsowicz)
+
         hadel.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1246,10 +1265,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        hadel  = teacherService.save(hadel)
+
         przybyłowicz.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1271,10 +1291,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        przybyłowicz = teacherService.save(przybyłowicz)
+
         przybyłowiczCiszewska.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1296,10 +1317,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        przybyłowiczCiszewska = teacherService.save(przybyłowiczCiszewska)
+
         rachwał.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1321,10 +1343,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        rachwał  = teacherService.save(rachwał)
+
         chodorowiczBąk.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1346,10 +1369,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        chodorowiczBąk = teacherService.save(chodorowiczBąk)
+
         serwatka.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1371,10 +1395,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        serwatka = teacherService.save(serwatka)
+
         gonet.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1396,10 +1421,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        gonet = teacherService.save(gonet)
+
         guzik.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1421,10 +1447,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        guzik = teacherService.save(guzik)
+
         szarłowicz.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1446,10 +1473,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        szarłowicz  = teacherService.save(szarłowicz)
+
         dawidkoJ.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1471,10 +1499,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        dawidkoJ = teacherService.save(dawidkoJ)
+
         wilk.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1496,10 +1525,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        wilk = teacherService.save(wilk)
+
         zając.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1521,10 +1551,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        zając = teacherService.save(zając)
+
         dawidkoR.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1546,10 +1577,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        dawidkoR = teacherService.save(dawidkoR)
+
         rachfał.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1571,10 +1603,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        rachfał = teacherService.save(rachfał)
+
         bloch.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1596,10 +1629,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = 10),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        bloch = teacherService.save(bloch)
+
         józefczyk.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1621,10 +1655,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        józefczyk  = teacherService.save(józefczyk)
+
         szott.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1646,10 +1681,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        szott = teacherService.save(szott)
+
         dzierwa.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1671,10 +1707,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        dzierwa = teacherService.save(dzierwa)
+
         solecki.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1696,10 +1733,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = 5))
-            teacherService.save(this)
         }
+        solecki = teacherService.save(solecki)
+
         kudroń.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1721,10 +1759,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        kudroń = teacherService.save(kudroń)
+
         pPiernal.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1746,10 +1785,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = 10),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        pPiernal = teacherService.save(pPiernal)
+
         tPiwinski.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1771,10 +1811,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = 10),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        tPiwinski = teacherService.save(tPiwinski)
+
         matwiej.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1796,10 +1837,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        matwiej = teacherService.save(matwiej)
+
         twardzikWilk.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1821,10 +1863,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        twardzikWilk = teacherService.save(twardzikWilk)
+
         suchodolski.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1846,10 +1889,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        suchodolski= teacherService.save(suchodolski)
+
         mSuchodolski.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1871,10 +1915,11 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        mSuchodolski = teacherService.save(mSuchodolski)
+
         łopuszańska.apply {
-            preferenceSubjectByTeacher = setOf(
+            preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = -10_000),
@@ -1896,108 +1941,109 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            teacherService.save(this)
         }
+        łopuszańska = teacherService.save(łopuszańska)
+
 
 
         // =====================================================
         // Preference Place
         // =====================================================
         p4.apply {
-            preferenceSubjectByPlace = setOf(
+            preferenceSubjectByPlace = hashSetOf(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p5.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
 
         p6.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p7.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p7g.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p8.apply {
-            preferenceSubjectByPlace = setOf(
+            preferenceSubjectByPlace = hashSetOf(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = biologia.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p10.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p13.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p14.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p15.apply {
-            preferenceSubjectByPlace = setOf(
+            preferenceSubjectByPlace = hashSetOf(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizyka.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p16.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p20.apply {
-            preferenceSubjectByPlace = setOf(
+            preferenceSubjectByPlace = hashSetOf(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = geografia.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p21.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p22.apply {
-            preferenceSubjectByPlace = setOf(
+            preferenceSubjectByPlace = hashSetOf(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = matematyka.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
 
-            preferenceTeacherByPlace = setOf(PreferenceTeacherByPlaceDTO(placeId = this.id, teacherId = czuba.id, points = 5))
+            preferenceTeacherByPlace = hashSetOf(PreferenceTeacherByPlaceDTO(placeId = this.id, teacherId = czuba.id, points = 5))
 
-            preferenceDivisionByPlace = setOf(PreferenceDivisionByPlaceDTO(placeId = this.id, divisionId = class1a.id, points = 5))
+            preferenceDivisionByPlace = hashSetOf(PreferenceDivisionByPlaceDTO(placeId = this.id, divisionId = class1a.id, points = 5))
             placeService.save(this)
         }
         p24.apply {
-            preferenceSubjectByPlace = setOf(
+            preferenceSubjectByPlace = hashSetOf(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = chemia.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p25.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p31.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p35.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         p36.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
         pds.apply {
-            preferenceSubjectByPlace = setOf(
+            preferenceSubjectByPlace = hashSetOf(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
@@ -2022,7 +2068,7 @@ open class FillerResource(
             placeService.save(this)
         }
         pS.apply {
-            preferenceSubjectByPlace = setOf(
+            preferenceSubjectByPlace = hashSetOf(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
@@ -2047,7 +2093,7 @@ open class FillerResource(
             placeService.save(this)
         }
         pb.apply {
-            preferenceSubjectByPlace = setOf(
+            preferenceSubjectByPlace = hashSetOf(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
@@ -2072,7 +2118,7 @@ open class FillerResource(
             placeService.save(this)
         }
         ph.apply {
-            preferenceSubjectByPlace = setOf(
+            preferenceSubjectByPlace = hashSetOf(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
@@ -2097,7 +2143,7 @@ open class FillerResource(
             placeService.save(this)
         }
         pG4.apply {
-            preferenceSubjectByPlace = setOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
     }

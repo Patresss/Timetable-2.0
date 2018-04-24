@@ -38,11 +38,11 @@ abstract class DivisionOwnerService<EntityType : AbstractDivisionOwner, EntityDt
         return when {
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> {
                 log.debug("Return {} for user with role {} ", getEntityName(), AuthoritiesConstants.ADMIN)
-                entityRepository.findAll(pageable).map{ entityMapper.toDto(it) }
+                entityRepository.findAll(pageable).map{ entityMapper.toDtoWithSampleForm(it) }
             }
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> {
                 log.debug("Return {} for user with role {} ", getEntityName(), AuthoritiesConstants.SCHOOL_ADMIN)
-                entityRepository.findByCurrentLogin(pageable).map{ entityMapper.toDto(it) }
+                entityRepository.findByCurrentLogin(pageable).map{ entityMapper.toDtoWithSampleForm(it) }
             }
             else -> {
                 log.debug("Return empty list of {} for user without needed rule ", getEntityName())

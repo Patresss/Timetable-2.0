@@ -18,6 +18,17 @@ interface DivisionOwnerRepository<EntityType : AbstractDivisionOwner> : JpaRepos
 
     fun findByDivisionOwnerId(divisionsId: Long): Set<EntityType>
 
+    @Query("""
+        select
+            entity
+        from
+            #{#entityName} entity
+        WHERE
+            :id = entity.id"""
+    )
+    fun findByIdWithoutFetch(@Param("id") id: Long): Set<Long>
+
+
     @Query("select entity.id from #{#entityName} entity WHERE :divisionOwnerId = entity.divisionOwner.id")
     fun findIdByDivisionOwnerId(@Param("divisionOwnerId") divisionOwnerId: Long): Set<Long>
 

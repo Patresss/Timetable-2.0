@@ -46,7 +46,7 @@ abstract class EntityService<EntityType : AbstractApplicationEntity, EntityDtoTy
     @Transactional(readOnly = true)
     open fun findAll(pageable: Pageable): Page<EntityDtoType> {
         log.debug("Request to get all {}", getEntityName())
-        return entityRepository.findAll(pageable).map { entityMapper.toDto(it) }
+        return entityRepository.findAll(pageable).map { entityMapper.toDtoWithSampleForm(it) }
     }
 
     open fun delete(id: Long?) {
