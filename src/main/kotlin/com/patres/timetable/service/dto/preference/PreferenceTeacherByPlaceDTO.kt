@@ -13,6 +13,9 @@ class PreferenceTeacherByPlaceDTO(
     @get:NotNull
     var teacherId: Long? = null,
     var teacherFullName: String = "",
+    var teacherName: String = "",
+    var teacherSurname: String = "",
+    var teacherDegree: String = "",
 
     var points: Int = 0
 

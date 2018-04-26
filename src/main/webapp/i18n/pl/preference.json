@@ -3,6 +3,9 @@
         "preference": {
             "preferenceLessonAndDate" : "Preferencja lekcji i daty",
             "preferredSubjects" : "Preferowane przedmioty",
+            "preferredDivisions" : "Preferowane grupy",
+            "preferredPlaces" : "Preferowane miejsca",
+            "preferredTeachers" : "Preferowani nauczyciele",
             "preference" : "Preferencja",
             "hierarchy": {
                 "10": "10",

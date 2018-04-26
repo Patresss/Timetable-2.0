@@ -36,7 +36,7 @@ class Teacher(
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var timetables: Set<Timetable> = HashSet(),
 
-    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "teacher", orphanRemoval = true)
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "teacher", orphanRemoval = true, fetch = FetchType.LAZY)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferenceSubjectByTeacher: Set<PreferenceSubjectByTeacher> = HashSet(),
 

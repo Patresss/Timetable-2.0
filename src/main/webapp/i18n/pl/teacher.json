@@ -15,6 +15,7 @@
             "detail": {
                 "title": "Teacher"
             },
+            "main": "Teacher",
             "name": "Name",
             "surname": "Surname",
             "degree": "Degree",

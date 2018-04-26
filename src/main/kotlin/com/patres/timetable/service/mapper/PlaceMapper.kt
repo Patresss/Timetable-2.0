@@ -106,12 +106,9 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
             val neutralPreferenceToAdd =
                 teachers
                     .filter { teacher -> !preferenceTeacherByPlace.any { preference -> id == preference.placeId && teacher.id == preference.teacherId } }
-                    .map { teacher -> PreferenceTeacherByPlaceDTO(placeId = id, placeName = name ?: "", teacherId = teacher.id, teacherFullName = teacher.name ?: "") }
+                    .map { teacher -> PreferenceTeacherByPlaceDTO(placeId = id, placeName = name ?: "", teacherId = teacher.id, teacherFullName = teacher.getFullName(), teacherDegree = teacher.degree?: "", teacherName = teacher.name?: "", teacherSurname = teacher.surname?: "") }
             preferenceTeacherByPlace += neutralPreferenceToAdd
-            preferenceTeacherByPlace
-                .map { teachers.find { teacher -> teacher.id == it.teacherId } }
-                .sortedWith(compareBy({ it?.surname }, { it?.name }))
-                .map { preferenceTeacherByPlace.find { preference -> it?.id == preference.teacherId } }
+            preferenceTeacherByPlace = preferenceTeacherByPlace.sortedWith(compareBy({ it.teacherSurname }, { it.teacherName }, { it.teacherDegree })).toSet()
         }
     }
 

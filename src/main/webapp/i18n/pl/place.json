@@ -15,6 +15,7 @@
             "detail": {
                 "title": "Place"
             },
+            "main": "Miejsce",
             "name": "Name",
             "numberOfSeats": "Number Of Seats",
             "shortName": "Short Name",

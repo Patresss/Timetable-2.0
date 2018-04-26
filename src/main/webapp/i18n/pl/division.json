@@ -13,8 +13,9 @@
                 "question": "Czy na pewno chcesz usunąć Division {{ id }}?"
             },
             "detail": {
-                "title": "Division"
+                "title": "Grupa"
             },
+            "main": "Grupa",
             "name": "Name",
             "shortName": "Short Name",
             "numberOfPeople": "Number Of People",

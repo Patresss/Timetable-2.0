@@ -1,6 +1,5 @@
 package com.patres.timetable.aop.logging
 
-import com.patres.timetable.config.AsyncConfiguration
 import io.github.jhipster.config.JHipsterConstants
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
@@ -37,9 +36,9 @@ class LoggingAspect(private val env: Environment) {
     /**
      * Pointcut that matches all Spring beans in the application's main packages.
      */
-    @Pointcut("within(com.patres.timetable.repository..*)" +
-        " || within(com.patres.timetable.service..*)" +
-        " || within(com.patres.timetable.web.rest..*)")
+    @Pointcut("""within(com.patres.timetable.repository..*)
+        || (within(com.patres.timetable.service..*) && !within(com.patres.timetable.service.mapper..*))
+        || within(com.patres.timetable.web.rest..*)""")
     fun applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }
@@ -73,20 +72,16 @@ class LoggingAspect(private val env: Environment) {
     @Throws(Throwable::class)
     fun logAround(joinPoint: ProceedingJoinPoint): Any? {
         if (log.isDebugEnabled) {
-            log.debug("Enter: {}.{}() with argument[s] = {}", joinPoint.signature.declaringTypeName,
-                joinPoint.signature.name, Arrays.toString(joinPoint.args))
+            log.debug("Enter: {}.{}() with argument[s] = {}", joinPoint.signature.declaringTypeName, joinPoint.signature.name, Arrays.toString(joinPoint.args))
         }
         try {
             val result = joinPoint.proceed()
             if (log.isDebugEnabled) {
-                log.debug("Exit: {}.{}() with result = {}", joinPoint.signature.declaringTypeName,
-                    joinPoint.signature.name, result)
+                log.debug("Exit: {}.{}() with result = {}", joinPoint.signature.declaringTypeName, joinPoint.signature.name, result)
             }
             return result
         } catch (e: IllegalArgumentException) {
-            log.error("Illegal argument: {} in {}.{}()", Arrays.toString(joinPoint.args),
-                joinPoint.signature.declaringTypeName, joinPoint.signature.name)
-
+            log.error("Illegal argument: {} in {}.{}()", Arrays.toString(joinPoint.args), joinPoint.signature.declaringTypeName, joinPoint.signature.name)
             throw e
         }
 

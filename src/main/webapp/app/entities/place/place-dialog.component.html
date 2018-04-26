@@ -34,35 +34,7 @@
                 <input type="text" class="form-control" name="shortName" id="field_shortName"
                        [(ngModel)]="place.shortName"/>
             </div>
-            <div class="form-group">
-                <label class="form-control-label" jhiTranslate="timetableApp.place.colorBackground" for="field_colorBackground">Color Background</label>
-                <input type="text" class="form-control" name="colorBackground" id="field_colorBackground"
-                       [(ngModel)]="place.colorBackground"/>
-            </div>
-            <div class="form-group">
-                <label class="form-control-label" jhiTranslate="timetableApp.place.colorText" for="field_colorText">Color Text</label>
-                <input type="text" class="form-control" name="colorText" id="field_colorText"
-                       [(ngModel)]="place.colorText"/>
-            </div>
 
-            <div class="form-group">
-                <label jhiTranslate="timetableApp.place.preferredSubject" for="field_preferredSubject">Preferred Subject</label>
-                <select class="form-control" id="field_preferredSubject" multiple name="preferredSubject" [(ngModel)]="place.preferredSubjects">
-                    <option [ngValue]="getSelected(place.preferredSubjects, subjectOption)" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.name}}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label jhiTranslate="timetableApp.place.preferredDivision" for="field_preferredDivision">Preferred Division</label>
-                <select class="form-control" id="field_preferredDivision" multiple name="preferredDivision" [(ngModel)]="place.preferredDivisions">
-                    <option [ngValue]="getSelected(place.preferredDivisions, divisionOption)" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label jhiTranslate="timetableApp.place.preferredTeacher" for="field_preferredTeacher">Preferred Teacher</label>
-                <select class="form-control" id="field_preferredTeacher" multiple name="preferredTeacher" [(ngModel)]="place.preferredTeachers">
-                    <option [ngValue]="getSelected(place.preferredTeachers, teacherOption)" *ngFor="let teacherOption of teachers; trackBy: trackTeacherById">{{teacherOption.surname}}</option>
-                </select>
-            </div>
             <div class="form-group">
                 <label jhiTranslate="timetableApp.place.divisionOwner" for="field_division">Division</label>
                 <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="place.divisionOwnerId">
@@ -70,7 +42,92 @@
                     <option [ngValue]="divisionOption.id" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>
                 </select>
             </div>
+
+            <ngb-accordion #acc="ngbAccordion">
+                <ngb-panel>
+                    <ng-template ngbPanelTitle>
+                        <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferredSubjects">Preferred subjects</span>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th jhiTranslate="timetableApp.subject.main">Subject</th>
+                                <th jhiTranslate="timetableApp.preference.preference">Preference</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let preferenceSubjectByPlace of place.preferenceSubjectByPlace">
+                                <td>{{preferenceSubjectByPlace.subjectName}}</td>
+                                <td>
+                                    <select class="form-control" name="preference_{{preferenceSubjectByPlace.subjectId}}{{preferenceSubjectByPlace.placeId}}" [(ngModel)]="preferenceSubjectByPlace.points">
+                                        <option *ngFor="let selectType of preferenceSelectTypes" [ngValue]="selectType.value" jhiTranslate="{{selectType.itemTranslate}}">{{selectType.value}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </ng-template>
+                </ngb-panel>
+                <br>
+                <ngb-panel>
+                    <ng-template ngbPanelTitle>
+                        <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferredTeachers">Preferred teachers</span>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th jhiTranslate="timetableApp.teacher.main">Teacher</th>
+                                <th jhiTranslate="timetableApp.preference.preference">Preference</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let preference of place.preferenceTeacherByPlace">
+                                <td>{{preference.teacherFullName}}</td>
+                                <td>
+                                    <select class="form-control" name="preference_{{preference.teacherId}}{{preference.placeId}}" [(ngModel)]="preference.points">
+                                        <option *ngFor="let selectType of preferenceSelectTypes" [ngValue]="selectType.value" jhiTranslate="{{selectType.itemTranslate}}">{{selectType.value}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </ng-template>
+                </ngb-panel>
+                <br>
+                <ngb-panel>
+                    <ng-template ngbPanelTitle>
+                        <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferredDivisions">Preferred divisions</span>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th jhiTranslate="timetableApp.division.main">Division</th>
+                                <th jhiTranslate="timetableApp.preference.preference">Preference</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let preference of place.preferenceDivisionByPlace">
+                                <td>{{preference.divisionName}}</td>
+                                <td>
+                                    <select class="form-control" name="preference_{{preference.divisionId}}{{preference.placeId}}" [(ngModel)]="preference.points">
+                                        <option *ngFor="let selectType of preferenceSelectTypes" [ngValue]="selectType.value" jhiTranslate="{{selectType.itemTranslate}}">{{selectType.value}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </ng-template>
+                </ngb-panel>
+                <br>
+            </ngb-accordion>
+
         </div>
+
+
+
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
                 <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>

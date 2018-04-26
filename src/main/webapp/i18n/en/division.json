@@ -15,6 +15,7 @@
             "detail": {
                 "title": "Division"
             },
+            "main": "Division",
             "name": "Name",
             "shortName": "Short Name",
             "numberOfPeople": "Number Of People",

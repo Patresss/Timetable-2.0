@@ -13,6 +13,8 @@ import { Subject, SubjectService } from '../subject';
 import { Division, DivisionService } from '../division';
 import { Teacher, TeacherService } from '../teacher';
 import { ResponseWrapper } from '../../shared';
+import {DayOfWeek} from '../timetable/timetable.model';
+import {Preference} from '../../preference/preferecne.model';
 
 @Component({
     selector: 'jhi-place-dialog',
@@ -23,32 +25,26 @@ export class PlaceDialogComponent implements OnInit {
     place: Place;
     isSaving: boolean;
 
-    subjects: Subject[];
+    preferenceByLessonList = [];
+    preferenceSelectTypes = Preference.preferenceSelectTypes;
 
     divisions: Division[];
-
-    teachers: Teacher[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private placeService: PlaceService,
-        private subjectService: SubjectService,
         private divisionService: DivisionService,
-        private teacherService: TeacherService,
         private eventManager: JhiEventManager
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
-        this.subjectService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => { this.subjects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.divisionService.query()
             .subscribe((res: ResponseWrapper) => { this.divisions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.teacherService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => { this.teachers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
+
 
     clear() {
         this.activeModal.dismiss('cancel');

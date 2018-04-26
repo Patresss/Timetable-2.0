@@ -34,6 +34,9 @@ open class PreferenceTeacherByPlaceMapper : EntityMapper<PreferenceTeacherByPlac
             placeName = entity.place?.name ?: "",
             teacherId = entity.teacher?.id,
             teacherFullName = entity.teacher?.getFullName() ?: "",
+            teacherName = entity.teacher?.name ?: "",
+            teacherSurname = entity.teacher?.surname ?: "",
+            teacherDegree = entity.teacher?.degree ?: "",
             points = entity.points)
             .apply {
                 id = entity.id
