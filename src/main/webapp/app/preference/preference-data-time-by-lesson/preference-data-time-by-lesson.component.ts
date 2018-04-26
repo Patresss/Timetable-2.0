@@ -1,34 +1,33 @@
-import {Component, Input} from '@angular/core';
-import {SelectType} from '../../util/select-type.model';
-import {AngularMultiSelectComponent} from '../../components/angular2-multiselect-dropdown/multiselect.component';
+import {Component, Input, OnInit} from '@angular/core';
 import {Preference} from '../preferecne.model';
 
 @Component({
     selector: 'jhi-preference-data-time-by-lesson',
     templateUrl: './preference-data-time-by-lesson.component.html',
 })
-export class PreferenceDataTimeByLessonComponent {
+export class PreferenceDataTimeByLessonComponent implements OnInit {
 
     preferenceDataTimeSelectOption = Preference.preferenceSelectTypes;
 
     @Input()
-    preferenceDataTimeByLessonList = [];
+    preferenceByLessonList = [];
 
-
-    // TODO to samo w multiselectt=
-    getOptionHierarchyStyle(item: any) {
-        let color = 'transparent';
-        if (item.value) {
-            if (item.value > 0) {
-                const colorAlpha = item.value / 10.0;
-                color = 'rgba(40, 167, 69, ' + colorAlpha + ')';
-                return {'border-left': '10px solid ' + color};
-            } else if (item.value < 0) {
-                const colorAlpha = item.value / 10.0;
-                color = 'rgba(220, 53, 69, ' + colorAlpha + ')';
-                return {'border-left': '10px solid ' + color};
-            }
-        }
-        return {'border-left': '10px solid ' + color};
+    ngOnInit(): void {
+        this.entityLessonSelectSort();
     }
+
+    entityLessonSelectSort() {
+        this.preferenceByLessonList.sort((a: any, b: any) => {
+            if (!isNaN(Number(a.lessonName)) && isNaN(Number(b.lessonName))) {
+                return -1;
+            } else if (isNaN(Number(a.lessonName)) && !isNaN(Number(b.lessonName))) {
+                return 1;
+            } else if (!isNaN(Number(a.lessonName)) && !isNaN(Number(b.lessonName))) {
+                return Number(a.lessonName) - Number(b.lessonName)
+            } else {
+                return a.lessonName.localeCompare(b.lessonName);
+            }
+        });
+    }
+
 }

@@ -9,12 +9,8 @@ import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
 import {Teacher} from './teacher.model';
 import {TeacherPopupService} from './teacher-popup.service';
 import {TeacherService} from './teacher.service';
-import {Subject, SubjectService} from '../subject';
 import {Division, DivisionService} from '../division';
-import {Place, PlaceService} from '../place';
 import {ResponseWrapper} from '../../shared';
-import {Lesson, LessonService} from '../lesson';
-import {SelectType} from '../../util/select-type.model';
 import {DayOfWeek} from '../timetable/timetable.model';
 import {Preference} from '../../preference/preferecne.model';
 
@@ -28,22 +24,16 @@ export class TeacherDialogComponent implements OnInit {
     schoolId: number;
     teacher: Teacher;
 
-    subjects: Subject[];
-    lessons: Lesson[];
     divisions: Division[];
-    places: Place[];
 
-    preferenceDataTimeByLessonList = [];
+    preferenceByLessonList = [];
     preferenceSelectTypes = Preference.preferenceSelectTypes;
 
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private teacherService: TeacherService,
-        private subjectService: SubjectService,
-        private lessonService: LessonService,
         private divisionService: DivisionService,
-        private placeService: PlaceService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -51,41 +41,28 @@ export class TeacherDialogComponent implements OnInit {
     ngOnInit() {
         this.schoolId = this.teacher.divisionOwnerId;
         this.isSaving = false;
-        this.subjectService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => {
-                this.subjects = res.json;
-            }, (res: ResponseWrapper) => this.onError(res.json));
         this.divisionService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.divisions = res.json;
             }, (res: ResponseWrapper) => this.onError(res.json));
-        this.placeService.findByCurrentLogin()
-            .subscribe((res: ResponseWrapper) => {
-                this.places = res.json;
-            }, (res: ResponseWrapper) => this.onError(res.json));
-        this.lessonService.findByDivisionOwner([this.schoolId], {size: SelectType.MAX_INT_JAVA})
-            .subscribe((res: ResponseWrapper) => {
-                this.initLessons(res.json)
-            }, (res: ResponseWrapper) => this.onError(res.json));
-    }
-
-    private initLessons(entityList: any[]) {
-        this.lessons = entityList;
-        this.lessons.forEach((preferredLesson) => this.preferenceDataTimeByLessonList.push({lesson: preferredLesson, preference: []}));
-
         this.initPreferenceDataTimeForTeachers();
     }
 
     private initPreferenceDataTimeForTeachers() {
-        this.preferenceDataTimeByLessonList.forEach((preferenceDataTimeByLesson) => {
+        const lessons = this.teacher.preferenceDataTimeForTeachers
+            .map((preferenceDataTimeForTeacher) => ({lessonId: preferenceDataTimeForTeacher.lessonId, lessonName: preferenceDataTimeForTeacher.lessonName}));
+        const lessonsWithoutDuplicate = lessons.filter( (element, index) => lessons.indexOf(lessons.find((lesson) => lesson.lessonId === element.lessonId)) === index);
+        lessonsWithoutDuplicate
+            .forEach((preferredLesson) => this.preferenceByLessonList
+                .push({lessonId: preferredLesson.lessonId, lessonName: preferredLesson.lessonName, preferenceDataTimeByLessons: []}));
+
+        this.preferenceByLessonList.forEach((preferenceByLesson) => {
                 for (const dayOfWeek of Object.keys(DayOfWeek)) {
                     const numberDayOfWeek = Number(dayOfWeek);
                     if (!isNaN(numberDayOfWeek)) {
                         const preferenceForDataTimeModals = this.teacher.preferenceDataTimeForTeachers
-                            .filter((preference) => preference.lessonId === preferenceDataTimeByLesson.lesson.id && preference.dayOfWeek === numberDayOfWeek);
-                        if (preferenceForDataTimeModals.length > 0) {
-                            preferenceDataTimeByLesson.preference[numberDayOfWeek] = preferenceForDataTimeModals[0];
-                        }
+                            .find((preference) => preference.lessonId === preferenceByLesson.lessonId && preference.dayOfWeek === numberDayOfWeek);
+                            preferenceByLesson.preferenceDataTimeByLessons[numberDayOfWeek] = preferenceForDataTimeModals;
                     }
                 }
             }
@@ -126,10 +103,6 @@ export class TeacherDialogComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
-    trackSubjectById(index: number, item: Subject) {
-        return item.id;
-    }
-
     trackDivisionById(index: number, item: Division) {
         return item.id;
     }
@@ -144,7 +117,6 @@ export class TeacherDialogComponent implements OnInit {
         }
         return option;
     }
-
 
 }
 

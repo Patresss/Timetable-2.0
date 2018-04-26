@@ -47,12 +47,6 @@
             </div>
 
             <div class="form-group">
-                <label jhiTranslate="timetableApp.teacher.preferredSubject" for="field_preferredSubject">Preferred Subject</label>
-                <select class="form-control" id="field_preferredSubject" multiple name="preferredSubject" [(ngModel)]="teacher.preferredSubjects">
-                    <option [ngValue]="getSelected(teacher.preferredSubjects, subjectOption)" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.name}}</option>
-                </select>
-            </div>
-            <div class="form-group">
                 <label jhiTranslate="timetableApp.teacher.divisionOwner" for="field_division">Division</label>
                 <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="teacher.divisionOwnerId">
                     <option [ngValue]="null"></option>
@@ -93,7 +87,7 @@
                         <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferenceLessonAndDate">Preference lesson and date </span>
                     </ng-template>
                     <ng-template ngbPanelContent>
-                        <jhi-preference-data-time-by-lesson [preferenceDataTimeByLessonList]="preferenceDataTimeByLessonList"></jhi-preference-data-time-by-lesson>
+                        <jhi-preference-data-time-by-lesson [preferenceByLessonList]="preferenceByLessonList"></jhi-preference-data-time-by-lesson>
                     </ng-template>
                 </ngb-panel>
             </ngb-accordion>
