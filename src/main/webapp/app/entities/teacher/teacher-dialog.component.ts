@@ -26,7 +26,6 @@ export class TeacherDialogComponent implements OnInit {
 
     divisions: Division[];
 
-    preferenceByLessonList = [];
     preferenceSelectTypes = Preference.preferenceSelectTypes;
 
     constructor(
@@ -45,29 +44,8 @@ export class TeacherDialogComponent implements OnInit {
             .subscribe((res: ResponseWrapper) => {
                 this.divisions = res.json;
             }, (res: ResponseWrapper) => this.onError(res.json));
-        this.initPreferenceDataTimeForTeachers();
     }
 
-    private initPreferenceDataTimeForTeachers() {
-        const lessons = this.teacher.preferenceDataTimeForTeachers
-            .map((preferenceDataTimeForTeacher) => ({lessonId: preferenceDataTimeForTeacher.lessonId, lessonName: preferenceDataTimeForTeacher.lessonName}));
-        const lessonsWithoutDuplicate = lessons.filter( (element, index) => lessons.indexOf(lessons.find((lesson) => lesson.lessonId === element.lessonId)) === index);
-        lessonsWithoutDuplicate
-            .forEach((preferredLesson) => this.preferenceByLessonList
-                .push({lessonId: preferredLesson.lessonId, lessonName: preferredLesson.lessonName, preferenceDataTimeByLessons: []}));
-
-        this.preferenceByLessonList.forEach((preferenceByLesson) => {
-                for (const dayOfWeek of Object.keys(DayOfWeek)) {
-                    const numberDayOfWeek = Number(dayOfWeek);
-                    if (!isNaN(numberDayOfWeek)) {
-                        const preferenceForDataTimeModals = this.teacher.preferenceDataTimeForTeachers
-                            .find((preference) => preference.lessonId === preferenceByLesson.lessonId && preference.dayOfWeek === numberDayOfWeek);
-                            preferenceByLesson.preferenceDataTimeByLessons[numberDayOfWeek] = preferenceForDataTimeModals;
-                    }
-                }
-            }
-        );
-    }
 
     clear() {
         this.activeModal.dismiss('cancel');

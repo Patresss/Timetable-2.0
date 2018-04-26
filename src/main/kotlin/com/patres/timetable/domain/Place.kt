@@ -1,10 +1,7 @@
 package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
-import com.patres.timetable.domain.preference.PreferenceDivisionByPlace
-import com.patres.timetable.domain.preference.PreferenceSubjectByPlace
-import com.patres.timetable.domain.preference.PreferenceTeacherByPlace
+import com.patres.timetable.domain.preference.*
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -49,6 +46,11 @@ class Place(
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferenceDivisionByPlace: Set<PreferenceDivisionByPlace> = HashSet(),
+
+
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true, fetch = FetchType.LAZY)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    var preferencesDataTimeForPlace: Set<PreferenceDataTimeForPlace> = HashSet(),
 
     divisionOwner: Division? = null
 

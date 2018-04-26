@@ -2,6 +2,8 @@ package com.patres.timetable.service.dto
 
 
 import com.patres.timetable.domain.enumeration.DivisionType
+import com.patres.timetable.service.dto.preference.PreferenceDataTimeForDivisionDTO
+import com.patres.timetable.service.dto.preference.PreferenceDataTimeForPlaceDTO
 import java.io.Serializable
 import java.util.*
 import javax.validation.constraints.NotNull
@@ -29,6 +31,8 @@ class DivisionDTO(
     var preferredTeachers: Set<TeacherDTO> = HashSet(),
 
     var preferredSubjects: Set<SubjectDTO> = HashSet(),
+
+    var preferencesDataTimeForDivision: Set<PreferenceDataTimeForDivisionDTO> = HashSet(),
 
     divisionOwnerId: Long? = null
 

@@ -2,6 +2,8 @@ package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.patres.timetable.domain.enumeration.DivisionType
+import com.patres.timetable.domain.preference.PreferenceDataTimeForDivision
+import com.patres.timetable.domain.preference.PreferenceDataTimeForSubject
 import com.patres.timetable.domain.preference.PreferenceDivisionByPlace
 import com.patres.timetable.domain.preference.PreferenceTeacherByPlace
 import org.hibernate.annotations.Cache
@@ -96,6 +98,10 @@ class Division(
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferenceDivisionByPlace: Set<PreferenceDivisionByPlace> = HashSet(),
+
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "division", orphanRemoval = true, fetch = FetchType.LAZY)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    var preferencesDataTimeForDivision: Set<PreferenceDataTimeForDivision> = HashSet(),
 
     divisionOwner: Division? = null
 

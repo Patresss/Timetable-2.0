@@ -25,7 +25,6 @@ export class PlaceDialogComponent implements OnInit {
     place: Place;
     isSaving: boolean;
 
-    preferenceByLessonList = [];
     preferenceSelectTypes = Preference.preferenceSelectTypes;
 
     divisions: Division[];

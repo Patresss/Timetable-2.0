@@ -1,4 +1,6 @@
 import { BaseEntity, User } from './../../shared';
+import {PreferenceForDataTimeForSubjectModel} from '../../preference/preference-for-data-time-for-subject.model';
+import {PreferenceForDataTimeForDivisionModel} from '../../preference/preference-for-data-time-for-division.model';
 
 export const enum DivisionType {
     'SCHOOL',
@@ -27,6 +29,7 @@ export class Division implements BaseEntity {
         public preferredTeachers?: BaseEntity[],
         public preferredSubjects?: BaseEntity[],
         public preferredPlaces?: BaseEntity[],
+        public preferencesDataTimeForDivision: PreferenceForDataTimeForDivisionModel[] = [],
     ) {
     }
 }

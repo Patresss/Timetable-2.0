@@ -21,6 +21,9 @@
     <include file="config/liquibase/changelog/20180418220000_added_entity_PreferenceDivisionByPlace.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180418220000_added_entity_PreferenceSubjectByPlace.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180418220000_added_entity_PreferenceTeacherByPlace.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180426210400_added_entity_PreferenceDataTimeForSubject.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180426210500_added_entity_PreferenceDataTimeForPlace.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180426210600_added_entity_PreferenceDataTimeForDivision.xml" relativeToChangelogFile="false"/>
 
     <include file="config/liquibase/changelog/20170731144135_added_entity_constraints_Division.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170731144136_added_entity_constraints_Property.xml" relativeToChangelogFile="false"/>
@@ -39,5 +42,8 @@
     <include file="config/liquibase/changelog/20180418220000_added_entity_constraints_PreferenceDivisionByPlace.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180418220000_added_entity_constraints_PreferenceSubjectByPlace.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180418220000_added_entity_constraints_PreferenceTeacherByPlace.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180426210100_added_entity_constraints_PreferenceDataTimeForSubject.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180426210200_added_entity_constraints_PreferenceDataTimeForPlace.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180426210300_added_entity_constraints_PreferenceDataTimeForDivision.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

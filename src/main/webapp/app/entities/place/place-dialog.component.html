@@ -122,6 +122,14 @@
                     </ng-template>
                 </ngb-panel>
                 <br>
+                <ngb-panel>
+                    <ng-template ngbPanelTitle>
+                        <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferenceLessonAndDate">Preference lesson and date </span>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <jhi-preference-data-time-by-lesson [preferenceDataTime]="place.preferencesDataTimeForPlace"></jhi-preference-data-time-by-lesson>
+                    </ng-template>
+                </ngb-panel>
             </ngb-accordion>
 
         </div>

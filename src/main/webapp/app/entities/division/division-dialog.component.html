@@ -83,6 +83,17 @@
                     <option [ngValue]="getSelected(division.preferredSubjects, subjectOption)" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.name}}</option>
                 </select>
             </div>
+
+            <ngb-accordion #acc="ngbAccordion">
+                <ngb-panel>
+                    <ng-template ngbPanelTitle>
+                        <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferenceLessonAndDate">Preference lesson and date </span>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <jhi-preference-data-time-by-lesson [preferenceDataTime]="division.preferencesDataTimeForDivision"></jhi-preference-data-time-by-lesson>
+                    </ng-template>
+                </ngb-panel>
+            </ngb-accordion>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
