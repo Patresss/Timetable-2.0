@@ -15,12 +15,10 @@ export class PreferenceDataTimeByLessonComponent implements OnInit {
 
     preferenceByLessonList = [];
 
-
     ngOnInit(): void {
         this.initPreferenceDataTimeForTeachers();
         this.entityLessonSelectSort();
     }
-
 
     private initPreferenceDataTimeForTeachers() {
         const lessons = this.preferenceDataTime

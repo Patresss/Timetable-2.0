@@ -46,7 +46,6 @@ export class TeacherDialogComponent implements OnInit {
             }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
-
     clear() {
         this.activeModal.dismiss('cancel');
     }

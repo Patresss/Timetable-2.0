@@ -44,7 +44,6 @@ export class PlaceDialogComponent implements OnInit {
             .subscribe((res: ResponseWrapper) => { this.divisions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
-
     clear() {
         this.activeModal.dismiss('cancel');
     }
