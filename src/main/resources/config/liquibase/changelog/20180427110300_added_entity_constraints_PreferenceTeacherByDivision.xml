@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="20180427110300" author="Patres">
+
+        <addForeignKeyConstraint baseColumnNames="division_id"
+                                 baseTableName="preference_teacher_by_division"
+                                 constraintName="fk_preference_teacher_by_division_division_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="division"/>
+
+        <addForeignKeyConstraint baseColumnNames="teacher_id"
+                                 baseTableName="preference_teacher_by_division"
+                                 constraintName="fk_preference_teacher_by_division_teacher_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="teacher"/>
+
+    </changeSet>
+</databaseChangeLog>

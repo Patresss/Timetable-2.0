@@ -49,25 +49,23 @@ open class CacheConfiguration(jHipsterProperties: JHipsterProperties) {
             it.createCache(com.patres.timetable.domain.Division::class.java.name + ".divisionProperties", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Division::class.java.name + ".parents", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Division::class.java.name + ".users", jcacheConfiguration)
-            it.createCache(com.patres.timetable.domain.Division::class.java.name + ".preferredTeachers", jcacheConfiguration)
-            it.createCache(com.patres.timetable.domain.Division::class.java.name + ".preferredSubjects", jcacheConfiguration)
+            it.createCache(com.patres.timetable.domain.Division::class.java.name + ".preferencesTeacherByDivision", jcacheConfiguration)
+            it.createCache(com.patres.timetable.domain.Division::class.java.name + ".preferencesSubjectByDivision", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Division::class.java.name + ".preferenceDivisionByPlace", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Division::class.java.name + ".preferencesDataTimeForDivision", jcacheConfiguration)
-
             it.createCache(com.patres.timetable.domain.Property::class.java.name, jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Teacher::class.java.name, jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Teacher::class.java.name + ".timetables", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Teacher::class.java.name + ".preferenceSubjectByTeacher", jcacheConfiguration)
-            it.createCache(com.patres.timetable.domain.Teacher::class.java.name + ".preferredDivisions", jcacheConfiguration)
+            it.createCache(com.patres.timetable.domain.Teacher::class.java.name + ".preferencesTeacherByDivision", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Teacher::class.java.name + ".preferenceTeacherByPlace", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Teacher::class.java.name + ".preferenceDataTimeForTeachers", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Subject::class.java.name, jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Subject::class.java.name + ".timetables", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Subject::class.java.name + ".preferenceSubjectByTeacher", jcacheConfiguration)
-            it.createCache(com.patres.timetable.domain.Subject::class.java.name + ".preferredDivisions", jcacheConfiguration)
+            it.createCache(com.patres.timetable.domain.Subject::class.java.name + ".preferencesSubjectByDivision", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Subject::class.java.name + ".preferenceSubjectByPlace", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Subject::class.java.name + ".preferencesDataTimeForSubject", jcacheConfiguration)
-
             it.createCache(com.patres.timetable.domain.Place::class.java.name, jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Place::class.java.name + ".timetables", jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.Place::class.java.name + ".preferenceSubjectByPlace", jcacheConfiguration)
@@ -93,6 +91,8 @@ open class CacheConfiguration(jHipsterProperties: JHipsterProperties) {
             it.createCache(com.patres.timetable.domain.preference.PreferenceSubjectByPlace::class.java.name, jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.preference.PreferenceDivisionByPlace::class.java.name, jcacheConfiguration)
             it.createCache(com.patres.timetable.domain.preference.PreferenceTeacherByPlace::class.java.name, jcacheConfiguration)
+            it.createCache(com.patres.timetable.domain.preference.PreferenceTeacherByDivision::class.java.name, jcacheConfiguration)
+            it.createCache(com.patres.timetable.domain.preference.PreferenceSubjectByDivision::class.java.name, jcacheConfiguration)
         }
     }
 }

@@ -71,20 +71,60 @@
                     <option [ngValue]="getSelected(division.users, userOption)" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label jhiTranslate="timetableApp.division.preferredTeacher" for="field_preferredTeacher">Preferred Teacher</label>
-                <select class="form-control" id="field_preferredTeacher" multiple name="preferredTeacher" [(ngModel)]="division.preferredTeachers">
-                    <option [ngValue]="getSelected(division.preferredTeachers, teacherOption)" *ngFor="let teacherOption of teachers; trackBy: trackTeacherById">{{teacherOption.surname}}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label jhiTranslate="timetableApp.division.preferredSubject" for="field_preferredSubject">Preferred Subject</label>
-                <select class="form-control" id="field_preferredSubject" multiple name="preferredSubject" [(ngModel)]="division.preferredSubjects">
-                    <option [ngValue]="getSelected(division.preferredSubjects, subjectOption)" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.name}}</option>
-                </select>
-            </div>
 
             <ngb-accordion #acc="ngbAccordion">
+                <ngb-panel>
+                    <ng-template ngbPanelTitle>
+                        <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferredTeachers">Preferred teachers</span>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th jhiTranslate="timetableApp.teacher.main">Teacher</th>
+                                <th jhiTranslate="timetableApp.preference.preference">Preference</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let preference of division.preferencesTeacherByDivision">
+                                <td>{{preference.teacherFullName}}</td>
+                                <td>
+                                    <select class="form-control" name="preference_{{preference.teacherId}}{{preference.divisionId}}" [(ngModel)]="preference.points">
+                                        <option *ngFor="let selectType of preferenceSelectTypes" [ngValue]="selectType.value" jhiTranslate="{{selectType.itemTranslate}}">{{selectType.value}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </ng-template>
+                </ngb-panel>
+                <br>
+                <ngb-panel>
+                    <ng-template ngbPanelTitle>
+                        <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferredSubjects">Preferred subjects</span>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th jhiTranslate="timetableApp.subject.main">Subject</th>
+                                <th jhiTranslate="timetableApp.preference.preference">Preference</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let preference of division.preferencesSubjectByDivision">
+                                <td>{{preference.subjectName}}</td>
+                                <td>
+                                    <select class="form-control" name="preference_{{preference.subjectId}}{{preference.divisionId}}" [(ngModel)]="preference.points">
+                                        <option *ngFor="let selectType of preferenceSelectTypes" [ngValue]="selectType.value" jhiTranslate="{{selectType.itemTranslate}}">{{selectType.value}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </ng-template>
+                </ngb-panel>
+                <br>
                 <ngb-panel>
                     <ng-template ngbPanelTitle>
                         <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferenceLessonAndDate">Preference lesson and date </span>

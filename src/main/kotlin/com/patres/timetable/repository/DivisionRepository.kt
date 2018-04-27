@@ -16,8 +16,8 @@ interface DivisionRepository : DivisionOwnerRepository<Division> {
             Division division
             left join fetch division.parents
             left join fetch division.users
-            left join fetch division.preferredTeachers
-            left join fetch division.preferredSubjects
+            left join fetch division.preferencesSubjectByDivision
+            left join fetch division.preferencesTeacherByDivision
             left join fetch division.preferenceDivisionByPlace
             left join fetch division.preferencesDataTimeForDivision
         """)
@@ -30,8 +30,8 @@ interface DivisionRepository : DivisionOwnerRepository<Division> {
             Division division
             left join fetch division.parents
             left join fetch division.users
-            left join fetch division.preferredTeachers
-            left join fetch division.preferredSubjects
+            left join fetch division.preferencesSubjectByDivision
+            left join fetch division.preferencesTeacherByDivision
             left join fetch division.preferenceDivisionByPlace
             left join fetch division.preferencesDataTimeForDivision
 
@@ -45,8 +45,8 @@ interface DivisionRepository : DivisionOwnerRepository<Division> {
             division
         from
             Division division
-            left join fetch division.preferredTeachers
-            left join fetch division.preferredSubjects
+            left join fetch division.preferencesSubjectByDivision
+            left join fetch division.preferencesTeacherByDivision
             left join fetch division.preferenceDivisionByPlace
             left join fetch division.preferencesDataTimeForDivision
         where

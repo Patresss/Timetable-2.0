@@ -14,7 +14,7 @@ interface SubjectRepository : DivisionOwnerRepository<Subject> {
         from
             Subject subject
             left join fetch subject.preferenceSubjectByPlace
-            left join fetch subject.preferredDivisions
+            left join fetch subject.preferencesSubjectByDivision
             left join fetch subject.preferenceSubjectByTeacher
             left join fetch subject.preferencesDataTimeForSubject
         where

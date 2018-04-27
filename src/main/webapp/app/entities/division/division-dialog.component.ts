@@ -14,6 +14,7 @@ import { Teacher, TeacherService } from '../teacher';
 import { Subject, SubjectService } from '../subject';
 import { User, UserService } from '../../shared';
 import { ResponseWrapper } from '../../shared';
+import {Preference} from '../../preference/preferecne.model';
 
 @Component({
     selector: 'jhi-division-dialog',
@@ -23,6 +24,8 @@ export class DivisionDialogComponent implements OnInit {
 
     division: Division;
     isSaving: boolean;
+
+    preferenceSelectTypes = Preference.preferenceSelectTypes;
 
     divisions: Division[];
 

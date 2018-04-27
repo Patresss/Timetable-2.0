@@ -2,10 +2,7 @@ package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.patres.timetable.domain.enumeration.DivisionType
-import com.patres.timetable.domain.preference.PreferenceDataTimeForDivision
-import com.patres.timetable.domain.preference.PreferenceDataTimeForSubject
-import com.patres.timetable.domain.preference.PreferenceDivisionByPlace
-import com.patres.timetable.domain.preference.PreferenceTeacherByPlace
+import com.patres.timetable.domain.preference.*
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -76,23 +73,21 @@ class Division(
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "division_parent", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "parents_id", referencedColumnName = "id")))
+    @JoinTable(name = "division_parent", joinColumns = [(JoinColumn(name = "divisions_id", referencedColumnName = "id"))], inverseJoinColumns = arrayOf(JoinColumn(name = "parents_id", referencedColumnName = "id")))
     var parents: Set<Division> = HashSet(),
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "division_user", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "users_id", referencedColumnName = "id")))
+    @JoinTable(name = "division_user", joinColumns = [(JoinColumn(name = "divisions_id", referencedColumnName = "id"))], inverseJoinColumns = arrayOf(JoinColumn(name = "users_id", referencedColumnName = "id")))
     var users: Set<User> = HashSet(),
 
-    @ManyToMany
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "division", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "division_preferred_teacher", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_teachers_id", referencedColumnName = "id")))
-    var preferredTeachers: Set<Teacher> = HashSet(),
+    var preferencesSubjectByDivision: Set<PreferenceSubjectByDivision> = HashSet(),
 
-    @ManyToMany
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "division", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "division_preferred_subject", joinColumns = arrayOf(JoinColumn(name = "divisions_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "preferred_subjects_id", referencedColumnName = "id")))
-    var preferredSubjects: Set<Subject> = HashSet(),
+    var preferencesTeacherByDivision: Set<PreferenceTeacherByDivision> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "division", orphanRemoval = true)
     @JsonIgnore

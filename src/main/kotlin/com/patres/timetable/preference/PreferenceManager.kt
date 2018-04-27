@@ -198,10 +198,10 @@ open class PreferenceManager(
     }
 
     private fun calculateDivisionsByTeacher(preference: Preference, teacher: Teacher) {
-        val preferredDivisions = teacher.preferredDivisions.mapNotNull { it.id }.toSet()
         preference.preferredDivisionMap.forEach { id, preferenceHierarchy ->
-            if (preferredDivisions.contains(id)) {
-                preferenceHierarchy.preferredByTeacher = PreferenceHierarchy.PREFERRED_POINTS
+            val preferredDivisions = teacher.preferencesTeacherByDivision.find { it.division?.id == id }
+            if (preferredDivisions != null) {
+                preferenceHierarchy.preferredByTeacher = preferredDivisions.points
             } else {
                 preferenceHierarchy.preferredByTeacher = 0
             }
@@ -253,10 +253,10 @@ open class PreferenceManager(
     }
 
     private fun calculateSubjectsByDivision(preference: Preference, division: Division) {
-        val preferredSubjects = division.preferredSubjects.mapNotNull { it.id }.toSet()
         preference.preferredSubjectMap.forEach { id, preferenceHierarchy ->
-            if (preferredSubjects.contains(id)) {
-                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFERRED_POINTS
+            val preferredSubjects = division.preferencesSubjectByDivision.find { it.subject?.id == id }
+            if (preferredSubjects != null) {
+                preferenceHierarchy.preferredByDivision = preferredSubjects.points
             } else {
                 preferenceHierarchy.preferredByDivision = 0
             }
@@ -275,10 +275,10 @@ open class PreferenceManager(
     }
 
     private fun calculateTeachersByDivision(preference: Preference, division: Division) {
-        val preferredTeachers = division.preferredTeachers.mapNotNull { it.id }.toSet()
         preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            if (preferredTeachers.contains(id)) {
-                preferenceHierarchy.preferredByDivision = PreferenceHierarchy.PREFERRED_POINTS
+            val preferredTeachers = division.preferencesTeacherByDivision.find { it.teacher?.id == id }
+            if (preferredTeachers != null) {
+                preferenceHierarchy.preferredByDivision = preferredTeachers.points
             } else {
                 preferenceHierarchy.preferredByDivision = 0
             }
@@ -297,10 +297,10 @@ open class PreferenceManager(
     }
 
     private fun calculateDivisionsBySubject(preference: Preference, subject: Subject) {
-        val preferredDivisions = subject.preferredDivisions.mapNotNull { it.id }.toSet()
         preference.preferredDivisionMap.forEach { id, preferenceHierarchy ->
-            if (preferredDivisions.contains(id)) {
-                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFERRED_POINTS
+            val preferredDivisions = subject.preferencesSubjectByDivision.find { it.division?.id == id }
+            if (preferredDivisions != null) {
+                preferenceHierarchy.preferredBySubject = preferredDivisions.points
             } else {
                 preferenceHierarchy.preferredBySubject = 0
             }
@@ -308,10 +308,10 @@ open class PreferenceManager(
     }
 
     private fun calculateTeachersBySubject(preference: Preference, subject: Subject) {
-        val preferredTeachers = subject.preferenceSubjectByTeacher.mapNotNull { it.id }.toSet()
         preference.preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            if (preferredTeachers.contains(id)) {
-                preferenceHierarchy.preferredBySubject = PreferenceHierarchy.PREFERRED_POINTS
+            val preferredTeachers = subject.preferenceSubjectByTeacher.find { it.teacher?.id == id }
+            if (preferredTeachers != null) {
+                preferenceHierarchy.preferredBySubject = preferredTeachers.points
             } else {
                 preferenceHierarchy.preferredBySubject = 0
             }

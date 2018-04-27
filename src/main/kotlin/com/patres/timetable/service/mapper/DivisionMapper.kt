@@ -1,12 +1,16 @@
 package com.patres.timetable.service.mapper
 
 import com.patres.timetable.domain.Division
-import com.patres.timetable.domain.Subject
 import com.patres.timetable.repository.LessonRepository
+import com.patres.timetable.repository.SubjectRepository
+import com.patres.timetable.repository.TeacherRepository
 import com.patres.timetable.service.dto.DivisionDTO
-import com.patres.timetable.service.dto.SubjectDTO
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForDivisionDTO
+import com.patres.timetable.service.dto.preference.PreferenceSubjectByDivisionDTO
+import com.patres.timetable.service.dto.preference.PreferenceTeacherByDivisionDTO
 import com.patres.timetable.service.mapper.preference.PreferenceDataTimeForDivisionMapper
+import com.patres.timetable.service.mapper.preference.PreferenceSubjectByDivisionMapper
+import com.patres.timetable.service.mapper.preference.PreferenceTeacherByDivisionMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.DayOfWeek
@@ -29,6 +33,19 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
     @Autowired
     private lateinit var preferenceDataTimeForDivisionMapper: PreferenceDataTimeForDivisionMapper
 
+    @Autowired
+    private lateinit var preferenceTeacherByDivisionMapper: PreferenceTeacherByDivisionMapper
+
+    @Autowired
+    private lateinit var preferenceSubjectByDivisionMapper: PreferenceSubjectByDivisionMapper
+
+    @Autowired
+    private lateinit var teacherRepository: TeacherRepository
+
+    @Autowired
+    private lateinit var subjectRepository: SubjectRepository
+
+
     override fun toEntity(entityDto: DivisionDTO): Division {
         return Division(
             name = entityDto.name,
@@ -41,8 +58,8 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 colorText = entityDto.colorText
                 parents = entityDTOSetToEntitySet(entityDto.parents)
                 users = userMapper.entityDTOSetToEntitySet(entityDto.users)
-                preferredTeachers = teacherMapper.entityDTOSetToEntitySet(entityDto.preferredTeachers)
-                preferredSubjects = subjectMapper.entityDTOSetToEntitySet(entityDto.preferredSubjects)
+                preferencesTeacherByDivision = preferenceTeacherByDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesTeacherByDivision)
+                preferencesSubjectByDivision = preferenceSubjectByDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesSubjectByDivision)
                 val parent = parents.elementAtOrNull(0) //TODO validate if all parents has the same owner
                 divisionOwner = parent?.divisionOwner ?: parent
                 preferencesDataTimeForDivision = preferenceDataTimeForDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForDivision)
@@ -62,6 +79,12 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 colorText = entity.colorText
                 divisionOwnerId = getDivisionOwnerId(entity.divisionOwner)
                 divisionOwnerName = getDivisionOwnerName(entity.divisionOwner)
+
+                preferencesTeacherByDivision = preferenceTeacherByDivisionMapper.entitySetToEntityDTOSet(entity.preferencesTeacherByDivision)
+                addNeutralPreferenceTeacherByDivision()
+                preferencesSubjectByDivision = preferenceSubjectByDivisionMapper.entitySetToEntityDTOSet(entity.preferencesSubjectByDivision)
+                addNeutralPreferenceSubjectByDivision()
+
                 preferencesDataTimeForDivision = preferenceDataTimeForDivisionMapper.entitySetToEntityDTOSet(entity.preferencesDataTimeForDivision)
                 addNeutralPreferencesDataTime()
             }
@@ -70,17 +93,14 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
         divisionDTO.parents = divisionDtoSet
         val userDtoSet = userMapper.entitySetToEntityDTOSet(entity.users)
         divisionDTO.users = userDtoSet
-        val teacherDtoSet = teacherMapper.entitySetToEntityDTOSet(entity.preferredTeachers)
-        divisionDTO.preferredTeachers = teacherDtoSet
-        val subjectDtoSet = subjectMapper.entitySetToEntityDTOSet(entity.preferredSubjects)
-        divisionDTO.preferredSubjects = subjectDtoSet
 
         return divisionDTO
     }
 
     override fun toDtoWithSampleForm(entity: Division): DivisionDTO {
         return DivisionDTO(
-            name = entity.name
+            name = entity.name,
+            divisionType = entity.divisionType
         ).apply {
             id = entity.id
             shortName = entity.shortName
@@ -102,6 +122,30 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
             return null
         }
         return divisionOwner.name
+    }
+
+    private fun DivisionDTO.addNeutralPreferenceSubjectByDivision() {
+        divisionOwnerId?.let {
+            val subjects = subjectRepository.findByDivisionOwnerId(it)
+            val neutralPreferenceToAdd =
+                subjects
+                    .filter { subject -> !preferencesSubjectByDivision.any { preference -> id == preference.divisionId && subject.id == preference.subjectId } }
+                    .map { subject -> PreferenceSubjectByDivisionDTO(divisionId = id, divisionName = name ?: "", subjectId = subject.id, subjectName = subject.name ?: "") }
+            preferencesSubjectByDivision += neutralPreferenceToAdd
+            preferencesSubjectByDivision = preferencesSubjectByDivision.sortedBy { it.subjectName }.toSet()
+        }
+    }
+
+    private fun DivisionDTO.addNeutralPreferenceTeacherByDivision() {
+        divisionOwnerId?.let {
+            val teachers = teacherRepository.findByDivisionOwnerId(it)
+            val neutralPreferenceToAdd =
+                teachers
+                    .filter { teacher -> !preferencesTeacherByDivision.any { preference -> id == preference.divisionId && teacher.id == preference.teacherId } }
+                    .map { teacher -> PreferenceTeacherByDivisionDTO(divisionId = id, divisionName = name ?: "", teacherId = teacher.id, teacherFullName = teacher.getFullName(), teacherDegree = teacher.degree ?: "", teacherName = teacher.name ?: "", teacherSurname = teacher.surname ?: "") }
+            preferencesTeacherByDivision += neutralPreferenceToAdd
+            preferencesTeacherByDivision = preferencesTeacherByDivision.sortedWith(compareBy({ it.teacherSurname }, { it.teacherName }, { it.teacherDegree })).toSet()
+        }
     }
 
     private fun DivisionDTO.addNeutralPreferencesDataTime() {

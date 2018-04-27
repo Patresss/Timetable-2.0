@@ -36,7 +36,7 @@ interface TeacherRepository : DivisionOwnerRepository<Teacher> {
         from
             Teacher teacher
             left join fetch teacher.preferenceDataTimeForTeachers
-            left join fetch teacher.preferredDivisions
+            left join fetch teacher.preferencesTeacherByDivision
             left join fetch teacher.preferenceTeacherByPlace
             left join fetch teacher.preferenceSubjectByTeacher
         where

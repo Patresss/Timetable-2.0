@@ -416,8 +416,7 @@ open class FillerResource(
         // =====================================================
         // Division
         // =====================================================
-        val preferredSubjects = hashSetOf(historia, wiedzaOSpołeczeństwie, wiedzaOKulturze, matematyka, podstawyPrzedsiębiorczości, informatyka, biologia, chemia, geografia, fizyka, jPolski, jAngielski, jNiemiecki, jFrancuski, jRosyjski, godzWych, edukacjaDoBezpieczeństwa, wychowanieFizyczne, religia, wychowaniedoZyciaWRodzinie)
-        class1a = createDivision(name = "1 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2), preferredTeachers = hashSetOf(czuba), preferredSubjects = preferredSubjects)
+        class1a = createDivision(name = "1 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
         class1aGenerate = createDivision(name = "1 A generate", shortName = "1 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
         class1b = createDivision(name = "1 B", shortName = "1 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
         class1c = createDivision(name = "1 C", shortName = "1 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
@@ -1945,7 +1944,6 @@ open class FillerResource(
         łopuszańska = teacherService.save(łopuszańska)
 
 
-
         // =====================================================
         // Preference Place
         // =====================================================
@@ -2146,6 +2144,19 @@ open class FillerResource(
             preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
             placeService.save(this)
         }
+
+        // =====================================================
+        // Preference Divisions
+        // =====================================================
+        class1a.apply {
+            preferencesSubjectByDivision = hashSetOf(
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLaciński.id, points = -10_000)
+                )
+            preferencesTeacherByDivision = hashSetOf(
+                PreferenceTeacherByDivisionDTO(divisionId = this.id, teacherId = czuba.id, points = 5)
+            )
+        }
+        class1a = divisionService.save(class1a)
     }
 
 
@@ -2169,8 +2180,8 @@ open class FillerResource(
         return lessonService.save(lesson)
     }
 
-    private fun createDivision(name: String, shortName: String, divisionType: DivisionType, numberOfPeople: Long, parents: Set<DivisionDTO> = emptySet(), preferredTeachers: Set<TeacherDTO> = emptySet(), preferredSubjects: Set<SubjectDTO> = emptySet()): DivisionDTO {
-        val division = DivisionDTO(name = name, shortName = shortName, divisionType = divisionType, numberOfPeople = numberOfPeople, parents = parents, preferredTeachers = preferredTeachers, preferredSubjects = preferredSubjects)
+    private fun createDivision(name: String, shortName: String, divisionType: DivisionType, numberOfPeople: Long, parents: Set<DivisionDTO> = emptySet()): DivisionDTO {
+        val division = DivisionDTO(name = name, shortName = shortName, divisionType = divisionType, numberOfPeople = numberOfPeople, parents = parents)
         return divisionService.save(division)
     }
 
