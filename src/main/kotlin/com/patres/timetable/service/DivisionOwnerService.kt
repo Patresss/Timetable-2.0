@@ -29,7 +29,7 @@ abstract class DivisionOwnerService<EntityType : AbstractDivisionOwner, EntityDt
     @Transactional(readOnly = true)
     open fun findByDivisionOwnerId(pageable: Pageable, divisionsId: List<Long>): Page<EntityDtoType> {
         log.debug("Request to get {} by Division owners id", getEntityName())
-        return entityRepository.findByDivisionOwnerId(pageable, divisionsId).map{ entityMapper.toDto(it) }
+        return entityRepository.findByDivisionOwnerId(pageable, divisionsId).map{ entityMapper.toDtoWithSampleForm(it) }
     }
 
     @Transactional(readOnly = true)

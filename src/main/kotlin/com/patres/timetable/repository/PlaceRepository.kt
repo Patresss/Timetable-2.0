@@ -16,6 +16,8 @@ interface PlaceRepository : DivisionOwnerRepository<Place> {
             left join fetch place.preferenceSubjectByPlace
             left join fetch place.preferenceDivisionByPlace
             left join fetch place.preferenceTeacherByPlace
+            left join fetch place.preferencesDataTimeForPlace
+
         """)
     fun findAllWithEagerRelationships(): List<Place>
 
@@ -27,6 +29,7 @@ interface PlaceRepository : DivisionOwnerRepository<Place> {
             left join fetch place.preferenceSubjectByPlace
             left join fetch place.preferenceDivisionByPlace
             left join fetch place.preferenceTeacherByPlace
+            left join fetch place.preferencesDataTimeForPlace
         where
             place.id =:id
         """)
@@ -40,6 +43,7 @@ interface PlaceRepository : DivisionOwnerRepository<Place> {
             left join fetch place.preferenceSubjectByPlace
             left join fetch place.preferenceDivisionByPlace
             left join fetch place.preferenceTeacherByPlace
+            left join fetch place.preferencesDataTimeForPlace
         where
             place.id =:id
             """)

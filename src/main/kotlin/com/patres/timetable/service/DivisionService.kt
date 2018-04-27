@@ -25,18 +25,18 @@ open class DivisionService(entityRepository: DivisionRepository, entityMapper: E
     @Transactional(readOnly = true)
     open fun findByDivisionType(divisionType: DivisionType): List<DivisionDTO> {
         log.debug("Request to get {} by division value", getEntityName())
-        return entityRepository.findAllByDivisionType(divisionType).map { entityMapper.toDto(it) }
+        return entityRepository.findAllByDivisionType(divisionType).map { entityMapper.toDtoWithSampleForm(it) }
     }
 
     @Transactional(readOnly = true)
     open fun findClassesByParentId(parentId: Long): List<DivisionDTO> {
         log.debug("Request to get {} Class by parent Id", getEntityName())
-        return entityRepository.findByParentsIdAndDivisionTypeOrderByName(parentId, DivisionType.CLASS).map { entityMapper.toDto(it) }
+        return entityRepository.findByParentsIdAndDivisionTypeOrderByName(parentId, DivisionType.CLASS).map { entityMapper.toDtoWithSampleForm(it) }
     }
 
     @Transactional(readOnly = true)
     open fun findSubgroupsByParentId(parentId: Long): List<DivisionDTO> {
         log.debug("Request to get {} Subgroups by parent Id", getEntityName())
-        return entityRepository.findByParentsIdAndDivisionTypeOrderByName(parentId, DivisionType.SUBGROUP).map { entityMapper.toDto(it) }
+        return entityRepository.findByParentsIdAndDivisionTypeOrderByName(parentId, DivisionType.SUBGROUP).map { entityMapper.toDtoWithSampleForm(it) }
     }
 }
