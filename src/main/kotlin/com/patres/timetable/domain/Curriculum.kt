@@ -2,6 +2,7 @@ package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.patres.timetable.domain.enumeration.EventType
+import com.patres.timetable.preference.Preference
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable

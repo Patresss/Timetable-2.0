@@ -35,6 +35,11 @@ abstract class EntityService<EntityType : AbstractApplicationEntity, EntityDtoTy
         return entityMapper.toDto(entity)
     }
 
+    open fun saveEntityList(entity: List<EntityType>): List<EntityDtoType> {
+        log.debug("Request to save {} : {}", getEntityName(), entity)
+        val savedEntity = entityRepository.save(entity)
+        return entityMapper.toDto(savedEntity)
+    }
 
     @Transactional(readOnly = true)
     open fun findOne(id: Long?): EntityDtoType? {

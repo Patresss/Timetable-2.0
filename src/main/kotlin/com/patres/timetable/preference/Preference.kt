@@ -15,8 +15,6 @@ class Preference(
     val preferredSubjectMap = subjectsId.map { it to PreferenceSubjectHierarchy() }.toMap().toSortedMap()
     val preferredPlaceMap = placesId.map { it to PreferencePlaceHierarchy() }.toMap().toSortedMap()
     val preferredDivisionMap = divisionsId.map { it to PreferenceDivisionHierarchy() }.toMap().toSortedMap()
-    val preferredLessonMap = lessonsId.map { it to PreferenceLessonHierarchy() }.toMap().toSortedMap()
-    val preferredDayOfWeekMap = DayOfWeek.values().forEach { it.value to PreferenceDayOfWeekHierarchy() }
     val preferredLessonAndDayOfWeekSet = HashSet<LessonDayOfWeekPreferenceElement>()
 
     init {

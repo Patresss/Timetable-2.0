@@ -7,11 +7,9 @@ import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
 
 import {Division, DivisionService} from '../division';
 import {ResponseWrapper} from '../../shared';
-import {Curriculum, CurriculumService} from '../curriculum';
+import {CurriculumService} from '../curriculum';
 import {CurriculumList} from './curriculum-list.model';
 import {CurriculumListService} from './curriculum-list.service';
-import {PeriodDialogComponent} from '../period/period-dialog.component';
-import {PeriodPopupService} from '../period/period-popup.service';
 import {CurriculumListPopupService} from './curriculum-list-popup.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {PeriodService} from '../period/period.service';
@@ -39,6 +37,7 @@ export class CurriculumListPopupComponent implements OnInit, OnDestroy {
                 this.curriculumListPopupService
                     .open(CurriculumListDialogComponent as Component);
             }
+
         });
     }
 
@@ -81,25 +80,34 @@ export class CurriculumListDialogComponent implements OnInit {
                 private curriculumService: CurriculumService,
                 private eventManager: JhiEventManager,
                 private curriculumListService: CurriculumListService,
+                private divisionService: DivisionService,
                 private activeModal: NgbActiveModal) {
     }
 
     ngOnInit() {
         this.isSaving = false;
         this.periodService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
-            .subscribe((res: ResponseWrapper) => { this.initPeriods(res.json)}, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: ResponseWrapper) => {
+                this.initPeriods(res.json)
+            }, (res: ResponseWrapper) => this.onError(res.json));
         this.curriculumService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
-            .subscribe((res: ResponseWrapper) => { this.initCurriculums(res.json)}, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: ResponseWrapper) => {
+                this.initCurriculums(res.json)
+            }, (res: ResponseWrapper) => this.onError(res.json));
+        this.divisionService.query()
+            .subscribe((res: ResponseWrapper) => {
+                this.divisions = res.json;
+            }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     private initPeriods(entityList: any[]) {
         this.periodSelectOption = SelectUtil.entityListToSelectList(entityList);
-        this.selectedPeriod = this.periodSelectOption.filter( (entity) => entity.id === this.curriculumList.periodId)
+        this.selectedPeriod = this.periodSelectOption.filter((entity) => entity.id === this.curriculumList.periodId)
     }
 
     private initCurriculums(entityList: any[]) {
         this.curriculumSelectOption = SelectUtil.entityListToSelectList(entityList);
-        this.selectedCurriculum = this.curriculumSelectOption.filter( (entity) => this.curriculumList.curriculums.some((curriculum) => entity.id === curriculum.id ))
+        this.selectedCurriculum = this.curriculumSelectOption.filter((entity) => this.curriculumList.curriculums.some((curriculum) => entity.id === curriculum.id))
     }
 
     load(id) {

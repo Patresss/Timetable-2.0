@@ -31,7 +31,8 @@ open class PreferenceManager(
         preferenceDependency.teacher?.let { calculateByTeacher(preference, it) }
         preferenceDependency.subject?.let { calculateBySubject(preference, it) }
         preferenceDependency.place?.let { calculateByPlace(preference, it) }
-        preferenceDependency.division?.let { calculateByDivision(preference, it, getIdOfTooSmallPlacesFromDatabase(it)) }
+        preferenceDependency.division?.let { calculateByDivision(preference, it) }
+        preferenceDependency.division?.let { calculateTooSmallPlace(preference, getIdOfTooSmallPlacesFromDatabase(it)) }
         calculateTaken(preference, getTakenTimetableFromDatabase(preferenceDependency))
 
         val lessonId = preferenceDependency.lesson?.id
@@ -45,6 +46,28 @@ open class PreferenceManager(
         preferenceDependency.teacher?.let { calculateTakenLessonAndDayOfWeekByTeacher(preference, it, takenTimetable) }
         preferenceDependency.place?.let { calculateTakenLessonAndDayOfWeekByPlace(preference, it, takenTimetable) }
         preferenceDependency.division?.let { calculateTakenLessonAndDayOfWeekByDivision(preference, it, takenTimetable) }
+    }
+
+    fun calculateAllForTimetable(preference: Preference, timetable: Timetable, tooSmallPlaceId: Set<Long>) {
+        timetable.teacher?.let { calculateByTeacher(preference, it) }
+        timetable.subject?.let { calculateBySubject(preference, it) }
+        timetable.place?.let { calculateByPlace(preference, it) }
+        timetable.division?.let { calculateByDivision(preference, it) }
+        timetable.division?.let { calculateTooSmallPlace(preference, tooSmallPlaceId) }
+//
+//       calculateTaken(preference, getTakenTimetableFromDatabase(preferenceDependency))
+//
+//        val lessonId = timetable.lesson?.id
+//        val dayOfWeek = timetable.dayOfWeek
+//        if (lessonId != null && dayOfWeek != null) {
+//            val preferenceDataTimeForTeacherFromDatabase = getPreferenceDataTimeForTeacherFromDatabase(dayOfWeek, lessonId)
+//            calculateByLessonAndDayOfWeek(preference, preferenceDataTimeForTeacherFromDatabase)
+//        }
+//
+//        val takenTimetable = getTakenTimetableForLessonAndDayOfWeekFromDatabase(preferenceDependency)
+//        timetable.teacher?.let { calculateTakenLessonAndDayOfWeekByTeacher(preference, it, takenTimetable) }
+//        timetable.place?.let { calculateTakenLessonAndDayOfWeekByPlace(preference, it, takenTimetable) }
+//        timetable.division?.let { calculateTakenLessonAndDayOfWeekByDivision(preference, it, takenTimetable) }
     }
 
     fun calculateTaken(preference: Preference, takenTimetable: Set<Timetable>) {
@@ -99,11 +122,10 @@ open class PreferenceManager(
         calculateLessonAndDayOfWeekByPlace(preference, place)
     }
 
-    fun calculateByDivision(preference: Preference, division: Division, idOfTooSmallPlaces: Set<Long>) {
+    fun calculateByDivision(preference: Preference, division: Division) {
         calculateTeachersByDivision(preference, division)
         calculatePlacesByDivision(preference, division)
         calculateSubjectsByDivision(preference, division)
-        calculateTooSmallPlace(preference, idOfTooSmallPlaces)
         calculateLessonAndDayOfWeekByDivision(preference, division)
     }
 

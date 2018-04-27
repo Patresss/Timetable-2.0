@@ -29,6 +29,7 @@ open class FillerResource(
     private var periodService: PeriodService,
     private var teacherService: TeacherService,
     private var curriculumService: CurriculumService,
+    private var curriculumListService: CurriculumListService,
     private var placeService: PlaceService) {
 
     companion object {
@@ -602,24 +603,47 @@ open class FillerResource(
         // =====================================================
         // Curriculum
         // =====================================================
-        createCurriculum(division = class1aGenerate, subject = biologia, teacher = szarłowicz, place = p8, numberOfActivities = 1)
-        createCurriculum(division = class1aGenerate, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, place = p35, numberOfActivities = 2)
-        createCurriculum(division = class1aGenerate, subject = jAngielski, teacher = kasprzyk, place = p21, numberOfActivities = 3)
-        createCurriculum(division = class1aGenerate, subject = religia, teacher = tPiwinski, place = p36, numberOfActivities = 2)
-        createCurriculum(division = class1aGenerate, subject = fizyka, teacher = szott, place = p15, numberOfActivities = 2)
-        createCurriculum(division = class1aGenerate, subject = jNiemiecki, teacher = przybyłowicz, place = p13, numberOfActivities = 3)
-        createCurriculum(division = class1aGenerate, subject = historia, teacher = świstak, place = p7, numberOfActivities = 2)
-        createCurriculum(division = class1aGenerate, subject = jPolski, teacher = pernal, place = p16, numberOfActivities = 3)
-        createCurriculum(division = class1aGenerate, subject = geografia, teacher = gonet, place = p20, numberOfActivities = 1)
-        createCurriculum(division = class1aGenerate, subject = matematyka, teacher = czuba, place = p22, numberOfActivities = 4)
-        createCurriculum(division = class1aGenerate, subject = chemia, teacher = chodorowiczBąk, place = p24, numberOfActivities = 1)
-        createCurriculum(division = class1aGenerate, subject = wiedzaOSpołeczeństwie, teacher = świstak, place = p24, numberOfActivities = 1)
-        createCurriculum(division = class1aGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, place = p36, numberOfActivities = 1)
-        createCurriculum(division = class1aGenerate, subject = wiedzaOKulturze, teacher = twardzikWilk, place = p13, numberOfActivities = 1)
-        createCurriculum(division = class1aGenerate, subject = edukacjaDoBezpieczeństwa, teacher = bloch, place = p31, numberOfActivities = 1)
-        createCurriculum(division = class1aGenerate, subject = informatyka, teacher = dzierwa, place = p4, numberOfActivities = 1)
-        createCurriculum(division = class1aGenerate, subject = godzWych, teacher = czuba, place = p22, numberOfActivities = 1)
-        createCurriculum(division = class1aGenerate, subject = wychowanieFizyczne, teacher = wilk, place = pds, numberOfActivities = 2)
+
+        val curriculumBiologia = createCurriculum(division = class1aGenerate, subject = biologia, teacher = szarłowicz, place = p8, numberOfActivities = 1)
+        val curriculumPodstawyPrzedsiębiorczości = createCurriculum(division = class1aGenerate, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, place = p35, numberOfActivities = 2)
+        val curriculumJAngielski = createCurriculum(division = class1aGenerate, subject = jAngielski, teacher = kasprzyk, place = p21, numberOfActivities = 3)
+        val curriculumReligia = createCurriculum(division = class1aGenerate, subject = religia, teacher = tPiwinski, place = p36, numberOfActivities = 2)
+        val curriculumFizyka = createCurriculum(division = class1aGenerate, subject = fizyka, teacher = szott, place = p15, numberOfActivities = 2)
+        val curriculumJNiemiecki = createCurriculum(division = class1aGenerate, subject = jNiemiecki, teacher = przybyłowicz, place = p13, numberOfActivities = 3)
+        val curriculumHistoria = createCurriculum(division = class1aGenerate, subject = historia, teacher = świstak, place = p7, numberOfActivities = 2)
+        val curriculumJPolski = createCurriculum(division = class1aGenerate, subject = jPolski, teacher = pernal, place = p16, numberOfActivities = 3)
+        val curriculumGeografia = createCurriculum(division = class1aGenerate, subject = geografia, teacher = gonet, place = p20, numberOfActivities = 1)
+        val curriculumMatematyka = createCurriculum(division = class1aGenerate, subject = matematyka, teacher = czuba, place = p22, numberOfActivities = 4)
+        val curriculumChemia = createCurriculum(division = class1aGenerate, subject = chemia, teacher = chodorowiczBąk, place = p24, numberOfActivities = 1)
+        val curriculumWiedzaOSpołeczeństwie = createCurriculum(division = class1aGenerate, subject = wiedzaOSpołeczeństwie, teacher = świstak, place = p24, numberOfActivities = 1)
+        val curriculumWychowaniedoZyciaWRodzinie = createCurriculum(division = class1aGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, place = p36, numberOfActivities = 1)
+        val curriculumWiedzaOKulturze = createCurriculum(division = class1aGenerate, subject = wiedzaOKulturze, teacher = twardzikWilk, place = p13, numberOfActivities = 1)
+        val curriculumEdukacjaDoBezpieczeństwa = createCurriculum(division = class1aGenerate, subject = edukacjaDoBezpieczeństwa, teacher = bloch, place = p31, numberOfActivities = 1)
+        val curriculumInformatyka = createCurriculum(division = class1aGenerate, subject = informatyka, teacher = dzierwa, place = p4, numberOfActivities = 1)
+        val curriculumGodzWych = createCurriculum(division = class1aGenerate, subject = godzWych, teacher = czuba, place = p22, numberOfActivities = 1)
+        val curriculumWychowanieFizyczne = createCurriculum(division = class1aGenerate, subject = wychowanieFizyczne, teacher = wilk, place = pds, numberOfActivities = 2)
+
+        curriculumListService.save(CurriculumListDTO(name = "test001", periodId = semestLetniPeriod.id, divisionOwnerId = lo2.id, curriculums = hashSetOf(
+            curriculumBiologia,
+            curriculumPodstawyPrzedsiębiorczości,
+            curriculumJAngielski,
+            curriculumReligia,
+            curriculumFizyka,
+            curriculumJNiemiecki,
+            curriculumHistoria,
+            curriculumJPolski,
+            curriculumGeografia,
+            curriculumMatematyka,
+            curriculumChemia,
+            curriculumWiedzaOSpołeczeństwie,
+            curriculumWychowaniedoZyciaWRodzinie,
+            curriculumWiedzaOKulturze,
+            curriculumEdukacjaDoBezpieczeństwa,
+            curriculumInformatyka,
+            curriculumGodzWych,
+            curriculumWychowanieFizyczne
+        )))
+
 
         // =====================================================
         // Preference Teacher
@@ -700,7 +724,7 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
         }
-        stasik  = teacherService.save(stasik)
+        stasik = teacherService.save(stasik)
 
         urbanek.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -871,7 +895,7 @@ open class FillerResource(
                 PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l10.id, dayOfWeek = 7, points = -10000),
                 PreferenceDataTimeForTeacherDTO(teacherId = this.id, lessonId = l11.id, dayOfWeek = 7, points = -10000))
         }
-        pernal  = teacherService.save(pernal)
+        pernal = teacherService.save(pernal)
 
         grodeckaZaremba.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -975,7 +999,7 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
         }
-        longosz  = teacherService.save(longosz)
+        longosz = teacherService.save(longosz)
 
         świstak.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -1105,7 +1129,7 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
         }
-        kijowska  = teacherService.save(kijowska)
+        kijowska = teacherService.save(kijowska)
 
         kolanko.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -1157,7 +1181,7 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
         }
-        trybusGorczyca  = teacherService.save(trybusGorczyca)
+        trybusGorczyca = teacherService.save(trybusGorczyca)
 
         czuba.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -1213,7 +1237,7 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
         }
-        jastrzębska  = teacherService.save(jastrzębska)
+        jastrzębska = teacherService.save(jastrzębska)
 
         mięsowicz.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -1265,7 +1289,7 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
         }
-        hadel  = teacherService.save(hadel)
+        hadel = teacherService.save(hadel)
 
         przybyłowicz.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -1343,7 +1367,7 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
         }
-        rachwał  = teacherService.save(rachwał)
+        rachwał = teacherService.save(rachwał)
 
         chodorowiczBąk.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -1473,7 +1497,7 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
         }
-        szarłowicz  = teacherService.save(szarłowicz)
+        szarłowicz = teacherService.save(szarłowicz)
 
         dawidkoJ.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -1655,7 +1679,7 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
         }
-        józefczyk  = teacherService.save(józefczyk)
+        józefczyk = teacherService.save(józefczyk)
 
         szott.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -1889,7 +1913,7 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
         }
-        suchodolski= teacherService.save(suchodolski)
+        suchodolski = teacherService.save(suchodolski)
 
         mSuchodolski.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -2151,7 +2175,7 @@ open class FillerResource(
         class1a.apply {
             preferencesSubjectByDivision = hashSetOf(
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLaciński.id, points = -10_000)
-                )
+            )
             preferencesTeacherByDivision = hashSetOf(
                 PreferenceTeacherByDivisionDTO(divisionId = this.id, teacherId = czuba.id, points = 5)
             )

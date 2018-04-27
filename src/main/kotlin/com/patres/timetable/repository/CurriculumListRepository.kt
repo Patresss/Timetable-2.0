@@ -1,13 +1,25 @@
 package com.patres.timetable.repository
 
 import com.patres.timetable.domain.CurriculumList
-import com.patres.timetable.domain.Period
-import com.patres.timetable.domain.Teacher
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
-import org.springframework.data.jpa.repository.*
-
 @Repository
-interface CurriculumListRepository : DivisionOwnerRepository<CurriculumList>
+interface CurriculumListRepository : DivisionOwnerRepository<CurriculumList> {
+
+    @Query("""
+        select
+            curriculumList
+        from
+            CurriculumList curriculumList
+            left join fetch curriculumList.curriculums
+            left join fetch curriculumList.period
+            left join fetch curriculumList.divisionOwner
+        where
+            curriculumList.id =:id
+        """)
+    fun findOneWithEagerRelationships(@Param("id") id: Long?): CurriculumList?
+
+
+}

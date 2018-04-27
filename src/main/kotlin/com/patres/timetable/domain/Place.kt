@@ -54,4 +54,16 @@ class Place(
 
     divisionOwner: Division? = null
 
-) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable
+) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
+
+
+    fun isPlaceTooSmallEnough(division: Division?): Boolean {
+        numberOfSeats?.let {seats ->
+            division?.numberOfPeople?.let {numberOfPeople ->
+                return seats < numberOfPeople
+            }
+        }
+        return true
+    }
+
+}
