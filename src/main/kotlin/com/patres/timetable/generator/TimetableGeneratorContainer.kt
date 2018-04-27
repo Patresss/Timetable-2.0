@@ -35,13 +35,19 @@ open class TimetableGeneratorContainer(
 
     fun generate(): List<Timetable> {
         calculatePreference()
-
-        timetablesFromCurriculum.forEach {
-            val lessonDayOfWeekPreferenceElement = it.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.points }
-            it.lesson = lessons.find { it.id == lessonDayOfWeekPreferenceElement?.lessonId }
-            it.dayOfWeek = lessonDayOfWeekPreferenceElement?.dayOfWeek
+        timetablesFromCurriculum.forEach {timetableFromCurriculum ->
+            val lessonDayOfWeekPreferenceElement = timetableFromCurriculum.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.points }
+            timetableFromCurriculum.lesson = lessons.find { it.id == lessonDayOfWeekPreferenceElement?.lessonId }
+            timetableFromCurriculum.dayOfWeek = lessonDayOfWeekPreferenceElement?.dayOfWeek
+            setTakenLessonAndDay(timetableFromCurriculum)
         }
         return timetablesFromCurriculum
+    }
+
+    private fun setTakenLessonAndDay(timetableFromCurriculum: Timetable) {
+        timetablesFromCurriculum
+            .filter { timetable -> timetableFromCurriculum != timetable }
+            .forEach { timetable -> timetable.preference.getPreferenceByLessonAndDay(timetableFromCurriculum.dayOfWeek, timetableFromCurriculum.lesson?.id)?.preference?.setTakenByAll() }
     }
 
 

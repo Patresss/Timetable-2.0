@@ -14,4 +14,15 @@ class PreferenceLessonAndDayOfWeekHierarchy : PreferenceHierarchy() {
     override var points = 0
         get() = preferredByDivision + preferredBySubject + preferredByPlace + preferredByTeacher + takenByPlace + takenByTeacher + takenByDivision
 
+    fun setTakenByAll() {
+        takenByPlace = PreferenceHierarchy.TAKEN
+        takenByTeacher = PreferenceHierarchy.TAKEN
+        takenByDivision = PreferenceHierarchy.TAKEN
+    }
+
+    fun setFreeByAll() {
+        takenByPlace = 0
+        takenByTeacher = 0
+        takenByDivision = 0
+    }
 }

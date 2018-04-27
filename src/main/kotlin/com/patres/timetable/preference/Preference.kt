@@ -34,10 +34,9 @@ class Preference(
         timetable.division?.let {calculateByDivision(it) }
         timetable.division?.let { calculateTooSmallPlace(tooSmallPlaceId) }
     }
-    fun getPreferenceByLessonAndDay(dayOfWeek: Int, lessonId: Long): LessonDayOfWeekPreferenceElement? {
+    fun getPreferenceByLessonAndDay(dayOfWeek: Int?, lessonId: Long?): LessonDayOfWeekPreferenceElement? {
         return preferredLessonAndDayOfWeekSet.find { it.dayOfWeek == dayOfWeek && it.lessonId == lessonId }
     }
-
 
     fun calculateTaken(takenTimetable: Set<Timetable>) {
         val takenPlacesId = takenTimetable.mapNotNull { it.place?.id }.toSet()
