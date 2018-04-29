@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository
 interface PreferenceDataTimeForTeacherRepository : JpaRepository<PreferenceDataTimeForTeacher, Long> {
 
     fun findByDayOfWeekAndLessonId(dayOfWeek: Int, lessonId: Long): Set<PreferenceDataTimeForTeacher>
+
+    fun findByTeacherId(teacherId: Long): Set<PreferenceDataTimeForTeacher>
 }
 
 

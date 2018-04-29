@@ -48,7 +48,7 @@ class Place(
     var preferenceDivisionByPlace: Set<PreferenceDivisionByPlace> = HashSet(),
 
 
-    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferencesDataTimeForPlace: Set<PreferenceDataTimeForPlace> = HashSet(),
 

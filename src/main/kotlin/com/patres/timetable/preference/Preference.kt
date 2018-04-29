@@ -1,6 +1,9 @@
 package com.patres.timetable.preference
 
 import com.patres.timetable.domain.*
+import com.patres.timetable.domain.preference.PreferenceDataTimeForDivision
+import com.patres.timetable.domain.preference.PreferenceDataTimeForPlace
+import com.patres.timetable.domain.preference.PreferenceDataTimeForSubject
 import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import com.patres.timetable.preference.hierarchy.*
 import java.time.DayOfWeek
@@ -49,11 +52,18 @@ class Preference(
         takenDivisionsId.forEach { preferredDivisionMap[it]?.taken = PreferenceHierarchy.TAKEN }
     }
 
+    fun calculateTakenPlace(takenTimetable: Set<Timetable>) {
+        val takenPlacesId = takenTimetable.mapNotNull { it.place?.id }.toSet()
+        takenPlacesId.forEach { preferredPlaceMap[it]?.taken = PreferenceHierarchy.TAKEN }
+    }
+
     fun calculateTakenLessonAndDayOfWeekByTeacher(teacher: Teacher, takenTimetable: Set<Timetable>) {
         preferredLessonAndDayOfWeekSet.forEach { preferredLessonAndDayOfWeek ->
             val isTaken = takenTimetable.any { timetable -> timetable.dayOfWeek == preferredLessonAndDayOfWeek.dayOfWeek && timetable.lesson?.id == preferredLessonAndDayOfWeek.lessonId && timetable.teacher?.id == teacher.id }
             if (isTaken) {
                 preferredLessonAndDayOfWeek.preference.takenByTeacher = PreferenceHierarchy.TAKEN
+            } else {
+                preferredLessonAndDayOfWeek.preference.takenByTeacher = 0
             }
         }
     }
@@ -63,6 +73,8 @@ class Preference(
             val isTaken = takenTimetable.any { timetable -> timetable.dayOfWeek == preferredLessonAndDayOfWeek.dayOfWeek && timetable.lesson?.id == preferredLessonAndDayOfWeek.lessonId && timetable.place?.id == place.id }
             if (isTaken) {
                 preferredLessonAndDayOfWeek.preference.takenByPlace = PreferenceHierarchy.TAKEN
+            }  else {
+                preferredLessonAndDayOfWeek.preference.takenByPlace = 0
             }
         }
     }
@@ -72,6 +84,8 @@ class Preference(
             val isTaken = takenTimetable.any { timetable -> timetable.dayOfWeek == preferredLessonAndDayOfWeek.dayOfWeek && timetable.lesson?.id == preferredLessonAndDayOfWeek.lessonId && timetable.division?.id == division.id }
             if (isTaken) {
                 preferredLessonAndDayOfWeek.preference.takenByDivision = PreferenceHierarchy.TAKEN
+            } else {
+                preferredLessonAndDayOfWeek.preference.takenByDivision = 0
             }
         }
     }
@@ -114,11 +128,44 @@ class Preference(
         }
     }
 
-    fun calculateByLessonAndDayOfWeek(preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacher>) {
+    fun calculateTeacherByLessonAndDayOfWeek(preferenceDataTimes: Set<PreferenceDataTimeForTeacher>) {
         preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            val preferenceDataTimeForTeacher = preferenceDataTimeForTeachers.find { it.teacher?.id == id }
-            if (preferenceDataTimeForTeacher != null) {
-                preferenceHierarchy.preferredByDataTime = preferenceDataTimeForTeacher.points
+            val preferenceDataTime = preferenceDataTimes.find { it.teacher?.id == id }
+            if (preferenceDataTime != null) {
+                preferenceHierarchy.preferredByDataTime = preferenceDataTime.points
+            } else {
+                preferenceHierarchy.preferredByDataTime = 0
+            }
+        }
+    }
+
+    fun calculatePlaceByLessonAndDayOfWeek(preferenceDataTimes: Set<PreferenceDataTimeForPlace>) {
+        preferredPlaceMap.forEach { id, preferenceHierarchy ->
+            val preferenceDataTime = preferenceDataTimes.find { it.place?.id == id }
+            if (preferenceDataTime != null) {
+                preferenceHierarchy.preferredByDataTime = preferenceDataTime.points
+            } else {
+                preferenceHierarchy.preferredByDataTime = 0
+            }
+        }
+    }
+
+    fun calculateDivisionByLessonAndDayOfWeek(preferenceDataTimes: Set<PreferenceDataTimeForDivision>) {
+        preferredDivisionMap.forEach { id, preferenceHierarchy ->
+            val preferenceDataTime = preferenceDataTimes.find { it.division?.id == id }
+            if (preferenceDataTime != null) {
+                preferenceHierarchy.preferredByDataTime = preferenceDataTime.points
+            } else {
+                preferenceHierarchy.preferredByDataTime = 0
+            }
+        }
+    }
+
+    fun calculateSubjectByLessonAndDayOfWeek(preferenceDataTimes: Set<PreferenceDataTimeForSubject>) {
+        preferredSubjectMap.forEach { id, preferenceHierarchy ->
+            val preferenceDataTime = preferenceDataTimes.find { it.subject?.id == id }
+            if (preferenceDataTime != null) {
+                preferenceHierarchy.preferredByDataTime = preferenceDataTime.points
             } else {
                 preferenceHierarchy.preferredByDataTime = 0
             }

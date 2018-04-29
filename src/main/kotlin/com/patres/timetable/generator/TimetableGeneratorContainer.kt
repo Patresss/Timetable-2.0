@@ -1,6 +1,7 @@
 package com.patres.timetable.generator
 
 import com.patres.timetable.domain.*
+import com.patres.timetable.domain.preference.PreferenceDataTimeForPlace
 import com.patres.timetable.preference.Preference
 import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 import org.slf4j.Logger
@@ -13,7 +14,8 @@ open class TimetableGeneratorContainer(
     private val teachers: Set<Teacher>,
     private val subjects: Set<Subject>,
     private val divisions: Set<Division>,
-    private var lessons: List<Lesson>
+    private var lessons: List<Lesson>,
+    private var preferencesDataTimeForPlace: Set<PreferenceDataTimeForPlace>
 ) {
 
     companion object {
@@ -50,7 +52,7 @@ open class TimetableGeneratorContainer(
         }
         log.info("Remove iterate: $windowsRemoveCounter")
 
-        timetablesFromCurriculum.forEach { it.place = null }
+
         calculatePlace()
         return timetablesFromCurriculum
     }
@@ -60,22 +62,27 @@ open class TimetableGeneratorContainer(
         timetablesFromCurriculum
             .filter { timetable -> timetable.lesson == null || timetable.dayOfWeek == null }
             .forEach { timetableFromCurriculum ->
+                calculateTakenLessonAndDay(timetableFromCurriculum)
                 val lessonDayOfWeekPreferenceElement = timetableFromCurriculum.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithWindowHandicap }
                 timetableFromCurriculum.lesson = lessons.find { it.id == lessonDayOfWeekPreferenceElement?.lessonId }
                 timetableFromCurriculum.dayOfWeek = lessonDayOfWeekPreferenceElement?.dayOfWeek
                 timetableFromCurriculum.points = timetableFromCurriculum.preference.getPreferenceByLessonAndDay(timetableFromCurriculum.dayOfWeek, timetableFromCurriculum.lesson?.id)?.preference?.points ?: 0
-                setTakenLessonAndDay(timetableFromCurriculum)
             }
     }
 
     private fun calculatePlace() {
+        timetablesFromCurriculum.forEach { timetable ->
+            val preferences = preferencesDataTimeForPlace.filter { it.lesson?.id == timetable.lesson?.id }.toSet()
+            timetable.preference.calculatePlaceByLessonAndDayOfWeek(preferences)
+        }
+
         sortByPreferredPlace()
         timetablesFromCurriculum
             .filter { timetable -> timetable.place == null}
             .forEach { timetableFromCurriculum ->
+                calculateTakenPlace(timetableFromCurriculum)
                 val placeId = timetableFromCurriculum.preference.preferredPlaceMap.maxBy { preferred -> preferred.value?.points?:0}?.key
                 timetableFromCurriculum.place = places.find { it.id == placeId }
-                setTakenPlace(timetableFromCurriculum)
             }
     }
 
@@ -88,16 +95,14 @@ open class TimetableGeneratorContainer(
         timetablesFromCurriculum = timetablesFromCurriculum.sortedByDescending { it.preference.preferredPlaceMap.maxBy { entry -> entry.value.points }?.value?.points }.toMutableList()
     }
 
-    private fun setTakenLessonAndDay(timetableFromCurriculum: Timetable) {
-        timetablesFromCurriculum
-            .filter { timetable -> timetableFromCurriculum != timetable }
-            .forEach { timetable -> timetable.preference.getPreferenceByLessonAndDay(timetableFromCurriculum.dayOfWeek, timetableFromCurriculum.lesson?.id)?.preference?.setTakenByAll() }
+    private fun calculateTakenLessonAndDay(timetableFromCurriculum: Timetable) {
+        timetableFromCurriculum.division?.let { timetableFromCurriculum.preference.calculateTakenLessonAndDayOfWeekByDivision(it, timetablesFromCurriculum.toSet()) }
+        timetableFromCurriculum.teacher?.let { timetableFromCurriculum.preference.calculateTakenLessonAndDayOfWeekByTeacher(it, timetablesFromCurriculum.toSet()) }
+        timetableFromCurriculum.place?.let { timetableFromCurriculum.preference.calculateTakenLessonAndDayOfWeekByPlace(it, timetablesFromCurriculum.toSet()) }
     }
 
-    private fun setTakenPlace(timetableFromCurriculum: Timetable) {
-        timetablesFromCurriculum
-            .filter { timetable -> timetableFromCurriculum != timetable }
-            .forEach { timetable -> timetable.preference.preferredPlaceMap[timetableFromCurriculum.place?.id]?.taken = PreferenceHierarchy.TAKEN }
+    private fun calculateTakenPlace(timetableFromCurriculum: Timetable) {
+        timetableFromCurriculum.preference.calculateTakenPlace( timetablesFromCurriculum.filter { it.lesson?.id == timetableFromCurriculum.lesson?.id && it.dayOfWeek == timetableFromCurriculum.dayOfWeek}.toSet())
     }
 
     private fun removeWidows() {

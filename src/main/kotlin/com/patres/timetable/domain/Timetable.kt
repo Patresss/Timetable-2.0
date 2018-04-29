@@ -77,6 +77,9 @@ class Timetable(
     @Transient
     var preference: Preference = Preference(),
 
+    @Transient
+    var points: Int = 0,
+
     divisionOwner: Division? = null
 
 ) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {

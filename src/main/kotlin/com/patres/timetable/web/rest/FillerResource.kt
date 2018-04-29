@@ -38,7 +38,7 @@ open class FillerResource(
 
     var lo2 = DivisionDTO()
     var class1a = DivisionDTO()
-    var class1aGenerate = DivisionDTO()
+
     var class1b = DivisionDTO()
     var class1c = DivisionDTO()
     var class1d = DivisionDTO()
@@ -56,6 +56,24 @@ open class FillerResource(
     var class3d = DivisionDTO()
     var class3e = DivisionDTO()
     var class3f = DivisionDTO()
+    var class1aGenerate = DivisionDTO()
+    var class1bGenerate = DivisionDTO()
+    var class1cGenerate = DivisionDTO()
+    var class1dGenerate = DivisionDTO()
+    var class1eGenerate = DivisionDTO()
+    var class1fGenerate = DivisionDTO()
+    var class2aGenerate = DivisionDTO()
+    var class2bGenerate = DivisionDTO()
+    var class2cGenerate = DivisionDTO()
+    var class2dGenerate = DivisionDTO()
+    var class2eGenerate = DivisionDTO()
+    var class2fGenerate = DivisionDTO()
+    var class3aGenerate = DivisionDTO()
+    var class3bGenerate = DivisionDTO()
+    var class3cGenerate = DivisionDTO()
+    var class3dGenerate = DivisionDTO()
+    var class3eGenerate = DivisionDTO()
+    var class3fGenerate = DivisionDTO()
     var div1aG1 = DivisionDTO()
     var div1aG2 = DivisionDTO()
     var divNie1G1 = DivisionDTO()
@@ -418,7 +436,6 @@ open class FillerResource(
         // Division
         // =====================================================
         class1a = createDivision(name = "1 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class1aGenerate = createDivision(name = "1 A generate", shortName = "1 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
         class1b = createDivision(name = "1 B", shortName = "1 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
         class1c = createDivision(name = "1 C", shortName = "1 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
         class1d = createDivision(name = "1 D", shortName = "1 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
@@ -451,6 +468,27 @@ open class FillerResource(
         div1bG2 = createDivision(name = "1B gr	 2", shortName = "Ang 1B gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1b))
         div1Gr1bDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1b))
 
+
+        class1aGenerate = createDivision(name = "1 A generate", shortName = "1 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class1bGenerate = createDivision(name = "1 B generate", shortName = "1 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class1cGenerate = createDivision(name = "1 C generate", shortName = "1 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class1dGenerate = createDivision(name = "1 D generate", shortName = "1 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class1eGenerate = createDivision(name = "1 E generate", shortName = "1 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class1fGenerate = createDivision(name = "1 F generate", shortName = "1 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+
+        class2aGenerate = createDivision(name = "2 A generate", shortName = "2 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class2bGenerate = createDivision(name = "2 B generate", shortName = "2 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class2cGenerate = createDivision(name = "2 C generate", shortName = "2 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class2dGenerate = createDivision(name = "2 D generate", shortName = "2 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class2eGenerate = createDivision(name = "2 E generate", shortName = "2 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class2fGenerate = createDivision(name = "2 F generate", shortName = "2 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+
+        class3aGenerate = createDivision(name = "3 A generate", shortName = "3 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class3bGenerate = createDivision(name = "3 B generate", shortName = "3 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class3cGenerate = createDivision(name = "3 C generate", shortName = "3 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class3dGenerate = createDivision(name = "3 D generate", shortName = "3 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class3eGenerate = createDivision(name = "3 E generate", shortName = "3 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class3fGenerate = createDivision(name = "3 F generate", shortName = "3 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
 
         // =====================================================
         // Place
@@ -494,6 +532,7 @@ open class FillerResource(
         // Timetable
         // =====================================================
         // Klasa 1a
+        /*
         d1aMon2 = createTimetable(dayOfWeek = 1, lesson = l2, subject = biologia, teacher = szarłowicz, place = p8, division = class1a, period = semestLetniPeriod)
         d1aMon3 = createTimetable(dayOfWeek = 1, lesson = l3, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, place = p35, division = class1a, period = semestLetniPeriod)
         d1aMon4a = createTimetable(dayOfWeek = 1, lesson = l4, subject = jAngielski, teacher = kijowska, place = p7g, division = div1aG1, period = semestLetniPeriod)
@@ -599,50 +638,89 @@ open class FillerResource(
         d1bFri5b = createTimetable(dayOfWeek = 5, lesson = l5, subject = jAngielski, teacher = kijowska, place = p13, division = div1bG2, period = semestLetniPeriod)
         d1bFri6 = createTimetable(dayOfWeek = 5, lesson = l6, subject = jPolski, teacher = klein, place = p15, division = class1b, period = semestLetniPeriod)
         d1bFri7a = createTimetable(dayOfWeek = 5, lesson = l7, subject = jNiemiecki, teacher = przybyłowiczCiszewska, place = p22, division = divNie1G1, period = semestLetniPeriod)
-
+*/
         // =====================================================
         // Curriculum
         // =====================================================
 
-        val curriculumBiologia = createCurriculum(division = class1aGenerate, subject = biologia, teacher = szarłowicz, place = p8, numberOfActivities = 1)
-        val curriculumPodstawyPrzedsiębiorczości = createCurriculum(division = class1aGenerate, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, place = p35, numberOfActivities = 2)
-        val curriculumJAngielski = createCurriculum(division = class1aGenerate, subject = jAngielski, teacher = kasprzyk, place = p21, numberOfActivities = 3)
-        val curriculumReligia = createCurriculum(division = class1aGenerate, subject = religia, teacher = tPiwinski, place = p36, numberOfActivities = 2)
-        val curriculumFizyka = createCurriculum(division = class1aGenerate, subject = fizyka, teacher = szott, place = p15, numberOfActivities = 2)
-        val curriculumJNiemiecki = createCurriculum(division = class1aGenerate, subject = jNiemiecki, teacher = przybyłowicz, place = p13, numberOfActivities = 3)
-        val curriculumHistoria = createCurriculum(division = class1aGenerate, subject = historia, teacher = świstak, place = p7, numberOfActivities = 2)
-        val curriculumJPolski = createCurriculum(division = class1aGenerate, subject = jPolski, teacher = pernal, place = p16, numberOfActivities = 3)
-        val curriculumGeografia = createCurriculum(division = class1aGenerate, subject = geografia, teacher = gonet, place = p20, numberOfActivities = 1)
-        val curriculumMatematyka = createCurriculum(division = class1aGenerate, subject = matematyka, teacher = czuba, place = p22, numberOfActivities = 4)
-        val curriculumChemia = createCurriculum(division = class1aGenerate, subject = chemia, teacher = chodorowiczBąk, place = p24, numberOfActivities = 1)
-        val curriculumWiedzaOSpołeczeństwie = createCurriculum(division = class1aGenerate, subject = wiedzaOSpołeczeństwie, teacher = świstak, place = p24, numberOfActivities = 1)
-        val curriculumWychowaniedoZyciaWRodzinie = createCurriculum(division = class1aGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, place = p36, numberOfActivities = 1)
-        val curriculumWiedzaOKulturze = createCurriculum(division = class1aGenerate, subject = wiedzaOKulturze, teacher = twardzikWilk, place = p13, numberOfActivities = 1)
-        val curriculumEdukacjaDoBezpieczeństwa = createCurriculum(division = class1aGenerate, subject = edukacjaDoBezpieczeństwa, teacher = bloch, place = p31, numberOfActivities = 1)
-        val curriculumInformatyka = createCurriculum(division = class1aGenerate, subject = informatyka, teacher = dzierwa, place = p4, numberOfActivities = 1)
-        val curriculumGodzWych = createCurriculum(division = class1aGenerate, subject = godzWych, teacher = czuba, place = p22, numberOfActivities = 1)
-        val curriculumWychowanieFizyczne = createCurriculum(division = class1aGenerate, subject = wychowanieFizyczne, teacher = wilk, place = pds, numberOfActivities = 2)
+        val curriculum1aBiologia = createCurriculum(division = class1aGenerate, subject = biologia, teacher = szarłowicz, numberOfActivities = 1)
+        val curriculum1aPodstawyPrzedsiębiorczości = createCurriculum(division = class1aGenerate, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, numberOfActivities = 2)
+        val curriculum1aJAngielski = createCurriculum(division = class1aGenerate, subject = jAngielski, teacher = kasprzyk, numberOfActivities = 3)
+        val curriculum1aReligia = createCurriculum(division = class1aGenerate, subject = religia, teacher = tPiwinski, numberOfActivities = 2)
+        val curriculum1aFizyka = createCurriculum(division = class1aGenerate, subject = fizyka, teacher = szott, numberOfActivities = 2)
+        val curriculum1aJNiemiecki = createCurriculum(division = class1aGenerate, subject = jNiemiecki, teacher = przybyłowicz, numberOfActivities = 3)
+        val curriculum1aHistoria = createCurriculum(division = class1aGenerate, subject = historia, teacher = świstak, numberOfActivities = 2)
+        val curriculum1aJPolski = createCurriculum(division = class1aGenerate, subject = jPolski, teacher = pernal, numberOfActivities = 3)
+        val curriculum1aGeografia = createCurriculum(division = class1aGenerate, subject = geografia, teacher = gonet, numberOfActivities = 1)
+        val curriculum1aMatematyka = createCurriculum(division = class1aGenerate, subject = matematyka, teacher = czuba, numberOfActivities = 4)
+        val curriculum1aChemia = createCurriculum(division = class1aGenerate, subject = chemia, teacher = chodorowiczBąk, numberOfActivities = 1)
+        val curriculum1aWiedzaOSpołeczeństwie = createCurriculum(division = class1aGenerate, subject = wiedzaOSpołeczeństwie, teacher = świstak, numberOfActivities = 1)
+        val curriculum1aWychowaniedoZyciaWRodzinie = createCurriculum(division = class1aGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, numberOfActivities = 1)
+        val curriculum1aWiedzaOKulturze = createCurriculum(division = class1aGenerate, subject = wiedzaOKulturze, teacher = twardzikWilk, numberOfActivities = 1)
+        val curriculum1aEdukacjaDoBezpieczeństwa = createCurriculum(division = class1aGenerate, subject = edukacjaDoBezpieczeństwa, teacher = bloch, numberOfActivities = 1)
+        val curriculum1aInformatyka = createCurriculum(division = class1aGenerate, subject = informatyka, teacher = dzierwa, numberOfActivities = 1)
+        val curriculum1aGodzWych = createCurriculum(division = class1aGenerate, subject = godzWych, teacher = czuba, numberOfActivities = 1)
+        val curriculum1aWychowanieFizyczne = createCurriculum(division = class1aGenerate, subject = wychowanieFizyczne, teacher = wilk, numberOfActivities = 2)
+
+        val curriculum1bPodstawyPrzedsiębiorczości = createCurriculum(division = class1bGenerate, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, numberOfActivities = 2)
+        val curriculum1bJPolski = createCurriculum(division = class1bGenerate, subject = jPolski, teacher = klein, numberOfActivities = 3)
+        val curriculum1bEdukacjaDoBezpieczeństwa = createCurriculum(division = class1bGenerate, subject = edukacjaDoBezpieczeństwa, teacher = bloch, numberOfActivities = 1)
+        val curriculum1bJdodatkowy = createCurriculum(division = class1bGenerate, subject = jNiemiecki, teacher = przybyłowiczCiszewska, numberOfActivities = 3)
+        val curriculum1bGeografia = createCurriculum(division = class1bGenerate, subject = geografia, teacher = gonet, numberOfActivities = 2)
+        val curriculum1bWiedzaOSpołeczeństwie = createCurriculum(division = class1bGenerate, subject = wiedzaOSpołeczeństwie, teacher = dynowski, numberOfActivities = 1)
+        val curriculum1bJAngielski = createCurriculum(division = class1bGenerate, subject = jAngielski, teacher = kasprzyk, numberOfActivities = 3)
+        val curriculum1bInformatyka = createCurriculum(division = class1bGenerate, subject = informatyka, teacher = dzierwa, numberOfActivities = 1)
+        val curriculum1bChemia = createCurriculum(division = class1bGenerate, subject = chemia, teacher = chodorowiczBąk, numberOfActivities = 1)
+        val curriculum1bWychowanieFizyczne = createCurriculum(division = class1bGenerate, subject = wychowanieFizyczne, teacher = rachfał, numberOfActivities = 2)
+        val curriculum1bMatematyka = createCurriculum(division = class1bGenerate, subject = matematyka, teacher = mięsowicz, numberOfActivities = 4)
+        val curriculum1bWiedzaOKulturze = createCurriculum(division = class1bGenerate, subject = wiedzaOKulturze, teacher = twardzikWilk, numberOfActivities = 1)
+        val curriculum1bGodzWych = createCurriculum(division = class1bGenerate, subject = godzWych, teacher = klein, numberOfActivities = 1)
+        val curriculum1bReligia = createCurriculum(division = class1bGenerate, subject = religia, teacher = tPiwinski, numberOfActivities = 2)
+        val curriculum1bFizyka = createCurriculum(division = class1bGenerate, subject = fizyka, teacher = józefczyk, numberOfActivities = 1)
+        val curriculum1bWychowaniedoZyciaWRodzinie = createCurriculum(division = class1bGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, numberOfActivities = 1)
+        val curriculum1bBiologia = createCurriculum(division = class1bGenerate, subject = biologia, teacher = szarłowicz, numberOfActivities = 1)
+        val curriculum1bHistoria = createCurriculum(division = class1bGenerate, subject = historia, teacher = świstak, numberOfActivities = 2)
+
 
         curriculumListService.save(CurriculumListDTO(name = "test001", periodId = semestLetniPeriod.id, divisionOwnerId = lo2.id, curriculums = hashSetOf(
-            curriculumBiologia,
-            curriculumPodstawyPrzedsiębiorczości,
-            curriculumJAngielski,
-            curriculumReligia,
-            curriculumFizyka,
-            curriculumJNiemiecki,
-            curriculumHistoria,
-            curriculumJPolski,
-            curriculumGeografia,
-            curriculumMatematyka,
-            curriculumChemia,
-            curriculumWiedzaOSpołeczeństwie,
-            curriculumWychowaniedoZyciaWRodzinie,
-            curriculumWiedzaOKulturze,
-            curriculumEdukacjaDoBezpieczeństwa,
-            curriculumInformatyka,
-            curriculumGodzWych,
-            curriculumWychowanieFizyczne
-        )))
+            curriculum1aBiologia,
+            curriculum1aPodstawyPrzedsiębiorczości,
+            curriculum1aJAngielski,
+            curriculum1aReligia,
+            curriculum1aFizyka,
+            curriculum1aJNiemiecki,
+            curriculum1aHistoria,
+            curriculum1aJPolski,
+            curriculum1aGeografia,
+            curriculum1aMatematyka,
+            curriculum1aChemia,
+            curriculum1aWiedzaOSpołeczeństwie,
+            curriculum1aWychowaniedoZyciaWRodzinie,
+            curriculum1aWiedzaOKulturze,
+            curriculum1aEdukacjaDoBezpieczeństwa,
+            curriculum1aInformatyka,
+            curriculum1aGodzWych,
+            curriculum1aWychowanieFizyczne,
+            curriculum1bPodstawyPrzedsiębiorczości,
+            curriculum1bJPolski,
+            curriculum1bEdukacjaDoBezpieczeństwa,
+            curriculum1bJdodatkowy,
+            curriculum1bGeografia,
+            curriculum1bWiedzaOSpołeczeństwie,
+            curriculum1bJAngielski,
+            curriculum1bInformatyka,
+            curriculum1bChemia,
+            curriculum1bWychowanieFizyczne,
+            curriculum1bMatematyka,
+            curriculum1bWiedzaOKulturze,
+            curriculum1bGodzWych,
+            curriculum1bReligia,
+            curriculum1bFizyka,
+            curriculum1bWychowaniedoZyciaWRodzinie,
+            curriculum1bBiologia,
+            curriculum1bHistoria
+
+            )))
 
 
         // =====================================================
@@ -2179,72 +2257,7 @@ open class FillerResource(
             preferencesTeacherByDivision = hashSetOf(
                 PreferenceTeacherByDivisionDTO(divisionId = this.id, teacherId = czuba.id, points = 5)
             )
-            preferencesDataTimeForDivision = hashSetOf(
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 1, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 1, points = 10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 1, points = 5),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 1, points = 3),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 1, points = 1),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 1, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 1, points = -10),
-
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 2, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 2, points = 10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 2, points = 5),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 2, points = 3),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 2, points = 1),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 2, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 2, points = -10),
-
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 3, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 3, points = 10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 3, points = 5),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 3, points = 3),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 3, points = 1),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 3, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 3, points = -10),
-
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 4, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 4, points = 10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 4, points = 5),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 4, points = 3),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 4, points = 1),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 4, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 4, points = -10),
-
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 5, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 5, points = 10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 5, points = 5),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 5, points = 3),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 5, points = 1),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 5, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 5, points = -10),
-
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l5.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l6.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l7.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l8.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l9.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 6, points = -10000),
-
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l5.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l6.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l7.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l8.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l9.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 7, points = -10000))
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
 
         }
         class1a = divisionService.save(class1a)
@@ -2257,76 +2270,114 @@ open class FillerResource(
             preferencesTeacherByDivision = hashSetOf(
                 PreferenceTeacherByDivisionDTO(divisionId = this.id, teacherId = czuba.id, points = 5)
             )
-            preferencesDataTimeForDivision = hashSetOf(
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 1, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 1, points = 10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 1, points = 5),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 1, points = 3),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 1, points = 1),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 1, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 1, points = -10),
-
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 2, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 2, points = 10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 2, points = 5),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 2, points = 3),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 2, points = 1),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 2, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 2, points = -10),
-
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 3, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 3, points = 10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 3, points = 5),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 3, points = 3),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 3, points = 1),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 3, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 3, points = -10),
-
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 4, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 4, points = 10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 4, points = 5),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 4, points = 3),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 4, points = 1),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 4, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 4, points = -10),
-
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 5, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 5, points = 10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 5, points = 5),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 5, points = 3),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 5, points = 1),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 5, points = -10),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 5, points = -10),
-
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l5.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l6.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l7.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l8.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l9.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 6, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 6, points = -10000),
-
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l5.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l6.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l7.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l8.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l9.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 7, points = -10000),
-                PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 7, points = -10000))
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
 
         }
         class1aGenerate = divisionService.save(class1aGenerate)
 
+        class1bGenerate.apply {
+            preferencesSubjectByDivision = hashSetOf(
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLaciński.id, points = -10_000)
+            )
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+
+        }
+        class1bGenerate = divisionService.save(class1bGenerate)
+
+    }
+
+    private fun DivisionDTO.calculateTypicalPreferenceForTime(): HashSet<PreferenceDataTimeForDivisionDTO> {
+        return hashSetOf(
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 1, points = -10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 1, points = 10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 1, points = 5),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 1, points = 3),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 1, points = 1),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l5.id, dayOfWeek = 1, points = -1),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l6.id, dayOfWeek = 1, points = -2),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l7.id, dayOfWeek = 1, points = -2),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l8.id, dayOfWeek = 1, points = -3),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l9.id, dayOfWeek = 1, points = -5),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 1, points = -10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 1, points = -10),
+
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 2, points = -10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 2, points = 10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 2, points = 5),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 2, points = 3),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 2, points = 1),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l5.id, dayOfWeek = 2, points = 0),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l6.id, dayOfWeek = 2, points = -1),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l7.id, dayOfWeek = 2, points = -2),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l8.id, dayOfWeek = 2, points = -3),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l9.id, dayOfWeek = 2, points = -5),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 2, points = -10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 2, points = -10),
+
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 3, points = -10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 3, points = 10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 3, points = 5),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 3, points = 3),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 3, points = 1),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l5.id, dayOfWeek = 3, points = 0),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l6.id, dayOfWeek = 3, points = -1),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l7.id, dayOfWeek = 3, points = -2),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l8.id, dayOfWeek = 3, points = -3),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l9.id, dayOfWeek = 3, points = -5),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 3, points = -10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 3, points = -10),
+
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 4, points = -10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 4, points = 10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 4, points = 5),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 4, points = 3),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 4, points = 1),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l5.id, dayOfWeek = 4, points = 0),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l6.id, dayOfWeek = 4, points = -1),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l7.id, dayOfWeek = 4, points = -2),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l8.id, dayOfWeek = 4, points = -3),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l9.id, dayOfWeek = 4, points = -5),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 4, points = -10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 4, points = -10),
+
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 5, points = -10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 5, points = 10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 5, points = 5),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 5, points = 3),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 5, points = 1),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l5.id, dayOfWeek = 5, points = -1),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l6.id, dayOfWeek = 5, points = -2),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l7.id, dayOfWeek = 5, points = -2),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l8.id, dayOfWeek = 5, points = -3),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l9.id, dayOfWeek = 5, points = -5),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 5, points = -10),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 5, points = -10),
+
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l5.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l6.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l7.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l8.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l9.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 6, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 6, points = -10000),
+
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l0.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l1.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l2.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l3.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l4.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l5.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l6.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l7.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l8.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l9.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 7, points = -10000),
+            PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 7, points = -10000))
     }
 
 
@@ -2355,8 +2406,8 @@ open class FillerResource(
         return divisionService.save(division)
     }
 
-    private fun createCurriculum(subject: SubjectDTO, teacher: TeacherDTO, division: DivisionDTO, place: PlaceDTO, numberOfActivities: Long): CurriculumDTO {
-        val curriculum = CurriculumDTO(subjectId = subject.id, teacherId = teacher.id, divisionId = division.id, placeId = place.id, numberOfActivities = numberOfActivities)
+    private fun createCurriculum(subject: SubjectDTO, teacher: TeacherDTO, division: DivisionDTO, numberOfActivities: Long, place: PlaceDTO? = null): CurriculumDTO {
+        val curriculum = CurriculumDTO(subjectId = subject.id, teacherId = teacher.id, divisionId = division.id, placeId = place?.id, numberOfActivities = numberOfActivities)
         return curriculumService.save(curriculum)
     }
 

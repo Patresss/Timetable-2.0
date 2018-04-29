@@ -1,8 +1,14 @@
 package com.patres.timetable.preference
 
 import com.patres.timetable.domain.*
+import com.patres.timetable.domain.preference.PreferenceDataTimeForDivision
+import com.patres.timetable.domain.preference.PreferenceDataTimeForPlace
+import com.patres.timetable.domain.preference.PreferenceDataTimeForSubject
 import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import com.patres.timetable.repository.*
+import com.patres.timetable.repository.preference.PreferenceDataTimeForDivisionRepository
+import com.patres.timetable.repository.preference.PreferenceDataTimeForSubjectRepository
+import com.patres.timetable.repository.preference.PreferenceDataTimeForPlaceRepository
 import com.patres.timetable.repository.preference.PreferenceDataTimeForTeacherRepository
 import com.patres.timetable.web.rest.util.TimetableDateUtil
 import org.springframework.stereotype.Component
@@ -15,6 +21,9 @@ open class PreferenceManager(
     private var divisionRepository: DivisionRepository,
     private var lessonRepository: LessonRepository,
     private var preferenceDataTimeForTeacherRepository: PreferenceDataTimeForTeacherRepository,
+    private var preferenceDataTimeForSubjectRepository: PreferenceDataTimeForSubjectRepository,
+    private var preferenceDataTimeForDivisionRepository: PreferenceDataTimeForDivisionRepository,
+    private var preferenceDataTimeForPlaceRepository: PreferenceDataTimeForPlaceRepository,
     private var timetableRepository: TimetableRepository
 ) {
 
@@ -39,7 +48,13 @@ open class PreferenceManager(
         val dayOfWeek = preferenceDependency.dayOfWeek
         if (lessonId != null && dayOfWeek != null) {
             val preferenceDataTimeForTeacherFromDatabase = getPreferenceDataTimeForTeacherFromDatabase(dayOfWeek, lessonId)
-            preference.calculateByLessonAndDayOfWeek(preferenceDataTimeForTeacherFromDatabase)
+            val preferenceDataTimeForSubjectFromDatabase = getPreferenceDataTimeForSubjectFromDatabase(dayOfWeek, lessonId)
+            val preferenceDataTimeForDivisionFromDatabase = getPreferenceDataTimeForDivisionFromDatabase(dayOfWeek, lessonId)
+            val preferenceDataTimeForPlaceFromDatabase = getPreferenceDataTimeForPlaceFromDatabase(dayOfWeek, lessonId)
+            preference.calculateTeacherByLessonAndDayOfWeek(preferenceDataTimeForTeacherFromDatabase)
+            preference.calculateSubjectByLessonAndDayOfWeek(preferenceDataTimeForSubjectFromDatabase)
+            preference.calculateDivisionByLessonAndDayOfWeek(preferenceDataTimeForDivisionFromDatabase)
+            preference.calculatePlaceByLessonAndDayOfWeek(preferenceDataTimeForPlaceFromDatabase)
         }
 
         val takenTimetable = getTakenTimetableForLessonAndDayOfWeekFromDatabase(preferenceDependency)
@@ -80,6 +95,19 @@ open class PreferenceManager(
     private fun getPreferenceDataTimeForTeacherFromDatabase(dayOfWeek: Int, lessonId: Long): Set<PreferenceDataTimeForTeacher> {
         return preferenceDataTimeForTeacherRepository.findByDayOfWeekAndLessonId(dayOfWeek, lessonId)
     }
+
+    private fun getPreferenceDataTimeForDivisionFromDatabase(dayOfWeek: Int, lessonId: Long): Set<PreferenceDataTimeForDivision> {
+        return preferenceDataTimeForDivisionRepository.findByDayOfWeekAndLessonId(dayOfWeek, lessonId)
+    }
+
+    private fun getPreferenceDataTimeForPlaceFromDatabase(dayOfWeek: Int, lessonId: Long): Set<PreferenceDataTimeForPlace> {
+        return preferenceDataTimeForPlaceRepository.findByDayOfWeekAndLessonId(dayOfWeek, lessonId)
+    }
+
+    private fun getPreferenceDataTimeForSubjectFromDatabase(dayOfWeek: Int, lessonId: Long): Set<PreferenceDataTimeForSubject> {
+        return preferenceDataTimeForSubjectRepository.findByDayOfWeekAndLessonId(dayOfWeek, lessonId)
+    }
+
 
 
 }

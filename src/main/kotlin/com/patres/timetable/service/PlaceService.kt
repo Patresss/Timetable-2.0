@@ -15,11 +15,4 @@ open class PlaceService(entityRepository: PlaceRepository, entityMapper: EntityM
 
     private val log = LoggerFactory.getLogger(PlaceService::class.java)
 
-    @Transactional(readOnly = true)
-    override fun findOne(id: Long?): PlaceDTO? {
-        log.debug("Request to get Place : {}", id)
-        val place = entityRepository.findOneWithEagerRelationships(id)
-        return if(place != null) entityMapper.toDto(place) else null
-    }
-
 }

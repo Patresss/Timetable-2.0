@@ -2,6 +2,7 @@ package com.patres.timetable.generator
 
 import com.patres.timetable.domain.Timetable
 import com.patres.timetable.repository.*
+import com.patres.timetable.repository.preference.PreferenceDataTimeForPlaceRepository
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -14,6 +15,7 @@ open class TimetableGeneratorManager(
     private var divisionRepository: DivisionRepository,
     private var lessonRepository: LessonRepository,
     private var curriculumListRepository: CurriculumListRepository,
+    private var preferenceDataTimeForPlaceRepository: PreferenceDataTimeForPlaceRepository,
     private var timetableRepository: TimetableRepository) {
 
     @Transactional
@@ -27,8 +29,9 @@ open class TimetableGeneratorManager(
             val subjects = subjectRepository.findByDivisionOwnerId(schoolId)
             val divisions = divisionRepository.findByDivisionOwnerId(schoolId)
             val lessons = lessonRepository.findByDivisionOwnerId(schoolId).toMutableList()
+            val preferencesDataTimeForPlace = preferenceDataTimeForPlaceRepository.findByPlaceIdIn(places.mapNotNull { it.id }).toSet()
 
-            val timetableGeneratorContainer = TimetableGeneratorContainer(curriculumListEntity = curriculumListEntity, places = places, teachers = teachers, subjects = subjects, divisions = divisions, lessons = lessons)
+            val timetableGeneratorContainer = TimetableGeneratorContainer(curriculumListEntity = curriculumListEntity, places = places, teachers = teachers, subjects = subjects, divisions = divisions, lessons = lessons, preferencesDataTimeForPlace = preferencesDataTimeForPlace)
             timetableGeneratorContainer.generate()
         }
 
