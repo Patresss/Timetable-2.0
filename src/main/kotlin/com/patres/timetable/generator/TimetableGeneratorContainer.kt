@@ -3,6 +3,8 @@ package com.patres.timetable.generator
 import com.patres.timetable.domain.*
 import com.patres.timetable.preference.Preference
 import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 
 open class TimetableGeneratorContainer(
@@ -13,6 +15,11 @@ open class TimetableGeneratorContainer(
     private val divisions: Set<Division>,
     private var lessons: List<Lesson>
 ) {
+
+    companion object {
+        const val MAX_WINDOWS_REMOVE_ITERATOR = 10
+        val log: Logger = LoggerFactory.getLogger(TimetableGeneratorContainer::class.java)
+    }
 
     private val curriculumList = curriculumListEntity.curriculums
     private val placesId = places.mapNotNull { it.id }.toSet()
@@ -35,14 +42,16 @@ open class TimetableGeneratorContainer(
     }
 
     fun generate(): List<Timetable> {
+        var windowsRemoveCounter = 0
         calculatePreference()
-        calculateLessonAndDay()
-        removeWidows()
-        calculateLessonAndDay()
-        removeWidows()
-        calculateLessonAndDay()
-        removeWidows()
-        calculateLessonAndDay()
+        while (timetablesFromCurriculum.count { it.dayOfWeek == null && it.lesson == null } != 0 && ++windowsRemoveCounter < MAX_WINDOWS_REMOVE_ITERATOR) {
+            calculateLessonAndDay()
+            removeWidows()
+        }
+        log.info("Remove iterate: $windowsRemoveCounter")
+
+        timetablesFromCurriculum.forEach { it.place = null }
+        calculatePlace()
         return timetablesFromCurriculum
     }
 
@@ -54,18 +63,41 @@ open class TimetableGeneratorContainer(
                 val lessonDayOfWeekPreferenceElement = timetableFromCurriculum.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithWindowHandicap }
                 timetableFromCurriculum.lesson = lessons.find { it.id == lessonDayOfWeekPreferenceElement?.lessonId }
                 timetableFromCurriculum.dayOfWeek = lessonDayOfWeekPreferenceElement?.dayOfWeek
+                timetableFromCurriculum.points = timetableFromCurriculum.preference.getPreferenceByLessonAndDay(timetableFromCurriculum.dayOfWeek, timetableFromCurriculum.lesson?.id)?.preference?.points ?: 0
                 setTakenLessonAndDay(timetableFromCurriculum)
             }
     }
 
+    private fun calculatePlace() {
+        sortByPreferredPlace()
+        timetablesFromCurriculum
+            .filter { timetable -> timetable.place == null}
+            .forEach { timetableFromCurriculum ->
+                val placeId = timetableFromCurriculum.preference.preferredPlaceMap.maxBy { preferred -> preferred.value?.points?:0}?.key
+                timetableFromCurriculum.place = places.find { it.id == placeId }
+                setTakenPlace(timetableFromCurriculum)
+            }
+    }
+
+
     private fun sortByPreferredLessonAndDay() {
         timetablesFromCurriculum = timetablesFromCurriculum.sortedByDescending { it.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithWindowHandicap } }.toMutableList()
+    }
+
+    private fun sortByPreferredPlace() {
+        timetablesFromCurriculum = timetablesFromCurriculum.sortedByDescending { it.preference.preferredPlaceMap.maxBy { entry -> entry.value.points }?.value?.points }.toMutableList()
     }
 
     private fun setTakenLessonAndDay(timetableFromCurriculum: Timetable) {
         timetablesFromCurriculum
             .filter { timetable -> timetableFromCurriculum != timetable }
             .forEach { timetable -> timetable.preference.getPreferenceByLessonAndDay(timetableFromCurriculum.dayOfWeek, timetableFromCurriculum.lesson?.id)?.preference?.setTakenByAll() }
+    }
+
+    private fun setTakenPlace(timetableFromCurriculum: Timetable) {
+        timetablesFromCurriculum
+            .filter { timetable -> timetableFromCurriculum != timetable }
+            .forEach { timetable -> timetable.preference.preferredPlaceMap[timetableFromCurriculum.place?.id]?.taken = PreferenceHierarchy.TAKEN }
     }
 
     private fun removeWidows() {
