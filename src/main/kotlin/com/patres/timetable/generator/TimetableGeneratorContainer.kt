@@ -11,7 +11,7 @@ open class TimetableGeneratorContainer(
     private val teachers: Set<Teacher>,
     private val subjects: Set<Subject>,
     private val divisions: Set<Division>,
-    private val lessons: Set<Lesson>
+    private var lessons: List<Lesson>
 ) {
 
     private val curriculumList = curriculumListEntity.curriculums
@@ -20,10 +20,10 @@ open class TimetableGeneratorContainer(
     private val subjectsId = subjects.mapNotNull { it.id }.toSet()
     private val divisionsId = divisions.mapNotNull { it.id }.toSet()
     private val lessonsId = lessons.mapNotNull { it.id }.toSet()
-    private val timetablesFromCurriculum = ArrayList<Timetable>()
+    private var timetablesFromCurriculum = mutableListOf<Timetable>()
 
     init {
-        lessons.sortedBy { it.startTime }
+        lessons = lessons.sortedBy { it.startTime }
         curriculumList.forEach { curriculum ->
             (1..curriculum.numberOfActivities).forEach {
                 timetablesFromCurriculum.add(Timetable(curriculum, curriculumListEntity.period))
@@ -59,7 +59,7 @@ open class TimetableGeneratorContainer(
     }
 
     private fun sortByPreferredLessonAndDay() {
-        timetablesFromCurriculum.sortedBy { it.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithWindowHandicap } }
+        timetablesFromCurriculum = timetablesFromCurriculum.sortedByDescending { it.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithWindowHandicap } }.toMutableList()
     }
 
     private fun setTakenLessonAndDay(timetableFromCurriculum: Timetable) {

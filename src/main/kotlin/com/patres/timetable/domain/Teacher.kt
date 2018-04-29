@@ -56,5 +56,9 @@ class Teacher(
 ) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
 
     fun getFullName() = "${degree ?: ""} ${name ?: ""} ${surname ?: ""}"
+    override fun toString(): String {
+        return "Teacher(fullName=${getFullName()})"
+    }
+
 
 }

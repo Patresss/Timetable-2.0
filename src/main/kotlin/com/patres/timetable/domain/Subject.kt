@@ -51,4 +51,9 @@ class Subject(
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferencesDataTimeForSubject: Set<PreferenceDataTimeForSubject> = HashSet()
 
-) : AbstractDivisionOwner(), Serializable
+) : AbstractDivisionOwner(), Serializable {
+
+    override fun toString(): String {
+        return "Subject(name=$name)"
+    }
+}

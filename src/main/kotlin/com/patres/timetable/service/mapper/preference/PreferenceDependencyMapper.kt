@@ -2,6 +2,7 @@ package com.patres.timetable.service.mapper.preference
 
 import com.patres.timetable.preference.PreferenceDependency
 import com.patres.timetable.repository.*
+import com.patres.timetable.repository.preference.PreferenceTeacherByPlaceRepository
 import com.patres.timetable.service.dto.PreferenceDependencyDTO
 import com.patres.timetable.service.mapper.EntityMapper
 import com.patres.timetable.service.util.getOneOrNull
@@ -29,13 +30,16 @@ open class PreferenceDependencyMapper : EntityMapper<PreferenceDependency, Prefe
     @Autowired
     private lateinit var placeRepository: PlaceRepository
 
+    @Autowired
+    private lateinit var preferenceTeacherByPlaceRepository: PreferenceTeacherByPlaceRepository
+
     override fun toEntity(entityDto: PreferenceDependencyDTO): PreferenceDependency {
         return PreferenceDependency(
-            division = divisionRepository.findOneWithPreference(entityDto.divisionId),
+            division = divisionRepository.getOneOrNull(entityDto.divisionId),
             teacher = teacherRepository.getOneOrNull(entityDto.teacherId),
-            subject = subjectRepository.findOneWithPreference(entityDto.subjectId),
+            subject = subjectRepository.getOneOrNull(entityDto.subjectId),
             lesson = lessonRepository.getOneOrNull(entityDto.lessonId),
-            place = placeRepository.findOneWithPreference(entityDto.placeId),
+            place = placeRepository.getOneOrNull(entityDto.placeId),
             notTimetableId = entityDto.notTimetableId,
             date = entityDto.date,
             everyWeek = entityDto.everyWeek,
@@ -58,6 +62,9 @@ open class PreferenceDependencyMapper : EntityMapper<PreferenceDependency, Prefe
                 date = entityDto.date
                 dayOfWeek = date?.dayOfWeek?.value
             }
+
+//            teacher?.id?.let { teacherId -> teacher?.preferenceTeacherByPlace = preferenceTeacherByPlaceRepository.findByTeacherId(teacherId = teacherId)}
+//            place?.id?.let { placeId -> place?.preferenceTeacherByPlace = preferenceTeacherByPlaceRepository.findByPlaceId(placeId = placeId)}
         }
     }
 

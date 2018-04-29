@@ -26,7 +26,7 @@ open class TimetableGeneratorManager(
             val teachers = teacherRepository.findByDivisionOwnerId(schoolId)
             val subjects = subjectRepository.findByDivisionOwnerId(schoolId)
             val divisions = divisionRepository.findByDivisionOwnerId(schoolId)
-            val lessons = lessonRepository.findByDivisionOwnerId(schoolId)
+            val lessons = lessonRepository.findByDivisionOwnerId(schoolId).toMutableList()
 
             val timetableGeneratorContainer = TimetableGeneratorContainer(curriculumListEntity = curriculumListEntity, places = places, teachers = teachers, subjects = subjects, divisions = divisions, lessons = lessons)
             timetableGeneratorContainer.generate()

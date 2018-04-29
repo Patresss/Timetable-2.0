@@ -1,4 +1,4 @@
-package com.patres.timetable.repository
+package com.patres.timetable.repository.preference
 
 import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import org.springframework.data.jpa.repository.JpaRepository

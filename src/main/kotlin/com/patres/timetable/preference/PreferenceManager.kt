@@ -2,8 +2,8 @@ package com.patres.timetable.preference
 
 import com.patres.timetable.domain.*
 import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
-import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 import com.patres.timetable.repository.*
+import com.patres.timetable.repository.preference.PreferenceDataTimeForTeacherRepository
 import com.patres.timetable.web.rest.util.TimetableDateUtil
 import org.springframework.stereotype.Component
 
