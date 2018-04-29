@@ -38,7 +38,8 @@ class LoggingAspect(private val env: Environment) {
      */
     @Pointcut("""within(com.patres.timetable.repository..*)
         || (within(com.patres.timetable.service..*) && !within(com.patres.timetable.service.mapper..*))
-        || within(com.patres.timetable.web.rest..*)""")
+        || within(com.patres.timetable.web.rest..*)
+        """)
     fun applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }

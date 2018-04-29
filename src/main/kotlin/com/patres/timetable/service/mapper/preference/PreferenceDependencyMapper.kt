@@ -32,7 +32,7 @@ open class PreferenceDependencyMapper : EntityMapper<PreferenceDependency, Prefe
     override fun toEntity(entityDto: PreferenceDependencyDTO): PreferenceDependency {
         return PreferenceDependency(
             division = divisionRepository.findOneWithPreference(entityDto.divisionId),
-            teacher = teacherRepository.findOneWithPreference(entityDto.teacherId),
+            teacher = teacherRepository.getOneOrNull(entityDto.teacherId),
             subject = subjectRepository.findOneWithPreference(entityDto.subjectId),
             lesson = lessonRepository.getOneOrNull(entityDto.lessonId),
             place = placeRepository.findOneWithPreference(entityDto.placeId),

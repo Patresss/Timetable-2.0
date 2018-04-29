@@ -11,8 +11,13 @@ class PreferenceLessonAndDayOfWeekHierarchy : PreferenceHierarchy() {
     var takenByTeacher = 0
     var takenByDivision = 0
 
+    var windowHandicap = 0
+
     override var points = 0
         get() = preferredByDivision + preferredBySubject + preferredByPlace + preferredByTeacher + takenByPlace + takenByTeacher + takenByDivision
+
+    var pointsWithWindowHandicap= 0
+        get() = points + windowHandicap
 
     fun setTakenByAll() {
         takenByPlace = PreferenceHierarchy.TAKEN

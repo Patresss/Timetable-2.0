@@ -43,7 +43,6 @@ object TimetableDateUtil {
         if (firstDateFromPeriod == null) {
             return false
         }
-        log.debug("Can be add: date={}, firstDateFromPeriod={}, startWithWeek={}, everyWeek={}", dates, firstDateFromPeriod, startWithWeek, everyWeek)
         var firstMonday = if (firstDateFromPeriod.dayOfWeek == DayOfWeek.MONDAY) {
             firstDateFromPeriod
         } else {
