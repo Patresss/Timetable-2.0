@@ -4,6 +4,7 @@ import com.patres.timetable.domain.*
 import com.patres.timetable.domain.preference.PreferenceDataTimeForPlace
 import com.patres.timetable.preference.Preference
 import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
+import com.patres.timetable.util.EntityUtil
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -19,7 +20,7 @@ open class TimetableGeneratorContainer(
 ) {
 
     companion object {
-        const val MAX_WINDOWS_REMOVE_ITERATOR = 10
+        const val MAX_WINDOWS_REMOVE_ITERATOR = 50
         val log: Logger = LoggerFactory.getLogger(TimetableGeneratorContainer::class.java)
     }
 
@@ -47,11 +48,13 @@ open class TimetableGeneratorContainer(
         var windowsRemoveCounter = 0
         calculatePreference()
         while (timetablesFromCurriculum.count { it.dayOfWeek == null && it.lesson == null } != 0 && ++windowsRemoveCounter < MAX_WINDOWS_REMOVE_ITERATOR) {
+            log.info("Iteration: $windowsRemoveCounter")
             calculateLessonAndDay()
             removeWidows()
         }
-        log.info("Remove iterate: $windowsRemoveCounter")
 
+        calculateLessonAndDay()
+        log.info("Remove iterate: $windowsRemoveCounter")
 
         calculatePlace()
         return timetablesFromCurriculum
@@ -96,9 +99,10 @@ open class TimetableGeneratorContainer(
     }
 
     private fun calculateTakenLessonAndDay(timetableFromCurriculum: Timetable) {
-        timetableFromCurriculum.division?.let { timetableFromCurriculum.preference.calculateTakenLessonAndDayOfWeekByDivision(it, timetablesFromCurriculum.toSet()) }
-        timetableFromCurriculum.teacher?.let { timetableFromCurriculum.preference.calculateTakenLessonAndDayOfWeekByTeacher(it, timetablesFromCurriculum.toSet()) }
-        timetableFromCurriculum.place?.let { timetableFromCurriculum.preference.calculateTakenLessonAndDayOfWeekByPlace(it, timetablesFromCurriculum.toSet()) }
+        val takenTimetables = timetablesFromCurriculum.filter { it != timetableFromCurriculum }.toSet()
+        timetableFromCurriculum.division?.let { timetableFromCurriculum.preference.calculateTakenLessonAndDayOfWeekByDivision(it, takenTimetables) }
+        timetableFromCurriculum.teacher?.let { timetableFromCurriculum.preference.calculateTakenLessonAndDayOfWeekByTeacher(it, takenTimetables) }
+        timetableFromCurriculum.place?.let { timetableFromCurriculum.preference.calculateTakenLessonAndDayOfWeekByPlace(it, takenTimetables) }
     }
 
     private fun calculateTakenPlace(timetableFromCurriculum: Timetable) {
@@ -110,36 +114,88 @@ open class TimetableGeneratorContainer(
         val timetablesByDivision = timetablesFromCurriculum.groupBy { it.division }
         timetablesByDivision.forEach { division, timetables ->
             timetables.groupBy { it.dayOfWeek }.forEach { dayOfWeek, divisionTimetables ->
-                var hasLesson = false
-                var lastLesson: Lesson? = null
-                lessons.forEach { lesson ->
-                    val currentLesson = divisionTimetables.find { it.lesson == lesson }?.lesson
-                    if (currentLesson == null && hasLesson) {
-                        val lessonWithWindow = lesson
-                        removeLessonAndDayFromTimetables(lastLesson, lessonWithWindow, division, dayOfWeek)
-                    }
-                    if (currentLesson != null) {
-                        hasLesson = true
-                        lastLesson = currentLesson
+                if (division != null && dayOfWeek != null) {
+                    var hasLesson = false
+                    var lastLesson: Lesson? = null
+                    lessons.forEach { lesson ->
+                        val currentLesson = divisionTimetables.find { it.lesson == lesson }?.lesson
+                        if (currentLesson == null && hasLesson) {
+                            val lessonWithWindow = lesson
+
+                            removeLessonAndDayFromTimetables(lastLesson, lessonWithWindow, division, dayOfWeek)
+                        }
+                        if (currentLesson != null) {
+                            hasLesson = true
+                            lastLesson = currentLesson
+                        }
                     }
                 }
             }
         }
     }
 
-    private fun removeLessonAndDayFromTimetables(lastLesson: Lesson?, lessonWithWindow: Lesson, division: Division?, dayOfWeek: Int?) {
+
+    private fun removeLessonAndDayFromTimetables(lastLesson: Lesson?, lessonWithWindow: Lesson, division: Division, dayOfWeek: Int) {
         val timetablesToRemoveAndSetHandicap = timetablesFromCurriculum
             .filter { it.lesson?.startTime ?: 1L > lastLesson?.startTime ?: 1L && it.division == division && it.dayOfWeek == dayOfWeek }
         if (timetablesToRemoveAndSetHandicap.isNotEmpty()) {
-            log.debug("Remove windows for division: ${division?.name} in: day of week: $dayOfWeek after lesson when start ${lastLesson?.getStartTimeHHmmFormatted()}")
+            log.debug("Remove windows for division: ${division.name} in: day of week: $dayOfWeek after lesson when start ${lastLesson?.getStartTimeHHmmFormatted()}")
             timetablesToRemoveAndSetHandicap
                 .forEach { timetable ->
-                    timetable.preference.getPreferenceByLessonAndDay(timetable.dayOfWeek, lessonWithWindow.id)?.preference?.let { it.windowHandicap += PreferenceHierarchy.HANDICAP }
-                    timetable.lesson = null
-                    timetable.dayOfWeek = null
+                    val preference = timetable.preference.getPreferenceByLessonAndDay(timetable.dayOfWeek, lessonWithWindow.id)?.preference
+                    if (preference?.points ?: 0 > PreferenceHierarchy.CAN_BE_USED) {
+                        preference?.let { it.windowHandicap += PreferenceHierarchy.HANDICAP }
+                        timetable.lesson = null
+                        timetable.dayOfWeek = null
+                    } else {
+                        timetable.dayOfWeek = dayOfWeek
+                        timetable.lesson = lessonWithWindow
+                        val swapLessonAndDay  = tryChangeLessonAndDay(division = division, timetableWithCollision = timetable)
+                        if (!swapLessonAndDay) {
+                            trySomethingsElse()
+                        }
+                    }
+
                 }
         }
     }
+
+    // TODO
+    private fun trySomethingsElse() {
+
+    }
+
+    private fun tryChangeLessonAndDay(division: Division, timetableWithCollision: Timetable): Boolean {
+        val divisionTimetable = timetablesFromCurriculum
+            .filter { it.division == division && it.lesson != null && it.dayOfWeek != null && it != timetableWithCollision }
+            .sortedBy {  it.preference.getPreferencePointsByLessonAndDay(it) }
+
+        val timetableToSwap = divisionTimetable.find { timetableToTest -> canChangeLessonAndDay(timetableWithCollision, timetableToTest) }
+        return if (timetableToSwap == null) {
+            log.warn("Not found timetable to swap lesson and day")
+            false
+        } else {
+            log.warn("Swap timetable: $timetableWithCollision <-> $timetableToSwap")
+            swapLessonAndDayWithCalculatePreference(timetableWithCollision, timetableToSwap)
+            true
+        }
+    }
+
+    private fun canChangeLessonAndDay(timetableWithCollision: Timetable, timetableToTest: Timetable): Boolean {
+        swapLessonAndDayWithCalculatePreference(timetableWithCollision, timetableToTest)
+        val canSwap = isValidPointsAfterChangeLessonAndDay(timetableWithCollision, timetableToTest)
+        swapLessonAndDayWithCalculatePreference(timetableWithCollision, timetableToTest)
+        return canSwap
+    }
+
+
+    private fun swapLessonAndDayWithCalculatePreference(timetable1: Timetable, timetable2: Timetable) {
+        EntityUtil.swapLessonAndDay(timetable1, timetable2)
+        calculateTakenLessonAndDay(timetable1) // TODO Can we check smaller list?
+        calculateTakenLessonAndDay(timetable2)
+    }
+
+    private fun isValidPointsAfterChangeLessonAndDay(timetableWithCollision: Timetable, timetableToTest: Timetable) = timetableWithCollision.preference.getPreferencePointsByLessonAndDay(timetableWithCollision) ?: 0 >= PreferenceHierarchy.CAN_BE_USED && timetableToTest.preference.getPreferencePointsByLessonAndDay(timetableToTest) ?: 0 >= PreferenceHierarchy.CAN_BE_USED
 
     private fun calculatePreference() {
         timetablesFromCurriculum.forEach {

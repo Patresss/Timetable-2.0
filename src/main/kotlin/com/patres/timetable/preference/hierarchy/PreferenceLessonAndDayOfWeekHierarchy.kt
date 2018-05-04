@@ -30,4 +30,6 @@ class PreferenceLessonAndDayOfWeekHierarchy : PreferenceHierarchy() {
         takenByTeacher = 0
         takenByDivision = 0
     }
+
+
 }

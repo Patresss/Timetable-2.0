@@ -110,4 +110,9 @@ class Timetable(
         endTime = getSecondsFromString(time)
     }
 
+    override fun toString(): String {
+        return "Timetable(id = $id, dayOfWeek=$dayOfWeek, placeId=${place?.id}, placeName=${place?.name}, subjectId=${subject?.id}, subjectName=${subject?.name}, divisionId=${division?.id}, divisionName=${division?.name}, teacherId=${teacher?.id}, teacherName=${teacher?.getFullName()}, periodId=${period?.id}, periodName=${period?.name}, lessonId=${lesson?.id}, lessonName=${lesson?.name},points=$points)"
+    }
+
+
 }
