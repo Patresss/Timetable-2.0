@@ -121,7 +121,6 @@ open class TimetableGeneratorContainer(
                         val currentLesson = divisionTimetables.find { it.lesson == lesson }?.lesson
                         if (currentLesson == null && hasLesson) {
                             val lessonWithWindow = lesson
-
                             removeLessonAndDayFromTimetables(lastLesson, lessonWithWindow, division, dayOfWeek)
                         }
                         if (currentLesson != null) {
@@ -152,6 +151,8 @@ open class TimetableGeneratorContainer(
                         timetable.lesson = lessonWithWindow
                         val swapLessonAndDay  = tryChangeLessonAndDay(division = division, timetableWithCollision = timetable)
                         if (!swapLessonAndDay) {
+                            timetable.lesson = null
+                            timetable.dayOfWeek = null
                             trySomethingsElse()
                         }
                     }

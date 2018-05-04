@@ -134,7 +134,7 @@ open class FillerResource(
     var PrAr = TeacherDTO()
     var DyLu = TeacherDTO()
     var LoEl = TeacherDTO()
-    var świstak = TeacherDTO()
+    var SwEl = TeacherDTO()
     var BaEl = TeacherDTO()
     var KaMo = TeacherDTO()
     var KaTo = TeacherDTO()
@@ -151,7 +151,7 @@ open class FillerResource(
     var ChAg = TeacherDTO()
     var SeMo = TeacherDTO()
     var GoTa = TeacherDTO()
-    var guzik = TeacherDTO()
+    var GuMa = TeacherDTO()
     var SzTo = TeacherDTO()
     var DaJa = TeacherDTO()
     var WiWo = TeacherDTO()
@@ -162,7 +162,7 @@ open class FillerResource(
     var JóSt = TeacherDTO()
     var SzIr = TeacherDTO()
     var DzMa = TeacherDTO()
-    var solecki = TeacherDTO()
+    var SoRy = TeacherDTO()
     var KuKa = TeacherDTO()
     var PePi = TeacherDTO()
     var PiTa = TeacherDTO()
@@ -410,7 +410,7 @@ open class FillerResource(
         PrAr = createTeacher(degree = "mgr", name = "Arkadiusz", surname = "Prajsnar", divisionOwner = lo2)
         DyLu = createTeacher(degree = "mgr", name = "Lucjan", surname = "Dynowski", divisionOwner = lo2)
         LoEl = createTeacher(degree = "dr", name = "Elżbieta", surname = "Longosz", divisionOwner = lo2)
-        świstak = createTeacher(degree = "mgr", name = "Elżbieta", surname = "Świstak", divisionOwner = lo2)
+        SwEl = createTeacher(degree = "mgr", name = "Elżbieta", surname = "SwEl", divisionOwner = lo2)
         BaEl = createTeacher(degree = "mgr", name = "Elżbieta", surname = "Baran", divisionOwner = lo2)
         KaMo = createTeacher(degree = "mgr", name = "Monika", surname = "Karnas", divisionOwner = lo2)
         KaTo = createTeacher(degree = "mgr", name = "Tomasz", surname = "Kasprzyk", divisionOwner = lo2)
@@ -427,7 +427,7 @@ open class FillerResource(
         ChAg = createTeacher(degree = "dr", name = "Agata", surname = "Chodorowicz-Bąk", divisionOwner = lo2)
         SeMo = createTeacher(degree = "mgr", name = "Monika", surname = "Serwatka", divisionOwner = lo2)
         GoTa = createTeacher(degree = "mgr", name = "Tatiana", surname = "Gonet", divisionOwner = lo2)
-        guzik = createTeacher(degree = "mgr", name = "Maciej", surname = "Guzik", divisionOwner = lo2)
+        GuMa = createTeacher(degree = "mgr", name = "Maciej", surname = "Guzik", divisionOwner = lo2)
         SzTo = createTeacher(degree = "mgr", name = "Tomasz", surname = "Szarłowicz", divisionOwner = lo2)
         DaJa = createTeacher(degree = "mgr", name = "Jacek", surname = "Dawidko", divisionOwner = lo2)
         WiWo = createTeacher(degree = "mgr", name = "Wojciech", surname = "Wilk", divisionOwner = lo2)
@@ -438,7 +438,7 @@ open class FillerResource(
         JóSt = createTeacher(degree = "mgr", name = "Stanisław", surname = "Józefczyk", divisionOwner = lo2)
         SzIr = createTeacher(degree = "mgr", name = "Irma", surname = "Szott", divisionOwner = lo2)
         DzMa = createTeacher(degree = "mgr", name = "Małgorzata", surname = "Dzierwa", divisionOwner = lo2)
-        solecki = createTeacher(degree = "mgr", name = "Ryszard", surname = "Solecki", divisionOwner = lo2)
+        SoRy = createTeacher(degree = "mgr", name = "Ryszard", surname = "SoRy", divisionOwner = lo2)
         KuKa = createTeacher(degree = "mgr", name = "Katarzyna", surname = "Kudroń", divisionOwner = lo2)
         PePi = createTeacher(degree = "ks	 mgr", name = "Piotr", surname = "Pernal", divisionOwner = lo2)
         PiTa = createTeacher(degree = "ks	 mgr", name = "Tadeusz", surname = "Piwiński", divisionOwner = lo2)
@@ -555,8 +555,8 @@ open class FillerResource(
         d1aMon4b = createTimetable(dayOfWeek = 1, lesson = l4, subject = jAngielski, teacher = KaTo, place = p21, division = div1aG2, period = semestLetniPeriod)
         d1aMon5 = createTimetable(dayOfWeek = 1, lesson = l5, subject = religia, teacher = PiTa, place = p36, division = class1a, period = semestLetniPeriod)
         d1aMon6 = createTimetable(dayOfWeek = 1, lesson = l6, subject = fizyka, teacher = SzIr, place = p15, division = class1a, period = semestLetniPeriod)
-        d1aMon8 = createTimetable(dayOfWeek = 1, lesson = l8, subject = historia, teacher = świstak, place = p7, division = class1a, period = semestLetniPeriod)
-        d1aMon9Test = createTimetable(dayOfWeek = 1, lesson = l9, subject = historia, teacher = świstak, place = p7, division = class1a, period = semestLetniPeriod, everyWeek = 2)
+        d1aMon8 = createTimetable(dayOfWeek = 1, lesson = l8, subject = historia, teacher = SwEl, place = p7, division = class1a, period = semestLetniPeriod)
+        d1aMon9Test = createTimetable(dayOfWeek = 1, lesson = l9, subject = historia, teacher = SwEl, place = p7, division = class1a, period = semestLetniPeriod, everyWeek = 2)
 
         d1aTue1 = createTimetable(dayOfWeek = 2, lesson = l1, subject = jPolski, teacher = PeRe, place = p24, division = class1a, period = semestLetniPeriod)
         d1aTue2 = createTimetable(dayOfWeek = 2, lesson = l2, subject = geografia, teacher = GoTa, place = p20, division = class1a, period = semestLetniPeriod)
@@ -567,9 +567,9 @@ open class FillerResource(
         d1aTue6 = createTimetable(dayOfWeek = 2, lesson = l6, subject = chemia, teacher = ChAg, place = p24, division = class1a, period = semestLetniPeriod)
         d1aTue7 = createTimetable(dayOfWeek = 2, lesson = l7, subject = fizyka, teacher = SzIr, place = p15, division = class1a, period = semestLetniPeriod)
 
-        d1aWen1 = createTimetable(dayOfWeek = 3, lesson = l1, subject = wiedzaOSpołeczeństwie, teacher = świstak, place = p24, division = class1a, period = semestLetniPeriod)
-        d1aWen3 = createTimetable(dayOfWeek = 3, lesson = l3, subject = historia, teacher = świstak, place = p24, division = class1a, period = semestLetniPeriod)
-        d1aWen4 = createTimetable(dayOfWeek = 3, lesson = l4, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, place = p35, division = class1a, period = semestLetniPeriod)
+        d1aWen1 = createTimetable(dayOfWeek = 3, lesson = l1, subject = wiedzaOSpołeczeństwie, teacher = SwEl, place = p24, division = class1a, period = semestLetniPeriod)
+        d1aWen3 = createTimetable(dayOfWeek = 3, lesson = l3, subject = historia, teacher = SwEl, place = p24, division = class1a, period = semestLetniPeriod)
+        d1aWen4 = createTimetable(dayOfWeek = 3, lesson = l4, subject = wychowaniedoZyciaWRodzinie, teacher = SoRy, place = p35, division = class1a, period = semestLetniPeriod)
 
         d1aThu1 = createTimetable(dayOfWeek = 4, lesson = l1, subject = podstawyPrzedsiębiorczości, teacher = SM, place = p36, division = class1a, period = semestLetniPeriod)
         d1aThu2 = createTimetable(dayOfWeek = 4, lesson = l2, subject = matematyka, teacher = CzBe, place = p22, division = class1a, period = semestLetniPeriod)
@@ -616,7 +616,7 @@ open class FillerResource(
         d1bMon3 = createTimetable(dayOfWeek = 1, lesson = l3, subject = jPolski, teacher = KlLu, place = p13, division = class1b, period = semestLetniPeriod)
         d1bMon4 = createTimetable(dayOfWeek = 1, lesson = l4, subject = jPolski, teacher = KlLu, place = p13, division = class1b, period = semestLetniPeriod)
         d1bMon5 = createTimetable(dayOfWeek = 1, lesson = l5, subject = edukacjaDoBezpieczeństwa, teacher = BlSł, place = p31, division = class1b, period = semestLetniPeriod)
-        d1bMon6 = createTimetable(dayOfWeek = 1, lesson = l6, subject = historia, teacher = świstak, place = p35, division = class1b, period = semestLetniPeriod)
+        d1bMon6 = createTimetable(dayOfWeek = 1, lesson = l6, subject = historia, teacher = SwEl, place = p35, division = class1b, period = semestLetniPeriod)
         d1bMon7a = createTimetable(dayOfWeek = 1, lesson = l7, subject = jNiemiecki, teacher = PrKa, place = p13, division = divNie1G1, period = semestLetniPeriod)
         d1bMon8 = createTimetable(dayOfWeek = 1, lesson = l8, subject = geografia, teacher = GoTa, place = p20, division = class1b, period = semestLetniPeriod)
 
@@ -645,8 +645,8 @@ open class FillerResource(
         d1bThu3 = createTimetable(dayOfWeek = 4, lesson = l3, subject = matematyka, teacher = MiJo, place = p22, division = class1b, period = semestLetniPeriod)
         d1bThu4 = createTimetable(dayOfWeek = 4, lesson = l4, subject = matematyka, teacher = MiJo, place = p22, division = class1b, period = semestLetniPeriod)
         d1bThu5 = createTimetable(dayOfWeek = 4, lesson = l5, subject = religia, teacher = PiTa, place = p10, division = class1b, period = semestLetniPeriod)
-        d1bThu6 = createTimetable(dayOfWeek = 1, lesson = l6, subject = historia, teacher = świstak, place = p36, division = class1b, period = semestLetniPeriod)
-        d1bThu7 = createTimetable(dayOfWeek = 1, lesson = l7, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, place = p36, division = class1b, period = semestLetniPeriod)
+        d1bThu6 = createTimetable(dayOfWeek = 1, lesson = l6, subject = historia, teacher = SwEl, place = p36, division = class1b, period = semestLetniPeriod)
+        d1bThu7 = createTimetable(dayOfWeek = 1, lesson = l7, subject = wychowaniedoZyciaWRodzinie, teacher = SoRy, place = p36, division = class1b, period = semestLetniPeriod)
 
 
         d1bFri4 = createTimetable(dayOfWeek = 5, lesson = l4, subject = matematyka, teacher = MiJo, place = p7, division = class1b, period = semestLetniPeriod)
@@ -665,13 +665,13 @@ open class FillerResource(
         val curriculum1aReligia = createCurriculum(division = class1aGenerate, subject = religia, teacher = PiTa, numberOfActivities = 2)
         val curriculum1aFizyka = createCurriculum(division = class1aGenerate, subject = fizyka, teacher = SzIr, numberOfActivities = 2)
         val curriculum1aJNiemiecki = createCurriculum(division = class1aGenerate, subject = jNiemiecki, teacher = PrAn, numberOfActivities = 3)
-        val curriculum1aHistoria = createCurriculum(division = class1aGenerate, subject = historia, teacher = świstak, numberOfActivities = 2)
+        val curriculum1aHistoria = createCurriculum(division = class1aGenerate, subject = historia, teacher = SwEl, numberOfActivities = 2)
         val curriculum1aJPolski = createCurriculum(division = class1aGenerate, subject = jPolski, teacher = PeRe, numberOfActivities = 3)
         val curriculum1aGeografia = createCurriculum(division = class1aGenerate, subject = geografia, teacher = GoTa, numberOfActivities = 1)
         val curriculum1aMatematyka = createCurriculum(division = class1aGenerate, subject = matematyka, teacher = CzBe, numberOfActivities = 4)
         val curriculum1aChemia = createCurriculum(division = class1aGenerate, subject = chemia, teacher = ChAg, numberOfActivities = 1)
-        val curriculum1aWiedzaOSpołeczeństwie = createCurriculum(division = class1aGenerate, subject = wiedzaOSpołeczeństwie, teacher = świstak, numberOfActivities = 1)
-        val curriculum1aWychowaniedoZyciaWRodzinie = createCurriculum(division = class1aGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, numberOfActivities = 1)
+        val curriculum1aWiedzaOSpołeczeństwie = createCurriculum(division = class1aGenerate, subject = wiedzaOSpołeczeństwie, teacher = SwEl, numberOfActivities = 1)
+        val curriculum1aWychowaniedoZyciaWRodzinie = createCurriculum(division = class1aGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = SoRy, numberOfActivities = 1)
         val curriculum1aWiedzaOKulturze = createCurriculum(division = class1aGenerate, subject = wiedzaOKulturze, teacher = TwMa, numberOfActivities = 1)
         val curriculum1aEdukacjaDoBezpieczeństwa = createCurriculum(division = class1aGenerate, subject = edukacjaDoBezpieczeństwa, teacher = BlSł, numberOfActivities = 1)
         val curriculum1aInformatyka = createCurriculum(division = class1aGenerate, subject = informatyka, teacher = DzMa, numberOfActivities = 1)
@@ -693,9 +693,9 @@ open class FillerResource(
         val curriculum1bGodzWych = createCurriculum(division = class1bGenerate, subject = godzWych, teacher = KlLu, numberOfActivities = 1)
         val curriculum1bReligia = createCurriculum(division = class1bGenerate, subject = religia, teacher = PiTa, numberOfActivities = 2)
         val curriculum1bFizyka = createCurriculum(division = class1bGenerate, subject = fizyka, teacher = JóSt, numberOfActivities = 1)
-        val curriculum1bWychowaniedoZyciaWRodzinie = createCurriculum(division = class1bGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, numberOfActivities = 1)
+        val curriculum1bWychowaniedoZyciaWRodzinie = createCurriculum(division = class1bGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = SoRy, numberOfActivities = 1)
         val curriculum1bBiologia = createCurriculum(division = class1bGenerate, subject = biologia, teacher = SzTo, numberOfActivities = 1)
-        val curriculum1bHistoria = createCurriculum(division = class1bGenerate, subject = historia, teacher = świstak, numberOfActivities = 2)
+        val curriculum1bHistoria = createCurriculum(division = class1bGenerate, subject = historia, teacher = SwEl, numberOfActivities = 2)
 
         val curriculum1cBiologia = createCurriculum(division = class1cGenerate, subject = biologia, teacher = deptuch, numberOfActivities = 1)
         val curriculum1cChemia = createCurriculum(division = class1cGenerate, subject = chemia, teacher = ChAg, numberOfActivities = 1)
@@ -713,7 +713,7 @@ open class FillerResource(
         val curriculum1cReligia = createCurriculum(division = class1cGenerate, subject = religia, teacher = PiTa, numberOfActivities = 2)
         val curriculum1cWiedzaOKulturze = createCurriculum(division = class1cGenerate, subject = wiedzaOKulturze, teacher = TwMa, numberOfActivities = 1)
         val curriculum1cWiedzaOSpołeczeństwie = createCurriculum(division = class1cGenerate, subject = wiedzaOSpołeczeństwie, teacher = DyLu, numberOfActivities = 1)
-        val curriculum1cWychowaniedoZyciaWRodzinie = createCurriculum(division = class1cGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, numberOfActivities = 1)
+        val curriculum1cWychowaniedoZyciaWRodzinie = createCurriculum(division = class1cGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = SoRy, numberOfActivities = 1)
         val curriculum1cWychowanieFizyczne = createCurriculum(division = class1cGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 2)
 
 
@@ -723,7 +723,7 @@ open class FillerResource(
         val curriculum1dFizyka = createCurriculum(division = class1dGenerate, subject = fizyka, teacher = JóSt, numberOfActivities = 1)
         val curriculum1dGeografia = createCurriculum(division = class1dGenerate, subject = geografia, teacher = GoTa, numberOfActivities = 2)
         val curriculum1dGodzWych = createCurriculum(division = class1dGenerate, subject = godzWych, teacher = PeRe, numberOfActivities = 1)
-        val curriculum1dHistoria = createCurriculum(division = class1dGenerate, subject = historia, teacher = świstak, numberOfActivities = 3)
+        val curriculum1dHistoria = createCurriculum(division = class1dGenerate, subject = historia, teacher = SwEl, numberOfActivities = 3)
         val curriculum1dInformatyka = createCurriculum(division = class1dGenerate, subject = informatyka, teacher = DzMa, numberOfActivities = 1)
         val curriculum1dJAngielski = createCurriculum(division = class1dGenerate, subject = jAngielski, teacher = KaMo, numberOfActivities = 3)
         val curriculum1dJdodatkowy = createCurriculum(division = class1dGenerate, subject = jNiemiecki, teacher = HaAn, numberOfActivities = 3)
@@ -732,7 +732,7 @@ open class FillerResource(
         val curriculum1dPodstawyPrzedsiębiorczości = createCurriculum(division = class1dGenerate, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, numberOfActivities = 2)
         val curriculum1dReligia = createCurriculum(division = class1dGenerate, subject = religia, teacher = PePi, numberOfActivities = 2)
         val curriculum1dWiedzaOKulturze = createCurriculum(division = class1dGenerate, subject = wiedzaOKulturze, teacher = TwMa, numberOfActivities = 1)
-        val curriculum1dWiedzaOSpołeczeństwie = createCurriculum(division = class1dGenerate, subject = wiedzaOSpołeczeństwie, teacher = świstak, numberOfActivities = 1)
+        val curriculum1dWiedzaOSpołeczeństwie = createCurriculum(division = class1dGenerate, subject = wiedzaOSpołeczeństwie, teacher = SwEl, numberOfActivities = 1)
         val curriculum1dWychowanieFizyczne = createCurriculum(division = class1dGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 2)
 
         val curriculum1eBiologia = createCurriculum(division = class1eGenerate, subject = biologia, teacher = SzTo, numberOfActivities = 2)
@@ -773,11 +773,11 @@ open class FillerResource(
 
         val curriculum2aJPolski = createCurriculum(division = class2aGenerate, subject = jPolski, teacher = PeRe, numberOfActivities = 5)
         val curriculum2a1grJAngielski = createCurriculum(division = class2aGenerate, subject = jAngielski, teacher = KiBe, numberOfActivities = 3)
-        //val curriculum2a2grJAngielski = createCurriculum(division = class2aGenerate, subject = jAngielski, teacher = KaTo, numberOfActivities = 3)
+        val curriculum2a2grJAngielski = createCurriculum(division = class2aGenerate, subject = jAngielski, teacher = KaTo, numberOfActivities = 3)
         val curriculum2aGr1Jdodatkowy = createCurriculum(division = class2aGenerate, subject = jNiemiecki, teacher = HaAn, numberOfActivities = 3)
-//        val curriculum2aGr2Jdodatkowy = createCurriculum(division = class2aGenerate, subject = jFrancuski, teacher = RaBe, numberOfActivities = 3)
-//        val curriculum2aGr3Jdodatkowy = createCurriculum(division = class2aGenerate, subject = jRosyjski, teacher = ŁoDo, numberOfActivities = 3)
-//        val curriculum2aGr4Jdodatkowy = createCurriculum(division = class2aGenerate, subject = jRosyjski, teacher = StBo, numberOfActivities = 3)
+        val curriculum2aGr2Jdodatkowy = createCurriculum(division = class2aGenerate, subject = jFrancuski, teacher = RaBe, numberOfActivities = 3)
+        val curriculum2aGr3Jdodatkowy = createCurriculum(division = class2aGenerate, subject = jRosyjski, teacher = ŁoDo, numberOfActivities = 3)
+        val curriculum2aGr4Jdodatkowy = createCurriculum(division = class2aGenerate, subject = jRosyjski, teacher = StBo, numberOfActivities = 3)
         val curriculum2aFizyka = createCurriculum(division = class2aGenerate, subject = fizyka, teacher = SzIr, numberOfActivities = 4)
         val curriculum2aMatematyka = createCurriculum(division = class2aGenerate, subject = matematyka, teacher = CzBe, numberOfActivities = 7)
         val curriculum2aInformatyka = createCurriculum(division = class2aGenerate, subject = informatyka, teacher = DzMa, numberOfActivities = 3)
@@ -792,13 +792,13 @@ open class FillerResource(
         val curriculum2b1grJAngielski = createCurriculum(division = class2bGenerate, subject = jAngielski, teacher = KaMo, numberOfActivities = 3)
         val curriculum2b2grJAngielski = createCurriculum(division = class2bGenerate, subject = jAngielski, teacher = KiBe, numberOfActivities = 3)
         val curriculum2bGr1Jdodatkowy = createCurriculum(division = class2bGenerate, subject = jNiemiecki, teacher = PrKa, numberOfActivities = 3)
-//        val curriculum2bGr2Jdodatkowy = createCurriculum(division = class2bGenerate, subject = jNiemiecki, teacher = HaAn, numberOfActivities = 3)
-//        val curriculum2bGr3Jdodatkowy = createCurriculum(division = class2bGenerate, subject = jFrancuski, teacher = RaBe, numberOfActivities = 3)
-//        val curriculum2bGr4Jdodatkowy = createCurriculum(division = class2bGenerate, subject = jRosyjski, teacher = ŁoDo, numberOfActivities = 3)
+        val curriculum2bGr2Jdodatkowy = createCurriculum(division = class2bGenerate, subject = jNiemiecki, teacher = HaAn, numberOfActivities = 3)
+        val curriculum2bGr3Jdodatkowy = createCurriculum(division = class2bGenerate, subject = jFrancuski, teacher = RaBe, numberOfActivities = 3)
+        val curriculum2bGr4Jdodatkowy = createCurriculum(division = class2bGenerate, subject = jRosyjski, teacher = ŁoDo, numberOfActivities = 3)
         val curriculum2bGeografia = createCurriculum(division = class2bGenerate, subject = geografia, teacher = GoTa, numberOfActivities = 5)
         val curriculum2bMatematyka = createCurriculum(division = class2bGenerate, subject = matematyka, teacher = MiJo, numberOfActivities = 8)
         val curriculum2bGrDzWychowanieFizyczne = createCurriculum(division = class2bGenerate, subject = wychowanieFizyczne, teacher = DaRe, numberOfActivities = 3)
-        // val curriculum2bGrChWychowanieFizyczne = createCurriculum(division = class2bGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 3)
+        val curriculum2bGrChWychowanieFizyczne = createCurriculum(division = class2bGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 3)
         val curriculum2bGodzWych = createCurriculum(division = class2bGenerate, subject = godzWych, teacher = KlLu, numberOfActivities = 1)
         val curriculum2bHistISpol = createCurriculum(division = class2bGenerate, subject = historiaISpoleczenstwo, teacher = DyLu, numberOfActivities = 2)
         val curriculum2bEkonomiaWPraktyce = createCurriculum(division = class2bGenerate, subject = ekonomiaWPraktyce, teacher = SM, numberOfActivities = 1)
@@ -806,14 +806,14 @@ open class FillerResource(
 
         val curriculum2cJPolski = createCurriculum(division = class2cGenerate, subject = jPolski, teacher = KlLu, numberOfActivities = 8)
         val curriculum2c1grJAngielski = createCurriculum(division = class2cGenerate, subject = jAngielski, teacher = PrAn, numberOfActivities = 3)
-//        val curriculum2c2grJAngielski = createCurriculum(division = class2cGenerate, subject = jAngielski, teacher = KoIr, numberOfActivities = 3)
+        val curriculum2c2grJAngielski = createCurriculum(division = class2cGenerate, subject = jAngielski, teacher = KoIr, numberOfActivities = 3)
         val curriculum2cGr1Jdodatkowy = createCurriculum(division = class2cGenerate, subject = jNiemiecki, teacher = PrKa, numberOfActivities = 3)
-//        val curriculum2cGr2Jdodatkowy = createCurriculum(division = class2cGenerate, subject = jFrancuski, teacher = RaBe, numberOfActivities = 3)
-//        val curriculum2cGr3Jdodatkowy = createCurriculum(division = class2cGenerate, subject = jRosyjski, teacher = ŁoDo, numberOfActivities = 3)
+        val curriculum2cGr2Jdodatkowy = createCurriculum(division = class2cGenerate, subject = jFrancuski, teacher = RaBe, numberOfActivities = 3)
+        val curriculum2cGr3Jdodatkowy = createCurriculum(division = class2cGenerate, subject = jRosyjski, teacher = ŁoDo, numberOfActivities = 3)
         val curriculum2cMatematyka = createCurriculum(division = class2cGenerate, subject = matematyka, teacher = JóSt, numberOfActivities = 4)
         val curriculum2cGrDz1WychowanieFizyczne = createCurriculum(division = class2cGenerate, subject = wychowanieFizyczne, teacher = DaRe, numberOfActivities = 3)
-//        val curriculum2cGrDz2WychowanieFizyczne = createCurriculum(division = class2cGenerate, subject = wychowanieFizyczne, teacher = WiWo, numberOfActivities = 3)
-//        val curriculum2cGrChWychowanieFizyczne = createCurriculum(division = class2cGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 3)
+        val curriculum2cGrDz2WychowanieFizyczne = createCurriculum(division = class2cGenerate, subject = wychowanieFizyczne, teacher = WiWo, numberOfActivities = 3)
+        val curriculum2cGrChWychowanieFizyczne = createCurriculum(division = class2cGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 3)
         val curriculum2cGodzWych = createCurriculum(division = class2cGenerate, subject = godzWych, teacher = BlSł, numberOfActivities = 1)
         val curriculum2cHistoria = createCurriculum(division = class2cGenerate, subject = historia, teacher = DyLu, numberOfActivities = 4)
         val curriculum2cWiedzaOSpoleczenstwie = createCurriculum(division = class2cGenerate, subject = wiedzaOSpołeczeństwie, teacher = DyLu, numberOfActivities = 3)
@@ -823,13 +823,14 @@ open class FillerResource(
 
         val curriculum2dJPolski = createCurriculum(division = class2dGenerate, subject = jPolski, teacher = PeRe, numberOfActivities = 4)
         val curriculum2d1grJAngielski = createCurriculum(division = class2dGenerate, subject = jAngielski, teacher = PrAn, numberOfActivities = 6)
-        //val curriculum2d2grJAngielski = createCurriculum(division = class2dGenerate, subject = jAngielski, teacher = TrAg, numberOfActivities = 6)
+        val curriculum2d2grJAngielski = createCurriculum(division = class2dGenerate, subject = jAngielski, teacher = TrAg, numberOfActivities = 6)
         val curriculum2dGr1Jdodatkowy = createCurriculum(division = class2dGenerate, subject = jNiemiecki, teacher = HaAn, numberOfActivities = 6)
-        //val curriculum2dGr2Jdodatkowy = createCurriculum(division = class2dGenerate, subject = jFrancuski, teacher = JaEd, numberOfActivities = 6)
+        val curriculum2dGr2Jdodatkowy = createCurriculum(division = class2dGenerate, subject = jFrancuski, teacher = JaEd, numberOfActivities = 6)
         val curriculum2dMatematyka = createCurriculum(division = class2dGenerate, subject = matematyka, teacher = JóSt, numberOfActivities = 4)
         val curriculum2dGrDzWychowanieFizyczne = createCurriculum(division = class2dGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 3)
         val curriculum2dGrChWychowanieFizyczne = createCurriculum(division = class2dGenerate, subject = wychowanieFizyczne, teacher = ZaTo, numberOfActivities = 3)
         val curriculum2dGodzWych = createCurriculum(division = class2dGenerate, subject = godzWych, teacher = PeRe, numberOfActivities = 1)
+        val curriculum2dHistoria = createCurriculum(division = class2dGenerate, subject = historia, teacher = SwEl, numberOfActivities = 2)
         val curriculum2dPrzyroda = createCurriculum(division = class2dGenerate, subject = przyroda, teacher = GoTa, numberOfActivities = 2)
         val curriculum2dEdukacjaDziennikarska = createCurriculum(division = class2dGenerate, subject = edukacjaDziennikarska, teacher = PrAr, numberOfActivities = 1)
         val curriculum2dLiteraturaObca = createCurriculum(division = class2dGenerate, subject = literaturaObca, teacher = PeRe, numberOfActivities = 1)
@@ -838,10 +839,10 @@ open class FillerResource(
 
         val curriculum2eJPolski = createCurriculum(division = class2eGenerate, subject = jPolski, teacher = GrRe, numberOfActivities = 5)
         val curriculum2e1grJAngielski = createCurriculum(division = class2eGenerate, subject = jAngielski, teacher = KoIr, numberOfActivities = 3)
-        // val curriculum2e2grJAngielski = createCurriculum(division = class2eGenerate, subject = jAngielski, teacher = KiBe, numberOfActivities = 3)
+        val curriculum2e2grJAngielski = createCurriculum(division = class2eGenerate, subject = jAngielski, teacher = KiBe, numberOfActivities = 3)
         val curriculum2eGr1Jdodatkowy = createCurriculum(division = class2eGenerate, subject = jNiemiecki, teacher = PrAn, numberOfActivities = 3)
-//        val curriculum2eGr2Jdodatkowy = createCurriculum(division = class2eGenerate, subject = jNiemiecki, teacher = PrKa, numberOfActivities = 3)
-//        val curriculum2eGr3Jdodatkowy = createCurriculum(division = class2eGenerate, subject = jFrancuski, teacher = JaEd, numberOfActivities = 3)
+        val curriculum2eGr2Jdodatkowy = createCurriculum(division = class2eGenerate, subject = jNiemiecki, teacher = PrKa, numberOfActivities = 3)
+        val curriculum2eGr3Jdodatkowy = createCurriculum(division = class2eGenerate, subject = jFrancuski, teacher = JaEd, numberOfActivities = 3)
         val curriculum2eMatematyka = createCurriculum(division = class2eGenerate, subject = matematyka, teacher = JaMa, numberOfActivities = 4)
         val curriculum2eGrDz1WychowanieFizyczne = createCurriculum(division = class2eGenerate, subject = wychowanieFizyczne, teacher = DaRe, numberOfActivities = 3)
         val curriculum2eGrDz2WychowanieFizyczne = createCurriculum(division = class2eGenerate, subject = wychowanieFizyczne, teacher = WiWo, numberOfActivities = 3)
@@ -855,10 +856,10 @@ open class FillerResource(
 
         val curriculum2fJPolski = createCurriculum(division = class2fGenerate, subject = jPolski, teacher = GrRe, numberOfActivities = 5)
         val curriculum2f1grJAngielski = createCurriculum(division = class2fGenerate, subject = jAngielski, teacher = KaTo, numberOfActivities = 3)
-//        val curriculum2f2grJAngielski = createCurriculum(division = class2fGenerate, subject = jAngielski, teacher = TrAg, numberOfActivities = 3)
+        val curriculum2f2grJAngielski = createCurriculum(division = class2fGenerate, subject = jAngielski, teacher = TrAg, numberOfActivities = 3)
         val curriculum2fGr1Jdodatkowy = createCurriculum(division = class2fGenerate, subject = jNiemiecki, teacher = PrKa, numberOfActivities = 3)
-//        val curriculum2fGr2Jdodatkowy = createCurriculum(division = class2fGenerate, subject = jNiemiecki, teacher = HaAn, numberOfActivities = 3)
-//        val curriculum2fGr3Jdodatkowy = createCurriculum(division = class2fGenerate, subject = jFrancuski, teacher = JaEd, numberOfActivities = 3)
+        val curriculum2fGr2Jdodatkowy = createCurriculum(division = class2fGenerate, subject = jNiemiecki, teacher = HaAn, numberOfActivities = 3)
+        val curriculum2fGr3Jdodatkowy = createCurriculum(division = class2fGenerate, subject = jFrancuski, teacher = JaEd, numberOfActivities = 3)
         val curriculum2fMatematyka = createCurriculum(division = class2fGenerate, subject = matematyka, teacher = CzBe, numberOfActivities = 7)
         val curriculum2fGrDz1WychowanieFizyczne = createCurriculum(division = class2fGenerate, subject = wychowanieFizyczne, teacher = DaRe, numberOfActivities = 3)
         val curriculum2fGrDz2WychowanieFizyczne = createCurriculum(division = class2fGenerate, subject = wychowanieFizyczne, teacher = WiWo, numberOfActivities = 3)
@@ -868,6 +869,89 @@ open class FillerResource(
         val curriculum2fChemia = createCurriculum(division = class2fGenerate, subject = chemia, teacher = ChAg, numberOfActivities = 4)
         val curriculum2fHistISpol = createCurriculum(division = class2fGenerate, subject = historiaISpoleczenstwo, teacher = DyLu, numberOfActivities = 2)
         val curriculum2fReligia = createCurriculum(division = class2fGenerate, subject = religia, teacher = PePi, numberOfActivities = 2)
+
+
+        val curriculum3aJPolski = createCurriculum(division = class3aGenerate, subject = jPolski, teacher = KlLu, numberOfActivities = 4)
+        val curriculum3a1grJAngielski = createCurriculum(division = class3aGenerate, subject = jAngielski, teacher = KaMo, numberOfActivities = 3)
+        val curriculum3a2grJAngielski = createCurriculum(division = class3aGenerate, subject = jAngielski, teacher = KaTo, numberOfActivities = 3)
+        val curriculum3aFizyka = createCurriculum(division = class3aGenerate, subject = fizyka, teacher = SzIr, numberOfActivities = 4)
+        val curriculum3aMatematyka = createCurriculum(division = class3aGenerate, subject = matematyka, teacher = CzBe, numberOfActivities = 8)
+        val curriculum3aInformatyka = createCurriculum(division = class3aGenerate, subject = informatyka, teacher = SoRy, numberOfActivities = 3)
+        val curriculum3aGrDzWychowanieFizyczne = createCurriculum(division = class3aGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 3)
+        val curriculum3aGrChWychowanieFizyczne = createCurriculum(division = class3aGenerate, subject = wychowanieFizyczne, teacher = ZaTo, numberOfActivities = 3)
+        val curriculum3aGodzWych = createCurriculum(division = class3aGenerate, subject = godzWych, teacher = SzIr, numberOfActivities = 1)
+        val curriculum3aHistISpol = createCurriculum(division = class3aGenerate, subject = historiaISpoleczenstwo, teacher = SwEl, numberOfActivities = 2)
+        val curriculum3aTechAngielski = createCurriculum(division = class3aGenerate, subject = techAngielski, teacher = SzIr, numberOfActivities = 1)
+        val curriculum3aReligia = createCurriculum(division = class3aGenerate, subject = religia, teacher = PePi, numberOfActivities = 2)
+
+        val curriculum3bJPolski = createCurriculum(division = class3bGenerate, subject = jPolski, teacher = KlLu, numberOfActivities = 4)
+        val curriculum3b1grJAngielski = createCurriculum(division = class3bGenerate, subject = jAngielski, teacher = KaMo, numberOfActivities = 3)
+        val curriculum3b2grJAngielski = createCurriculum(division = class3bGenerate, subject = jAngielski, teacher = KiBe, numberOfActivities = 3)
+        val curriculum3bGeografia = createCurriculum(division = class3bGenerate, subject = geografia, teacher = GoTa, numberOfActivities = 5)
+        val curriculum3bMatematyka = createCurriculum(division = class3bGenerate, subject = matematyka, teacher = MiJo, numberOfActivities = 9)
+        val curriculum3bGrDz1WychowanieFizyczne = createCurriculum(division = class3bGenerate, subject = wychowanieFizyczne, teacher = DaRe, numberOfActivities = 3)
+        val curriculum3bGrDz2WychowanieFizyczne = createCurriculum(division = class3bGenerate, subject = wychowanieFizyczne, teacher = WiWo, numberOfActivities = 3)
+        val curriculum3bGrChWychowanieFizyczne = createCurriculum(division = class3bGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 3)
+        val curriculum3bGodzWych = createCurriculum(division = class3bGenerate, subject = godzWych, teacher = GoTa, numberOfActivities = 1)
+        val curriculum3bHistISpol = createCurriculum(division = class3bGenerate, subject = historiaISpoleczenstwo, teacher = SwEl, numberOfActivities = 2)
+        val curriculum3bReligia = createCurriculum(division = class3bGenerate, subject = religia, teacher = PePi, numberOfActivities = 2)
+
+        val curriculum3cJPolski = createCurriculum(division = class3cGenerate, subject = jPolski, teacher = PrAr, numberOfActivities = 9)
+        val curriculum3c1grJAngielski = createCurriculum(division = class3cGenerate, subject = jAngielski, teacher = TrAg, numberOfActivities = 3)
+        val curriculum3c2grJAngielski = createCurriculum(division = class3cGenerate, subject = jAngielski, teacher = KaTo, numberOfActivities = 3)
+        val curriculum3cMatematyka = createCurriculum(division = class3cGenerate, subject = matematyka, teacher = JóSt, numberOfActivities = 3)
+        val curriculum3cGrDzWychowanieFizyczne = createCurriculum(division = class3cGenerate, subject = wychowanieFizyczne, teacher = WiWo, numberOfActivities = 3)
+        val curriculum3cGrChWychowanieFizyczne = createCurriculum(division = class3cGenerate, subject = wychowanieFizyczne, teacher = ZaTo, numberOfActivities = 3)
+        val curriculum3cGodzWych = createCurriculum(division = class3cGenerate, subject = godzWych, teacher = WiWo, numberOfActivities = 1)
+        val curriculum3cHistoria = createCurriculum(division = class3cGenerate, subject = historia, teacher = LoEl, numberOfActivities = 4)
+        val curriculum3cWiedzaOSpoleczenstwie = createCurriculum(division = class3cGenerate, subject = wiedzaOSpołeczeństwie, teacher = LoEl, numberOfActivities = 4)
+        val curriculum3cPrzyroda = createCurriculum(division = class3cGenerate, subject = przyroda, teacher = SzTo, numberOfActivities = 2)
+        val curriculum3cReligia = createCurriculum(division = class3cGenerate, subject = religia, teacher = PePi, numberOfActivities = 2)
+
+        val curriculum3dJPolski = createCurriculum(division = class3dGenerate, subject = jPolski, teacher = PrAr, numberOfActivities = 4)
+        val curriculum3d1grJAngielski = createCurriculum(division = class3dGenerate, subject = jAngielski, teacher = KaMo, numberOfActivities = 6)
+        val curriculum3d2grJAngielski = createCurriculum(division = class3dGenerate, subject = jAngielski, teacher = TrAg, numberOfActivities = 6)
+        val curriculum3dGr1Jdodatkowy = createCurriculum(division = class3dGenerate, subject = jNiemiecki, teacher = PrAn, numberOfActivities = 6)
+        val curriculum3dGr2Jdodatkowy = createCurriculum(division = class3dGenerate, subject = jFrancuski, teacher = TwMa, numberOfActivities = 6)
+        val curriculum3dMatematyka = createCurriculum(division = class3dGenerate, subject = matematyka, teacher = JóSt, numberOfActivities = 3)
+        val curriculum3dGr1DzWychowanieFizyczne = createCurriculum(division = class3dGenerate, subject = wychowanieFizyczne, teacher = ZaTo, numberOfActivities = 3)
+        val curriculum3dGr2DzWychowanieFizyczne = createCurriculum(division = class3dGenerate, subject = wychowanieFizyczne, teacher = WiWo, numberOfActivities = 3)
+        val curriculum3dGrChWychowanieFizyczne = createCurriculum(division = class3dGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 3)
+        val curriculum3dGodzWych = createCurriculum(division = class3dGenerate, subject = godzWych, teacher = PrAr, numberOfActivities = 1)
+        val curriculum3dHistoria = createCurriculum(division = class3dGenerate, subject = historia, teacher = SwEl, numberOfActivities = 3)
+        val curriculum3dPrzyroda = createCurriculum(division = class3dGenerate, subject = przyroda, teacher = SeMo, numberOfActivities = 2)
+        val curriculum3dEdukacjaDziennikarska = createCurriculum(division = class3dGenerate, subject = edukacjaDziennikarska, teacher = PrAr, numberOfActivities = 1)
+        val curriculum3dLiteraturaObca = createCurriculum(division = class3dGenerate, subject = literaturaObca, teacher = PeRe, numberOfActivities = 1)
+        val curriculum3dReligia = createCurriculum(division = class3dGenerate, subject = religia, teacher = PePi, numberOfActivities = 2)
+
+        val curriculum3eJPolski = createCurriculum(division = class3eGenerate, subject = jPolski, teacher = GrRe, numberOfActivities = 4)
+        val curriculum3e1grJAngielski = createCurriculum(division = class3eGenerate, subject = jAngielski, teacher = KiBe, numberOfActivities = 3)
+        val curriculum3e2grJAngielski = createCurriculum(division = class3eGenerate, subject = jAngielski, teacher = BaEl, numberOfActivities = 3)
+        val curriculum3eMatematyka = createCurriculum(division = class3eGenerate, subject = matematyka, teacher = JaMa, numberOfActivities = 3)
+        val curriculum3eGrDz1WychowanieFizyczne = createCurriculum(division = class3eGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 3)
+        val curriculum3eGrDz2WychowanieFizyczne = createCurriculum(division = class3eGenerate, subject = wychowanieFizyczne, teacher = DaRe, numberOfActivities = 3)
+        val curriculum3eGrChWychowanieFizyczne = createCurriculum(division = class3eGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 3)
+        val curriculum3eGodzWych = createCurriculum(division = class3eGenerate, subject = godzWych, teacher = SzTo, numberOfActivities = 1)
+        val curriculum3eBiologia = createCurriculum(division = class3eGenerate, subject = biologia, teacher = SzTo, numberOfActivities = 5)
+        val curriculum3eChemia = createCurriculum(division = class3eGenerate, subject = chemia, teacher = ChAg, numberOfActivities = 5)
+        val curriculum3eHistISpol = createCurriculum(division = class3eGenerate, subject = historiaISpoleczenstwo, teacher = DyLu, numberOfActivities = 2)
+        val curriculum3eFizykaMedyczna = createCurriculum(division = class3eGenerate, subject = fizykaMedyczna, teacher = SzIr, numberOfActivities = 1)
+        val curriculum3eMedycznyJezykAngielski = createCurriculum(division = class3eGenerate, subject = medycznyJezykAngielski, teacher = SzIr, numberOfActivities = 1)
+        val curriculum3eReligia = createCurriculum(division = class3eGenerate, subject = religia, teacher = PePi, numberOfActivities = 2)
+
+        val curriculum3fJPolski = createCurriculum(division = class3fGenerate, subject = jPolski, teacher = GrRe, numberOfActivities = 4)
+        val curriculum3f1grJAngielski = createCurriculum(division = class3fGenerate, subject = jAngielski, teacher = KoIr, numberOfActivities = 3)
+        val curriculum3f2grJAngielski = createCurriculum(division = class3fGenerate, subject = jAngielski, teacher = BaEl, numberOfActivities = 3)
+        val curriculum3fMatematyka = createCurriculum(division = class3fGenerate, subject = matematyka, teacher = JaMa, numberOfActivities = 6)
+        val curriculum3fGrDz1WychowanieFizyczne = createCurriculum(division = class3fGenerate, subject = wychowanieFizyczne, teacher = ZaTo, numberOfActivities = 3)
+        val curriculum3fGrDz2WychowanieFizyczne = createCurriculum(division = class3fGenerate, subject = wychowanieFizyczne, teacher = DaRe, numberOfActivities = 3)
+        val curriculum3fGrChWychowanieFizyczne = createCurriculum(division = class3fGenerate, subject = wychowanieFizyczne, teacher = DaJa, numberOfActivities = 3)
+        val curriculum3fGodzWych = createCurriculum(division = class3fGenerate, subject = godzWych, teacher = GuMa, numberOfActivities = 1)
+        val curriculum3fBiologia = createCurriculum(division = class3fGenerate, subject = biologia, teacher = GuMa, numberOfActivities = 4)
+        val curriculum3fChemia = createCurriculum(division = class3fGenerate, subject = chemia, teacher = SeMo, numberOfActivities = 4)
+        val curriculum3fHistISpol = createCurriculum(division = class3fGenerate, subject = historiaISpoleczenstwo, teacher = LoEl, numberOfActivities = 2)
+        val curriculum3fFizyka = createCurriculum(division = class3fGenerate, subject = fizyka, teacher = BlSł, numberOfActivities = 3) // Powina byc fizyka medyczna wedlug planu 2018/2019
+        val curriculum3fReligia = createCurriculum(division = class3fGenerate, subject = religia, teacher = PePi, numberOfActivities = 2)
 
 
         curriculumListService.save(CurriculumListDTO(name = "test001", periodId = semestLetniPeriod.id, divisionOwnerId = lo2.id, curriculums = hashSetOf(
@@ -984,12 +1068,16 @@ open class FillerResource(
 
             curriculum2aJPolski,
             curriculum2a1grJAngielski,
+//            curriculum2a2grJAngielski,
             curriculum2aGr1Jdodatkowy,
+//            curriculum2aGr2Jdodatkowy,
+//            curriculum2aGr3Jdodatkowy,
+//            curriculum2aGr4Jdodatkowy,
             curriculum2aFizyka,
             curriculum2aMatematyka,
             curriculum2aInformatyka,
             curriculum2aGrDzWychowanieFizyczne,
-            curriculum2aGrChWychowanieFizyczne,
+//            curriculum2aGrChWychowanieFizyczne,
             curriculum2aGodzWych,
             curriculum2aHistISpol,
             curriculum2aTechAngielski,
@@ -997,21 +1085,30 @@ open class FillerResource(
 
             curriculum2bJPolski,
             curriculum2b1grJAngielski,
-            curriculum2b2grJAngielski,
+//            curriculum2b2grJAngielski,
             curriculum2bGr1Jdodatkowy,
+//            curriculum2bGr2Jdodatkowy,
+//            curriculum2bGr3Jdodatkowy,
+//            curriculum2bGr4Jdodatkowy,
             curriculum2bGeografia,
             curriculum2bMatematyka,
             curriculum2bGrDzWychowanieFizyczne,
+//            curriculum2bGrChWychowanieFizyczne,
             curriculum2bGodzWych,
             curriculum2bHistISpol,
             curriculum2bEkonomiaWPraktyce,
             curriculum2bReligia,
 
             curriculum2cJPolski,
-            curriculum2c1grJAngielski,
-            curriculum2cGr1Jdodatkowy,
+//            curriculum2c1grJAngielski,
+            curriculum2c2grJAngielski,
+//            curriculum2cGr1Jdodatkowy,
+//            curriculum2cGr2Jdodatkowy,
+            curriculum2cGr3Jdodatkowy,
             curriculum2cMatematyka,
-            curriculum2cGrDz1WychowanieFizyczne,
+//            curriculum2cGrDz1WychowanieFizyczne,
+//            curriculum2cGrDz2WychowanieFizyczne,
+            curriculum2cGrChWychowanieFizyczne,
             curriculum2cGodzWych,
             curriculum2cHistoria,
             curriculum2cWiedzaOSpoleczenstwie,
@@ -1020,12 +1117,15 @@ open class FillerResource(
             curriculum2cReligia,
 
             curriculum2dJPolski,
-            curriculum2d1grJAngielski,
-            curriculum2dGr1Jdodatkowy,
+//            curriculum2d1grJAngielski,
+            curriculum2d2grJAngielski,
+//            curriculum2dGr1Jdodatkowy,
+            curriculum2dGr2Jdodatkowy,
             curriculum2dMatematyka,
             curriculum2dGrDzWychowanieFizyczne,
-            curriculum2dGrChWychowanieFizyczne,
+//            curriculum2dGrChWychowanieFizyczne,
             curriculum2dGodzWych,
+            curriculum2dHistoria,
             curriculum2dPrzyroda,
             curriculum2dEdukacjaDziennikarska,
             curriculum2dLiteraturaObca,
@@ -1033,9 +1133,14 @@ open class FillerResource(
 
             curriculum2eJPolski,
             curriculum2e1grJAngielski,
+//            curriculum2e2grJAngielski,
             curriculum2eGr1Jdodatkowy,
+//            curriculum2eGr2Jdodatkowy,
+//            curriculum2eGr3Jdodatkowy,
             curriculum2eMatematyka,
             curriculum2eGrDz1WychowanieFizyczne,
+//            curriculum2eGrDz2WychowanieFizyczne,
+//            curriculum2eGrChWychowanieFizyczne,
             curriculum2eGodzWych,
             curriculum2eBiologia,
             curriculum2eChemia,
@@ -1045,14 +1150,101 @@ open class FillerResource(
 
             curriculum2fJPolski,
             curriculum2f1grJAngielski,
+//            curriculum2f2grJAngielski,
             curriculum2fGr1Jdodatkowy,
+//            curriculum2fGr2Jdodatkowy,
+//            curriculum2fGr3Jdodatkowy,
             curriculum2fMatematyka,
-            curriculum2fGrDz1WychowanieFizyczne,
+//            curriculum2fGrDz1WychowanieFizyczne,
+//            curriculum2fGrDz2WychowanieFizyczne,
+            curriculum2fGrChWychowanieFizyczne,
             curriculum2fGodzWych,
             curriculum2fBiologia,
             curriculum2fChemia,
             curriculum2fHistISpol,
-            curriculum2fReligia
+            curriculum2fReligia,
+
+            curriculum3aJPolski,
+            curriculum3a1grJAngielski,
+//            curriculum3a2grJAngielski,
+            curriculum3aFizyka,
+            curriculum3aMatematyka,
+            curriculum3aInformatyka,
+            curriculum3aGrDzWychowanieFizyczne,
+//            curriculum3aGrChWychowanieFizyczne,
+            curriculum3aGodzWych,
+            curriculum3aHistISpol,
+            curriculum3aTechAngielski,
+            curriculum3aReligia,
+
+            curriculum3bJPolski,
+            curriculum3b1grJAngielski,
+//            curriculum3b2grJAngielski,
+            curriculum3bGeografia,
+            curriculum3bMatematyka,
+            curriculum3bGrDz1WychowanieFizyczne,
+//            curriculum3bGrDz2WychowanieFizyczne,
+//            curriculum3bGrChWychowanieFizyczne,
+            curriculum3bGodzWych,
+            curriculum3bHistISpol,
+            curriculum3bReligia,
+
+            curriculum3cJPolski,
+            curriculum3c1grJAngielski,
+//            curriculum3c2grJAngielski,
+            curriculum3cMatematyka,
+            curriculum3cGrDzWychowanieFizyczne,
+//            curriculum3cGrChWychowanieFizyczne,
+            curriculum3cGodzWych,
+            curriculum3cHistoria,
+            curriculum3cWiedzaOSpoleczenstwie,
+            curriculum3cPrzyroda,
+            curriculum3cReligia,
+
+            curriculum3dJPolski,
+            curriculum3d1grJAngielski,
+//            curriculum3d2grJAngielski,
+            curriculum3dGr1Jdodatkowy,
+//            curriculum3dGr2Jdodatkowy,
+            curriculum3dMatematyka,
+//            curriculum3dGr1DzWychowanieFizyczne,
+//            curriculum3dGr2DzWychowanieFizyczne,
+            curriculum3dGrChWychowanieFizyczne,
+            curriculum3dGodzWych,
+            curriculum3dHistoria,
+            curriculum3dPrzyroda,
+            curriculum3dEdukacjaDziennikarska,
+            curriculum3dLiteraturaObca,
+            curriculum3dReligia,
+
+            curriculum3eJPolski,
+            curriculum3e1grJAngielski,
+//            curriculum3e2grJAngielski,
+            curriculum3eMatematyka,
+            curriculum3eGrDz1WychowanieFizyczne,
+//            curriculum3eGrDz2WychowanieFizyczne,
+//            curriculum3eGrChWychowanieFizyczne,
+            curriculum3eGodzWych,
+            curriculum3eBiologia,
+            curriculum3eChemia,
+            curriculum3eHistISpol,
+            curriculum3eFizykaMedyczna,
+            curriculum3eMedycznyJezykAngielski,
+            curriculum3eReligia,
+
+            curriculum3fJPolski,
+            curriculum3f1grJAngielski,
+//            curriculum3f2grJAngielski,
+            curriculum3fMatematyka,
+//            curriculum3fGrDz1WychowanieFizyczne,
+//            curriculum3fGrDz2WychowanieFizyczne,
+            curriculum3fGrChWychowanieFizyczne,
+            curriculum3fGodzWych,
+            curriculum3fBiologia,
+            curriculum3fChemia,
+            curriculum3fHistISpol,
+            curriculum3fFizyka,
+            curriculum3fReligia
         )))
 
 
@@ -1152,7 +1344,7 @@ open class FillerResource(
         }
         LoEl = teacherService.save(LoEl)
 
-        świstak.apply {
+        SwEl.apply {
             preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = 10),
@@ -1160,7 +1352,7 @@ open class FillerResource(
 
             )
         }
-        świstak = teacherService.save(świstak)
+        SwEl = teacherService.save(SwEl)
 
         BaEl.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -1277,7 +1469,8 @@ open class FillerResource(
         SeMo.apply {
             preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
-                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = 10)
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = chemia.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = przyroda.id, points = 10)
             )
         }
         SeMo = teacherService.save(SeMo)
@@ -1291,18 +1484,19 @@ open class FillerResource(
         }
         GoTa = teacherService.save(GoTa)
 
-        guzik.apply {
+        GuMa.apply {
             preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = 10)
             )
         }
-        guzik = teacherService.save(guzik)
+        GuMa = teacherService.save(GuMa)
 
         SzTo.apply {
             preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
-                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = 10)
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = biologia.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = przyroda.id, points = 10)
             )
         }
         SzTo = teacherService.save(SzTo)
@@ -1385,13 +1579,13 @@ open class FillerResource(
         }
         DzMa = teacherService.save(DzMa)
 
-        solecki.apply {
+        SoRy.apply {
             preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = informatyka.id, points = 10),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = 5))
         }
-        solecki = teacherService.save(solecki)
+        SoRy = teacherService.save(SoRy)
 
         KuKa.apply {
             preferenceSubjectByTeacher = hashSetOf(
@@ -1890,6 +2084,227 @@ open class FillerResource(
 
         }
         class2fGenerate = divisionService.save(class2fGenerate)
+
+
+
+        class3aGenerate.apply {
+            preferencesSubjectByDivision = hashSetOf(
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000),
+
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLacińskiPrawniczy.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = ekonomiaWPraktyce.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = przyroda.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = literaturaObca.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDziennikarska.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = medycznyJezykAngielski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = fizykaMedyczna.id, points = -10_000)
+            )
+            preferencesTeacherByDivision = hashSetOf(
+                PreferenceTeacherByDivisionDTO(divisionId = this.id, teacherId = JaMa.id, points = 10)
+            )
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+
+        }
+        class3aGenerate = divisionService.save(class3aGenerate)
+
+        class3bGenerate.apply {
+            preferencesSubjectByDivision = hashSetOf(
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = godzWych.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000),
+
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLacińskiPrawniczy.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = techAngielski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = ekonomiaWPraktyce.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = przyroda.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = literaturaObca.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDziennikarska.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = medycznyJezykAngielski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = fizykaMedyczna.id, points = -10_000)
+            )
+            preferencesTeacherByDivision = hashSetOf(
+                PreferenceTeacherByDivisionDTO(divisionId = this.id, teacherId = GoTa.id, points = 10)
+            )
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+        }
+        class3bGenerate = divisionService.save(class3bGenerate)
+
+        class3cGenerate.apply {
+            preferencesSubjectByDivision = hashSetOf(
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000),
+
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLacińskiPrawniczy.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = techAngielski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = historiaISpoleczenstwo.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = ekonomiaWPraktyce.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = literaturaObca.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDziennikarska.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = medycznyJezykAngielski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = fizykaMedyczna.id, points = -10_000)
+
+            )
+            preferencesTeacherByDivision = hashSetOf(
+                PreferenceTeacherByDivisionDTO(divisionId = this.id, teacherId = WiWo.id, points = 10)
+            )
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+
+        }
+        class3cGenerate = divisionService.save(class3cGenerate)
+
+        class3dGenerate.apply {
+            preferencesSubjectByDivision = hashSetOf(
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000),
+
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLacińskiPrawniczy.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = techAngielski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = historiaISpoleczenstwo.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = ekonomiaWPraktyce.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = medycznyJezykAngielski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = fizykaMedyczna.id, points = -10_000)
+
+            )
+            preferencesTeacherByDivision = hashSetOf(
+                PreferenceTeacherByDivisionDTO(divisionId = this.id, teacherId = PrAr.id, points = 10)
+            )
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+        }
+        class3dGenerate = divisionService.save(class3dGenerate)
+
+        class3eGenerate.apply {
+            preferencesSubjectByDivision = hashSetOf(
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000),
+
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLacińskiPrawniczy.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = techAngielski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = ekonomiaWPraktyce.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = przyroda.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = literaturaObca.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDziennikarska.id, points = -10_000)
+            )
+            preferencesTeacherByDivision = hashSetOf(
+                PreferenceTeacherByDivisionDTO(divisionId = this.id, teacherId = SzTo.id, points = 10)
+            )
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+
+        }
+        class3eGenerate = divisionService.save(class2eGenerate)
+
+        class3fGenerate.apply {
+            preferencesSubjectByDivision = hashSetOf(
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000),
+
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLacińskiPrawniczy.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = techAngielski.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = ekonomiaWPraktyce.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = przyroda.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = literaturaObca.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDziennikarska.id, points = -10_000),
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = medycznyJezykAngielski.id, points = -10_000)
+            )
+            preferencesTeacherByDivision = hashSetOf(
+                PreferenceTeacherByDivisionDTO(divisionId = this.id, teacherId = GuMa.id, points = 10)
+            )
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+
+        }
+        class3fGenerate = divisionService.save(class3fGenerate)
+
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = historia.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = matematyka.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = informatyka.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = biologia.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = chemia.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = geografia.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = fizyka.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jPolski.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jAngielski.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jFrancuski.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jRosyjski.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = godzWych.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = religia.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000),
+//
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLacińskiPrawniczy.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = techAngielski.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = historiaISpoleczenstwo.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = ekonomiaWPraktyce.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = przyroda.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = literaturaObca.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDziennikarska.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = medycznyJezykAngielski.id, points = -10_000),
+//        PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = fizykaMedyczna.id, points = -10_000)
 
     }
 
