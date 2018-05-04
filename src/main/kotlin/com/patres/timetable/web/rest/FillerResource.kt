@@ -163,6 +163,7 @@ open class FillerResource(
     var suchodolski = TeacherDTO()
     var mSuchodolski = TeacherDTO()
     var łopuszańska = TeacherDTO()
+    var grRe = TeacherDTO()
 
     // =====================================================
     // Lesson
@@ -432,6 +433,8 @@ open class FillerResource(
         mSuchodolski = createTeacher(degree = "mgr", name = "Mateusz", surname = "Suchodolski", divisionOwner = lo2)
         łopuszańska = createTeacher(degree = "mgr", name = "Dorota ", surname = "Łopuszańska-Patrylak", divisionOwner = lo2)
 
+        grRe = createTeacher(degree = "", name = "Re", surname = "Gr", divisionOwner = lo2) //Nie znam skrót
+
         // =====================================================
         // Division
         // =====================================================
@@ -681,6 +684,79 @@ open class FillerResource(
         val curriculum1bBiologia = createCurriculum(division = class1bGenerate, subject = biologia, teacher = szarłowicz, numberOfActivities = 1)
         val curriculum1bHistoria = createCurriculum(division = class1bGenerate, subject = historia, teacher = świstak, numberOfActivities = 2)
 
+        val curriculum1cBiologia = createCurriculum(division = class1cGenerate, subject = biologia, teacher = deptuch, numberOfActivities = 1)
+        val curriculum1cChemia = createCurriculum(division = class1cGenerate, subject = chemia, teacher = chodorowiczBąk, numberOfActivities = 1)
+        val curriculum1cEdukacjaDoBezpieczeństwa = createCurriculum(division = class1cGenerate, subject = edukacjaDoBezpieczeństwa, teacher = bloch, numberOfActivities = 1)
+        val curriculum1cFizyka = createCurriculum(division = class1cGenerate, subject = fizyka, teacher = józefczyk, numberOfActivities = 1)
+        val curriculum1cGeografia = createCurriculum(division = class1cGenerate, subject = geografia, teacher = gonet, numberOfActivities = 2)
+        val curriculum1cGodzWych = createCurriculum(division = class1cGenerate, subject = godzWych, teacher = bloch, numberOfActivities = 1)
+        val curriculum1cHistoria = createCurriculum(division = class1cGenerate, subject = historia, teacher = dynowski, numberOfActivities = 3)
+        val curriculum1cInformatyka = createCurriculum(division = class1cGenerate, subject = informatyka, teacher = dzierwa, numberOfActivities = 1)
+        val curriculum1cJAngielski = createCurriculum(division = class1cGenerate, subject = jAngielski, teacher = kolanko, numberOfActivities = 3)
+        val curriculum1cJdodatkowy = createCurriculum(division = class1cGenerate, subject = jRosyjski, teacher = stasik, numberOfActivities = 3)
+        val curriculum1cJPolski = createCurriculum(division = class1cGenerate, subject = jPolski, teacher = klein, numberOfActivities = 4)
+        val curriculum1cMatematyka = createCurriculum(division = class1cGenerate, subject = matematyka, teacher = józefczyk, numberOfActivities = 3)
+        val curriculum1cPodstawyPrzedsiębiorczości = createCurriculum(division = class1cGenerate, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, numberOfActivities = 2)
+        val curriculum1cReligia = createCurriculum(division = class1cGenerate, subject = religia, teacher = tPiwinski, numberOfActivities = 2)
+        val curriculum1cWiedzaOKulturze = createCurriculum(division = class1cGenerate, subject = wiedzaOKulturze, teacher = twardzikWilk, numberOfActivities = 1)
+        val curriculum1cWiedzaOSpołeczeństwie = createCurriculum(division = class1cGenerate, subject = wiedzaOSpołeczeństwie, teacher = dynowski, numberOfActivities = 1)
+        val curriculum1cWychowaniedoZyciaWRodzinie = createCurriculum(division = class1cGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = solecki, numberOfActivities = 1)
+        val curriculum1cWychowanieFizyczne = createCurriculum(division = class1cGenerate, subject = wychowanieFizyczne, teacher = dawidkoJ, numberOfActivities = 2)
+
+
+        val curriculum1dBiologia = createCurriculum(division = class1dGenerate, subject = biologia, teacher = deptuch, numberOfActivities = 1)
+        val curriculum1dChemia = createCurriculum(division = class1dGenerate, subject = chemia, teacher = chodorowiczBąk, numberOfActivities = 1)
+        val curriculum1dEdukacjaDoBezpieczeństwa = createCurriculum(division = class1dGenerate, subject = edukacjaDoBezpieczeństwa, teacher = bloch, numberOfActivities = 1)
+        val curriculum1dFizyka = createCurriculum(division = class1dGenerate, subject = fizyka, teacher = józefczyk, numberOfActivities = 1)
+        val curriculum1dGeografia = createCurriculum(division = class1dGenerate, subject = geografia, teacher = gonet, numberOfActivities = 2)
+        val curriculum1dGodzWych = createCurriculum(division = class1dGenerate, subject = godzWych, teacher = pernal, numberOfActivities = 1)
+        val curriculum1dHistoria = createCurriculum(division = class1dGenerate, subject = historia, teacher = świstak, numberOfActivities = 3)
+        val curriculum1dInformatyka = createCurriculum(division = class1dGenerate, subject = informatyka, teacher = dzierwa, numberOfActivities = 1)
+        val curriculum1dJAngielski = createCurriculum(division = class1dGenerate, subject = jAngielski, teacher = karnas, numberOfActivities = 3)
+        val curriculum1dJdodatkowy = createCurriculum(division = class1dGenerate, subject = jNiemiecki, teacher = hadel, numberOfActivities = 3)
+        val curriculum1dJPolski = createCurriculum(division = class1dGenerate, subject = jPolski, teacher = pernal, numberOfActivities = 4)
+        val curriculum1dMatematyka = createCurriculum(division = class1dGenerate, subject = matematyka, teacher = józefczyk, numberOfActivities = 3)
+        val curriculum1dPodstawyPrzedsiębiorczości = createCurriculum(division = class1dGenerate, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, numberOfActivities = 2)
+        val curriculum1dReligia = createCurriculum(division = class1dGenerate, subject = religia, teacher = pPiernal, numberOfActivities = 2)
+        val curriculum1dWiedzaOKulturze = createCurriculum(division = class1dGenerate, subject = wiedzaOKulturze, teacher = twardzikWilk, numberOfActivities = 1)
+        val curriculum1dWiedzaOSpołeczeństwie = createCurriculum(division = class1dGenerate, subject = wiedzaOSpołeczeństwie, teacher = świstak, numberOfActivities = 1)
+        val curriculum1dWychowanieFizyczne = createCurriculum(division = class1dGenerate, subject = wychowanieFizyczne, teacher = dawidkoJ, numberOfActivities = 2)
+
+        val curriculum1eBiologia = createCurriculum(division = class1eGenerate, subject = biologia, teacher = szarłowicz, numberOfActivities = 2)
+        val curriculum1eChemia = createCurriculum(division = class1eGenerate, subject = chemia, teacher = serwatka, numberOfActivities = 2)
+        val curriculum1eEdukacjaDoBezpieczeństwa = createCurriculum(division = class1eGenerate, subject = edukacjaDoBezpieczeństwa, teacher = bloch, numberOfActivities = 1)
+        val curriculum1eFizyka = createCurriculum(division = class1eGenerate, subject = fizyka, teacher = józefczyk, numberOfActivities = 1)
+        val curriculum1eGeografia = createCurriculum(division = class1eGenerate, subject = geografia, teacher = gonet, numberOfActivities = 2)
+        val curriculum1eGodzWych = createCurriculum(division = class1eGenerate, subject = godzWych, teacher = jastrzębska, numberOfActivities = 1)
+        val curriculum1eHistoria = createCurriculum(division = class1eGenerate, subject = historia, teacher = dynowski, numberOfActivities = 3)
+        val curriculum1eInformatyka = createCurriculum(division = class1eGenerate, subject = informatyka, teacher = dzierwa, numberOfActivities = 1)
+        val curriculum1eJAngielski = createCurriculum(division = class1eGenerate, subject = jAngielski, teacher = kijowska, numberOfActivities = 3)
+        val curriculum1eJdodatkowy = createCurriculum(division = class1eGenerate, subject = jFrancuski, teacher = rachwał, numberOfActivities = 3)
+        val curriculum1eJPolski = createCurriculum(division = class1eGenerate, subject = jPolski, teacher = pernal, numberOfActivities = 3)
+        val curriculum1eMatematyka = createCurriculum(division = class1eGenerate, subject = matematyka, teacher = prajsnar, numberOfActivities = 3)
+        val curriculum1ePodstawyPrzedsiębiorczości = createCurriculum(division = class1eGenerate, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, numberOfActivities = 2)
+        val curriculum1eReligia = createCurriculum(division = class1eGenerate, subject = religia, teacher = pPiernal, numberOfActivities = 2)
+        val curriculum1eWiedzaOKulturze = createCurriculum(division = class1eGenerate, subject = wiedzaOKulturze, teacher = twardzikWilk, numberOfActivities = 1)
+        val curriculum1eWiedzaOSpołeczeństwie = createCurriculum(division = class1eGenerate, subject = wiedzaOSpołeczeństwie, teacher = dynowski, numberOfActivities = 1)
+        val curriculum1eWychowanieFizyczne = createCurriculum(division = class1eGenerate, subject = wychowanieFizyczne, teacher = dawidkoR, numberOfActivities = 2)
+
+        val curriculum1fBiologia = createCurriculum(division = class1fGenerate, subject = biologia, teacher = szarłowicz, numberOfActivities = 2)
+        val curriculum1fChemia = createCurriculum(division = class1fGenerate, subject = chemia, teacher = chodorowiczBąk, numberOfActivities = 2)
+        val curriculum1fEdukacjaDoBezpieczeństwa = createCurriculum(division = class1fGenerate, subject = edukacjaDoBezpieczeństwa, teacher = bloch, numberOfActivities = 1)
+        val curriculum1fFizyka = createCurriculum(division = class1fGenerate, subject = fizyka, teacher = szott, numberOfActivities = 1)
+        val curriculum1fGeografia = createCurriculum(division = class1fGenerate, subject = geografia, teacher = gonet, numberOfActivities = 2)
+        val curriculum1fGodzWych = createCurriculum(division = class1fGenerate, subject = godzWych, teacher = chodorowiczBąk, numberOfActivities = 1)
+        val curriculum1fHistoria = createCurriculum(division = class1fGenerate, subject = historia, teacher = dynowski, numberOfActivities = 3)
+        val curriculum1fInformatyka = createCurriculum(division = class1fGenerate, subject = informatyka, teacher = dzierwa, numberOfActivities = 1)
+        val curriculum1fJAngielski = createCurriculum(division = class1fGenerate, subject = jAngielski, teacher = trybusGorczyca, numberOfActivities = 3)
+        val curriculum1fJdodatkowy = createCurriculum(division = class1fGenerate, subject = jNiemiecki, teacher = przybyłowiczCiszewska, numberOfActivities = 3)
+        val curriculum1fJPolski = createCurriculum(division = class1fGenerate, subject = jPolski, teacher = grRe, numberOfActivities = 3)
+        val curriculum1fMatematyka = createCurriculum(division = class1fGenerate, subject = matematyka, teacher = czuba, numberOfActivities = 3)
+        val curriculum1fPodstawyPrzedsiębiorczości = createCurriculum(division = class1fGenerate, subject = podstawyPrzedsiębiorczości, teacher = suchodolski, numberOfActivities = 2)
+        val curriculum1fReligia = createCurriculum(division = class1fGenerate, subject = religia, teacher = pPiernal, numberOfActivities = 2)
+        val curriculum1fWiedzaOKulturze = createCurriculum(division = class1fGenerate, subject = wiedzaOKulturze, teacher = twardzikWilk, numberOfActivities = 1)
+        val curriculum1fWiedzaOSpołeczeństwie = createCurriculum(division = class1fGenerate, subject = wiedzaOSpołeczeństwie, teacher = dynowski, numberOfActivities = 1)
+        val curriculum1fWychowanieFizyczne = createCurriculum(division = class1fGenerate, subject = wychowanieFizyczne, teacher = dawidkoR, numberOfActivities = 2)
 
         curriculumListService.save(CurriculumListDTO(name = "test001", periodId = semestLetniPeriod.id, divisionOwnerId = lo2.id, curriculums = hashSetOf(
             curriculum1aBiologia,
@@ -701,6 +777,7 @@ open class FillerResource(
             curriculum1aInformatyka,
             curriculum1aGodzWych,
             curriculum1aWychowanieFizyczne,
+
             curriculum1bPodstawyPrzedsiębiorczości,
             curriculum1bJPolski,
             curriculum1bEdukacjaDoBezpieczeństwa,
@@ -718,9 +795,81 @@ open class FillerResource(
             curriculum1bFizyka,
             curriculum1bWychowaniedoZyciaWRodzinie,
             curriculum1bBiologia,
-            curriculum1bHistoria
+            curriculum1bHistoria,
 
-            )))
+            curriculum1cBiologia,
+                curriculum1cChemia,
+                curriculum1cEdukacjaDoBezpieczeństwa,
+                curriculum1cFizyka,
+                curriculum1cGeografia,
+                curriculum1cGodzWych,
+                curriculum1cHistoria,
+                curriculum1cInformatyka,
+                curriculum1cJAngielski,
+                curriculum1cJdodatkowy,
+                curriculum1cJPolski,
+                curriculum1cMatematyka,
+                curriculum1cPodstawyPrzedsiębiorczości,
+                curriculum1cReligia,
+                curriculum1cWiedzaOKulturze,
+                curriculum1cWiedzaOSpołeczeństwie,
+                curriculum1cWychowaniedoZyciaWRodzinie,
+                curriculum1cWychowanieFizyczne,
+
+                curriculum1dBiologia,
+                curriculum1dChemia,
+                curriculum1dEdukacjaDoBezpieczeństwa,
+                curriculum1dFizyka,
+                curriculum1dGeografia,
+                curriculum1dGodzWych,
+                curriculum1dHistoria,
+                curriculum1dInformatyka,
+                curriculum1dJAngielski,
+                curriculum1dJdodatkowy,
+                curriculum1dJPolski,
+                curriculum1dMatematyka,
+                curriculum1dPodstawyPrzedsiębiorczości,
+                curriculum1dReligia,
+                curriculum1dWiedzaOKulturze,
+                curriculum1dWiedzaOSpołeczeństwie,
+                curriculum1dWychowanieFizyczne,
+
+                curriculum1eBiologia,
+                curriculum1eChemia,
+                curriculum1eEdukacjaDoBezpieczeństwa,
+                curriculum1eFizyka,
+                curriculum1eGeografia,
+                curriculum1eGodzWych,
+                curriculum1eHistoria,
+                curriculum1eInformatyka,
+                curriculum1eJAngielski,
+                curriculum1eJdodatkowy,
+                curriculum1eJPolski,
+                curriculum1eMatematyka,
+                curriculum1ePodstawyPrzedsiębiorczości,
+                curriculum1eReligia,
+                curriculum1eWiedzaOKulturze,
+                curriculum1eWiedzaOSpołeczeństwie,
+                curriculum1eWychowanieFizyczne,
+
+                curriculum1fBiologia,
+                curriculum1fChemia,
+                curriculum1fEdukacjaDoBezpieczeństwa,
+                curriculum1fFizyka,
+                curriculum1fGeografia,
+                curriculum1fGodzWych,
+                curriculum1fHistoria,
+                curriculum1fInformatyka,
+                curriculum1fJAngielski,
+                curriculum1fJdodatkowy,
+                curriculum1fJPolski,
+                curriculum1fMatematyka,
+                curriculum1fPodstawyPrzedsiębiorczości,
+                curriculum1fReligia,
+                curriculum1fWiedzaOKulturze,
+                curriculum1fWiedzaOSpołeczeństwie,
+                curriculum1fWychowanieFizyczne
+        )))
 
 
         // =====================================================
