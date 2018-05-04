@@ -78,10 +78,10 @@ open class TimetableGeneratorContainer(
 
         sortByPreferredPlace()
         timetablesFromCurriculum
-            .filter { timetable -> timetable.place == null}
+            .filter { timetable -> timetable.place == null }
             .forEach { timetableFromCurriculum ->
                 calculateTakenPlace(timetableFromCurriculum)
-                val placeId = timetableFromCurriculum.preference.preferredPlaceMap.maxBy { preferred -> preferred.value?.points?:0}?.key
+                val placeId = timetableFromCurriculum.preference.preferredPlaceMap.maxBy { preferred -> preferred.value?.points ?: 0 }?.key
                 timetableFromCurriculum.place = places.find { it.id == placeId }
             }
     }
@@ -102,39 +102,44 @@ open class TimetableGeneratorContainer(
     }
 
     private fun calculateTakenPlace(timetableFromCurriculum: Timetable) {
-        timetableFromCurriculum.preference.calculateTakenPlace( timetablesFromCurriculum.filter { it.lesson?.id == timetableFromCurriculum.lesson?.id && it.dayOfWeek == timetableFromCurriculum.dayOfWeek}.toSet())
+        timetableFromCurriculum.preference.calculateTakenPlace(timetablesFromCurriculum.filter { it.lesson?.id == timetableFromCurriculum.lesson?.id && it.dayOfWeek == timetableFromCurriculum.dayOfWeek }.toSet())
     }
 
     private fun removeWidows() {
         timetablesFromCurriculum.sortBy { it.lesson?.startTime }
-        timetablesFromCurriculum.groupBy { it.dayOfWeek }.forEach { dayOfWeek, timetable ->
-            var hasLesson = false
-            var lastLesson: Lesson? = null
-            lessons.forEach { lesson ->
-                val currentLesson = timetable.find { it.lesson == lesson }?.lesson
-                if (currentLesson == null && hasLesson) {
-                    removeLessonAndDayFromTimetables(timetable, lastLesson, dayOfWeek, lesson)
-                }
-                if (currentLesson != null) {
-                    hasLesson = true
-                    lastLesson = currentLesson
+        val timetablesByDivision = timetablesFromCurriculum.groupBy { it.division }
+        timetablesByDivision.forEach { division, timetables ->
+            timetables.groupBy { it.dayOfWeek }.forEach { dayOfWeek, divisionTimetables ->
+                var hasLesson = false
+                var lastLesson: Lesson? = null
+                lessons.forEach { lesson ->
+                    val currentLesson = divisionTimetables.find { it.lesson == lesson }?.lesson
+                    if (currentLesson == null && hasLesson) {
+                        val lessonWithWindow = lesson
+                        removeLessonAndDayFromTimetables(lastLesson, lessonWithWindow, division, dayOfWeek)
+                    }
+                    if (currentLesson != null) {
+                        hasLesson = true
+                        lastLesson = currentLesson
+                    }
                 }
             }
-
         }
     }
 
-    private fun removeLessonAndDayFromTimetables(timetables: List<Timetable>, lastLesson: Lesson?, dayOfWeek: Int?, lesson: Lesson) {
-        timetables
-            .filter { it.lesson?.startTime ?: 1L > lastLesson?.startTime ?: 1L }
-            .forEach { timetable ->
-                timetable.lesson = null
-                timetable.dayOfWeek = null
-                timetable.preference.getPreferenceByLessonAndDay(dayOfWeek, lesson.id)?.preference?.setFreeByAll()
-                timetable.preference.getPreferenceByLessonAndDay(dayOfWeek, lesson.id)?.preference?.let { it.windowHandicap += PreferenceHierarchy.HANDICAP }
-            }
+    private fun removeLessonAndDayFromTimetables(lastLesson: Lesson?, lessonWithWindow: Lesson, division: Division?, dayOfWeek: Int?) {
+        val timetablesToRemoveAndSetHandicap = timetablesFromCurriculum
+            .filter { it.lesson?.startTime ?: 1L > lastLesson?.startTime ?: 1L && it.division == division && it.dayOfWeek == dayOfWeek }
+        if (timetablesToRemoveAndSetHandicap.isNotEmpty()) {
+            log.debug("Remove windows for division: ${division?.name} in: day of week: $dayOfWeek after lesson when start ${lastLesson?.getStartTimeHHmmFormatted()}")
+            timetablesToRemoveAndSetHandicap
+                .forEach { timetable ->
+                    timetable.preference.getPreferenceByLessonAndDay(timetable.dayOfWeek, lessonWithWindow.id)?.preference?.let { it.windowHandicap += PreferenceHierarchy.HANDICAP }
+                    timetable.lesson = null
+                    timetable.dayOfWeek = null
+                }
+        }
     }
-
 
     private fun calculatePreference() {
         timetablesFromCurriculum.forEach {
