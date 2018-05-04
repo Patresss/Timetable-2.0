@@ -89,7 +89,7 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             val neutralPreferenceSubjectByTeacherToAdd =
                 subjects
                     .filter { subject -> !preferenceSubjectByTeacher.any { preference -> id == preference.teacherId && subject.id == preference.subjectId } }
-                    .map { subject -> PreferenceSubjectByTeacherDTO(teacherId = id, teacherFullName = fullName ?: "", subjectId = subject.id, subjectName = subject.name ?: "") }
+                    .map { subject -> PreferenceSubjectByTeacherDTO(teacherId = id, teacherFullName = fullName ?: "", subjectId = subject.id, subjectName = subject.name ?: "", points = -10_000) }
             preferenceSubjectByTeacher += neutralPreferenceSubjectByTeacherToAdd
             preferenceSubjectByTeacher = preferenceSubjectByTeacher.sortedBy { it.subjectName }.toSet()
         }

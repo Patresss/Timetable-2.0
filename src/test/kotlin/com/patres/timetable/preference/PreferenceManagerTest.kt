@@ -90,15 +90,15 @@ open class PreferenceManagerTest {
         val preference = preferenceManager.createPreference(fillerResource.lo2.id!!)
         preferenceManager.calculateAll(preference, preferenceDependency)
 
-        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.czuba.id))
-        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.stasik.id))
-        assertNotEquals(0, preference.preferredTeacherMap[fillerResource.czuba.id]?.preferredByDivision)
-        assertEquals(0, preference.preferredTeacherMap[fillerResource.stasik.id]?.preferredByDivision)
+        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.CzBe.id))
+        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.StBo.id))
+        assertNotEquals(0, preference.preferredTeacherMap[fillerResource.CzBe.id]?.preferredByDivision)
+        assertEquals(0, preference.preferredTeacherMap[fillerResource.StBo.id]?.preferredByDivision)
 
         assertTrue(preference.preferredSubjectMap.containsKey(fillerResource.matematyka.id))
-        assertTrue(preference.preferredSubjectMap.containsKey(fillerResource.jLaciński.id))
+        assertTrue(preference.preferredSubjectMap.containsKey(fillerResource.jLacińskiPrawniczy.id))
         assertNotEquals(0, preference.preferredSubjectMap[fillerResource.matematyka.id]?.preferredByDivision)
-        assertEquals(0, preference.preferredSubjectMap[fillerResource.jLaciński.id]?.preferredByDivision)
+        assertEquals(0, preference.preferredSubjectMap[fillerResource.jLacińskiPrawniczy.id]?.preferredByDivision)
 
         assertTrue(preference.preferredPlaceMap.containsKey(fillerResource.p22.id))
         assertTrue(preference.preferredPlaceMap.containsKey(fillerResource.p20.id))
@@ -121,15 +121,15 @@ open class PreferenceManagerTest {
         val preference = preferenceManager.createPreference(fillerResource.lo2.id!!)
         preferenceManager.calculateAll(preference, preferenceDependency)
 
-        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.czuba.id))
-        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.stasik.id))
-        assertNotEquals(0, preference.preferredTeacherMap[fillerResource.czuba.id]?.preferredByPlace)
-        assertEquals(0, preference.preferredTeacherMap[fillerResource.stasik.id]?.preferredByPlace)
+        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.CzBe.id))
+        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.StBo.id))
+        assertNotEquals(0, preference.preferredTeacherMap[fillerResource.CzBe.id]?.preferredByPlace)
+        assertEquals(0, preference.preferredTeacherMap[fillerResource.StBo.id]?.preferredByPlace)
 
         assertTrue(preference.preferredSubjectMap.containsKey(fillerResource.matematyka.id))
-        assertTrue(preference.preferredSubjectMap.containsKey(fillerResource.jLaciński.id))
+        assertTrue(preference.preferredSubjectMap.containsKey(fillerResource.jLacińskiPrawniczy.id))
         assertNotEquals(0, preference.preferredSubjectMap[fillerResource.matematyka.id]?.preferredByPlace)
-        assertEquals(0, preference.preferredSubjectMap[fillerResource.jLaciński.id]?.preferredByPlace)
+        assertEquals(0, preference.preferredSubjectMap[fillerResource.jLacińskiPrawniczy.id]?.preferredByPlace)
 
         assertTrue(preference.preferredDivisionMap.containsKey(fillerResource.class1a.id))
         assertTrue(preference.preferredDivisionMap.containsKey(fillerResource.class2a.id))
@@ -151,10 +151,10 @@ open class PreferenceManagerTest {
         val preference = preferenceManager.createPreference(fillerResource.lo2.id!!)
         preferenceManager.calculateAll(preference, preferenceDependency)
 
-        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.czuba.id))
-        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.stasik.id))
-        assertNotEquals(0, preference.preferredTeacherMap[fillerResource.czuba.id]?.preferredBySubject)
-        assertEquals(0, preference.preferredTeacherMap[fillerResource.stasik.id]?.preferredBySubject)
+        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.CzBe.id))
+        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.StBo.id))
+        assertNotEquals(0, preference.preferredTeacherMap[fillerResource.CzBe.id]?.preferredBySubject)
+        assertEquals(0, preference.preferredTeacherMap[fillerResource.StBo.id]?.preferredBySubject)
 
         assertTrue(preference.preferredPlaceMap.containsKey(fillerResource.p22.id))
         assertTrue(preference.preferredPlaceMap.containsKey(fillerResource.p10.id))
@@ -176,7 +176,7 @@ open class PreferenceManagerTest {
         entityManager.flush()
         entityManager.clear()
 
-        val preferenceDependencyDTO = PreferenceDependencyDTO(teacherId = fillerResource.czuba.id, divisionOwnerId = fillerResource.lo2.id)
+        val preferenceDependencyDTO = PreferenceDependencyDTO(teacherId = fillerResource.CzBe.id, divisionOwnerId = fillerResource.lo2.id)
         val preferenceDependency = preferenceDependencyMapper.toEntity(preferenceDependencyDTO)
         val preference = preferenceManager.createPreference(fillerResource.lo2.id!!)
         preferenceManager.calculateAll(preference, preferenceDependency)
@@ -238,10 +238,10 @@ open class PreferenceManagerTest {
         assertNotEquals(0, preference.preferredDivisionMap[fillerResource.class1a.id]?.taken)
         assertEquals(0, preference.preferredDivisionMap[fillerResource.class1b.id]?.taken)
 
-        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.stasik.id))
-        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.czuba.id))
-        assertNotEquals(0, preference.preferredTeacherMap[fillerResource.czuba.id]?.taken)
-        assertEquals(0, preference.preferredTeacherMap[fillerResource.stasik.id]?.taken)
+        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.StBo.id))
+        assertTrue(preference.preferredTeacherMap.containsKey(fillerResource.CzBe.id))
+        assertNotEquals(0, preference.preferredTeacherMap[fillerResource.CzBe.id]?.taken)
+        assertEquals(0, preference.preferredTeacherMap[fillerResource.StBo.id]?.taken)
 
         assertTrue(preference.preferredPlaceMap.containsKey(fillerResource.p10.id))
         assertTrue(preference.preferredPlaceMap.containsKey(fillerResource.p22.id))
@@ -258,7 +258,7 @@ open class PreferenceManagerTest {
         entityManager.flush()
         entityManager.clear()
 
-        val preferenceDependencyDTO = PreferenceDependencyDTO(divisionOwnerId = fillerResource.lo2.id, teacherId = fillerResource.czuba.id)
+        val preferenceDependencyDTO = PreferenceDependencyDTO(divisionOwnerId = fillerResource.lo2.id, teacherId = fillerResource.CzBe.id)
         val preferenceDependency = preferenceDependencyMapper.toEntity(preferenceDependencyDTO)
         val preference = preferenceManager.createPreference(fillerResource.lo2.id!!)
         preferenceManager.calculateAll(preference, preferenceDependency)
@@ -284,7 +284,7 @@ open class PreferenceManagerTest {
         val preference = preferenceManager.createPreference(fillerResource.lo2.id!!)
         preferenceManager.calculateAll(preference, preferenceDependency)
 
-        assertEquals(10, preference.preferredTeacherMap[fillerResource.czuba.id]?.preferredByDataTime)
+        assertEquals(10, preference.preferredTeacherMap[fillerResource.CzBe.id]?.preferredByDataTime)
     }
 
 
