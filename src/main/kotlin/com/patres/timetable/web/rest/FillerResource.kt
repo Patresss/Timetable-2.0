@@ -2433,6 +2433,42 @@ open class FillerResource(
         }
         class1bGenerate = divisionService.save(class1bGenerate)
 
+        class1cGenerate.apply {
+            preferencesSubjectByDivision = hashSetOf(
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLaciński.id, points = -10_000)
+            )
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+
+        }
+        class1cGenerate = divisionService.save(class1cGenerate)
+
+        class1dGenerate.apply {
+            preferencesSubjectByDivision = hashSetOf(
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLaciński.id, points = -10_000)
+            )
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+
+        }
+        class1dGenerate = divisionService.save(class1dGenerate)
+
+        class1eGenerate.apply {
+            preferencesSubjectByDivision = hashSetOf(
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLaciński.id, points = -10_000)
+            )
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+
+        }
+        class1eGenerate = divisionService.save(class1eGenerate)
+
+        class1fGenerate.apply {
+            preferencesSubjectByDivision = hashSetOf(
+                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLaciński.id, points = -10_000)
+            )
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+
+        }
+        class1fGenerate = divisionService.save(class1fGenerate)
+
     }
 
     private fun DivisionDTO.calculateTypicalPreferenceForTime(): HashSet<PreferenceDataTimeForDivisionDTO> {
