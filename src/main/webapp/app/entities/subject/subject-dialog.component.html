@@ -29,15 +29,19 @@
                 <input type="text" class="form-control" name="shortName" id="field_shortName"
                        [(ngModel)]="subject.shortName"/>
             </div>
+
             <div class="form-group">
+                <div class="pure-checkbox">
+                    <input type="checkbox"  class="form-control" name="customColor" id="field_customColor" [(ngModel)]="customColor"/>
+                    <label class="form-control-label" jhiTranslate="global.customColor" for="field_customColor">customColor</label>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="customColor">
                 <label class="form-control-label" jhiTranslate="timetableApp.subject.colorBackground" for="field_colorBackground">Color Background</label>
                 <input type="text" class="form-control" name="colorBackground" id="field_colorBackground"
-                       [(ngModel)]="subject.colorBackground"/>
-            </div>
-            <div class="form-group">
-                <label class="form-control-label" jhiTranslate="timetableApp.subject.colorText" for="field_colorText">Color Text</label>
-                <input type="text" class="form-control" name="colorText" id="field_colorText"
-                       [(ngModel)]="subject.colorText"/>
+                       [value]="subject.colorBackground" [(colorPicker)]="subject.colorBackground" [style.background]="subject.colorBackground" [cpOutputFormat]="'rgba'"
+                       [cpAlphaChannel]="'disabled'" (colorPickerChange)="subject.colorBackground = $event" readonly/>
             </div>
 
             <div class="form-group">

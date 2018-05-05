@@ -29,6 +29,8 @@ export class SubjectDialogComponent implements OnInit {
 
     places: Place[];
 
+    customColor = false;
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
@@ -42,6 +44,10 @@ export class SubjectDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
+        if (this.subject.colorBackground) {
+            this.customColor = true;
+        }
+
         this.divisionService.query()
             .subscribe((res: ResponseWrapper) => { this.divisions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.teacherService.findByCurrentLogin()
@@ -56,6 +62,10 @@ export class SubjectDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+
+        if (!this.customColor) {
+            this.subject.colorBackground = null;
+        }
         if (this.subject.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.subjectService.update(this.subject));
@@ -82,6 +92,10 @@ export class SubjectDialogComponent implements OnInit {
 
     private onError(error: any) {
         this.alertService.error(error.message, null, null);
+    }
+
+    changeColor(item: any) {
+        console.log(item)
     }
 
     trackDivisionById(index: number, item: Division) {

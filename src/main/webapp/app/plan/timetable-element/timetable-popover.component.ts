@@ -28,6 +28,8 @@ export class TimetableElementComponent implements OnInit {
 
     lastPopoverRef: any;
 
+    opacity = 0.6;
+
     constructor(private eventManager: JhiEventManager,
                 private principal: Principal) {
     }
@@ -84,5 +86,16 @@ export class TimetableElementComponent implements OnInit {
         } else {
             return false;
         }
+    }
+
+
+    getColorStyle() {
+        if (this.timetable && this.timetable.colorBackgroundForSubject) {
+            const color = this.timetable.colorBackgroundForSubject.slice(0, -1) + ', ' + this.opacity + ')';
+            return {'background': color};
+        } else {
+            return {}
+        }
+
     }
 }

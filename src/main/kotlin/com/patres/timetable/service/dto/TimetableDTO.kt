@@ -33,6 +33,14 @@ class TimetableDTO(
 
     var colorBackground: String? = null,
 
+    var colorBackgroundForTeacher: String? = null,
+
+    var colorBackgroundForDivision: String? = null,
+
+    var colorBackgroundForSubject: String? = null,
+
+    var colorBackgroundForPlace: String? = null,
+
     var colorText: String? = null,
 
     var dayOfWeek: Int? = null,

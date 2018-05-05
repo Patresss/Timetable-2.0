@@ -9,15 +9,13 @@ import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherD
 import com.patres.timetable.service.dto.preference.PreferenceSubjectByTeacherDTO
 import com.patres.timetable.service.mapper.preference.PreferenceDataTimeForTeacherMapper
 import com.patres.timetable.service.mapper.preference.PreferenceSubjectByTeacherMapper
+import com.patres.timetable.util.EntityUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.DayOfWeek
 
 @Service
 open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
-
-    @Autowired
-    private lateinit var subjectMapper: SubjectMapper
 
     @Autowired
     private lateinit var preferenceDataTimeForTeacherMapper: PreferenceDataTimeForTeacherMapper
@@ -48,6 +46,10 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             shortName = entityDto.shortName
             preferenceSubjectByTeacher = preferenceSubjectByTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceSubjectByTeacher)
             preferenceDataTimeForTeachers = preferenceDataTimeForTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceDataTimeForTeachers)
+
+            if (colorBackground.isNullOrBlank()) {
+                colorBackground = EntityUtil.calculateRandomColor()
+            }
         }
     }
 

@@ -28,6 +28,12 @@ class Teacher(
     @Column(name = "short_name")
     var shortName: String? = null,
 
+    @Column(name = "color_background")
+    var colorBackground: String? = null,
+
+    @Column(name = "color_text")
+    var colorText: String? = null,
+
     @OneToMany(mappedBy = "teacher")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

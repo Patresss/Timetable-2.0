@@ -1,7 +1,7 @@
 <ng-template #popContent>
     <div class="blur-background"></div>
     <div class="glass-content">
-        <div class='popover-title'>
+        <div class='popover-title' [ngStyle]="getColorStyle()">
             <label jhiTranslate="timetableApp.EventType.{{timetable.type}}">{{timetable.type}}</label>
             <button *ngIf="canModifyTimetable()" [routerLink]="['/', { outlets: { popup: 'timetable/'+ timetable.id + '/delete'} }]" replaceUrl="true">
                 <span class="fa fa-trash"></span>
@@ -49,6 +49,6 @@
 </ng-template>
 
 
-<a class="event" [ngbPopover]="popContent" #popoverRef="ngbPopover" (click)="setCurrentPopoverOpen(popoverRef)">
+<a class="event" [ngStyle]="getColorStyle()" [ngbPopover]="popContent" #popoverRef="ngbPopover" (click)="setCurrentPopoverOpen(popoverRef)">
     {{timetable.subjectShortName}} ({{timetable.placeShortName ? timetable.placeShortName : timetable.placeName}})
 </a>

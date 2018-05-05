@@ -84,9 +84,13 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             everyWeek = entity.everyWeek,
             startWithWeek = entity.startWithWeek,
             description = entity.description,
-            colorBackground = entity.colorBackground,
+            colorBackground = entity.subject?.colorBackground,
             colorText = entity.colorText,
-            dayOfWeek = entity.dayOfWeek
+            dayOfWeek = entity.dayOfWeek,
+            colorBackgroundForDivision = entity.division?.colorBackground,
+            colorBackgroundForSubject = entity.subject?.colorBackground,
+            colorBackgroundForPlace = entity.place?.colorBackground,
+            colorBackgroundForTeacher = entity.teacher?.colorBackground
         ).apply {
             id = entity.id
             if (entity.lesson != null) {

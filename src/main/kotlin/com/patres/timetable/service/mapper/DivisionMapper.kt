@@ -11,6 +11,7 @@ import com.patres.timetable.service.dto.preference.PreferenceTeacherByDivisionDT
 import com.patres.timetable.service.mapper.preference.PreferenceDataTimeForDivisionMapper
 import com.patres.timetable.service.mapper.preference.PreferenceSubjectByDivisionMapper
 import com.patres.timetable.service.mapper.preference.PreferenceTeacherByDivisionMapper
+import com.patres.timetable.util.EntityUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.DayOfWeek
@@ -63,6 +64,10 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 val parent = parents.elementAtOrNull(0) //TODO validate if all parents has the same owner
                 divisionOwner = parent?.divisionOwner ?: parent
                 preferencesDataTimeForDivision = preferenceDataTimeForDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForDivision)
+
+                if (colorBackground.isNullOrBlank()) {
+                    colorBackground = EntityUtil.calculateRandomColor()
+                }
 
             }
     }

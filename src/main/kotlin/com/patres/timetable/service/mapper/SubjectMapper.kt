@@ -1,13 +1,12 @@
 package com.patres.timetable.service.mapper
 
-import com.patres.timetable.domain.Place
 import com.patres.timetable.domain.Subject
 import com.patres.timetable.repository.DivisionRepository
 import com.patres.timetable.repository.LessonRepository
-import com.patres.timetable.service.dto.PlaceDTO
 import com.patres.timetable.service.dto.SubjectDTO
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForSubjectDTO
 import com.patres.timetable.service.mapper.preference.PreferenceDataTimeForSubjectMapper
+import com.patres.timetable.util.EntityUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.DayOfWeek
@@ -38,6 +37,10 @@ open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
             colorBackground = entityDto.colorBackground
             colorText = entityDto.colorText
             preferencesDataTimeForSubject = preferenceDataTimeForSubjectMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForSubject)
+
+            if (colorBackground.isNullOrBlank()) {
+                colorBackground = EntityUtil.calculateRandomColor()
+            }
         }
     }
 
@@ -53,6 +56,7 @@ open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
             colorText = entity.colorText
             preferencesDataTimeForSubject = preferenceDataTimeForSubjectMapper.entitySetToEntityDTOSet(entity.preferencesDataTimeForSubject)
             addNeutralPreferencesDataTime()
+
         }
     }
 

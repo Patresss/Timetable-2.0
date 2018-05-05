@@ -14,6 +14,7 @@ import com.patres.timetable.service.mapper.preference.PreferenceDataTimeForPlace
 import com.patres.timetable.service.mapper.preference.PreferenceDivisionByPlaceMapper
 import com.patres.timetable.service.mapper.preference.PreferenceSubjectByPlaceMapper
 import com.patres.timetable.service.mapper.preference.PreferenceTeacherByPlaceMapper
+import com.patres.timetable.util.EntityUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.DayOfWeek
@@ -63,6 +64,10 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
                 preferenceSubjectByPlace = preferenceSubjectByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceSubjectByPlace)
                 preferenceDivisionByPlace = preferenceDivisionByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceDivisionByPlace)
                 preferencesDataTimeForPlace = preferenceDataTimeForPlaceMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForPlace)
+
+                if (colorBackground.isNullOrBlank()) {
+                    colorBackground = EntityUtil.calculateRandomColor()
+                }
             }
     }
 

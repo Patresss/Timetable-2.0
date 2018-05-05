@@ -158,5 +158,6 @@
         "idexists": "A new {{ entityName }} cannot already have an ID",
         "accessDenied": "Access denied"
     },
-    "footer": "This is your footer"
+    "footer": "This is your footer",
+    "customColor": "Custom color"
 }
