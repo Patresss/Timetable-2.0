@@ -1,6 +1,7 @@
 package com.patres.timetable.preference
 
 import com.patres.timetable.domain.*
+import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.domain.preference.PreferenceDataTimeForDivision
 import com.patres.timetable.domain.preference.PreferenceDataTimeForPlace
 import com.patres.timetable.domain.preference.PreferenceDataTimeForSubject
@@ -34,7 +35,7 @@ class Preference(
         timetable.teacher?.let { calculateByTeacher(it) }
         timetable.subject?.let { calculateBySubject(it) }
         timetable.place?.let { calculateByPlace(it) }
-        timetable.division?.let {calculateByDivision(it) }
+        timetable.division?.let { calculateByDivision(it) }
         timetable.division?.let { calculateTooSmallPlace(tooSmallPlaceId) }
     }
 
@@ -58,8 +59,16 @@ class Preference(
         val takenTeachersId = takenTimetable.mapNotNull { it.teacher?.id }.toSet()
         takenTeachersId.forEach { preferredTeacherMap[it]?.taken = PreferenceHierarchy.TAKEN }
 
-        val takenDivisionsId = takenTimetable.mapNotNull { it.division?.id }.toSet()
-        takenDivisionsId.forEach { preferredDivisionMap[it]?.taken = PreferenceHierarchy.TAKEN }
+        val takenDivisions = takenTimetable.mapNotNull { it.division }.toSet()
+        takenDivisions.forEach {
+            preferredDivisionMap[it.id]?.taken = PreferenceHierarchy.TAKEN
+            it.parents.filter { it.divisionType == DivisionType.CLASS }.forEach {
+                preferredDivisionMap[it.id]?.taken = PreferenceHierarchy.TAKEN
+            }
+            it.children.filter { it.divisionType == DivisionType.SUBGROUP }.forEach {
+                preferredDivisionMap[it.id]?.taken = PreferenceHierarchy.TAKEN
+            }
+        }
     }
 
     fun calculateTakenPlace(takenTimetable: Set<Timetable>) {
@@ -83,7 +92,7 @@ class Preference(
             val isTaken = takenTimetable.any { timetable -> timetable.dayOfWeek == preferredLessonAndDayOfWeek.dayOfWeek && timetable.lesson?.id == preferredLessonAndDayOfWeek.lessonId && timetable.place?.id == place.id }
             if (isTaken) {
                 preferredLessonAndDayOfWeek.preference.takenByPlace = PreferenceHierarchy.TAKEN
-            }  else {
+            } else {
                 preferredLessonAndDayOfWeek.preference.takenByPlace = 0
             }
         }
@@ -91,7 +100,11 @@ class Preference(
 
     fun calculateTakenLessonAndDayOfWeekByDivision(division: Division, takenTimetable: Set<Timetable>) {
         preferredLessonAndDayOfWeekSet.forEach { preferredLessonAndDayOfWeek ->
-            val isTaken = takenTimetable.any { timetable -> timetable.dayOfWeek == preferredLessonAndDayOfWeek.dayOfWeek && timetable.lesson?.id == preferredLessonAndDayOfWeek.lessonId && timetable.division?.id == division.id }
+            val isTaken = takenTimetable.any { timetable ->
+                    timetable.dayOfWeek == preferredLessonAndDayOfWeek.dayOfWeek &&
+                    timetable.lesson?.id == preferredLessonAndDayOfWeek.lessonId &&
+                    (timetable.division?.id == division.id || division.parents.any { it.id == timetable.division?.id } || division.children.any { it.id == timetable.division?.id })
+            }
             if (isTaken) {
                 preferredLessonAndDayOfWeek.preference.takenByDivision = PreferenceHierarchy.TAKEN
             } else {
@@ -101,31 +114,31 @@ class Preference(
     }
 
     fun calculateByTeacher(teacher: Teacher) {
-        calculateSubjectsByTeacher( teacher)
-        calculateDivisionsByTeacher( teacher)
-        calculatePlacesByTeacher( teacher)
-        calculateLessonAndDayOfWeekByTeacher( teacher)
+        calculateSubjectsByTeacher(teacher)
+        calculateDivisionsByTeacher(teacher)
+        calculatePlacesByTeacher(teacher)
+        calculateLessonAndDayOfWeekByTeacher(teacher)
     }
 
     fun calculateByPlace(place: Place) {
-        calculateTeachersByPlace( place)
-        calculateDivisionsByPlace( place)
-        calculateSubjectsByPlace( place)
-        calculateLessonAndDayOfWeekByPlace( place)
+        calculateTeachersByPlace(place)
+        calculateDivisionsByPlace(place)
+        calculateSubjectsByPlace(place)
+        calculateLessonAndDayOfWeekByPlace(place)
     }
 
     fun calculateByDivision(division: Division) {
-        calculateTeachersByDivision( division)
-        calculatePlacesByDivision( division)
-        calculateSubjectsByDivision( division)
-        calculateLessonAndDayOfWeekByDivision( division)
+        calculateTeachersByDivision(division)
+        calculatePlacesByDivision(division)
+        calculateSubjectsByDivision(division)
+        calculateLessonAndDayOfWeekByDivision(division)
     }
 
     fun calculateBySubject(subject: Subject) {
-        calculateTeachersBySubject( subject)
-        calculateDivisionsBySubject( subject)
-        calculatePlacesBySubject( subject)
-        calculateLessonAndDayOfWeekBySubject( subject)
+        calculateTeachersBySubject(subject)
+        calculateDivisionsBySubject(subject)
+        calculatePlacesBySubject(subject)
+        calculateLessonAndDayOfWeekBySubject(subject)
     }
 
     fun calculateTooSmallPlace(idOfTooSmallPlaces: Set<Long>) {
@@ -363,8 +376,6 @@ class Preference(
             }
         }
     }
-
-
 
 
 }

@@ -89,6 +89,10 @@ open class FillerResource(
     var div1bG2 = DivisionDTO()
     var div1Gr1bDz1 = DivisionDTO()
 
+    var div1aWychowanieFizyczne = DivisionDTO()
+    var div1aGirlWychowanieFizyczne = DivisionDTO()
+    var div1aBoyWychowanieFizyczne = DivisionDTO()
+
     var historia = SubjectDTO()
     var wiedzaOSpołeczeństwie = SubjectDTO()
     var wiedzaOKulturze = SubjectDTO()
@@ -506,6 +510,11 @@ open class FillerResource(
         class3eGenerate = createDivision(name = "3 E generate", shortName = "3 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
         class3fGenerate = createDivision(name = "3 F generate", shortName = "3 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
 
+
+        div1aWychowanieFizyczne = createDivision(name = "div1aWychowanieFizyczne", shortName = "div1aWychowanieFizyczne", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, parents = hashSetOf(class1aGenerate))
+        div1aGirlWychowanieFizyczne = createDivision(name = "div1aGirlWychowanieFizyczne", shortName = "div1aGirlWychowanieFizyczne", divisionType = DivisionType.SUBGROUP, numberOfPeople = 15, parents = hashSetOf(div1aWychowanieFizyczne, class1aGenerate))
+        div1aBoyWychowanieFizyczne = createDivision(name = "div1aBoyWychowanieFizyczne", shortName = "div1aBoyWychowanieFizyczne", divisionType = DivisionType.SUBGROUP, numberOfPeople = 15, parents = hashSetOf(div1aWychowanieFizyczne, class1aGenerate))
+
         // =====================================================
         // Place
         // =====================================================
@@ -675,12 +684,16 @@ open class FillerResource(
         val curriculum1aFizyka = createCurriculum(division = class1aGenerate, subject = fizyka, teacher = SzIr, numberOfActivities = 2)
         val curriculum1aMatematyka = createCurriculum(division = class1aGenerate, subject = matematyka, teacher = MiJo, numberOfActivities = 4)
         val curriculum1aInformatyka = createCurriculum(division = class1aGenerate, subject = informatyka, teacher = DzMa, numberOfActivities = 1)
-        val curriculum1aGrDzWychowanieFizyczne = createCurriculum(division = class1aGenerate, subject = wychowanieFizyczne, teacher = WiWo, numberOfActivities = 3)
-        val curriculum1aGrChWychowanieFizyczne = createCurriculum(division = class1aGenerate, subject = wychowanieFizyczne, teacher = RaMa, numberOfActivities = 3)
+
+        val curriculum1aGrDzWychowanieFizyczne = createCurriculum(division = div1aGirlWychowanieFizyczne, subject = wychowanieFizyczne, teacher = WiWo, numberOfActivities = 3)
+        val curriculum1aGrChWychowanieFizyczne = createCurriculum(division = div1aBoyWychowanieFizyczne, subject = wychowanieFizyczne, teacher = RaMa, numberOfActivities = 3)
+
         val curriculum1aEdukacjaDoBezpieczeństwa = createCurriculum(division = class1aGenerate, subject = edukacjaDoBezpieczeństwa, teacher = BlSł, numberOfActivities = 1)
         val curriculum1aGodzWych = createCurriculum(division = class1aGenerate, subject = godzWych, teacher = DzMa, numberOfActivities = 1)
         val curriculum1aWychowaniedoZyciaWRodzinie = createCurriculum(division = class1aGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = SoRy, numberOfActivities = 1)
         val curriculum1aReligia = createCurriculum(division = class1aGenerate, subject = religia, teacher = PiTa, numberOfActivities = 2)
+
+
 
         val curriculum1bJPolski = createCurriculum(division = class1bGenerate, subject = jPolski, teacher = GrRe, numberOfActivities = 3)
         val curriculum1b1grJAngielski = createCurriculum(division = class1bGenerate, subject = jAngielski, teacher = KoIr, numberOfActivities = 3)
@@ -1002,7 +1015,7 @@ open class FillerResource(
             curriculum1aMatematyka,
             curriculum1aInformatyka,
             curriculum1aGrDzWychowanieFizyczne,
-//            curriculum1aGrChWychowanieFizyczne,
+            curriculum1aGrChWychowanieFizyczne,
             curriculum1aEdukacjaDoBezpieczeństwa,
             curriculum1aGodzWych,
             curriculum1aWychowaniedoZyciaWRodzinie,
@@ -2051,6 +2064,17 @@ open class FillerResource(
 
         }
         class1fGenerate = divisionService.save(class1fGenerate)
+
+        div1aBoyWychowanieFizyczne.apply {
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+        }
+        div1aBoyWychowanieFizyczne = divisionService.save(div1aBoyWychowanieFizyczne)
+
+        div1aGirlWychowanieFizyczne.apply {
+            preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+        }
+        div1aGirlWychowanieFizyczne = divisionService.save(div1aGirlWychowanieFizyczne)
+
 
         class2aGenerate.apply {
             preferencesSubjectByDivision = hashSetOf(

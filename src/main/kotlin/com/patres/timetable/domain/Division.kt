@@ -73,8 +73,12 @@ class Division(
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "division_parent", joinColumns = [(JoinColumn(name = "divisions_id", referencedColumnName = "id"))], inverseJoinColumns = arrayOf(JoinColumn(name = "parents_id", referencedColumnName = "id")))
+    @JoinTable(name = "division_parent", joinColumns = [(JoinColumn(name = "divisions_id", referencedColumnName = "id"))], inverseJoinColumns = [(JoinColumn(name = "parents_id", referencedColumnName = "id"))])
     var parents: Set<Division> = HashSet(),
+
+    @ManyToMany
+    @JoinTable(name = "division_parent", joinColumns = [(JoinColumn(name = "parents_id", referencedColumnName = "id"))], inverseJoinColumns = [(JoinColumn(name = "divisions_id", referencedColumnName = "id"))])
+    var children: Set<Division> = HashSet(),
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

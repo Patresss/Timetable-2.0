@@ -31,7 +31,7 @@ interface TimetableRepository : DivisionOwnerRepository<Timetable>, TimetableCus
             timetable.divisionOwner.id = :divisionOwnerId AND
             period.id = :periodId AND (
                 timetable.teacher.id = :teacherId OR
-                timetable.division.id = :divisionId OR
+                timetable.division.id IN (:divisionsId) OR
                 timetable.place.id = :placeId OR
                 timetable.subject.id = :subjectId)
                 """)
@@ -39,7 +39,7 @@ interface TimetableRepository : DivisionOwnerRepository<Timetable>, TimetableCus
         @Param("divisionOwnerId") divisionOwnerId: Long?,
         @Param("periodId") periodId: Long?,
         @Param("teacherId") teacherId: Long?,
-        @Param("divisionId") divisionId: Long?,
+        @Param("divisionsId") divisionId: Set<Long>,
         @Param("placeId") placeId: Long?,
         @Param("subjectId") subjectId: Long?
     ): Set<Timetable>
