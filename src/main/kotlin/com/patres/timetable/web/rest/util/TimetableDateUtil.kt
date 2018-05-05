@@ -35,7 +35,7 @@ object TimetableDateUtil {
         return if (preferenceDependency.date != null) {
             preferenceDependency.date == date
         } else {
-            date.dayOfWeek.value == preferenceDependency.dayOfWeek
+            preferenceDependency.dayOfWeek == null || date.dayOfWeek.value == preferenceDependency.dayOfWeek
         }
     }
 
