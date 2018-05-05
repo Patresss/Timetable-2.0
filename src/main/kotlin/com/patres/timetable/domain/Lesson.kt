@@ -57,4 +57,9 @@ class Lesson(
     fun setEndTimeHHmmFormatted(time: String) {
         endTime = getSecondsFromString(time)
     }
+
+    override fun toString(): String {
+        return "Lesson(name=$name, startTime=${getStartTimeHHmmFormatted()}, endTime=${getEndTimeHHmmFormatted()})"
+    }
+
 }
