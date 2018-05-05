@@ -3,7 +3,6 @@ package com.patres.timetable.generator
 import com.patres.timetable.domain.Division
 import com.patres.timetable.domain.Place
 import com.patres.timetable.domain.Timetable
-import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 
 class TimetableGeneratorPreferenceManager(private var container: TimetableGeneratorContainer) {
 
@@ -40,8 +39,6 @@ class TimetableGeneratorPreferenceManager(private var container: TimetableGenera
         timetableFromCurriculum.preference.calculateTakenPlace(container.timetablesFromCurriculum.filter { it.lesson?.id == timetableFromCurriculum.lesson?.id && it.dayOfWeek == timetableFromCurriculum.dayOfWeek }.toSet())
     }
 
-
-    private fun isValidPointsAfterChangeLessonAndDay(timetableWithCollision: Timetable, timetableToTest: Timetable) = timetableWithCollision.preference.getPreferencePointsByLessonAndDay(timetableWithCollision) ?: 0 >= PreferenceHierarchy.CAN_BE_USED && timetableToTest.preference.getPreferencePointsByLessonAndDay(timetableToTest) ?: 0 >= PreferenceHierarchy.CAN_BE_USED
 
     fun calculatePreference() {
         container.timetablesFromCurriculum.forEach {
