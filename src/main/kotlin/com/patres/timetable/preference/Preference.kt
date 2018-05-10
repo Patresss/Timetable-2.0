@@ -1,7 +1,6 @@
 package com.patres.timetable.preference
 
 import com.patres.timetable.domain.*
-import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.domain.preference.PreferenceDataTimeForDivision
 import com.patres.timetable.domain.preference.PreferenceDataTimeForPlace
 import com.patres.timetable.domain.preference.PreferenceDataTimeForSubject
@@ -59,17 +58,16 @@ class Preference(
         val takenTeachersId = takenTimetable.mapNotNull { it.teacher?.id }.toSet()
         takenTeachersId.forEach { preferredTeacherMap[it]?.taken = PreferenceHierarchy.TAKEN }
 
+
         val takenDivisions = takenTimetable.mapNotNull { it.division }.toSet()
-        takenDivisions.forEach {
-            preferredDivisionMap[it.id]?.taken = PreferenceHierarchy.TAKEN
-            it.parents.filter { it.divisionType == DivisionType.CLASS }.forEach {
-                preferredDivisionMap[it.id]?.taken = PreferenceHierarchy.TAKEN
-            }
-            it.children.filter { it.divisionType == DivisionType.SUBGROUP }.forEach {
-                preferredDivisionMap[it.id]?.taken = PreferenceHierarchy.TAKEN
-            }
+        takenDivisions.forEach { division ->
+            val divisions = division.getAllTakenDivisionFromDivision()
+            divisions.forEach { preferredDivisionMap[it.id]?.taken = PreferenceHierarchy.TAKEN }
         }
     }
+
+    // for example get subgorups
+
 
     fun calculateTakenPlace(takenTimetable: Set<Timetable>) {
         val takenPlacesId = takenTimetable.mapNotNull { it.place?.id }.toSet()
@@ -99,11 +97,12 @@ class Preference(
     }
 
     fun calculateTakenLessonAndDayOfWeekByDivision(division: Division, takenTimetable: Set<Timetable>) {
+        val allTakenDivisionFromDivision = division.getAllTakenDivisionFromDivision()
         preferredLessonAndDayOfWeekSet.forEach { preferredLessonAndDayOfWeek ->
             val isTaken = takenTimetable.any { timetable ->
-                    timetable.dayOfWeek == preferredLessonAndDayOfWeek.dayOfWeek &&
+                timetable.dayOfWeek == preferredLessonAndDayOfWeek.dayOfWeek &&
                     timetable.lesson?.id == preferredLessonAndDayOfWeek.lessonId &&
-                    (timetable.division?.id == division.id || division.parents.any { it.id == timetable.division?.id } || division.children.any { it.id == timetable.division?.id })
+                    allTakenDivisionFromDivision.contains(timetable.division)
             }
             if (isTaken) {
                 preferredLessonAndDayOfWeek.preference.takenByDivision = PreferenceHierarchy.TAKEN

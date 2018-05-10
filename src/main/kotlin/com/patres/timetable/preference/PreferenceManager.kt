@@ -85,7 +85,7 @@ open class PreferenceManager(
     private fun getTakenTimetableForLessonAndDayOfWeekFromDatabase(preferenceDependency: PreferenceDependency): Set<Timetable> {
         preferenceDependency.period?.id?.let { periodId ->
             val dates = TimetableDateUtil.getAllDatesByPreferenceDependency(preferenceDependency)
-            val divisions = getDivisionWithSubgroupAndClass(preferenceDependency.division)
+            val divisions = preferenceDependency.division?.getAllTakenDivisionFromDivision()?.mapNotNull { it.id }?.toSet()?: emptySet()
 
             var timetablesInThisTime = timetableRepository.findTakenByPeriod(preferenceDependency.divisionOwnerId, periodId, preferenceDependency.teacher?.id, divisions, preferenceDependency.place?.id, preferenceDependency.subject?.id)
             if (preferenceDependency.notTimetableId != null) {
@@ -94,16 +94,6 @@ open class PreferenceManager(
             return timetablesInThisTime.filter { it.period == null || TimetableDateUtil.canAddByEveryDays(dates, it.period?.getFirstDay(), it.startWithWeek, it.everyWeek) }.toSet()
         }
         return emptySet()
-    }
-
-    private fun getDivisionWithSubgroupAndClass(division: Division?): Set<Long> {
-        val divisionsId = HashSet<Long>()
-        division?.let {
-            division.id?.let { divisionsId.add(it) }
-            divisionsId.addAll(division.parents.filter { it.divisionType == DivisionType.CLASS }.mapNotNull { it.id })
-            divisionsId.addAll(division.children.filter { it.divisionType == DivisionType.SUBGROUP }.mapNotNull { it.id })
-        }
-        return divisionsId
     }
 
     private fun getPreferenceDataTimeForTeacherFromDatabase(dayOfWeek: Int, lessonId: Long): Set<PreferenceDataTimeForTeacher> {

@@ -2,7 +2,10 @@ package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.patres.timetable.domain.enumeration.DivisionType
-import com.patres.timetable.domain.preference.*
+import com.patres.timetable.domain.preference.PreferenceDataTimeForDivision
+import com.patres.timetable.domain.preference.PreferenceDivisionByPlace
+import com.patres.timetable.domain.preference.PreferenceSubjectByDivision
+import com.patres.timetable.domain.preference.PreferenceTeacherByDivision
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -105,6 +108,28 @@ class Division(
     divisionOwner: Division? = null
 
 ) : AbstractDivisionOwner(divisionOwner), Serializable {
+
+    fun getContainersWithSetOfSubgroup(): Set<Division> {
+        return parents.filter { it.divisionType == DivisionType.SET_OF_SUBGROUPS }.toSet()
+    }
+
+    fun getAllTakenDivisionFromDivision(): Set<Division> {
+        val takenDivisions = HashSet<Division>()
+            val setOfGroups = getContainersWithSetOfSubgroup()
+            takenDivisions.add(this)
+            parents
+                .filter { parent -> parent.divisionType == DivisionType.CLASS }
+                .forEach { parent ->
+                    takenDivisions.add(parent)
+                    parent.children
+                        .filter { it.divisionType == DivisionType.SUBGROUP && it.parents.intersect(setOfGroups).isEmpty() }
+                        .forEach { child -> takenDivisions.add(child) }
+                }
+            children
+                .filter { child -> child.divisionType == DivisionType.SUBGROUP }
+                .forEach { child -> takenDivisions.add(child) }
+        return takenDivisions
+    }
 
     override fun toString(): String {
         return "Division{" +
