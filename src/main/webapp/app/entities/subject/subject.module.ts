@@ -26,7 +26,7 @@ const ENTITY_STATES = [
     imports: [
         TimetableSharedModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
-        ColorPickerModule //how to put it global
+        ColorPickerModule // how to put it global
     ],
     declarations: [
         SubjectComponent,

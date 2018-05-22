@@ -12,8 +12,8 @@ import {TeacherService} from '../entities/teacher';
 import {PlaceService} from '../entities/place';
 import {SelectType} from '../util/select-type.model';
 import {Time} from '../util/time.model';
-import {RoleType} from '../util/role-type.model';
 import {SelectUtil} from '../util/select-util.model';
+import {ColorType} from './color-type.';
 
 @Component({
     selector: 'jhi-board',
@@ -99,6 +99,8 @@ export class PlanComponent implements OnInit, OnDestroy {
     firstColumnWidth = 5.0;
     columnWidth = (100.0 - this.firstColumnWidth) / this.numberOfColumns;
     planColumns: PlanColumn[] = [];
+    colorType = ColorType.SUBJECT;
+    ColorType = ColorType;
 
     constructor(private parseLinks: JhiParseLinks,
                 private alertService: JhiAlertService,

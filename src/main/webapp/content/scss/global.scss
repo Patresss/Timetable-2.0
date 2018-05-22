@@ -273,6 +273,12 @@ ui bootstrap tweaks
 // Plan
 // ================================================================
 
+.color-type {
+    width: 50%;
+    justify-content: center !important;
+}
+
+
 .plan-row-choose {
     margin-bottom: 25px;
 }
@@ -877,8 +883,34 @@ button.app-primary-button:hover {
 }
 
 button.app-primary-button:focus {
-    box-shadow: 0 0 0 2px $accent-color;
+    box-shadow: 0 0 0 1px $accent-color;
 }
+
+.app-text-button:focus {
+    box-shadow: 0 0 0 2px $accent-5-color-background;
+}
+
+.app-text-button:active {
+    box-shadow: 0 0 0 2px $accent-5-color-background;
+}
+
+.app-text-button {
+    background: transparent;
+    border: none;
+    color: $light-text-color;
+}
+
+.app-text-button.active {
+    background: $accent-5-color-background;
+}
+
+.app-text-button:hover {
+    background: $accent-4-color-background;
+    border: none;
+    cursor: pointer;
+}
+
+
 
 
 // ================================================================

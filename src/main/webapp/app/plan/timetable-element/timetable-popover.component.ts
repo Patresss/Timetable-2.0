@@ -4,6 +4,7 @@ import {JhiEventManager} from 'ng-jhipster';
 import {Subscription} from 'rxjs/Subscription';
 import {RoleType} from '../../util/role-type.model';
 import {Account, Principal} from '../../shared';
+import {ColorType} from '../color-type.';
 
 @Component({
     selector: 'jhi-timetable-popover',
@@ -16,6 +17,9 @@ export class TimetableElementComponent implements OnInit {
     currentAccount: Account;
 
     EventType = EventType;
+
+    @Input()
+    colorType: ColorType;
 
     @Input()
     timetable: Timetable;
@@ -88,10 +92,32 @@ export class TimetableElementComponent implements OnInit {
         }
     }
 
-
     getColorStyle() {
         if (this.timetable && this.timetable.colorBackgroundForSubject) {
-            const color = this.timetable.colorBackgroundForSubject.slice(0, -1) + ', ' + this.opacity + ')';
+            let colorFromServer = '';
+            switch (this.colorType) {
+                case ColorType.SUBJECT: {
+                    colorFromServer = this.timetable.colorBackgroundForSubject;
+                    break;
+                }
+                case ColorType.DIVISION: {
+                    colorFromServer = this.timetable.colorBackgroundForDivision;
+                    break;
+                }
+                case ColorType.PLACE: {
+                    colorFromServer = this.timetable.colorBackgroundForPlace;
+                    break;
+                }
+                case ColorType.TEACHER: {
+                    colorFromServer = this.timetable.colorBackgroundForTeacher;
+                    break;
+                }
+                default: {
+                    colorFromServer = this.timetable.colorBackgroundForSubject;
+                    break;
+                }
+            }
+            const color = colorFromServer.slice(0, -1) + ', ' + this.opacity + ')';
             return {'background': color};
         } else {
             return {}
