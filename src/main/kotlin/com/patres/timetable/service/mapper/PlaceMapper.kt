@@ -26,8 +26,6 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
     @Autowired
     private lateinit var divisionRepository: DivisionRepository
 
-    @Autowired
-    private lateinit var teacherRepository: TeacherRepository
 
     @Autowired
     private lateinit var subjectRepository: SubjectRepository
@@ -60,7 +58,6 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
                 shortName = entityDto.shortName
                 colorBackground = entityDto.colorBackground
                 colorText = entityDto.colorText
-                preferenceTeacherByPlace = preferenceTeacherByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceTeacherByPlace)
                 preferenceSubjectByPlace = preferenceSubjectByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceSubjectByPlace)
                 preferenceDivisionByPlace = preferenceDivisionByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceDivisionByPlace)
                 preferencesDataTimeForPlace = preferenceDataTimeForPlaceMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForPlace)
@@ -82,8 +79,6 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
                 shortName = entity.shortName
                 colorBackground = entity.colorBackground
                 colorText = entity.colorText
-                preferenceTeacherByPlace = preferenceTeacherByPlaceMapper.entitySetToEntityDTOSet(entity.preferenceTeacherByPlace)
-                addNeutralPreferenceTeacherByPlace()
                 preferenceSubjectByPlace = preferenceSubjectByPlaceMapper.entitySetToEntityDTOSet(entity.preferenceSubjectByPlace)
                 addNeutralPreferenceSubjectByPlace()
                 preferenceDivisionByPlace = preferenceDivisionByPlaceMapper.entitySetToEntityDTOSet(entity.preferenceDivisionByPlace)
@@ -129,17 +124,6 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
         }
     }
 
-    private fun PlaceDTO.addNeutralPreferenceTeacherByPlace() {
-        divisionOwnerId?.let {
-            val teachers = teacherRepository.findByDivisionOwnerId(it)
-            val neutralPreferenceToAdd =
-                teachers
-                    .filter { teacher -> !preferenceTeacherByPlace.any { preference -> id == preference.placeId && teacher.id == preference.teacherId } }
-                    .map { teacher -> PreferenceTeacherByPlaceDTO(placeId = id, placeName = name ?: "", teacherId = teacher.id, teacherFullName = teacher.getFullName(), teacherDegree = teacher.degree ?: "", teacherName = teacher.name ?: "", teacherSurname = teacher.surname ?: "") }
-            preferenceTeacherByPlace += neutralPreferenceToAdd
-            preferenceTeacherByPlace = preferenceTeacherByPlace.sortedWith(compareBy({ it.teacherSurname }, { it.teacherName }, { it.teacherDegree })).toSet()
-        }
-    }
 
     private fun PlaceDTO.addNeutralPreferencesDataTime() {
         val neutralPreferenceDataTimeForToAdd = HashSet<PreferenceDataTimeForPlaceDTO>()

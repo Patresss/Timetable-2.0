@@ -17,7 +17,6 @@ export class Place implements BaseEntity {
         public preferredDivisions?: BaseEntity[],
         public preferredTeachers?: BaseEntity[],
         public preferenceSubjectByPlace?: PreferenceSubjectByPlaceModel[],
-        public preferenceTeacherByPlace?: PreferenceTeacherByPlaceModel[],
         public preferenceDivisionByPlace?: PreferenceDivisionByPlaceModel[],
         public preferencesDataTimeForPlace?: PreferenceForDataTimeForPlaceModel[],
         public divisionId?: number,

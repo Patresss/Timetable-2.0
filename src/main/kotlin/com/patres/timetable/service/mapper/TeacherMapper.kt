@@ -1,14 +1,14 @@
 package com.patres.timetable.service.mapper
 
 import com.patres.timetable.domain.Teacher
-import com.patres.timetable.repository.DivisionRepository
-import com.patres.timetable.repository.LessonRepository
-import com.patres.timetable.repository.SubjectRepository
+import com.patres.timetable.repository.*
 import com.patres.timetable.service.dto.TeacherDTO
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
 import com.patres.timetable.service.dto.preference.PreferenceSubjectByTeacherDTO
+import com.patres.timetable.service.dto.preference.PreferenceTeacherByPlaceDTO
 import com.patres.timetable.service.mapper.preference.PreferenceDataTimeForTeacherMapper
 import com.patres.timetable.service.mapper.preference.PreferenceSubjectByTeacherMapper
+import com.patres.timetable.service.mapper.preference.PreferenceTeacherByPlaceMapper
 import com.patres.timetable.util.EntityUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -24,6 +24,9 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
     private lateinit var preferenceSubjectByTeacherMapper: PreferenceSubjectByTeacherMapper
 
     @Autowired
+    private lateinit var preferenceTeacherByPlaceMapper: PreferenceTeacherByPlaceMapper
+
+    @Autowired
     private lateinit var divisionMapper: DivisionMapper
 
     @Autowired
@@ -35,6 +38,9 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
     @Autowired
     private lateinit var lessonRepository: LessonRepository
 
+    @Autowired
+    private lateinit var placeRepository: PlaceRepository
+
     override fun toEntity(entityDto: TeacherDTO): Teacher {
         return Teacher(
             name = entityDto.name,
@@ -44,6 +50,7 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             id = entityDto.id
             degree = entityDto.degree
             shortName = entityDto.shortName
+            preferenceTeacherByPlace = preferenceTeacherByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceTeacherByPlace)
             preferenceSubjectByTeacher = preferenceSubjectByTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceSubjectByTeacher)
             preferenceDataTimeForTeachers = preferenceDataTimeForTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceDataTimeForTeachers)
 
@@ -64,6 +71,8 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             degree = entity.degree
             shortName = entity.shortName
             fullName = "$degree $name $surname"
+            preferenceTeacherByPlace = preferenceTeacherByPlaceMapper.entitySetToEntityDTOSet(entity.preferenceTeacherByPlace)
+            addNeutralPreferenceTeacherByPlace()
             preferenceSubjectByTeacher = preferenceSubjectByTeacherMapper.entitySetToEntityDTOSet(entity.preferenceSubjectByTeacher)
             addNeutralPreferenceSubjectByTeacher()
             preferenceDataTimeForTeachers = preferenceDataTimeForTeacherMapper.entitySetToEntityDTOSet(entity.preferenceDataTimeForTeachers)
@@ -97,6 +106,18 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
         }
     }
 
+    private fun TeacherDTO.addNeutralPreferenceTeacherByPlace() {
+        divisionOwnerId?.let {
+            val places = placeRepository.findByDivisionOwnerId(it)
+            val neutralPreferenceToAdd =
+                places
+                    .filter { place -> !preferenceTeacherByPlace.any { preference -> id == preference.teacherId && place.id == preference.placeId } }
+                    .map { place -> PreferenceTeacherByPlaceDTO(placeId = place.id, placeName = place.name ?: "", teacherId = id, teacherFullName = fullName?: "", teacherDegree = degree ?: "", teacherName = name ?: "", teacherSurname = surname ?: "") }
+            preferenceTeacherByPlace += neutralPreferenceToAdd
+            preferenceTeacherByPlace = preferenceTeacherByPlace.sortedBy { it.placeName }.toSet()
+        }
+    }
+
     private fun TeacherDTO.addNeutralPreferenceDataTimeForTeachers() {
         val neutralPreferenceDataTimeForTeachersToAdd = HashSet<PreferenceDataTimeForTeacherDTO>()
         divisionOwnerId?.let {
@@ -105,7 +126,7 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             for (lesson in lessons) {
                 for (dayOfWeek in daysOfWeeks) {
                     if (!preferenceDataTimeForTeachers.any { it.dayOfWeek == dayOfWeek && it.lessonId == lesson.id }) {
-                        neutralPreferenceDataTimeForTeachersToAdd.add(PreferenceDataTimeForTeacherDTO(teacherId = id, teacherFullName = fullName?: "", lessonId = lesson.id, lessonName = lesson.name?: "", dayOfWeek = dayOfWeek, points = 0))
+                        neutralPreferenceDataTimeForTeachersToAdd.add(PreferenceDataTimeForTeacherDTO(teacherId = id, teacherFullName = fullName ?: "", lessonId = lesson.id, lessonName = lesson.name ?: "", dayOfWeek = dayOfWeek, points = 0))
                     }
                 }
             }

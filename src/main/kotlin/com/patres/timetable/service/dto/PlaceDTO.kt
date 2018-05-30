@@ -20,8 +20,6 @@ class PlaceDTO(
 
     var preferenceSubjectByPlace: Set<PreferenceSubjectByPlaceDTO> = HashSet(),
 
-    var preferenceTeacherByPlace: Set<PreferenceTeacherByPlaceDTO> = HashSet(),
-
     var preferenceDivisionByPlace: Set<PreferenceDivisionByPlaceDTO> = HashSet(),
 
     var preferencesDataTimeForPlace: Set<PreferenceDataTimeForPlaceDTO> = HashSet(),

@@ -1502,6 +1502,7 @@ open class FillerResource(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = 10)
             )
+            preferenceTeacherByPlace = hashSetOf(PreferenceTeacherByPlaceDTO(placeId = this.id, teacherId = CzBe.id, points = 5))
         }
         CzBe = teacherService.save(CzBe)
 
@@ -1810,8 +1811,6 @@ open class FillerResource(
             preferenceSubjectByPlace = hashSetOf(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = matematyka.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-
-            preferenceTeacherByPlace = hashSetOf(PreferenceTeacherByPlaceDTO(placeId = this.id, teacherId = CzBe.id, points = 5))
 
             preferenceDivisionByPlace = hashSetOf(PreferenceDivisionByPlaceDTO(placeId = this.id, divisionId = class1a.id, points = 5))
             placeService.save(this)

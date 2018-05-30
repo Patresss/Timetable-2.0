@@ -58,6 +58,31 @@
             <ngb-accordion #acc="ngbAccordion">
                 <ngb-panel>
                     <ng-template ngbPanelTitle>
+                        <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferredPlaces">Preferred places</span>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th jhiTranslate="timetableApp.place.main">Place</th>
+                                <th jhiTranslate="timetableApp.preference.preference">Preference</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let preferenceTeacherByPlace of teacher.preferenceTeacherByPlace">
+                                <td>{{preferenceTeacherByPlace.placeName}}</td>
+                                <td>
+                                    <select class="form-control" name="preference_{{preferenceTeacherByPlace.placeId}}{{preferenceTeacherByPlace.teacherId}}" [(ngModel)]="preferenceTeacherByPlace.points">
+                                        <option *ngFor="let selectType of preferenceSelectTypes" [ngValue]="selectType.value" jhiTranslate="{{selectType.itemTranslate}}">{{selectType.value}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </ng-template>
+                </ngb-panel>
+                <ngb-panel>
+                    <ng-template ngbPanelTitle>
                         <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferredSubjects">Preferred subjects</span>
                     </ng-template>
                     <ng-template ngbPanelContent>

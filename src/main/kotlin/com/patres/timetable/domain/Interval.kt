@@ -13,7 +13,7 @@ import javax.persistence.Table
 @Entity
 @Table(name = "interval")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-class Interval(
+data class Interval(
 
     @Column(name = "included_state")
     var includedState: Boolean = true,
@@ -27,15 +27,4 @@ class Interval(
     @ManyToOne
     var period: Period? = null
 
-) : AbstractApplicationEntity(), Serializable {
-
-    override fun toString(): String {
-        return "Interval{" +
-            "id= '$id'" +
-            ", includedState='$includedState" +
-            ", startDate='$startDate'" +
-            ", endDate='$endDate'" +
-            "}"
-    }
-
-}
+) : AbstractApplicationEntity()

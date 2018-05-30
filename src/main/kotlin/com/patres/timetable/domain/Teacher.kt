@@ -49,7 +49,6 @@ class Teacher(
     var preferencesTeacherByDivision: Set<PreferenceTeacherByDivision> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "teacher", orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferenceTeacherByPlace: Set<PreferenceTeacherByPlace> = HashSet(),
 
