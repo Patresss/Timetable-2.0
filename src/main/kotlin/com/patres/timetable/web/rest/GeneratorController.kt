@@ -7,6 +7,7 @@ import com.patres.timetable.generator.report.GenerateReport
 import com.patres.timetable.service.CurriculumListService
 import com.patres.timetable.service.TimetableService
 import com.patres.timetable.service.dto.TimetableDTO
+import com.patres.timetable.service.dto.generator.GenerateReportDTO
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -31,14 +32,18 @@ open class GeneratorController(
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     // TODO add security
-    @PostMapping("/generator/{generatorStrategyType}/{curriculumListId}")
+    @PostMapping("/generator")
     @Timed
     @Throws(URISyntaxException::class)
-    open fun generate(@PathVariable curriculumListId: Long, @PathVariable generatorStrategyType: TimetableGeneratorStrategyType): ResponseEntity<GenerateReport> {
+    open fun generate(@RequestParam curriculumListId: Long): ResponseEntity<GenerateReportDTO> {
         log.debug("REST request generate with CurriculumListId : {}", curriculumListId)
-        val generateReport = timetableGeneratorManager.generate(curriculumListId, generatorStrategyType)
-        return ResponseEntity(generateReport, HttpStatus.OK)
-
+        val generateReport = timetableGeneratorManager.generate(curriculumListId)
+        val savedTimetablesDTO = timetableService.saveEntityList(generateReport.timetables)
+        val generateReportDTO = GenerateReportDTO().apply {
+            numberOfWindows = generateReport.numberOfWindows
+            timetables = savedTimetablesDTO
+        }
+        return ResponseEntity(generateReportDTO, HttpStatus.OK)
     }
 
 }

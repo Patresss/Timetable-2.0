@@ -1,12 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs/Rx';
+import {Observable, Subscription} from 'rxjs/Rx';
 import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from 'ng-jhipster';
 
 import {ITEMS_PER_PAGE, Principal, ResponseWrapper} from '../../shared';
 import {PaginationConfig} from '../../blocks/config/uib-pagination.config';
 import {CurriculumList} from './curriculum-list.model';
 import {CurriculumListService} from './curriculum-list.service';
+import {Curriculum} from '../curriculum/curriculum.model';
+import {Response} from '@angular/http';
 
 @Component({
     selector: 'jhi-curriculum-list',
@@ -126,5 +128,22 @@ export class CurriculumListComponent implements OnInit, OnDestroy {
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    private subscribeToSaveResponse(result: Observable<any>) {
+        result.subscribe((res: Curriculum) =>
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError());
+    }
+
+    private onSaveSuccess(result: Curriculum) {
+        this.eventManager.broadcast({ name: 'generate', content: 'OK'});
+    }
+
+    private onSaveError() {
+    }
+
+    generate(id: number) {
+        console.log(id);
+        this.subscribeToSaveResponse(this.curriculumListService.generate(id));
     }
 }

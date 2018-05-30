@@ -90,7 +90,8 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             colorBackgroundForDivision = entity.division?.colorBackground,
             colorBackgroundForSubject = entity.subject?.colorBackground,
             colorBackgroundForPlace = entity.place?.colorBackground,
-            colorBackgroundForTeacher = entity.teacher?.colorBackground
+            colorBackgroundForTeacher = entity.teacher?.colorBackground,
+            points = entity.points
         ).apply {
             id = entity.id
             if (entity.lesson != null) {

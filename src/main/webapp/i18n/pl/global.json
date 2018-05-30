@@ -125,7 +125,8 @@
             "edit": "Edytuj",
             "open": "Otwórz",
             "save": "Zapisz",
-            "view": "Widok"
+            "view": "Widok",
+            "generate": "Generuj"
         },
         "detail": {
             "field": "Pole",

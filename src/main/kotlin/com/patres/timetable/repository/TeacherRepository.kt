@@ -15,6 +15,7 @@ interface TeacherRepository : DivisionOwnerRepository<Teacher> {
         from
             Teacher teacher
             left join fetch teacher.preferenceDataTimeForTeachers
+            left join fetch teacher.preferenceTeacherByPlace
             left join fetch teacher.preferenceSubjectByTeacher
         """)
     fun findAllWithEagerRelationships(): List<Teacher>
@@ -25,6 +26,7 @@ interface TeacherRepository : DivisionOwnerRepository<Teacher> {
         from
             Teacher teacher
             left join fetch teacher.preferenceDataTimeForTeachers
+            left join fetch teacher.preferenceTeacherByPlace
             left join fetch teacher.preferenceSubjectByTeacher
         where
             teacher.id =:id

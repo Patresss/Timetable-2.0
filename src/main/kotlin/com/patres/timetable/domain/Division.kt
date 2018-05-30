@@ -109,13 +109,13 @@ class Division(
 
 ) : AbstractDivisionOwner(divisionOwner), Serializable {
 
-    fun getContainersWithSetOfSubgroup(): Set<Division> {
+    fun calculateContainersWithSetOfSubgroup(): Set<Division> {
         return parents.filter { it.divisionType == DivisionType.SET_OF_SUBGROUPS }.toSet()
     }
 
-    fun getAllTakenDivisionFromDivision(): Set<Division> {
+    fun calculateAllTakenDivisionFromDivision(): Set<Division> {
         val takenDivisions = HashSet<Division>()
-            val setOfGroups = getContainersWithSetOfSubgroup()
+            val setOfGroups = calculateContainersWithSetOfSubgroup()
             takenDivisions.add(this)
             parents
                 .filter { parent -> parent.divisionType == DivisionType.CLASS }

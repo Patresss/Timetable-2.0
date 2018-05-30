@@ -61,7 +61,7 @@ class Preference(
 
         val takenDivisions = takenTimetable.mapNotNull { it.division }.toSet()
         takenDivisions.forEach { division ->
-            val divisions = division.getAllTakenDivisionFromDivision()
+            val divisions = division.calculateAllTakenDivisionFromDivision()
             divisions.forEach { preferredDivisionMap[it.id]?.taken = PreferenceHierarchy.TAKEN }
         }
     }
@@ -97,7 +97,7 @@ class Preference(
     }
 
     fun calculateTakenLessonAndDayOfWeekByDivision(division: Division, takenTimetable: Set<Timetable>) {
-        val allTakenDivisionFromDivision = division.getAllTakenDivisionFromDivision()
+        val allTakenDivisionFromDivision = division.calculateAllTakenDivisionFromDivision()
         preferredLessonAndDayOfWeekSet.forEach { preferredLessonAndDayOfWeek ->
             val isTaken = takenTimetable.any { timetable ->
                 timetable.dayOfWeek == preferredLessonAndDayOfWeek.dayOfWeek &&

@@ -15,7 +15,6 @@ interface PlaceRepository : DivisionOwnerRepository<Place> {
             Place place
             left join fetch place.preferenceSubjectByPlace
             left join fetch place.preferenceDivisionByPlace
-            left join fetch place.preferenceTeacherByPlace
             left join fetch place.preferencesDataTimeForPlace
 
         """)
@@ -28,7 +27,6 @@ interface PlaceRepository : DivisionOwnerRepository<Place> {
             Place place
             left join fetch place.preferenceSubjectByPlace
             left join fetch place.preferenceDivisionByPlace
-            left join fetch place.preferenceTeacherByPlace
             left join fetch place.preferencesDataTimeForPlace
         where
             place.id =:id

@@ -73,6 +73,8 @@ class TimetableDTO(
 
     var periodName: String? = null,
 
+    var points: Int = 0,
+
     divisionOwnerId: Long? = null
 
 ) : AbstractDivisionOwnerDTO(divisionOwnerId = divisionOwnerId), Serializable {

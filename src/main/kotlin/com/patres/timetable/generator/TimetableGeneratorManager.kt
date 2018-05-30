@@ -4,6 +4,7 @@ import com.patres.timetable.domain.Timetable
 import com.patres.timetable.generator.report.GenerateReport
 import com.patres.timetable.repository.*
 import com.patres.timetable.repository.preference.PreferenceDataTimeForPlaceRepository
+import com.patres.timetable.service.mapper.GenerateReportMapper
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -17,10 +18,10 @@ open class TimetableGeneratorManager(
     private var lessonRepository: LessonRepository,
     private var curriculumListRepository: CurriculumListRepository,
     private var preferenceDataTimeForPlaceRepository: PreferenceDataTimeForPlaceRepository,
-    private var timetableRepository: TimetableRepository) {
+    private var generateReportMapper: GenerateReportMapper) {
 
     @Transactional
-    open fun generate(curriculumListId: Long, generatorStrategyType: TimetableGeneratorStrategyType): GenerateReport {
+    open fun generate(curriculumListId: Long): GenerateReport {
         val curriculumListEntity = curriculumListRepository.findOneWithEagerRelationships(curriculumListId)
         val schoolId = curriculumListEntity?.divisionOwner?.id
 
