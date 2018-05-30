@@ -21,7 +21,7 @@ class BlockWithoutWindow(val timetables: HashSet<Timetable> = HashSet()){
     fun getWindowBeforeBlock(lessons: Set<Lesson>):Window? {
         val dayOfWeek = dayOfWeek
         val division = division
-        if (dayOfWeek != null && division != null) {
+        if (dayOfWeek != null && division != null && hasBlockBefore) {
             val sortedLesson = lessons.sortedBy { it.startTime }
             val index = sortedLesson.indexOf(startLesson)
             val indexBefore = index - 1
@@ -36,7 +36,7 @@ class BlockWithoutWindow(val timetables: HashSet<Timetable> = HashSet()){
     fun getWindowAfterBlock(lessons: Set<Lesson>):Window? {
         val dayOfWeek = dayOfWeek
         val division = division
-        if (dayOfWeek != null && division != null) {
+        if (dayOfWeek != null && division != null && hasBlockAfter) {
             val sortedLesson = lessons.sortedBy { it.startTime }
             val index = sortedLesson.indexOf(endLesson)
             val indexAfter = index + 1

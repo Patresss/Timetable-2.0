@@ -29,8 +29,8 @@ class GroupOfBlockWithoutWindow(val blocksWithoutWindow: ArrayList<BlockWithoutW
 
 
     fun setupBlock(blockWithoutWindow: BlockWithoutWindow) {
-       // blockWithoutWindow.hasBlockBefore = blocksWithoutWindow.indexOf(blockWithoutWindow) != 0
-       // blockWithoutWindow.hasBlockAfter = blocksWithoutWindow.indexOf(blockWithoutWindow) != size - 1
+        blockWithoutWindow.hasBlockBefore = blocksWithoutWindow.indexOf(blockWithoutWindow) != 0
+        blockWithoutWindow.hasBlockAfter = blocksWithoutWindow.indexOf(blockWithoutWindow) != size - 1
     }
 
 
