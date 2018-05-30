@@ -12,7 +12,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "preference_subject_by_division")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class PreferenceSubjectByDivision(
 
     @get:NotNull

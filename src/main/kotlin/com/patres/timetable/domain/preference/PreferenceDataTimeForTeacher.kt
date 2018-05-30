@@ -9,12 +9,12 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "preference_data_time_for_teacher")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class PreferenceDataTimeForTeacher(
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var teacher: Teacher? = null,
 
     lesson: Lesson? = null,
