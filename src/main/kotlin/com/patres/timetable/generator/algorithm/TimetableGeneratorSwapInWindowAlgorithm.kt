@@ -2,6 +2,7 @@ package com.patres.timetable.generator.algorithm
 
 import com.patres.timetable.domain.Division
 import com.patres.timetable.domain.Timetable
+import com.patres.timetable.generator.BlockWithoutWindow
 import com.patres.timetable.generator.TimetableGeneratorContainer
 import com.patres.timetable.generator.Window
 import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
@@ -10,11 +11,15 @@ import com.patres.timetable.util.EntityUtil
 class TimetableGeneratorSwapInWindowAlgorithm(private var container: TimetableGeneratorContainer): TimetableGeneratorAlgorithm(container) {
 
     override fun runAlgorithm() {
-        val windows = findWidows()
-        fillWindowsAndSwap(windows)
+        val blocksWithTimetable = container.findAndSetupTheBiggestGroups()
+        fillWindowsAndSwap(getWindows(blocksWithTimetable))
     }
 
-    private fun fillWindowsAndSwap(windows: Set<Window>) {
+    private fun getWindows(blocks: Set<BlockWithoutWindow>): List<Window> {
+        return blocks.flatMap { it.getWindows(container.lessons) }
+    }
+
+    private fun fillWindowsAndSwap(windows: List<Window>) {
         windows.forEach { fillWindowAndSwap(it) }
     }
 
@@ -40,10 +45,10 @@ class TimetableGeneratorSwapInWindowAlgorithm(private var container: TimetableGe
 
         val timetableToSwap = divisionTimetable.find { timetableToTest -> canChangeLessonAndDay(timetableWithCollision, timetableToTest) }
         return if (timetableToSwap == null) {
-            TimetableGeneratorContainer.log.warn("Not found timetable to swap lesson and day")
+            TimetableGeneratorContainer.log.warn("Not found timetables to swap lesson and day")
             false
         } else {
-            TimetableGeneratorContainer.log.debug("Swap timetable: $timetableWithCollision <-> $timetableToSwap")
+            TimetableGeneratorContainer.log.debug("Swap timetables: $timetableWithCollision <-> $timetableToSwap")
             swapLessonAndDayWithCalculatePreference(timetableWithCollision, timetableToSwap)
             true
         }

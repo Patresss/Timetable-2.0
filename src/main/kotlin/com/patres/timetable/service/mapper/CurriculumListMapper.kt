@@ -21,7 +21,7 @@ open class CurriculumListMapper : EntityMapper<CurriculumList, CurriculumListDTO
 
     override fun toEntity(entityDto: CurriculumListDTO): CurriculumList {
         return CurriculumList().apply {
-            name = entityDto.name
+            name = entityDto.name?: ""
             divisionOwner = entityDto.divisionOwnerId?.let { divisionRepository.getOne(it) }
             id = entityDto.id
             curriculums = curriculumMapper.entityDTOSetToEntitySet(entityDto.curriculums)

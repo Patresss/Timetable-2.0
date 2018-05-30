@@ -16,6 +16,7 @@ import {
     divisionPopupRoute,
     DivisionResolvePagingParams,
 } from './';
+import {ColorPickerModule} from 'ngx-color-picker';
 
 const ENTITY_STATES = [
     ...divisionRoute,
@@ -26,7 +27,8 @@ const ENTITY_STATES = [
     imports: [
         TimetableSharedModule,
         TimetableAdminModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
+        ColorPickerModule // how to put it global
     ],
     declarations: [
         DivisionComponent,

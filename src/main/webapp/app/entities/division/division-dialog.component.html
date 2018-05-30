@@ -48,15 +48,12 @@
                     </small>
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="form-control-label" jhiTranslate="timetableApp.division.colorBackground" for="field_colorBackground">Color Background</label>
                 <input type="text" class="form-control" name="colorBackground" id="field_colorBackground"
-                       [(ngModel)]="division.colorBackground"/>
-            </div>
-            <div class="form-group">
-                <label class="form-control-label" jhiTranslate="timetableApp.division.colorText" for="field_colorText">Color Text</label>
-                <input type="text" class="form-control" name="colorText" id="field_colorText"
-                       [(ngModel)]="division.colorText"/>
+                       [value]="division.colorBackground" [(colorPicker)]="division.colorBackground" [style.background]="division.colorBackground" [cpOutputFormat]="'rgba'"
+                       [cpAlphaChannel]="'disabled'" (colorPickerChange)="division.colorBackground = $event" readonly/>
             </div>
 
             <div class="form-group">

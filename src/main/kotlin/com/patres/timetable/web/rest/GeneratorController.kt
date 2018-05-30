@@ -3,6 +3,7 @@ package com.patres.timetable.web.rest
 import com.codahale.metrics.annotation.Timed
 import com.patres.timetable.generator.TimetableGeneratorStrategyType
 import com.patres.timetable.generator.TimetableGeneratorManager
+import com.patres.timetable.generator.report.GenerateReport
 import com.patres.timetable.service.CurriculumListService
 import com.patres.timetable.service.TimetableService
 import com.patres.timetable.service.dto.TimetableDTO
@@ -33,11 +34,10 @@ open class GeneratorController(
     @PostMapping("/generator/{generatorStrategyType}/{curriculumListId}")
     @Timed
     @Throws(URISyntaxException::class)
-    open fun generate(@PathVariable curriculumListId: Long, @PathVariable generatorStrategyType: TimetableGeneratorStrategyType): ResponseEntity<List<TimetableDTO>> {
+    open fun generate(@PathVariable curriculumListId: Long, @PathVariable generatorStrategyType: TimetableGeneratorStrategyType): ResponseEntity<GenerateReport> {
         log.debug("REST request generate with CurriculumListId : {}", curriculumListId)
-        val timetables = timetableGeneratorManager.generate(curriculumListId, generatorStrategyType)
-        val savedTimetablesDOT = timetableService.saveEntityList(timetables)
-        return ResponseEntity(savedTimetablesDOT, HttpStatus.OK)
+        val generateReport = timetableGeneratorManager.generate(curriculumListId, generatorStrategyType)
+        return ResponseEntity(generateReport, HttpStatus.OK)
 
     }
 

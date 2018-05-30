@@ -2,21 +2,24 @@ package com.patres.timetable.generator
 
 import com.patres.timetable.domain.*
 import com.patres.timetable.domain.preference.PreferenceDataTimeForPlace
+import com.patres.timetable.excpetion.ApplicationException
+import com.patres.timetable.excpetion.ExceptionMessage
 import com.patres.timetable.generator.algorithm.TimetableGeneratorHandicapInWindowsAlgorithm
 import com.patres.timetable.generator.algorithm.TimetableGeneratorSwapInWindowAlgorithm
+import com.patres.timetable.generator.report.GenerateReport
 import com.patres.timetable.preference.Preference
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 
 class TimetableGeneratorContainer(
-    val curriculumListEntity: CurriculumList,
-    val places: Set<Place>,
-    val teachers: Set<Teacher>,
-    val subjects: Set<Subject>,
-    val divisions: Set<Division>,
-    var lessons: List<Lesson>,
-    private var preferencesDataTimeForPlace: Set<PreferenceDataTimeForPlace>
+    val curriculumListEntity: CurriculumList = CurriculumList(),
+    val places: Set<Place> = emptySet(),
+    val teachers: Set<Teacher> = emptySet(),
+    val subjects: Set<Subject> = emptySet(),
+    val divisions: Set<Division> = emptySet(),
+    var lessons: Set<Lesson> = emptySet(),
+    private var preferencesDataTimeForPlace: Set<PreferenceDataTimeForPlace> = emptySet()
 ) {
 
     companion object {
@@ -38,7 +41,7 @@ class TimetableGeneratorContainer(
 
 
     init {
-        lessons = lessons.sortedBy { it.startTime }
+        lessons = lessons.sortedBy { it.startTime }.toSet()
         curriculumList.forEach { curriculum ->
             (1..curriculum.numberOfActivities).forEach {
                 timetablesFromCurriculum.add(Timetable(curriculum, curriculumListEntity.period))
@@ -49,7 +52,7 @@ class TimetableGeneratorContainer(
         }
     }
 
-    fun generate(): List<Timetable> {
+    fun generate(): GenerateReport {
         preferenceManager.calculatePreference()
         preferenceManager.calculateLessonAndDay()
 
@@ -57,7 +60,10 @@ class TimetableGeneratorContainer(
         swapInWindowAlgorithm.run()
 
         calculatePlace()
-        return timetablesFromCurriculum
+
+        val numberOfWindows = findWidows().size
+        TimetableGeneratorContainer.log.info("Final number of windows: $numberOfWindows")
+        return GenerateReport(timetablesFromCurriculum, numberOfWindows)
     }
 
 
@@ -75,6 +81,115 @@ class TimetableGeneratorContainer(
                 val placeId = timetableFromCurriculum.preference.preferredPlaceMap.maxBy { preferred -> preferred.value?.points ?: 0 }?.key
                 timetableFromCurriculum.place = places.find { it.id == placeId }
             }
+    }
+
+    fun findWidows2(): Set<Window> {
+        val windows = HashSet<Window>()
+        val sortedTimetables = timetablesFromCurriculum.sortedBy { it.lesson?.startTime }
+        val timetablesByDivision = sortedTimetables.groupBy { it.division }
+        timetablesByDivision.forEach { division, timetables ->
+            timetables.groupBy { it.dayOfWeek }.forEach { dayOfWeek, divisionTimetables ->
+                if (division != null && dayOfWeek != null) {
+                    for (lesson in lessons) {
+                        val currentLesson = divisionTimetables.find { it.lesson == lesson }?.lesson
+                        if (currentLesson == null && divisionTimetables.any { lesson.startTime ?: 0 > it.lesson?.endTime ?: 0 } && divisionTimetables.any { lesson.endTime ?: 0 < it.lesson?.startTime ?: 0 }) {
+                            windows.add(Window(dayOfWeek, lesson, division))
+                            break
+                        }
+                    }
+                }
+            }
+        }
+        return windows
+    }
+
+
+    fun findWidows(): Set<Window> {
+        val windows = HashSet<Window>()
+        val sortedTimetables = timetablesFromCurriculum.sortedBy { it.lesson?.startTime }
+        val timetablesByDivision = sortedTimetables.groupBy { it.division }
+        timetablesByDivision.forEach { division, timetables ->
+            windows.addAll(findWindowsByDivision(timetables, division))
+        }
+        return windows
+    }
+
+    private fun findWindowsByDivision(timetables: List<Timetable>, division: Division?): Set<Window> {
+        val windows = HashSet<Window>()
+        timetables.groupBy { it.dayOfWeek }.forEach { dayOfWeek, divisionTimetables ->
+            if (division != null && dayOfWeek != null) {
+                for (lesson in lessons) {
+                    val currentLesson = divisionTimetables.find { it.lesson == lesson }?.lesson
+                    if (currentLesson == null && divisionTimetables.any { lesson.startTime ?: 0 > it.lesson?.endTime ?: 0 } && divisionTimetables.any { lesson.endTime ?: 0 < it.lesson?.startTime ?: 0 }) {
+                        windows.add(Window(dayOfWeek, lesson, division))
+                    }
+                }
+            }
+        }
+        return windows
+    }
+
+    fun findAndSetupTheBiggestGroups(): Set<BlockWithoutWindow> {
+        val blocks = HashSet<BlockWithoutWindow>()
+        val sortedTimetables = timetablesFromCurriculum.sortedBy { it.lesson?.startTime }
+        val timetablesByDivision = sortedTimetables.groupBy { it.division }
+        timetablesByDivision.forEach { _, timetables ->
+            blocks.addAll(findAndSetupTheBiggestGroupsByDivision(timetables))
+        }
+        return blocks
+    }
+
+
+    fun findAndSetupTheBiggestGroupsByDivision(timetablesWithThisSameDivision: List<Timetable>): Set<BlockWithoutWindow> {
+        if (timetablesWithThisSameDivision.isEmpty()) {
+            return emptySet()
+        } else if (timetablesWithThisSameDivision.any { timetablesWithThisSameDivision.first().division != it.division }) {
+            throw ApplicationException(ExceptionMessage.TIMETABLES_MUST_HAVE_THIS_SAME_DIVISION)
+        }
+
+        val groups = HashSet<BlockWithoutWindow>()
+        timetablesWithThisSameDivision
+            .groupBy { it.dayOfWeek }
+            .filterKeys { it != null }
+            .forEach { _, divisionTimetables ->
+                setupAndReturnTheBiggestGroup(divisionTimetables)?.let {groups.add(it)}
+            }
+        return groups
+    }
+
+    private fun setupAndReturnTheBiggestGroup(divisionTimetables: List<Timetable>):BlockWithoutWindow?  {
+        val groupOfBlock = findGroupsFromTimetablesWithThisSameDayAndDivision(divisionTimetables)
+        val theBiggestGroup = groupOfBlock.getTheBiggestGroup()
+        theBiggestGroup?.let {
+            groupOfBlock.setupBlock(theBiggestGroup)
+            return theBiggestGroup
+        }
+        return null
+    }
+
+    fun findGroupsFromTimetablesWithThisSameDayAndDivision(timetableWithThisSameDayAndDivision: List<Timetable>): GroupOfBlockWithoutWindow {
+        if (timetableWithThisSameDayAndDivision.isEmpty()) {
+            return GroupOfBlockWithoutWindow()
+        } else if (timetableWithThisSameDayAndDivision.any { timetableWithThisSameDayAndDivision.first().dayOfWeek != it.dayOfWeek || timetableWithThisSameDayAndDivision.first().division != it.division }) {
+            throw ApplicationException(ExceptionMessage.TIMETABLES_MUST_HAVE_THIS_SAME_DAY_AND_DIVISION)
+        }
+
+        val groupOfBlockWithoutWindowByDayOfWeek = GroupOfBlockWithoutWindow()
+        var currentBlock = BlockWithoutWindow()
+        for (lesson in lessons) {
+            val currentTimetable = timetableWithThisSameDayAndDivision.find { it.lesson == lesson }
+            if (currentTimetable != null) {
+                currentBlock.timetables.add(currentTimetable)
+            } else if (!currentBlock.timetables.isEmpty()) {
+                groupOfBlockWithoutWindowByDayOfWeek.add(currentBlock)
+                currentBlock = BlockWithoutWindow()
+            }
+
+            if (currentTimetable != null && lessons.last() == lesson ) {
+                groupOfBlockWithoutWindowByDayOfWeek.add(currentBlock)
+            }
+        }
+        return groupOfBlockWithoutWindowByDayOfWeek
     }
 
 

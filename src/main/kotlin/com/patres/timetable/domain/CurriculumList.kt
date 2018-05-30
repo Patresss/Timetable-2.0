@@ -15,7 +15,7 @@ class CurriculumList(
 
     @get:NotNull
     @Column(name = "name")
-    var name: String? = null,
+    var name: String = "",
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

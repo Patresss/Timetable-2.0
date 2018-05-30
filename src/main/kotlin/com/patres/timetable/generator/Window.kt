@@ -7,5 +7,4 @@ class Window(
     val dayOfWeek: Int,
     val lesson: Lesson,
     val division: Division
-) {
-}
+)
