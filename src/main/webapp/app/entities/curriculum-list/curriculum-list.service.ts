@@ -16,12 +16,8 @@ export class CurriculumListService extends DivisionOwnerEntityService<Curriculum
     }
 
     generate(curriculumId: number): Observable<any> {
-        console.log("in gej")
-        console.log(this.generateUrl + curriculumId.toString())
         return this.http.post(this.generateUrl + curriculumId.toString(), null);
     }
-
-
 
     convertFromServer(jsonResponse: any) {
         if (jsonResponse.curriculumTimes != null) {

@@ -20,17 +20,6 @@
                                  referencedTableName="division"/>
 
         <addForeignKeyConstraint baseColumnNames="divisions_id"
-                                 baseTableName="division_user"
-                                 constraintName="fk_division_user_divisions_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="division"/>
-        <addForeignKeyConstraint baseColumnNames="users_id"
-                                 baseTableName="division_user"
-                                 constraintName="fk_division_user_users_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
-
-        <addForeignKeyConstraint baseColumnNames="divisions_id"
                                  baseTableName="division_preferred_teacher"
                                  constraintName="fk_division_preferred_teacher_divisions_id"
                                  referencedColumnNames="id"
@@ -55,6 +44,12 @@
         <addForeignKeyConstraint baseColumnNames="division_owner_id"
                                  baseTableName="division"
                                  constraintName="fk_division_division_owner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="division"/>
+
+        <addForeignKeyConstraint baseColumnNames="school_id"
+                                 baseTableName="jhi_user"
+                                 constraintName="fk_jhi_user_school_id"
                                  referencedColumnNames="id"
                                  referencedTableName="division"/>
 

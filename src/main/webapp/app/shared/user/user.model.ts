@@ -12,6 +12,10 @@ export class User {
     public lastModifiedBy?: string;
     public lastModifiedDate?: Date;
     public password?: string;
+    public schoolName?: string;
+    public teacherFullName?: string;
+    public schoolId?: number;
+    public teacherId?: number;
 
     constructor(
         id?: any,
@@ -26,7 +30,11 @@ export class User {
         createdDate?: Date,
         lastModifiedBy?: string,
         lastModifiedDate?: Date,
-        password?: string
+        password?: string,
+        schoolName?: string,
+        teacherFullName?: string,
+        schoolId?: number,
+        teacherId?: number
     ) {
         this.id = id ? id : null;
         this.login = login ? login : null;
@@ -41,5 +49,9 @@ export class User {
         this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
         this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
         this.password = password ? password : null;
+        this.schoolName = schoolName ? schoolName : null;
+        this.teacherFullName = teacherFullName ? teacherFullName : null;
+        this.schoolId = schoolId ? schoolId : null;
+        this.teacherId = teacherId ? teacherId : null;
     }
 }

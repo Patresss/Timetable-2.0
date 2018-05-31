@@ -18,11 +18,13 @@ import {
     SettingsComponent,
     accountState
 } from './';
+import {AngularMultiSelectModule} from '../components/angular2-multiselect-dropdown';
 
 @NgModule({
     imports: [
         TimetableSharedModule,
-        RouterModule.forRoot(accountState, { useHash: true })
+        RouterModule.forRoot(accountState, { useHash: true }),
+        AngularMultiSelectModule,
     ],
     declarations: [
         ActivateComponent,

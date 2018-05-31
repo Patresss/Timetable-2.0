@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiLanguageService } from 'ng-jhipster';
+import {JhiEventManager, JhiLanguageService} from 'ng-jhipster';
 
 import { ProfileService } from '../profiles/profile.service';
-import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from '../../shared';
+import {JhiLanguageHelper, Principal, LoginModalService, LoginService, Account} from '../../shared';
 
 import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 import {FillerService} from '../../admin/filler/filler.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
     selector: 'jhi-navbar',
@@ -24,6 +25,8 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    eventSubscriber: Subscription;
+    currentAccount: Account;
 
     constructor(
         private fillerService: FillerService,
@@ -33,6 +36,7 @@ export class NavbarComponent implements OnInit {
         private principal: Principal,
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
+        private eventManager: JhiEventManager,
         private router: Router
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
@@ -48,6 +52,8 @@ export class NavbarComponent implements OnInit {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
+        this.loadCurrentAccount();
+        this.registerChangeOnUser();
     }
 
     changeLanguage(languageKey: string) {
@@ -56,6 +62,21 @@ export class NavbarComponent implements OnInit {
 
     collapseNavbar() {
         this.isNavbarCollapsed = true;
+    }
+
+    loadCurrentAccount() {
+        if (this.principal.isAuthenticated()) {
+            this.principal.identity().then((account) => {
+                this.currentAccount = account;
+            });
+        }
+    }
+
+    registerChangeOnUser() {
+        this.eventSubscriber = this.eventManager.subscribe(
+            'authenticationSuccess',
+            (response) => this.loadCurrentAccount()
+        );
     }
 
     isAuthenticated() {

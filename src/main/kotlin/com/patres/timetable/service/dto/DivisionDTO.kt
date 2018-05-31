@@ -34,8 +34,6 @@ class DivisionDTO(
 
     var parents: Set<DivisionDTO> = HashSet(),
 
-    var users: Set<UserDTO> = HashSet(),
-
     var preferencesSubjectByDivision: Set<PreferenceSubjectByDivisionDTO> = HashSet(),
 
     var preferencesTeacherByDivision: Set<PreferenceTeacherByDivisionDTO> = HashSet(),

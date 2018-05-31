@@ -68,7 +68,7 @@ abstract class DivisionOwnerService<EntityType : AbstractDivisionOwner, EntityDt
         }
     }
 
-    fun hasPrivilegeToModifyEntity(entityDto: AbstractDivisionOwnerDTO): Boolean {
+    open fun hasPrivilegeToModifyEntity(entityDto: AbstractDivisionOwnerDTO): Boolean {
         return when {
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> true
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> {

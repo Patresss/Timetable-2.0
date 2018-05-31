@@ -13,6 +13,7 @@
                                  constraintName="fk_teacher_preferred_subject_teachers_id"
                                  referencedColumnNames="id"
                                  referencedTableName="teacher"/>
+
         <addForeignKeyConstraint baseColumnNames="preferred_subjects_id"
                                  baseTableName="teacher_preferred_subject"
                                  constraintName="fk_teacher_preferred_subject_preferred_subjects_id"
@@ -24,6 +25,12 @@
                                  constraintName="fk_teacher_division_owner_id"
                                  referencedColumnNames="id"
                                  referencedTableName="division"/>
+
+        <addForeignKeyConstraint baseColumnNames="teacher_id"
+                                 baseTableName="jhi_user"
+                                 constraintName="fk_jhi_user_teacher_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="teacher"/>
 
     </changeSet>
 </databaseChangeLog>

@@ -2,12 +2,22 @@ package com.patres.timetable.service.mapper
 
 import com.patres.timetable.domain.Authority
 import com.patres.timetable.domain.User
+import com.patres.timetable.repository.DivisionRepository
+import com.patres.timetable.repository.TeacherRepository
 import com.patres.timetable.service.dto.UserDTO
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 
 @Service
 open class UserMapper : EntityMapper<User, UserDTO>() {
+
+
+    @Autowired
+    private lateinit var divisionRepository: DivisionRepository
+
+    @Autowired
+    private lateinit var teacherRepository: TeacherRepository
 
     override fun toEntity(entityDto: UserDTO): User {
 
@@ -21,6 +31,8 @@ open class UserMapper : EntityMapper<User, UserDTO>() {
             activated = entityDto.activated
             langKey = entityDto.langKey
             authorities = authoritiesFromStrings(entityDto.authorities)
+            school = entityDto.schoolId?.let { divisionRepository.getOne(it) }
+            teacher = entityDto.teacherId?.let { teacherRepository.getOne(it) }
         }
     }
 
@@ -38,7 +50,11 @@ open class UserMapper : EntityMapper<User, UserDTO>() {
             createdDate = entity.createdDate,
             lastModifiedBy = entity.lastModifiedBy,
             lastModifiedDate = entity.lastModifiedDate,
-            authorities = entity.authorities.map { it.name }.toHashSet()
+            authorities = entity.authorities.map { it.name }.toHashSet(),
+            schoolId = entity.school?.id,
+            schoolName = entity.school?.name?: "",
+            teacherId = entity.teacher?.id,
+            teacherFullName = entity.teacher?.getFullName()?: ""
         )
     }
 

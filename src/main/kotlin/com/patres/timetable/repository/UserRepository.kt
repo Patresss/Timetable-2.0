@@ -29,4 +29,8 @@ interface UserRepository : JpaRepository<User, Long> {
     fun findOneWithAuthoritiesByLogin(login: String): User?
 
     fun findAllByLoginNot(pageable: Pageable, login: String): Page<User>
+
+    fun findAllByLoginNotAndSchoolId(pageable: Pageable, login: String, schoolId: Long): Page<User>
+
+
 }

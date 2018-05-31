@@ -69,11 +69,12 @@ open class AccountResource(private val userRepository: UserRepository, private v
                 if (userFromRepositoryByEmail != null) {
                     return ResponseEntity("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST);
                 } else {
+
                     val user = userService
                         .createUser(managedUserVM.login!!, managedUserVM.password!!,
                             managedUserVM.firstName, managedUserVM.lastName,
                             managedUserVM.email!!.toLowerCase(), managedUserVM.imageUrl,
-                            managedUserVM.langKey)
+                            managedUserVM.langKey, managedUserVM.schoolId, managedUserVM.teacherId)
                     mailService.sendActivationEmail(user)
                     return ResponseEntity<ManagedUserVM>(HttpStatus.CREATED)
                 }

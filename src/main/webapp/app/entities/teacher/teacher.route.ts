@@ -63,7 +63,7 @@ export const teacherPopupRoute: Routes = [
         path: 'teacher/:id/edit',
         component: TeacherPopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_SCHOOL_ADMIN', 'ROLE_TEACHER'],
             pageTitle: 'timetableApp.teacher.home.title'
         },
         canActivate: [UserRouteAccessService],

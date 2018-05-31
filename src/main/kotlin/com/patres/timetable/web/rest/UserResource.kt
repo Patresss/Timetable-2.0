@@ -94,7 +94,8 @@ open class UserResource(private val userRepository: UserRepository, private val 
      */
     @PutMapping("/users")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.ADMIN, AuthoritiesConstants.SCHOOL_ADMIN)
+    // TODO create security for school
     open fun updateUser(@Valid @RequestBody managedUserVM: ManagedUserVM): ResponseEntity<UserDTO> {
         log.debug("REST request to update User : {}", managedUserVM)
         var existingUser = userRepository.findOneByEmail(managedUserVM.email!!)

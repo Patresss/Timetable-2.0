@@ -59,6 +59,10 @@ open class PreferenceManagerTest {
     @Autowired
     private lateinit var placeService: PlaceService
 
+
+    @Autowired
+    private lateinit var userService: UserService
+
     @Autowired
     private lateinit var placeRepository: PlaceRepository
 
@@ -73,7 +77,7 @@ open class PreferenceManagerTest {
 
     @Before
     fun setup() {
-        fillerResource = FillerResource(lessonService, divisionService, subjectService, timetableService, periodService, teacherService, curriculumService, curriculumListService, placeService)
+        fillerResource = FillerResource(lessonService, divisionService, subjectService, timetableService, periodService, teacherService, curriculumService, curriculumListService, placeService, userService)
     }
 
     @Test

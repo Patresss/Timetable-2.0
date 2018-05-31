@@ -2,20 +2,29 @@ package com.patres.timetable.service
 
 import com.patres.timetable.config.Constants
 import com.patres.timetable.domain.Authority
+import com.patres.timetable.domain.Division
+import com.patres.timetable.domain.Teacher
 import com.patres.timetable.domain.User
 import com.patres.timetable.repository.AuthorityRepository
+import com.patres.timetable.repository.DivisionRepository
+import com.patres.timetable.repository.TeacherRepository
 import com.patres.timetable.repository.UserRepository
 import com.patres.timetable.security.AuthoritiesConstants
 import com.patres.timetable.security.SecurityUtils
 import com.patres.timetable.service.dto.UserDTO
+import com.patres.timetable.service.mapper.DivisionMapper
+import com.patres.timetable.service.mapper.TeacherMapper
 import com.patres.timetable.service.mapper.UserMapper
 import com.patres.timetable.service.util.RandomUtil
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.CacheManager
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.scheduling.annotation.Scheduled
+import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -23,6 +32,7 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.stream.Collectors
+import kotlin.streams.toList
 
 @Service
 @Transactional
@@ -31,7 +41,12 @@ open class UserService(
     private val userMapper: UserMapper,
     private val passwordEncoder: PasswordEncoder,
     private val authorityRepository: AuthorityRepository,
-    private val cacheManager: CacheManager) {
+    private val cacheManager: CacheManager,
+    private val divisionRepository: DivisionRepository,
+    private val teacherRepository: TeacherRepository,
+    private val authenticationManager: AuthenticationManager
+    ) {
+
 
     companion object {
         private val log: Logger = LoggerFactory.getLogger(UserService::class.java)
@@ -48,7 +63,7 @@ open class UserService(
     }
 
     open fun getAuthorities(): List<String> {
-        return authorityRepository.findAll().stream().map { it.name }.collect(Collectors.toList())
+        return authorityRepository.findAll().stream().map { it.name }.toList()
     }
 
     open fun activateRegistration(key: String): User? {
@@ -86,11 +101,19 @@ open class UserService(
         return user
     }
 
-    open fun createUser(login: String, password: String, firstName: String?, lastName: String?, email: String,
-                   imageUrl: String?, langKey: String?): User {
+    open fun createUser(login: String, password: String, firstName: String? = null, lastName: String? = null, email: String,
+                   imageUrl: String? = null, langKey: String? = "en", schoolId: Long? = null, teacherId: Long? = null): User {
 
         val newUser = User()
-        val authority = authorityRepository.findOne(AuthoritiesConstants.SCHOOL_ADMIN)
+
+        val school = schoolId?.let { divisionRepository.getOne(schoolId) }
+        val teacher = teacherId?.let { teacherRepository.getOne(teacherId) }
+        val authority: Authority = if (teacher != null) {
+            authorityRepository.findOne(AuthoritiesConstants.TEACHER)
+        } else {
+            authorityRepository.findOne(AuthoritiesConstants.SCHOOL_ADMIN)
+        }
+
         val authorities = HashSet<Authority>()
         val encryptedPassword = passwordEncoder.encode(password)
         newUser.login = login
@@ -107,6 +130,9 @@ open class UserService(
         newUser.activationKey = RandomUtil.generateActivationKey()
         authorities.add(authority)
         newUser.authorities = authorities
+        newUser.school = school
+        newUser.teacher = teacher
+
         userRepository.save(newUser)
         log.debug("Created Information for User: {}", newUser)
         return newUser
@@ -114,6 +140,12 @@ open class UserService(
 
     open fun createUser(userDTO: UserDTO): User {
         val user = User()
+        val school = userDTO.schoolId?.let { divisionRepository.getOne(it) }
+        val teacher = userDTO.schoolId?.let { teacherRepository.getOne(it) }
+
+        user.school = school
+        user.teacher = teacher
+
         user.login = userDTO.login
         user.firstName = userDTO.firstName
         user.lastName = userDTO.lastName
@@ -178,7 +210,7 @@ open class UserService(
         user.imageUrl = userDTO.imageUrl
         user.activated = userDTO.activated
         user.langKey = userDTO.langKey
-        user.authorities = emptySet()
+        user.authorities = userDTO.authorities.map { authority -> authorityRepository.findOne(authority) }.toSet()
         userDTO.authorities
             .map { authorityRepository.findOne(it) }
             .forEach { user.authorities.plus(it) }
@@ -211,7 +243,18 @@ open class UserService(
 
     @Transactional(readOnly = true)
     open fun getAllManagedUsers(pageable: Pageable): Page<UserDTO> {
-        return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map { userMapper.toDto(it) }
+        val login = SecurityUtils.getCurrentUserLogin()
+            login?.let {
+                val userFromRepository = userRepository.findOneByLogin(login)
+            if (userFromRepository?.authorities?.map { it.name }?.contains(AuthoritiesConstants.ADMIN) == true) {
+                return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map { userMapper.toDto(it) }
+            }
+
+            if (userFromRepository?.authorities?.map { it.name }?.contains(AuthoritiesConstants.SCHOOL_ADMIN) == true) {
+                return userRepository.findAllByLoginNotAndSchoolId(pageable, Constants.ANONYMOUS_USER, userFromRepository.school?.id?: 0L).map { userMapper.toDto(it) }
+            }
+        }
+        return PageImpl<UserDTO>(emptyList())
     }
 
     @Transactional(readOnly = true)

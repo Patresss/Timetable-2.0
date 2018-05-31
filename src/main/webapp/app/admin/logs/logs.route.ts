@@ -6,6 +6,7 @@ export const logsRoute: Route = {
     path: 'logs',
     component: LogsComponent,
     data: {
+        authorities: ['ROLE_ADMIN'],
         pageTitle: 'logs.title'
     }
 };

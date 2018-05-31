@@ -4,6 +4,10 @@ import com.patres.timetable.domain.Teacher
 import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import com.patres.timetable.repository.LessonRepository
 import com.patres.timetable.repository.TeacherRepository
+import com.patres.timetable.repository.UserRepository
+import com.patres.timetable.security.AuthoritiesConstants
+import com.patres.timetable.security.SecurityUtils
+import com.patres.timetable.service.dto.AbstractDivisionOwnerDTO
 import com.patres.timetable.service.dto.TeacherDTO
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
 import com.patres.timetable.service.mapper.EntityMapper
@@ -16,31 +20,31 @@ import java.time.DayOfWeek
 
 @Service
 @Transactional
-open class TeacherService(entityRepository: TeacherRepository, entityMapper: EntityMapper<Teacher, TeacherDTO>) : DivisionOwnerService<Teacher, TeacherDTO, TeacherRepository>(entityRepository, entityMapper) {
-
-    @Autowired
-    private lateinit var lessonRepository: LessonRepository
+open class TeacherService(entityRepository: TeacherRepository, entityMapper: EntityMapper<Teacher, TeacherDTO>, val userRepository: UserRepository) : DivisionOwnerService<Teacher, TeacherDTO, TeacherRepository>(entityRepository, entityMapper) {
 
     companion object {
         private val log: Logger = LoggerFactory.getLogger(TeacherService::class.java)
     }
-//
-//    override fun save(entityDto: TeacherDTO): TeacherDTO {
-//
-//
-//        log.debug("Request to save {} : {}", getEntityName(), entityDto)
-//        var entity = entityMapper.toEntity(entityDto)
-//        lessonRepository.findByDivisionOwnerId(listOfNotNull(entityDto.divisionOwnerId)).forEach { lesson ->
-//            DayOfWeek.values().forEach { dayOfWeek ->
-//                if (!entity.preferenceDataTimeForTeachers.any { it.lesson?.id == lesson.id && it.dayOfWeek == dayOfWeek.value}) {
-//                    entity.preferenceDataTimeForTeachers.add(PreferenceDataTimeForTeacher())
-//                }
-//            }
-//        }
-//        entity = entityRepository.save(entity)
-//        return entityMapper.toDto(entity)
-//        return entityMapper.toDto(entity)
-//    }
+
+    override fun hasPrivilegeToModifyEntity(entityDto: AbstractDivisionOwnerDTO): Boolean {
+        return when {
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> true
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> {
+                val entityId = entityDto.id
+                val divisionOwnerId = entityDto.divisionOwnerId
+                entityRepository.userHasPrivilegeToModifyEntity(entityId, divisionOwnerId)
+            }
+            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.TEACHER) -> {
+                val login = SecurityUtils.getCurrentUserLogin()
+                val canModify = login?.let {
+                    val userFromRepository = userRepository.findOneByLogin(login)
+                    userFromRepository?.teacher?.id == entityDto.id
+                }
+                canModify?: false
+            }
+            else -> false
+        }
+    }
 
     @Transactional(readOnly = true)
     override fun findOne(id: Long?): TeacherDTO? {

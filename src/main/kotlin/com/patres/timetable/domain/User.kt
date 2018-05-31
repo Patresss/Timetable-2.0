@@ -13,6 +13,10 @@ import javax.persistence.*
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
+import javax.persistence.JoinColumn
+import javax.persistence.FetchType
+
+
 
 @Entity
 @Table(name = "jhi_user")
@@ -79,9 +83,12 @@ class User : AbstractAuditingEntity(), Serializable {
     @BatchSize(size = 20)
     var authorities: Set<Authority> = HashSet()
 
-    @ManyToMany(mappedBy = "users")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var divisions: Set<Division> = HashSet()
+    @ManyToOne
+    @JoinColumn(name = "school_id")
+    var school: Division? = null
+
+    @OneToOne
+    @JoinColumn(name = "teacher_id")
+    var teacher: Teacher? = null
 
 }

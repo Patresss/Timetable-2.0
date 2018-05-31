@@ -58,7 +58,6 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 colorBackground = entityDto.colorBackground
                 colorText = entityDto.colorText
                 parents = entityDTOSetToEntitySet(entityDto.parents)
-                users = userMapper.entityDTOSetToEntitySet(entityDto.users)
                 preferencesTeacherByDivision = preferenceTeacherByDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesTeacherByDivision)
                 preferencesSubjectByDivision = preferenceSubjectByDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesSubjectByDivision)
                 val parent = parents.elementAtOrNull(0) //TODO validate if all parents has the same owner
@@ -96,9 +95,6 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
 
         val divisionDtoSet = entitySetToEntityDTOSet(entity.parents)
         divisionDTO.parents = divisionDtoSet
-        val userDtoSet = userMapper.entitySetToEntityDTOSet(entity.users)
-        divisionDTO.users = userDtoSet
-
         return divisionDTO
     }
 

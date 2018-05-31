@@ -83,9 +83,8 @@ class Division(
     @JoinTable(name = "division_parent", joinColumns = [(JoinColumn(name = "parents_id", referencedColumnName = "id"))], inverseJoinColumns = [(JoinColumn(name = "divisions_id", referencedColumnName = "id"))])
     var children: Set<Division> = HashSet(),
 
-    @ManyToMany
+    @OneToMany(mappedBy = "school")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "division_user", joinColumns = [(JoinColumn(name = "divisions_id", referencedColumnName = "id"))], inverseJoinColumns = arrayOf(JoinColumn(name = "users_id", referencedColumnName = "id")))
     var users: Set<User> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "division", orphanRemoval = true)

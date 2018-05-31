@@ -40,7 +40,15 @@ open class UserDTO(
 
     var lastModifiedDate: Instant? = null,
 
-    var authorities: Set<String> = HashSet()
+    var authorities: Set<String> = HashSet(),
+
+    var schoolId: Long? = null,
+
+    var schoolName: String = "",
+
+    var teacherId: Long? = null,
+
+    var teacherFullName: String = ""
 
     ) : AbstractApplicationEntityDTO() {
 
@@ -62,8 +70,12 @@ open class UserDTO(
         createdDate: Instant?,
         lastModifiedBy: String?,
         lastModifiedDate: Instant?,
-        authorities: Set<String>?) : this() {
-
+        authorities: Set<String>?,
+        schoolId: Long? = null,
+        schoolName: String = "",
+        teacherId: Long? = null,
+        teacherFullName: String = "")
+    : this() {
         this.id = id
         this.login = login
         this.firstName = firstName
@@ -77,6 +89,10 @@ open class UserDTO(
         this.lastModifiedBy = lastModifiedBy
         this.lastModifiedDate = lastModifiedDate
         this.authorities = authorities?: HashSet()
+        this.schoolId = schoolId
+        this.schoolName = schoolName
+        this.teacherId = teacherId
+        this.teacherFullName = teacherFullName
     }
 
 }

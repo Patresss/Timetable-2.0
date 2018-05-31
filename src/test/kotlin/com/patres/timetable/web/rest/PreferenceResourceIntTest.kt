@@ -36,6 +36,9 @@ open class PreferenceResourceIntTest {
 
     @Autowired
     private lateinit var lessonService: LessonService
+
+    @Autowired
+    private lateinit var userService: UserService
     @Autowired
     private lateinit var divisionService: DivisionService
     @Autowired
@@ -65,7 +68,7 @@ open class PreferenceResourceIntTest {
     fun setup() {
         MockitoAnnotations.initMocks(this)
         restPreferenceMockMvc = initMockMvc(PreferenceResource(preferenceDependencyMapper, preferenceManager))
-        fillerResource = FillerResource(lessonService, divisionService, subjectService, timetableService, periodService, teacherService, curriculumService, curriculumListService, placeService)
+        fillerResource = FillerResource(lessonService, divisionService, subjectService, timetableService, periodService, teacherService, curriculumService, curriculumListService, placeService, userService)
         restFillerMockMvc = initMockMvc(fillerResource)
     }
 

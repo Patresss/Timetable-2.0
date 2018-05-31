@@ -63,17 +63,6 @@
 
         <addPrimaryKey columnNames="divisions_id, parents_id" tableName="division_parent"/>
 
-        <createTable tableName="division_user">
-            <column name="users_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="divisions_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="divisions_id, users_id" tableName="division_user"/>
-
         <createTable tableName="division_preferred_teacher">
             <column name="preferred_teachers_id" type="bigint">
                 <constraints nullable="false"/>

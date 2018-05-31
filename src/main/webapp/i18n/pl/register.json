@@ -19,6 +19,9 @@
                 "userexists": "<strong>Użytkownik z taką nazwą już istnieje!</strong> Prosimy wybrać inną nazwę.",
                 "emailexists": "<strong>Ten adres email jest już zarejestrowany!</strong> Prosimy wybrać inny adres."
             }
-        }
+        },
+        "register_new_school" : "Zarejestruj nową szkołę",
+        "choose_school" : "Wybierz szkołę",
+        "choose_teacher" : "Wybierz nauczyciela"
     }
 }

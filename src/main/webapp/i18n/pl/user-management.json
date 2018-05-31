@@ -25,6 +25,8 @@
         "createdBy": "Utworzony przez",
         "createdDate": "Data utworzenia",
         "lastModifiedBy": "Zmodyfikowany przez",
-        "lastModifiedDate": "Data modyfikacji"
+        "lastModifiedDate": "Data modyfikacji",
+        "school": "School",
+        "teacher": "Teacher"
     }
 }

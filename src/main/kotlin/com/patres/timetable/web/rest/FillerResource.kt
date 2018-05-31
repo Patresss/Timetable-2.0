@@ -30,7 +30,8 @@ open class FillerResource(
     private var teacherService: TeacherService,
     private var curriculumService: CurriculumService,
     private var curriculumListService: CurriculumListService,
-    private var placeService: PlaceService) {
+    private var placeService: PlaceService,
+    private var userService: UserService) {
 
     companion object {
         val log: Logger = LoggerFactory.getLogger(FillerResource::class.java)
@@ -2499,6 +2500,17 @@ open class FillerResource(
         class3fGenerate = divisionService.save(class3fGenerate)
 
 
+        userService.createUser(
+            login = "2lo",
+            password = "pass",
+            firstName = null,
+            lastName = null,
+            email = "2lo@gmail.com",
+            imageUrl = null,
+            langKey = "en",
+            schoolId = lo2.id,
+            teacherId = null
+        )
 
     }
 
@@ -2594,6 +2606,8 @@ open class FillerResource(
             PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l9.id, dayOfWeek = 7, points = -10000),
             PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l10.id, dayOfWeek = 7, points = -10000),
             PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 7, points = -10000))
+
+
     }
 
 
