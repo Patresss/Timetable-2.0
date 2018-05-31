@@ -622,6 +622,10 @@ a:hover {
         padding: 0.5rem;
     }
 
+    .jh-card {
+        padding: 0;
+    }
+
 }
 
 .edit-entity-card-select {
@@ -928,4 +932,22 @@ button.app-primary-button:focus {
 
 .card-header {
     background: rgba(0, 0, 0, 0.07);
+}
+
+.light-view {
+    background: transparentize($light-text-color, 0.2);
+    color: $accent-color-strong-dark;
+    input, textarea, select {
+        background: transparentize($accent-color-strong-light, 0.2);
+    }
+
+    input:focus, textarea:focus, select:focus {
+        background: $accent-color-strong-light;
+    }
+
+    a {
+        color: $accent-color-strong-dark;
+        font-weight: normal;
+    }
+
 }

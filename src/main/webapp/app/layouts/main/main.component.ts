@@ -10,6 +10,9 @@ import {JhiLanguageHelper} from '../../shared';
 export class JhiMainComponent implements OnInit {
 
     fullPage = false;
+    lightView = false;
+    lightGlassRegexp = [
+        new RegExp('^\\/register.*')];
     fullPageRegexp = [
         new RegExp('^\\/plan.*'),
         new RegExp('^\\/$')];
@@ -43,6 +46,13 @@ export class JhiMainComponent implements OnInit {
                 break;
             }
         }
-    }
 
+        this.lightView = false;
+        for (const regexp of this.lightGlassRegexp) {
+            if (regexp.test(event.url)) {
+                this.lightView = true;
+                break;
+            }
+        }
+    }
 }

@@ -13,12 +13,25 @@
     </ng-template>
 
     <ng-template #glassPageTemplate>
-        <jhi-glass>
-            <div class='card jh-card'>
-                <router-outlet></router-outlet>
-            </div>
-        </jhi-glass>
+        <div *ngIf="lightView; then lightGlass else darkGlass"></div>
+        <ng-template #darkGlass>
+            <jhi-glass>
+                <div class='card jh-card'>
+                    <router-outlet></router-outlet>
+                </div>
+            </jhi-glass>
+        </ng-template>
+
+        <ng-template #lightGlass>
+            <jhi-glass contentClass="light-view">
+                <div class='card jh-card'>
+                    <router-outlet></router-outlet>
+                </div>
+            </jhi-glass>
+        </ng-template>
+
     </ng-template>
 
     <jhi-footer></jhi-footer>
+
 </div>
