@@ -63,7 +63,7 @@ export const timetablePopupRoute: Routes = [
         path: 'timetable/:id/edit',
         component: TimetablePopupComponent,
         data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
+            authorities: ['ROLE_SCHOOL_ADMIN', 'ROLE_TEACHER'], // TODO check security
             pageTitle: 'timetableApp.timetable.home.title'
         },
         canActivate: [UserRouteAccessService],

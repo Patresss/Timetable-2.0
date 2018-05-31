@@ -86,6 +86,8 @@ export class TimetableElementComponent implements OnInit {
                 return true;
             } else if (this.currentAccount.authorities.indexOf(RoleType.ROLE_SCHOOL_ADMIN.toString()) > -1) {
                 return this.selectedSchool.users.indexOf(this.currentAccount.id) > -1;
+            } else if (this.currentAccount.authorities.indexOf(RoleType.ROLE_TEACHER.toString()) > -1 && this.timetable.teacherId == this.currentAccount.teacherId) {
+                return true;
             }
         } else {
             return false;
