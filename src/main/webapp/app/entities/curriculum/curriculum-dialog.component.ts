@@ -19,6 +19,10 @@ import { ResponseWrapper } from '../../shared';
 import {SelectType} from '../../util/select-type.model';
 import {SelectUtil} from '../../util/select-util.model';
 import {EventType} from '../timetable';
+import {PreferenceDependency} from '../../preference/preferecne-dependency.model';
+import {PreferenceService} from '../../preference/preference.service';
+import {Preference} from '../../preference/preferecne.model';
+import {PreferenceHierarchy} from '../../preference/preferecne-hierarchy.model';
 
 @Component({
     selector: 'jhi-curriculum-dialog',
@@ -32,6 +36,9 @@ export class CurriculumDialogComponent implements OnInit {
     endDateDp: any;
     dateDp: any;
     series = false;
+    schoolId: number;
+    currentLoadCounter = 0;
+    numberOfLoad = 3;
 
     eventTypeSelectOption = [
         new SelectType(1, '', 'timetableApp.EventType.LESSON', EventType.LESSON),
@@ -94,23 +101,22 @@ export class CurriculumDialogComponent implements OnInit {
         private divisionService: DivisionService,
         private lessonService: LessonService,
         private periodService: PeriodService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private preferenceService: PreferenceService
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
-        this.placeService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
-            .subscribe((res: ResponseWrapper) => { this.initPlaces(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
+        // this.placeService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
+        //     .subscribe((res: ResponseWrapper) => { this.initPlaces(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
         this.subjectService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
             .subscribe((res: ResponseWrapper) => { this.initSubjects(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
         this.teacherService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['surname,name']})
             .subscribe((res: ResponseWrapper) => { this.initTeachers(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
         this.divisionService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
             .subscribe((res: ResponseWrapper) => { this.initDivisions(res.json) }, (res: ResponseWrapper) => this.onError(res.json));
-        this.lessonService.findByCurrentLogin({size: SelectType.MAX_INT_JAVA, sort: ['name']})
-            .subscribe((res: ResponseWrapper) => { this.initLessons(res.json)}, (res: ResponseWrapper) => this.onError(res.json));
-        this.selectedEventType = this.eventTypeSelectOption.filter( (entity) => entity.value === this.curriculum.type)
+        // this.selectedEventType = this.eventTypeSelectOption.filter( (entity) => entity.value === this.curriculum.type)
     }
 
     clear() {
@@ -159,7 +165,9 @@ export class CurriculumDialogComponent implements OnInit {
 
     private initSubjects(entityList: any[]) {
         this.subjectSelectOption = SelectUtil.entityListToSelectList(entityList);
-        this.selectedSubject = this.subjectSelectOption.filter( (entity) => entity.id === this.curriculum.subjectId)
+        this.selectedSubject = this.subjectSelectOption.filter( (entity) => entity.id === this.curriculum.subjectId);
+        this.currentLoadCounter++;
+        this.changePreferenceAfterLoadEntities()
     }
     private initLessons(entityList: any[]) {
         this.lessonSelectOption = SelectUtil.entityListToSelectList(entityList);
@@ -168,12 +176,20 @@ export class CurriculumDialogComponent implements OnInit {
 
     private initTeachers(entityList: any[]) {
         this.teacherSelectOption = SelectUtil.teacherListToSelectList(entityList);
-        this.selectedTeacher = this.teacherSelectOption.filter( (entity) => entity.id === this.curriculum.teacherId)
+        this.selectedTeacher = this.teacherSelectOption.filter( (entity) => entity.id === this.curriculum.teacherId);
+        this.currentLoadCounter++;
+        this.changePreferenceAfterLoadEntities()
+
     }
 
     private initDivisions(entityList: any[]) {
         this.divisionSelectOption = SelectUtil.entityListToSelectList(entityList);
-        this.selectedDivision = this.divisionSelectOption.filter( (entity) => entity.id === this.curriculum.divisionId)
+        this.selectedDivision = this.divisionSelectOption.filter( (entity) => entity.id === this.curriculum.divisionId);
+        if (this.selectedDivision != null && this.selectedDivision[0] != null && this.selectedDivision[0].item != null) {
+            this.schoolId = this.selectedDivision[0].item.divisionOwnerId;
+        }
+        this.currentLoadCounter++;
+        this.changePreferenceAfterLoadEntities()
     }
 
  // ================================================================
@@ -181,26 +197,30 @@ export class CurriculumDialogComponent implements OnInit {
 // ================================================================
     onPlaceSelect(item: any) {
         this.curriculum.placeId = item.id;
+        this.changePreference();
     }
 
     onPlaceDeSelect() {
         this.curriculum.placeId = null;
+        this.changePreference();
     }
 
     onSubjectSelect(item: any) {
         this.curriculum.subjectId = item.id;
+        this.changePreference();
+
     }
 
     onSubjectDeSelect() {
         this.curriculum.subjectId = null;
+        this.changePreference();
+
     }
 
     onLessonSelect(item: any) {
         this.curriculum.lessonId = item.id;
         this.curriculum.startTime = item.item.startTime;
         this.curriculum.endTime = item.item.endTime;
-        console.log(item)
-        console.log(this.lessonSelectOption)
     }
 
     onLessonDeSelect() {
@@ -209,18 +229,24 @@ export class CurriculumDialogComponent implements OnInit {
 
     onTeacherSelect(item: any) {
         this.curriculum.teacherId = item.id;
+        this.changePreference();
     }
 
     onTeacherDeSelect() {
         this.curriculum.teacherId = null;
+        this.changePreference();
     }
 
     onDivisionSelect(item: any) {
         this.curriculum.divisionId = item.id;
+        this.schoolId = item.item.divisionOwnerId;
+        this.changePreference();
     }
 
     onDivisionDeSelect() {
         this.curriculum.divisionId = null;
+        this.schoolId = null;
+        this.changePreference();
     }
 
     onEventTypeSelect(item: any) {
@@ -229,6 +255,75 @@ export class CurriculumDialogComponent implements OnInit {
 
     onEventTypeDeSelect() {
         this.curriculum.type = null;
+    }
+
+// ================================================================
+// Preferece
+// ================================================================
+
+    changePreference() {
+        const preferenceDependency = new PreferenceDependency();
+        preferenceDependency.divisionId = this.curriculum.divisionId;
+        preferenceDependency.teacherId = this.curriculum.teacherId;
+        preferenceDependency.subjectId = this.curriculum.subjectId;
+        preferenceDependency.divisionOwnerId = this.schoolId;
+
+        this.preferenceService.getPreferenceByPreferenceDependency(preferenceDependency).subscribe((response) => {
+            this.updateSelectListesByPreference(response.json);
+        });
+    }
+
+    updateSelectListesByPreference(preference: Preference) {
+        this.updateSelectListsByPreference(preference.preferredTeacherMap, this.teacherSelectOption);
+        this.teacherSelectSort(this.teacherSelectOption);
+        this.updateSelectListsByPreference(preference.preferredSubjectMap, this.subjectSelectOption);
+        this.entitySelectSort(this.subjectSelectOption);
+        this.updateSelectListsByPreference(preference.preferredDivisionMap, this.divisionSelectOption);
+        this.entitySelectSort(this.divisionSelectOption);
+
+    }
+
+    // TODO duplicat from timetable
+    updateSelectListsByPreference(profferedMap: Map<number, PreferenceHierarchy>, selectOption: any) {
+        selectOption.forEach(
+            (selectOptionEntity) => selectOption
+                .filter((entity) => selectOptionEntity.id !== entity.id)
+                .forEach((entity) => entity.preferenceHierarchy = new PreferenceHierarchy())
+        );
+        profferedMap.forEach((value, key) => {
+            selectOption.filter((entity) => key === entity.id).forEach((entity) => entity.preferenceHierarchy = value)
+        });
+    }
+
+    // TODO duplicat from timetable
+    entitySelectSort(selectOption: any) {
+        selectOption.sort((a: any, b: any) => {
+            if (b.preferenceHierarchy.points === a.preferenceHierarchy.points) {
+                return a.itemName.localeCompare(b.itemName);
+            }
+            return b.preferenceHierarchy.points - a.preferenceHierarchy.points;
+        });
+    }
+
+    // TODO duplicat from timetable
+    teacherSelectSort(selectOption: any) {
+        selectOption.sort((a: any, b: any) => {
+            if (b.preferenceHierarchy.points === a.preferenceHierarchy.points) {
+                if (a.item.surname === b.item.surname) {
+                    return a.item.name.localeCompare(b.item.name)
+                } else {
+                    return a.item.surname.localeCompare(b.item.surname)
+                }
+
+            }
+            return b.preferenceHierarchy.points - a.preferenceHierarchy.points
+        });
+    }
+
+    private changePreferenceAfterLoadEntities() {
+        if (this.currentLoadCounter >= this.numberOfLoad) {
+            this.changePreference();
+        }
     }
 }
 

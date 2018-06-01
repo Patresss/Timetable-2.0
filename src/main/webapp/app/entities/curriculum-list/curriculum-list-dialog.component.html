@@ -10,7 +10,7 @@
         <div class="modal-body">
             <jhi-alert-error></jhi-alert-error>
 
-            <div class="form-group">
+            <div class="form-group" *jhiHasAnyAuthority="'ROLE_ADMIN'">
                 <label jhiTranslate="timetableApp.curriculum-list.divisionOwner" for="field_division">Division</label>
                 <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="curriculumList.divisionOwnerId">
                     <option [ngValue]="divisionOption.id" *ngFor="let divisionOption of divisions; trackBy: trackDivisionById">{{divisionOption.name}}</option>

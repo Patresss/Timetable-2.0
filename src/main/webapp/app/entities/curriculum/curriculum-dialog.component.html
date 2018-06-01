@@ -27,7 +27,8 @@
                     <div class='col-md-6'>
                         <label jhiTranslate="timetableApp.curriculum.division" for="field_division">Division</label>
                         <jhi-angular2-multiselect [data]="divisionSelectOption" [(ngModel)]="selectedDivision" [settings]="divisionSelectSettings"
-                                                  styleClass="edit-entity-card-select" name="selectedDivision" #type="ngModel" required [blur]="false" (onSelect)="onDivisionSelect($event)" (onDeSelect)="onDivisionDeSelect()">
+                                                  styleClass="edit-entity-card-select" name="selectedDivision" #type="ngModel" required [blur]="false"  [preferenceHierarchy]="true"
+                                                  (onSelect)="onDivisionSelect($event)" (onDeSelect)="onDivisionDeSelect()">
                     </div>
                     <div class='col-md-6'>
                         <label class="form-control-label" jhiTranslate="timetableApp.curriculum.numberOfActivities" for="field_numberOfActivities">Number of activities</label>
@@ -42,12 +43,14 @@
                     <div class='col-md-6'>
                         <label jhiTranslate="timetableApp.curriculum.subject" for="field_subject">Subject</label>
                         <jhi-angular2-multiselect [data]="subjectSelectOption" [(ngModel)]="selectedSubject" [settings]="subjectSelectSettings"
-                                                  styleClass="edit-entity-card-select" name="selectedSubject" #type="ngModel" required [blur]="false" (onSelect)="onSubjectSelect($event)" (onDeSelect)="onSubjectDeSelect()">
+                                                  styleClass="edit-entity-card-select" name="selectedSubject" #type="ngModel" required [blur]="false"  [preferenceHierarchy]="true"
+                                                  (onSelect)="onSubjectSelect($event)" (onDeSelect)="onSubjectDeSelect()">
                     </div>
                     <div class='col-md-6'>
                         <label jhiTranslate="timetableApp.curriculum.teacher" for="field_teacher">Teacher</label>
                         <jhi-angular2-multiselect [data]="teacherSelectOption" [(ngModel)]="selectedTeacher" [settings]="teacherSelectSettings"
-                                                  styleClass="edit-entity-card-select" name="selectedTeacher" #type="ngModel" required [blur]="false" (onSelect)="onTeacherSelect($event)" (onDeSelect)="onTeacherDeSelect()">
+                                                  styleClass="edit-entity-card-select" name="selectedTeacher" #type="ngModel" required [blur]="false" [preferenceHierarchy]="true"
+                                                  (onSelect)="onTeacherSelect($event)" (onDeSelect)="onTeacherDeSelect()">
                     </div>
                 </div>
             </div>

@@ -32,6 +32,7 @@ export class Division implements BaseEntity {
         public preferencesTeacherByDivision?: PreferenceTeacherByDivisionModel[],
         public preferredPlaces?: BaseEntity[],
         public preferencesDataTimeForDivision: PreferenceForDataTimeForDivisionModel[] = [],
+        public divisionOwnerId?: number
     ) {
     }
 }

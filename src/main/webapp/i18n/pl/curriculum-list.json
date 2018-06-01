@@ -4,7 +4,7 @@
             "home": {
                 "title": "Plany nauczania",
                 "createLabel": "Dodaj Plany nauczania",
-                "createOrEditLabel": "Dodaj lub edytuj: Plany nauczania"
+                "createOrEditLabel": "Dodaj lub edytuj: Listę programów nauczania"
             },
             "created": "Utworzono nowy Plany nauczania z identyfikatorem {{ param }}",
             "updated": "Uaktualniono Plany nauczania z identyfikatorem {{ param }}",
@@ -15,8 +15,8 @@
             "detail": {
                 "title": "Plany nauczania"
             },
-            "name": "Name",
-            "divisionOwner": "Division owner",
+            "name": "Nazwa",
+            "divisionOwner": "Szkoła",
             "curriculum-list": "Plany nauczania",
             "period": "Okres czasu"
         }
