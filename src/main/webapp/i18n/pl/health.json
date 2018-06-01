@@ -5,7 +5,7 @@
         "stacktrace": "Stos wywołań",
         "details": {
             "details": "Szczegóły",
-            "property": "Właściwości",
+            "properties": "Właściwości",
             "name": "Nazwa",
             "value": "Wartość",
             "error": "Błąd"
@@ -13,7 +13,10 @@
         "indicator": {
             "diskSpace": "Przestrzeń dyskowa",
             "mail": "Email",
-            "db": "Baza danych"
+            "db": "Baza danych",
+            "refreshScope": "Refresh Scope",
+            "configServer": "Config Server",
+            "hystrix": "Hystrix"
         },
         "table": {
             "service": "Nazwa usługi",
@@ -21,7 +24,8 @@
         },
         "status": {
             "UP": "DOSTĘPNE",
-            "DOWN": "NIEDZIAŁAJĄCY"
+            "DOWN": "NIEDZIAŁAJĄCY",
+            "UNKNOWN": "NIEZNANY"
         }
     }
 }

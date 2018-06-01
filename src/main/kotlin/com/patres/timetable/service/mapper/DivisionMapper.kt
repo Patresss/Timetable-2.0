@@ -1,6 +1,7 @@
 package com.patres.timetable.service.mapper
 
 import com.patres.timetable.domain.Division
+import com.patres.timetable.repository.DivisionRepository
 import com.patres.timetable.repository.LessonRepository
 import com.patres.timetable.repository.SubjectRepository
 import com.patres.timetable.repository.TeacherRepository
@@ -19,17 +20,12 @@ import java.time.DayOfWeek
 @Service
 open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
 
-    @Autowired
-    private lateinit var userMapper: UserMapper
-
-    @Autowired
-    private lateinit var teacherMapper: TeacherMapper
-
-    @Autowired
-    private lateinit var subjectMapper: SubjectMapper
 
     @Autowired
     private lateinit var lessonRepository: LessonRepository
+
+    @Autowired
+    private lateinit var divisionRepository: DivisionRepository
 
     @Autowired
     private lateinit var preferenceDataTimeForDivisionMapper: PreferenceDataTimeForDivisionMapper
@@ -60,8 +56,7 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 parents = entityDTOSetToEntitySet(entityDto.parents)
                 preferencesTeacherByDivision = preferenceTeacherByDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesTeacherByDivision)
                 preferencesSubjectByDivision = preferenceSubjectByDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesSubjectByDivision)
-                val parent = parents.elementAtOrNull(0) //TODO validate if all parents has the same owner
-                divisionOwner = parent?.divisionOwner ?: parent
+                divisionOwner = entityDto.divisionOwnerId?.let { divisionRepository.findOne(it) }
                 preferencesDataTimeForDivision = preferenceDataTimeForDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForDivision)
 
                 if (colorBackground.isNullOrBlank()) {

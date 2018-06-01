@@ -12,7 +12,8 @@ export class JhiMainComponent implements OnInit {
     fullPage = false;
     lightView = false;
     lightGlassRegexp = [
-        new RegExp('^\\/register.*')];
+        new RegExp('^\\/register.*'),
+        new RegExp('^\\/docs.*')];
     fullPageRegexp = [
         new RegExp('^\\/plan.*'),
         new RegExp('^\\/$')];

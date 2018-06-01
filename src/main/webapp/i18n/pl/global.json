@@ -8,18 +8,18 @@
             "edit_teacher": "Edytuj nauczyciela",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
-                "main": "Encje",
+                "main": "Zasoby",
                 "division": "Grupy",
                 "property": "Właściwości",
                 "teacher": "Nauczyciele",
                 "subject": "Przedmioty",
-                "place": "Sala",
+                "place": "Sale",
                 "timetable": "Wydarzenia",
                 "lesson": "Lekcje",
                 "period": "Okresy czasu",
                 "interval": "Interval",
                 "curriculum-list": "Lista programów",
-                "curriculum": "Program nauczania",
+                "curriculum": "Programy nauczania",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -50,10 +50,10 @@
         "form": {
             "username": "Nazwa użytkownika",
             "username.placeholder": "Twój login",
-            "newpassword": "Nowe hasło",
-            "newpassword.placeholder": "Nowe hasło",
-            "confirmpassword": "Potwierdź nowe hasło",
-            "confirmpassword.placeholder": "Potwierdź nowe hasło",
+            "newpassword": "Hasło",
+            "newpassword.placeholder": "Hasło",
+            "confirmpassword": "Potwierdź hasło",
+            "confirmpassword.placeholder": "Potwierdź hasło",
             "email": "Email",
             "email.placeholder": "Twój email"
         },
@@ -98,7 +98,7 @@
         "ribbon": {
             "dev": "Development"
         },
-        "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
+        "item-count": "Wyświetlono {{first}} - {{second}} z {{total}} elementów.",
         "search": "Szukaj",
         "select-all": "Zaznacz wszystko",
         "un-select-all": "Odznacz wszystko",

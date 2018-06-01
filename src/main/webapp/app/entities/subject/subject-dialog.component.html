@@ -31,20 +31,13 @@
             </div>
 
             <div class="form-group">
-                <div class="pure-checkbox">
-                    <input type="checkbox"  class="form-control" name="customColor" id="field_customColor" [(ngModel)]="customColor"/>
-                    <label class="form-control-label" jhiTranslate="global.customColor" for="field_customColor">customColor</label>
-                </div>
-            </div>
-
-            <div class="form-group" *ngIf="customColor">
                 <label class="form-control-label" jhiTranslate="timetableApp.subject.colorBackground" for="field_colorBackground">Color Background</label>
                 <input type="text" class="form-control" name="colorBackground" id="field_colorBackground"
                        [value]="subject.colorBackground" [(colorPicker)]="subject.colorBackground" [style.background]="subject.colorBackground" [cpOutputFormat]="'rgba'"
                        [cpAlphaChannel]="'disabled'" (colorPickerChange)="subject.colorBackground = $event" readonly/>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" *jhiHasAnyAuthority="'ROLE_ADMIN'">
                 <label jhiTranslate="timetableApp.subject.divisionOwner" for="field_division">Division</label>
                 <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="subject.divisionOwnerId">
                     <option [ngValue]="null"></option>

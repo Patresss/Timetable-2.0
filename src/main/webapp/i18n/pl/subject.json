@@ -16,9 +16,9 @@
                 "title": "Przedmiot"
             },
             "main": "Przedmiot",
-            "name": "Name",
-            "shortName": "Short Name",
-            "colorBackground": "Color Background",
+            "name": "Nazwa",
+            "shortName": "Skrócona nazwa",
+            "colorBackground": "Kolor",
             "colorText": "Color Text",
             "timetable": "Timetable",
             "division": "Division",

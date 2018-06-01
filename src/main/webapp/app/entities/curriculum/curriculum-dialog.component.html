@@ -9,18 +9,18 @@
         <div class="modal-body">
             <jhi-alert-error></jhi-alert-error>
 
-            <div class="form-group">
-                <label class="form-control-label" jhiTranslate="timetableApp.curriculum.type" for="field_type">Type</label>
-                <div style="clear: both"></div>
-                <jhi-angular2-multiselect [data]="eventTypeSelectOption" [(ngModel)]="selectedEventType" [settings]="eventTypeSelectSettings"
-                                          styleClass="edit-entity-card-select" name="selectedEventType" #type="ngModel" required [blur]="false">
-                    <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
-                        <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
-                            This field is required.
-                        </small>
-                    </div>
-            </div>
+            <!--<div class="form-group">-->
+                <!--<label class="form-control-label" jhiTranslate="timetableApp.curriculum.type" for="field_type">Type</label>-->
+                <!--<div style="clear: both"></div>-->
+                <!--<jhi-angular2-multiselect [data]="eventTypeSelectOption" [(ngModel)]="selectedEventType" [settings]="eventTypeSelectSettings"-->
+                                          <!--styleClass="edit-entity-card-select" name="selectedEventType" #type="ngModel" required [blur]="false">-->
+                    <!--<div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">-->
+                        <!--<small class="form-text text-danger"-->
+                               <!--[hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">-->
+                            <!--This field is required.-->
+                        <!--</small>-->
+                    <!--</div>-->
+            <!--</div>-->
 
             <div class="form-group">
                 <div class='row'>
@@ -51,28 +51,28 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class='row'>
-                    <div class='col-md-6'>
-                        <label jhiTranslate="timetableApp.curriculum.place" for="field_place">Place</label>
-                        <jhi-angular2-multiselect [data]="placeSelectOption" [(ngModel)]="selectedPlace" [settings]="placeSelectSettings"
-                                                  styleClass="edit-entity-card-select" name="selectedPlace" #type="ngModel" [blur]="false" (onSelect)="onPlaceSelect($event)" (onDeSelect)="onPlaceDeSelect()">
-                    </div>
+            <!--<div class="form-group">-->
+                <!--<div class='row'>-->
+                    <!--<div class='col-md-6'>-->
+                        <!--<label jhiTranslate="timetableApp.curriculum.place" for="field_place">Place</label>-->
+                        <!--<jhi-angular2-multiselect [data]="placeSelectOption" [(ngModel)]="selectedPlace" [settings]="placeSelectSettings"-->
+                                                  <!--styleClass="edit-entity-card-select" name="selectedPlace" #type="ngModel" [blur]="false" (onSelect)="onPlaceSelect($event)" (onDeSelect)="onPlaceDeSelect()">-->
+                    <!--</div>-->
 
-                </div>
-            </div>
-            <div class="form-group">
-                <div class='row'>
-                    <div class='col-md-6'>
-                        <label class="form-control-label" jhiTranslate="timetableApp.curriculum.everyWeek" for="field_everyWeek">Every Week</label>
-                        <input type="number" class="form-control" name="everyWeek" id="field_everyWeek" [(ngModel)]="curriculum.everyWeek"/>
-                    </div>
-                    <div class='col-md-6'>
-                        <label class="form-control-label" jhiTranslate="timetableApp.curriculum.startWithWeek" for="field_startWithWeek">Start With Week</label>
-                        <input type="number" class="form-control" name="startWithWeek" id="field_startWithWeek" [(ngModel)]="curriculum.startWithWeek"/>
-                    </div>
-                </div>
-            </div>
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<div class='row'>-->
+                    <!--<div class='col-md-6'>-->
+                        <!--<label class="form-control-label" jhiTranslate="timetableApp.curriculum.everyWeek" for="field_everyWeek">Every Week</label>-->
+                        <!--<input type="number" class="form-control" name="everyWeek" id="field_everyWeek" [(ngModel)]="curriculum.everyWeek"/>-->
+                    <!--</div>-->
+                    <!--<div class='col-md-6'>-->
+                        <!--<label class="form-control-label" jhiTranslate="timetableApp.curriculum.startWithWeek" for="field_startWithWeek">Start With Week</label>-->
+                        <!--<input type="number" class="form-control" name="startWithWeek" id="field_startWithWeek" [(ngModel)]="curriculum.startWithWeek"/>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
 
         </div>

@@ -4,7 +4,7 @@
             "home": {
                 "title": "Periods",
                 "createLabel": "Dodaj Period",
-                "createOrEditLabel": "Dodaj lub edytuj: Period"
+                "createOrEditLabel": "Dodaj lub edytuj: Okres czasu"
             },
             "created": "Utworzono nowy Period z identyfikatorem {{ param }}",
             "updated": "Uaktualniono Period z identyfikatorem {{ param }}",
@@ -13,16 +13,17 @@
                 "question": "Czy na pewno chcesz usunąć Period {{ id }}?"
             },
             "detail": {
-                "title": "Period"
+                "title": "Okres czasu"
             },
-            "name": "Name",
-            "intervalTime": "Interval Time",
+            "name": "Nazwa",
+            "intervalTime": "Interwał czasowy",
+            "excludedIntervalTime": "Wykluczony interwał czasowy",
             "timetable": "Timetable",
             "division": "Division"
         },
         "interval" : {
-            "startDate": "Start date",
-            "endDate": "End date"
+            "startDate": "Data rozpoczęcia",
+            "endDate": "Data zakończenia"
         }
     }
 }

@@ -68,6 +68,7 @@ open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
             divisionOwnerName = divisionMapper.getDivisionOwnerName(entity.divisionOwner)
             id = entity.id
             shortName = if (entity.shortName != null) entity.shortName else getShortName(name)
+            colorBackground = entity.colorBackground
         }
     }
 

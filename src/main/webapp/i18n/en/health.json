@@ -5,7 +5,7 @@
         "stacktrace": "Stacktrace",
         "details": {
             "details": "Details",
-            "property": "Properties",
+            "properties": "Properties",
             "name": "Name",
             "value": "Value",
             "error": "Error"
@@ -13,7 +13,10 @@
         "indicator": {
             "diskSpace": "Disk space",
             "mail": "Email",
-            "db": "Database"
+            "db": "Database",
+            "refreshScope": "Refresh Scope",
+            "configServer": "Config Server",
+            "hystrix": "Hystrix"
         },
         "table": {
             "service": "Service name",
@@ -21,7 +24,8 @@
         },
         "status": {
             "UP": "UP",
-            "DOWN": "DOWN"
+            "DOWN": "DOWN",
+            "UNKNOWN": "UNKNOWN"
         }
     }
 }

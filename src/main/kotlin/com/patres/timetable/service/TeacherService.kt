@@ -20,7 +20,7 @@ import java.time.DayOfWeek
 
 @Service
 @Transactional
-open class TeacherService(entityRepository: TeacherRepository, entityMapper: EntityMapper<Teacher, TeacherDTO>, val userRepository: UserRepository) : DivisionOwnerService<Teacher, TeacherDTO, TeacherRepository>(entityRepository, entityMapper) {
+open class TeacherService(entityRepository: TeacherRepository, entityMapper: EntityMapper<Teacher, TeacherDTO>) : DivisionOwnerService<Teacher, TeacherDTO, TeacherRepository>(entityRepository, entityMapper) {
 
     companion object {
         private val log: Logger = LoggerFactory.getLogger(TeacherService::class.java)

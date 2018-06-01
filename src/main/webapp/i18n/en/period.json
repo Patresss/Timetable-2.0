@@ -17,6 +17,7 @@
             },
             "name": "Name",
             "intervalTime": "Interval Time",
+            "excludedIntervalTime": "Excluded interval time",
             "timetable": "Timetable",
             "divisionOwner": "Division owner"
         },
