@@ -54,10 +54,14 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 colorBackground = entityDto.colorBackground
                 colorText = entityDto.colorText
                 parents = entityDTOSetToEntitySet(entityDto.parents)
+                divisionOwner = entityDto.divisionOwnerId?.let { divisionRepository.findOne(it) }
                 preferencesTeacherByDivision = preferenceTeacherByDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesTeacherByDivision)
                 preferencesSubjectByDivision = preferenceSubjectByDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesSubjectByDivision)
-                divisionOwner = entityDto.divisionOwnerId?.let { divisionRepository.findOne(it) }
                 preferencesDataTimeForDivision = preferenceDataTimeForDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForDivision)
+
+                preferencesTeacherByDivision.forEach { it.division = this }
+                preferencesSubjectByDivision.forEach { it.division = this }
+                preferencesDataTimeForDivision.forEach { it.division = this }
 
                 if (colorBackground.isNullOrBlank()) {
                     colorBackground = EntityUtil.calculateRandomColor()

@@ -1,8 +1,11 @@
 package com.patres.timetable.web.rest
 
 import com.codahale.metrics.annotation.Timed
+import com.patres.timetable.domain.Place
+import com.patres.timetable.domain.Teacher
 import com.patres.timetable.service.PlaceService
 import com.patres.timetable.service.dto.PlaceDTO
+import com.patres.timetable.service.dto.TeacherDTO
 import com.patres.timetable.web.rest.util.HeaderUtil
 import com.patres.timetable.web.rest.util.PaginationUtil
 import io.github.jhipster.web.util.ResponseUtil
@@ -134,6 +137,21 @@ open class PlaceResource(private val placeService: PlaceService) {
     open fun getPlace(@PathVariable id: Long?): ResponseEntity<PlaceDTO> {
         log.debug("REST request to get Place : {}", id)
         val placeDTO = placeService.findOne(id)
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(placeDTO))
+    }
+
+
+    /**
+     * GET  /places/default/{schoolId} : get the default place by schoolId
+     *
+     * @param schoolId schoolId
+     * @return the ResponseEntity with status 200 (OK) and with body the placeDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/places/default/{schoolId}")
+    @Timed
+    open fun getDefaultPlace(@PathVariable schoolId: Long?): ResponseEntity<PlaceDTO> {
+        PlaceResource.log.debug("REST request to get default Place by schoolId: {}", schoolId)
+        val placeDTO = schoolId?.let {placeService.calculateDefaultEntityBySchoolId(Place(), schoolId) }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(placeDTO))
     }
 

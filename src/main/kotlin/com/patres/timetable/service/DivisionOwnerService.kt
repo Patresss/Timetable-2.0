@@ -1,6 +1,7 @@
 package com.patres.timetable.service
 
 import com.patres.timetable.domain.AbstractDivisionOwner
+import com.patres.timetable.domain.Division
 import com.patres.timetable.repository.DivisionOwnerRepository
 import com.patres.timetable.repository.UserRepository
 import com.patres.timetable.security.AuthoritiesConstants
@@ -44,6 +45,12 @@ abstract class DivisionOwnerService<EntityType : AbstractDivisionOwner, EntityDt
     }
 
     @Transactional(readOnly = true)
+    open fun calculateDefaultEntityBySchoolId(entity: EntityType, schoolId: Long): EntityDtoType {
+        entity.divisionOwner = Division().apply { id =  schoolId}
+        return entityMapper.toDto(entity)
+    }
+
+    @Transactional(readOnly = true)
     open fun findByDivisionOwnerId(pageable: Pageable, divisionsId: List<Long>): Page<EntityDtoType> {
         log.debug("Request to get {} by Division owners id", getEntityName())
         return entityRepository.findByDivisionOwnerId(pageable, divisionsId).map{ entityMapper.toDtoWithSampleForm(it) }
@@ -74,30 +81,48 @@ abstract class DivisionOwnerService<EntityType : AbstractDivisionOwner, EntityDt
         return entityTypeClass.simpleName
     }
 
-    fun hasPrivilegeToAddEntity(entityDto: AbstractDivisionOwnerDTO): Boolean {
+    open fun hasPrivilegeToAddEntity(entityDto: AbstractDivisionOwnerDTO): Boolean {
         return when {
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> true
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> {
-                val divisionOwnerId = entityDto.divisionOwnerId
-                entityRepository.userHasPrivilegeToAddEntity(divisionOwnerId)
+                val login = SecurityUtils.getCurrentUserLogin()
+                return login?.let {
+                    val userFromRepository = userRepository.findOneByLogin(login)
+                    entityDto.divisionOwnerId == userFromRepository?.school?.id
+                }?: false
             }
             else -> false
         }
     }
 
+//    open fun hasPrivilegeToModifyEntity(entityDto: AbstractDivisionOwnerDTO): Boolean {
+//        return when {
+//            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> true
+//            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> {
+//                val entityId = entityDto.id
+//                val divisionOwnerId = entityDto.divisionOwnerId
+//                entityRepository.userHasPrivilegeToModifyEntity(entityId, divisionOwnerId)
+//            }
+//            else -> false
+//        }
+//    }
+
+
+    // TODO add checking prevoius school
     open fun hasPrivilegeToModifyEntity(entityDto: AbstractDivisionOwnerDTO): Boolean {
         return when {
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> true
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> {
-                val entityId = entityDto.id
-                val divisionOwnerId = entityDto.divisionOwnerId
-                entityRepository.userHasPrivilegeToModifyEntity(entityId, divisionOwnerId)
+                val login = SecurityUtils.getCurrentUserLogin()
+                return login?.let {
+                    val userFromRepository = userRepository.findOneByLogin(login)
+                    entityDto.divisionOwnerId == userFromRepository?.school?.id
+                }?: false
             }
             else -> false
         }
     }
-
-    fun hasPrivilegeToDeleteEntity(entityId: Long?): Boolean {
+    open fun hasPrivilegeToDeleteEntity(entityId: Long?): Boolean {
         return when {
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> true
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> entityRepository.userHasPrivilegeToDeleteEntity(entityId)

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Place } from './place.model';
 import { PlaceService } from './place.service';
+import {Principal, ResponseWrapper} from '../../shared';
+import {Teacher} from '../teacher/teacher.model';
 
 @Injectable()
 export class PlacePopupService {
@@ -11,7 +13,8 @@ export class PlacePopupService {
     constructor(
         private modalService: NgbModal,
         private router: Router,
-        private placeService: PlaceService
+        private placeService: PlaceService,
+        private principal: Principal
 
     ) {
         this.ngbModalRef = null;
@@ -30,13 +33,24 @@ export class PlacePopupService {
                     resolve(this.ngbModalRef);
                 });
             } else {
-                // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
-                setTimeout(() => {
-                    this.ngbModalRef = this.placeModalRef(component, new Place());
-                    resolve(this.ngbModalRef);
-                }, 0);
+                if (this.principal.isAuthenticated()) {
+                    this.principal.identity().then((account) => {
+                        this.placeService.calculateDefaultEntity(account.schoolId).subscribe((res) => {
+                            this.ngbModalRef = this.placeModalRef(component, res);
+                            resolve(this.ngbModalRef);
+                        }, (res: ResponseWrapper) => this.loadEmptyEntity(component, resolve));
+
+                    });
+                } else {
+                    this.loadEmptyEntity(component, resolve);
+                }
             }
         });
+    }
+
+    private loadEmptyEntity(component: Component, resolve: any) {
+        this.ngbModalRef = this.placeModalRef(component, new Place());
+        resolve(this.ngbModalRef);
     }
 
     placeModalRef(component: Component, place: Place): NgbModalRef {

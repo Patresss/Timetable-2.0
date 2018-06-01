@@ -1,8 +1,9 @@
-import { Injectable, Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Teacher } from './teacher.model';
-import { TeacherService } from './teacher.service';
+import {Component, Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {Teacher} from './teacher.model';
+import {TeacherService} from './teacher.service';
+import {Principal, ResponseWrapper} from '../../shared';
 
 @Injectable()
 export class TeacherPopupService {
@@ -11,11 +12,12 @@ export class TeacherPopupService {
     constructor(
         private modalService: NgbModal,
         private router: Router,
-        private teacherService: TeacherService
-
+        private teacherService: TeacherService,
+        private principal: Principal
     ) {
         this.ngbModalRef = null;
     }
+
 
     open(component: Component, id?: number | any): Promise<NgbModalRef> {
         return new Promise<NgbModalRef>((resolve, reject) => {
@@ -30,23 +32,34 @@ export class TeacherPopupService {
                     resolve(this.ngbModalRef);
                 });
             } else {
-                // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
-                setTimeout(() => {
-                    this.ngbModalRef = this.teacherModalRef(component, new Teacher());
-                    resolve(this.ngbModalRef);
-                }, 0);
+                if (this.principal.isAuthenticated()) {
+                    this.principal.identity().then((account) => {
+                        this.teacherService.calculateDefaultEntity(account.schoolId).subscribe((res) => {
+                            this.ngbModalRef = this.teacherModalRef(component, res);
+                            resolve(this.ngbModalRef);
+                        }, (res: ResponseWrapper) => this.loadEmptyEntity(component, resolve));
+
+                    });
+                } else {
+                    this.loadEmptyEntity(component, resolve);
+                }
             }
         });
     }
 
+    private loadEmptyEntity(component: Component, resolve: any) {
+        this.ngbModalRef = this.teacherModalRef(component, new Teacher());
+        resolve(this.ngbModalRef);
+    }
+
     teacherModalRef(component: Component, teacher: Teacher): NgbModalRef {
-        const modalRef = this.modalService.open(component, { size: 'lg', backdrop: 'static'});
+        const modalRef = this.modalService.open(component, {size: 'lg', backdrop: 'static'});
         modalRef.componentInstance.teacher = teacher;
         modalRef.result.then((result) => {
-            this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true });
+            this.router.navigate([{outlets: {popup: null}}], {replaceUrl: true});
             this.ngbModalRef = null;
         }, (reason) => {
-            this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true });
+            this.router.navigate([{outlets: {popup: null}}], {replaceUrl: true});
             this.ngbModalRef = null;
         });
         return modalRef;

@@ -38,6 +38,8 @@ open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
             colorText = entityDto.colorText
             preferencesDataTimeForSubject = preferenceDataTimeForSubjectMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForSubject)
 
+            preferencesDataTimeForSubject.forEach { it.subject = this }
+
             if (colorBackground.isNullOrBlank()) {
                 colorBackground = EntityUtil.calculateRandomColor()
             }

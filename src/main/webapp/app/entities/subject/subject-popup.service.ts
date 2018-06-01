@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from './subject.model';
 import { SubjectService } from './subject.service';
+import {Principal, ResponseWrapper} from '../../shared';
+import {Teacher} from '../teacher/teacher.model';
 
 @Injectable()
 export class SubjectPopupService {
@@ -11,7 +13,8 @@ export class SubjectPopupService {
     constructor(
         private modalService: NgbModal,
         private router: Router,
-        private subjectService: SubjectService
+        private subjectService: SubjectService,
+        private principal: Principal
 
     ) {
         this.ngbModalRef = null;
@@ -30,13 +33,24 @@ export class SubjectPopupService {
                     resolve(this.ngbModalRef);
                 });
             } else {
-                // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
-                setTimeout(() => {
-                    this.ngbModalRef = this.subjectModalRef(component, new Subject());
-                    resolve(this.ngbModalRef);
-                }, 0);
+                if (this.principal.isAuthenticated()) {
+                    this.principal.identity().then((account) => {
+                        this.subjectService.calculateDefaultEntity(account.schoolId).subscribe((res) => {
+                            this.ngbModalRef = this.subjectModalRef(component, res);
+                            resolve(this.ngbModalRef);
+                        }, (res: ResponseWrapper) => this.loadEmptyEntity(component, resolve));
+
+                    });
+                } else {
+                    this.loadEmptyEntity(component, resolve);
+                }
             }
         });
+    }
+
+    private loadEmptyEntity(component: Component, resolve: any) {
+        this.ngbModalRef = this.subjectModalRef(component, new Subject());
+        resolve(this.ngbModalRef);
     }
 
     subjectModalRef(component: Component, subject: Subject): NgbModalRef {

@@ -1,8 +1,11 @@
 package com.patres.timetable.web.rest
 
 import com.codahale.metrics.annotation.Timed
+import com.patres.timetable.domain.Subject
+import com.patres.timetable.domain.Teacher
 import com.patres.timetable.service.SubjectService
 import com.patres.timetable.service.dto.SubjectDTO
+import com.patres.timetable.service.dto.TeacherDTO
 import com.patres.timetable.web.rest.util.HeaderUtil
 import com.patres.timetable.web.rest.util.PaginationUtil
 import io.github.jhipster.web.util.ResponseUtil
@@ -135,6 +138,20 @@ open class SubjectResource(private val subjectService: SubjectService) {
     open fun getSubject(@PathVariable id: Long?): ResponseEntity<SubjectDTO> {
         log.debug("REST request to get Subject : {}", id)
         val subjectDTO = subjectService.findOne(id)
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(subjectDTO))
+    }
+
+    /**
+     * GET  /subjects/default/{schoolId} : get the default subject by schoolId
+     *
+     * @param schoolId schoolId
+     * @return the ResponseEntity with status 200 (OK) and with body the teacherDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/subjects/default/{schoolId}")
+    @Timed
+    open fun getDefaultSubject(@PathVariable schoolId: Long?): ResponseEntity<SubjectDTO> {
+        log.debug("REST request to get default Subject by schoolId: {}", schoolId)
+        val subjectDTO = schoolId?.let {subjectService.calculateDefaultEntityBySchoolId(Subject(), schoolId) }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(subjectDTO))
     }
 

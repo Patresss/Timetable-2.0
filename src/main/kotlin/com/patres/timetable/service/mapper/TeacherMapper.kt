@@ -54,6 +54,10 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             preferenceSubjectByTeacher = preferenceSubjectByTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceSubjectByTeacher)
             preferenceDataTimeForTeachers = preferenceDataTimeForTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceDataTimeForTeachers)
 
+            preferenceTeacherByPlace.forEach { it.teacher = this }
+            preferenceSubjectByTeacher.forEach { it.teacher = this }
+            preferenceDataTimeForTeachers.forEach { it.teacher = this }
+
             if (colorBackground.isNullOrBlank()) {
                 colorBackground = EntityUtil.calculateRandomColor()
             }

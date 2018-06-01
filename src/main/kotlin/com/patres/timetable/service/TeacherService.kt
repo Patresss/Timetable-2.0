@@ -30,9 +30,11 @@ open class TeacherService(entityRepository: TeacherRepository, entityMapper: Ent
         return when {
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) -> true
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN) -> {
-                val entityId = entityDto.id
-                val divisionOwnerId = entityDto.divisionOwnerId
-                entityRepository.userHasPrivilegeToModifyEntity(entityId, divisionOwnerId)
+                val login = SecurityUtils.getCurrentUserLogin()
+                return login?.let {
+                    val userFromRepository = userRepository.findOneByLogin(login)
+                    entityDto.divisionOwnerId == userFromRepository?.school?.id
+                }?: false
             }
             SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.TEACHER) -> {
                 val login = SecurityUtils.getCurrentUserLogin()

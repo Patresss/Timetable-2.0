@@ -1,10 +1,13 @@
 package com.patres.timetable.web.rest
 
 import com.codahale.metrics.annotation.Timed
+import com.patres.timetable.domain.Division
+import com.patres.timetable.domain.Teacher
 import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.service.DivisionService
 import com.patres.timetable.service.dto.DivisionDTO
 import com.patres.timetable.service.dto.PlaceDTO
+import com.patres.timetable.service.dto.TeacherDTO
 import com.patres.timetable.web.rest.util.HeaderUtil
 import com.patres.timetable.web.rest.util.PaginationUtil
 import io.github.jhipster.web.util.ResponseUtil
@@ -175,6 +178,20 @@ open class DivisionResource(private val divisionService: DivisionService) {
     open fun getDivision(@PathVariable id: Long?): ResponseEntity<DivisionDTO> {
         log.debug("REST request to get Division : {}", id)
         val divisionDTO = divisionService.findOne(id)
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(divisionDTO))
+    }
+
+    /**
+     * GET  /divisions/default/{schoolId} : get the default division by schoolId
+     *
+     * @param schoolId schoolId
+     * @return the ResponseEntity with status 200 (OK) and with body the divisionDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/divisions/default/{schoolId}")
+    @Timed
+    open fun getDefaultDivision(@PathVariable schoolId: Long?): ResponseEntity<DivisionDTO> {
+        log.debug("REST request to get default Division by schoolId: {}", schoolId)
+        val divisionDTO = schoolId?.let {divisionService.calculateDefaultEntityBySchoolId(Division(), schoolId) }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(divisionDTO))
     }
 

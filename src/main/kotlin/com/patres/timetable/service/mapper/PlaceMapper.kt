@@ -62,6 +62,11 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
                 preferenceDivisionByPlace = preferenceDivisionByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceDivisionByPlace)
                 preferencesDataTimeForPlace = preferenceDataTimeForPlaceMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForPlace)
 
+                preferenceSubjectByPlace.forEach { it.place = this }
+                preferenceDivisionByPlace.forEach { it.place = this }
+                preferencesDataTimeForPlace.forEach { it.place = this }
+
+
                 if (colorBackground.isNullOrBlank()) {
                     colorBackground = EntityUtil.calculateRandomColor()
                 }

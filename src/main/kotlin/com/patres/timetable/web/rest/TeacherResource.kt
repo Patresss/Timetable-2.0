@@ -1,6 +1,7 @@
 package com.patres.timetable.web.rest
 
 import com.codahale.metrics.annotation.Timed
+import com.patres.timetable.domain.Teacher
 import com.patres.timetable.service.TeacherService
 import com.patres.timetable.service.dto.TeacherDTO
 import com.patres.timetable.web.rest.util.HeaderUtil
@@ -141,6 +142,21 @@ open class TeacherResource(private val teacherService: TeacherService) {
         val teacherDTO = teacherService.findOne(id)
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(teacherDTO))
     }
+
+    /**
+     * GET  /teachers/default/{schoolId} : get the default teacher by schoolId
+     *
+     * @param schoolId schoolId
+     * @return the ResponseEntity with status 200 (OK) and with body the teacherDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/teachers/default/{schoolId}")
+    @Timed
+    open fun getDefaultTeacher(@PathVariable schoolId: Long?): ResponseEntity<TeacherDTO> {
+        log.debug("REST request to get default Teacher by schoolId: {}", schoolId)
+        val teacherDTO = schoolId?.let {teacherService.calculateDefaultEntityBySchoolId(Teacher(), schoolId) }
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(teacherDTO))
+    }
+
 
     /**
      * DELETE  /teachers/:id : delete the "id" teacher.
