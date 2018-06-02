@@ -12,6 +12,7 @@ import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotNull
+import kotlin.jvm.Transient
 
 @Entity
 @Table(name = "division")
@@ -106,6 +107,10 @@ class Division(
     divisionOwner: Division? = null
 
 ) : AbstractDivisionOwner(divisionOwner), Serializable {
+
+    @Transient
+    var subgroups:Set<Division> = emptySet()
+        get() = children.filter { DivisionType.SUBGROUP == it.divisionType }.toSet()
 
     fun calculateContainersWithSetOfSubgroup(): Set<Division> {
         return parents.filter { it.divisionType == DivisionType.SET_OF_SUBGROUPS }.toSet()

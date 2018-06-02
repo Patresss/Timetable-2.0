@@ -85,32 +85,32 @@ class TimetableGeneratorContainer(
             }
     }
 
-    fun findWidows2(): Set<Window> {
-        val windows = HashSet<Window>()
-        val sortedTimetables = timetablesFromCurriculum.sortedBy { it.lesson?.startTime }
-        val timetablesByDivision = sortedTimetables.groupBy { it.division }
-        timetablesByDivision.forEach { division, timetables ->
-            timetables.groupBy { it.dayOfWeek }.forEach { dayOfWeek, divisionTimetables ->
-                if (division != null && dayOfWeek != null) {
-                    for (lesson in lessons) {
-                        val currentLesson = divisionTimetables.find { it.lesson == lesson }?.lesson
-                        if (currentLesson == null && divisionTimetables.any { lesson.startTime ?: 0 > it.lesson?.endTime ?: 0 } && divisionTimetables.any { lesson.endTime ?: 0 < it.lesson?.startTime ?: 0 }) {
-                            windows.add(Window(dayOfWeek, lesson, division))
-                            break
-                        }
-                    }
-                }
-            }
-        }
-        return windows
-    }
-
-
     fun findWidows(): Set<Window> {
         val windows = HashSet<Window>()
         val sortedTimetables = timetablesFromCurriculum.sortedBy { it.lesson?.startTime }
         val timetablesByDivision = sortedTimetables.groupBy { it.division }
         timetablesByDivision.forEach { division, timetables ->
+
+            // TODO metoda powinna szuka wszysktich timetable  tam gdzie są wszystkie podgrupy p fran | ros | niem wchodzi ale bez jednego już nie
+//            val subgroupTimetables = HashSet<Timetable>()
+//            division?.calculateContainersWithSetOfSubgroup()
+//                ?.forEach { setOfSubgroup ->
+//                    val numberOfSubgroup = setOfSubgroup.children.size
+//                    sortedTimetables
+//                        .filter { timetable -> setOfSubgroup.children.contains(timetable.division) }
+//                        .groupBy { it.dayOfWeek }
+//                        .forEach { dayOfWeek, timetables ->
+//                            val timetablesInLessonAndDateSize = timetables
+//                                .groupBy { it.lesson }
+//                                .size
+//                            if (timetablesInLessonAndDateSize == numberOfSubgroup) {
+//                                subgroupTimetables.addAll(timetables)
+//                            }
+//                        }
+//
+//            }
+
+
             windows.addAll(findWindowsByDivision(timetables, division))
         }
         return windows
@@ -154,12 +154,32 @@ class TimetableGeneratorContainer(
             .groupBy { it.dayOfWeek }
             .filterKeys { it != null }
             .forEach { _, divisionTimetables ->
-                setupAndReturnTheBiggestGroup(divisionTimetables)?.let {groups.add(it)}
+                // TODO metoda powinna szuka wszysktich timetable  tam gdzie są wszystkie podgrupy p fran | ros | niem wchodzi ale bez jednego już nie
+//                val subgroupTimetables = HashSet<Timetable>()
+//                val sortedTimetables = timetablesFromCurriculum.sortedBy { it.lesson?.startTime }
+//                timetablesWithThisSameDivision.first().division?.calculateContainersWithSetOfSubgroup()
+//                    ?.forEach { setOfSubgroup ->
+//                        val numberOfSubgroup = setOfSubgroup.children.size
+//                        sortedTimetables
+//                            .filter { timetable -> setOfSubgroup.children.contains(timetable.division) }
+//                            .groupBy { it.dayOfWeek }
+//                            .forEach { dayOfWeek, timetables ->
+//                                val timetablesInLessonAndDateSize = timetables
+//                                    .groupBy { it.lesson }
+//                                    .size
+//                                if (timetablesInLessonAndDateSize == numberOfSubgroup) {
+//                                    subgroupTimetables.addAll(timetables)
+//                                }
+//                            }
+//
+//                    }
+
+                setupAndReturnTheBiggestGroup(divisionTimetables)?.let { groups.add(it) }
             }
         return groups
     }
 
-    private fun setupAndReturnTheBiggestGroup(divisionTimetables: List<Timetable>):BlockWithoutWindow?  {
+    private fun setupAndReturnTheBiggestGroup(divisionTimetables: List<Timetable>): BlockWithoutWindow? {
         val groupOfBlock = findGroupsFromTimetablesWithThisSameDayAndDivision(divisionTimetables)
         val theBiggestGroup = groupOfBlock.getTheBiggestGroup()
         theBiggestGroup?.let {
@@ -187,7 +207,7 @@ class TimetableGeneratorContainer(
                 currentBlock = BlockWithoutWindow()
             }
 
-            if (currentTimetable != null && lessons.last() == lesson ) {
+            if (currentTimetable != null && lessons.last() == lesson) {
                 groupOfBlockWithoutWindowByDayOfWeek.add(currentBlock)
             }
         }
