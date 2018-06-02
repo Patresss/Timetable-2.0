@@ -1,7 +1,5 @@
 import {BaseEntity} from './../../shared';
 import {PreferenceSubjectByPlaceModel} from '../../preference/preference-subject-by-place.model';
-import {PreferenceTeacherByPlaceModel} from '../../preference/preference-teacher-by-place.model';
-import {PreferenceDivisionByPlaceModel} from '../../preference/preference-division-by-place.model';
 import {PreferenceForDataTimeForPlaceModel} from '../../preference/preference-for-data-time-for-place.model';
 
 export class Place implements BaseEntity {
@@ -17,7 +15,6 @@ export class Place implements BaseEntity {
         public preferredDivisions?: BaseEntity[],
         public preferredTeachers?: BaseEntity[],
         public preferenceSubjectByPlace?: PreferenceSubjectByPlaceModel[],
-        public preferenceDivisionByPlace?: PreferenceDivisionByPlaceModel[],
         public preferencesDataTimeForPlace?: PreferenceForDataTimeForPlaceModel[],
         public divisionId?: number,
     ) {

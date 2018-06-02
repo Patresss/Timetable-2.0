@@ -11,7 +11,6 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "preference_subject_by_teacher")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class PreferenceSubjectByTeacher(
 
     @get:NotNull

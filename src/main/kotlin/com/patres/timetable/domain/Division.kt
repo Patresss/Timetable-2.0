@@ -96,7 +96,6 @@ class Division(
     var preferencesTeacherByDivision: Set<PreferenceTeacherByDivision> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "division", orphanRemoval = true)
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferenceDivisionByPlace: Set<PreferenceDivisionByPlace> = HashSet(),
 

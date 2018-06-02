@@ -13,7 +13,6 @@ import { Subject, SubjectService } from '../subject';
 import { Division, DivisionService } from '../division';
 import { Teacher, TeacherService } from '../teacher';
 import { ResponseWrapper } from '../../shared';
-import {DayOfWeek} from '../timetable/timetable.model';
 import {Preference} from '../../preference/preferecne.model';
 
 @Component({

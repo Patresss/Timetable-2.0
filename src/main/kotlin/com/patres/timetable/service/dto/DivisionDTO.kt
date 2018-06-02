@@ -4,10 +4,7 @@ package com.patres.timetable.service.dto
 import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.domain.preference.PreferenceSubjectByDivision
 import com.patres.timetable.domain.preference.PreferenceTeacherByDivision
-import com.patres.timetable.service.dto.preference.PreferenceDataTimeForDivisionDTO
-import com.patres.timetable.service.dto.preference.PreferenceDataTimeForPlaceDTO
-import com.patres.timetable.service.dto.preference.PreferenceSubjectByDivisionDTO
-import com.patres.timetable.service.dto.preference.PreferenceTeacherByDivisionDTO
+import com.patres.timetable.service.dto.preference.*
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -37,6 +34,8 @@ class DivisionDTO(
     var preferencesSubjectByDivision: Set<PreferenceSubjectByDivisionDTO> = HashSet(),
 
     var preferencesTeacherByDivision: Set<PreferenceTeacherByDivisionDTO> = HashSet(),
+
+    var preferenceDivisionByPlace: Set<PreferenceDivisionByPlaceDTO> = HashSet(),
 
     var preferencesDataTimeForDivision: Set<PreferenceDataTimeForDivisionDTO> = HashSet(),
 

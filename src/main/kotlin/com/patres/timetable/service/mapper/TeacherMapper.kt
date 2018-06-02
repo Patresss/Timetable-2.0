@@ -1,6 +1,7 @@
 package com.patres.timetable.service.mapper
 
 import com.patres.timetable.domain.Teacher
+import com.patres.timetable.domain.preference.PreferenceSubjectByTeacher
 import com.patres.timetable.repository.*
 import com.patres.timetable.service.dto.TeacherDTO
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
@@ -61,6 +62,8 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             if (colorBackground.isNullOrBlank()) {
                 colorBackground = EntityUtil.calculateRandomColor()
             }
+
+            addNeutralPreferenceSubjectByTeacher()
         }
     }
 
@@ -109,6 +112,18 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             preferenceSubjectByTeacher = preferenceSubjectByTeacher.sortedBy { it.subjectName }.toSet()
         }
     }
+
+    private fun Teacher.addNeutralPreferenceSubjectByTeacher() {
+        divisionOwner?.id?.let {
+            val subjects = subjectRepository.findByDivisionOwnerId(it)
+            val neutralPreferenceSubjectByTeacherToAdd =
+                subjects
+                    .filter { subject -> !preferenceSubjectByTeacher.any { preference -> id == preference.teacher?.id && subject.id == preference.subject?.id } }
+                    .map { subject -> PreferenceSubjectByTeacher(teacher = this, subject = subject, points = -10_000) }
+            preferenceSubjectByTeacher += neutralPreferenceSubjectByTeacherToAdd
+        }
+    }
+
 
     private fun TeacherDTO.addNeutralPreferenceTeacherByPlace() {
         divisionOwnerId?.let {

@@ -400,14 +400,17 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
             if (item.preferenceHierarchy.points > 0) {
                 const colorAlpha = item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_POSITIVE_HIERARCHY_POINTS;
                 color = 'rgba(40, 167, 69, ' + colorAlpha + ')';
-                return {'border-left': '10px solid ' + color};
+                return {'border-left': '15px solid ' + color};
+            } else if (item.preferenceHierarchy.points < AngularMultiSelectComponent.MAX_NEGATIVE_HIERARCHY_POINTS ) {
+                color = 'rgb(220, 53, 69)';
+                return {'border-left': '15px solid ' + color};
             } else if (item.preferenceHierarchy.points < 0) {
                 const colorAlpha = item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_NEGATIVE_HIERARCHY_POINTS;
-                color = 'rgba(220, 53, 69, ' + colorAlpha + ')';
-                return {'border-left': '10px solid ' + color};
+                color = 'rgba(255, 174, 66, ' + colorAlpha + ')';
+                return {'border-left': '15px solid ' + color};
             }
         }
-        return {'border-left': '10px solid ' + color};
+        return {'border-left': '15px solid ' + color};
     }
 
     getSelectedHierarchyStyle() {
@@ -417,10 +420,13 @@ export class AngularMultiSelectComponent implements OnInit, ControlValueAccessor
                 let color = 'transparent';
                 if (item.preferenceHierarchy.points > 0) {
                     color = 'rgba(40, 167, 69, ' + item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_POSITIVE_HIERARCHY_POINTS + ')';
+                } else if (item.preferenceHierarchy.points < AngularMultiSelectComponent.MAX_NEGATIVE_HIERARCHY_POINTS ) {
+                    color = 'rgb(220, 53, 69)';
                 } else if (item.preferenceHierarchy.points < 0) {
-                    color = 'rgba(220, 53, 69, ' + item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_NEGATIVE_HIERARCHY_POINTS + ')';
+                    color = 'rgba(255, 174, 66, ' + item.preferenceHierarchy.points / AngularMultiSelectComponent.MAX_NEGATIVE_HIERARCHY_POINTS + ')';
                 }
-                return {'border-left': '5px solid ' + color};
+
+                return {'border-left': '10px solid ' + color};
             }
         }
         return {};

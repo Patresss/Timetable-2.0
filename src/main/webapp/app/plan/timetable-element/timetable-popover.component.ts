@@ -82,11 +82,12 @@ export class TimetableElementComponent implements OnInit {
 
     canModifyTimetable() {
         if (this.currentAccount) {
+            console.log(this.currentAccount)
             if (this.currentAccount.authorities.indexOf(RoleType.ROLE_ADMIN.toString()) > -1) {
                 return true;
             } else if (this.currentAccount.authorities.indexOf(RoleType.ROLE_SCHOOL_ADMIN.toString()) > -1) {
-                return this.selectedSchool.users.indexOf(this.currentAccount.id) > -1;
-            } else if (this.currentAccount.authorities.indexOf(RoleType.ROLE_TEACHER.toString()) > -1 && this.timetable.teacherId == this.currentAccount.teacherId) {
+                return this.selectedSchool.id === this.currentAccount.schoolId;
+            } else if (this.currentAccount.authorities.indexOf(RoleType.ROLE_TEACHER.toString()) > -1 && this.timetable.teacherId === this.currentAccount.teacherId) {
                 return true;
             }
         } else {

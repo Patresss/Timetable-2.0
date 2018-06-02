@@ -1,15 +1,15 @@
 package com.patres.timetable.service.mapper
 
 import com.patres.timetable.domain.Division
-import com.patres.timetable.repository.DivisionRepository
-import com.patres.timetable.repository.LessonRepository
-import com.patres.timetable.repository.SubjectRepository
-import com.patres.timetable.repository.TeacherRepository
+import com.patres.timetable.repository.*
 import com.patres.timetable.service.dto.DivisionDTO
+import com.patres.timetable.service.dto.PlaceDTO
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForDivisionDTO
+import com.patres.timetable.service.dto.preference.PreferenceDivisionByPlaceDTO
 import com.patres.timetable.service.dto.preference.PreferenceSubjectByDivisionDTO
 import com.patres.timetable.service.dto.preference.PreferenceTeacherByDivisionDTO
 import com.patres.timetable.service.mapper.preference.PreferenceDataTimeForDivisionMapper
+import com.patres.timetable.service.mapper.preference.PreferenceDivisionByPlaceMapper
 import com.patres.timetable.service.mapper.preference.PreferenceSubjectByDivisionMapper
 import com.patres.timetable.service.mapper.preference.PreferenceTeacherByDivisionMapper
 import com.patres.timetable.util.EntityUtil
@@ -25,6 +25,9 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
     private lateinit var lessonRepository: LessonRepository
 
     @Autowired
+    private lateinit var placeRepository: PlaceRepository
+
+    @Autowired
     private lateinit var divisionRepository: DivisionRepository
 
     @Autowired
@@ -35,6 +38,9 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
 
     @Autowired
     private lateinit var preferenceSubjectByDivisionMapper: PreferenceSubjectByDivisionMapper
+
+    @Autowired
+    private lateinit var preferenceDivisionByPlaceMapper: PreferenceDivisionByPlaceMapper
 
     @Autowired
     private lateinit var teacherRepository: TeacherRepository
@@ -58,10 +64,13 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 preferencesTeacherByDivision = preferenceTeacherByDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesTeacherByDivision)
                 preferencesSubjectByDivision = preferenceSubjectByDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesSubjectByDivision)
                 preferencesDataTimeForDivision = preferenceDataTimeForDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForDivision)
+                preferenceDivisionByPlace = preferenceDivisionByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceDivisionByPlace)
 
                 preferencesTeacherByDivision.forEach { it.division = this }
                 preferencesSubjectByDivision.forEach { it.division = this }
                 preferencesDataTimeForDivision.forEach { it.division = this }
+                preferenceDivisionByPlace.forEach { it.division = this }
+
 
                 if (colorBackground.isNullOrBlank()) {
                     colorBackground = EntityUtil.calculateRandomColor()
@@ -87,7 +96,8 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 addNeutralPreferenceTeacherByDivision()
                 preferencesSubjectByDivision = preferenceSubjectByDivisionMapper.entitySetToEntityDTOSet(entity.preferencesSubjectByDivision)
                 addNeutralPreferenceSubjectByDivision()
-
+                preferenceDivisionByPlace = preferenceDivisionByPlaceMapper.entitySetToEntityDTOSet(entity.preferenceDivisionByPlace)
+                addNeutralPreferenceDivisionByPlace()
                 preferencesDataTimeForDivision = preferenceDataTimeForDivisionMapper.entitySetToEntityDTOSet(entity.preferencesDataTimeForDivision)
                 addNeutralPreferencesDataTime()
             }
@@ -162,6 +172,19 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
             }
             preferencesDataTimeForDivision += neutralPreferenceDataTimeForToAdd
             preferencesDataTimeForDivision = preferencesDataTimeForDivision.sortedBy { it.dayOfWeek }.toSet()
+        }
+    }
+
+
+    private fun DivisionDTO.addNeutralPreferenceDivisionByPlace() {
+        divisionOwnerId?.let {
+            val places = placeRepository.findByDivisionOwnerId(it)
+            val neutralPreferenceToAdd =
+                places
+                    .filter { place -> !preferenceDivisionByPlace.any { preference -> id == preference.divisionId && place.id == preference.placeId } }
+                    .map { place -> PreferenceDivisionByPlaceDTO(placeId = place.id, placeName = place.name ?: "", divisionId = id, divisionName = name ?: "") }
+            preferenceDivisionByPlace += neutralPreferenceToAdd
+            preferenceDivisionByPlace = preferenceDivisionByPlace.sortedBy { it.placeName }.toSet()
         }
     }
 

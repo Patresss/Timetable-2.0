@@ -470,78 +470,78 @@ open class FillerResource(
         // =====================================================
         // Division
         // =====================================================
-        class1a = createDivision(name = "1 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class1b = createDivision(name = "1 B", shortName = "1 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class1c = createDivision(name = "1 C", shortName = "1 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class1d = createDivision(name = "1 D", shortName = "1 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class1e = createDivision(name = "1 E", shortName = "1 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class1f = createDivision(name = "1 F", shortName = "1 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class2a = createDivision(name = "2 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class2b = createDivision(name = "2 B", shortName = "2 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class2c = createDivision(name = "2 C", shortName = "2 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class2d = createDivision(name = "2 D", shortName = "2 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class2e = createDivision(name = "2 E", shortName = "2 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class2f = createDivision(name = "2 F", shortName = "2 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class3a = createDivision(name = "3 A", shortName = "3 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class3b = createDivision(name = "3 B", shortName = "3 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class3c = createDivision(name = "3 C", shortName = "3 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class3d = createDivision(name = "3 D", shortName = "3 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class3e = createDivision(name = "3 E", shortName = "3 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class3f = createDivision(name = "3 F", shortName = "3 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        div1aG1 = createDivision(name = "1A gr	 1", shortName = "Ang 1A gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
-        div1aG2 = createDivision(name = "1A gr	 2", shortName = "Ang 1A gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
-        divNie1G1 = createDivision(name = "Niemiecki 1 gr	 1", shortName = "Niem 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
-        divNie1G2 = createDivision(name = "Niemiecki 1 gr	 2", shortName = "Niem 1 gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1b))
-        divFra1G1 = createDivision(name = "Francuski 1 gr	 1", shortName = "Fra 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
-        divRos1G1 = createDivision(name = "Rosyjski 1 gr	 1", shortName = "Ros 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
-        divRos1G2 = createDivision(name = "Rosyjski 1 gr	 2", shortName = "Ros 1 gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
-        div1GrCh1 = createDivision(name = "WF 1 gr	 Chłopcy 1", shortName = "WF 1 gr	 Ch 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a))
-        div1GrCh2 = createDivision(name = "WF 1 gr	 Chłopcy 2", shortName = "WF 1 gr	 Ch 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1b, class1c))
-        div1GrDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1a, class1c))
-        div1GrDz2 = createDivision(name = "WF 1 gr	 Dziewczyny 2", shortName = "WF 1 gr	 Dz 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1c))
-        div1bG1 = createDivision(name = "1B gr	 1", shortName = "Ang 1B gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1b))
-        div1bG2 = createDivision(name = "1B gr	 2", shortName = "Ang 1B gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1b))
-        div1Gr1bDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(class1b))
+        class1a = createDivision(name = "1 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class1b = createDivision(name = "1 B", shortName = "1 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class1c = createDivision(name = "1 C", shortName = "1 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class1d = createDivision(name = "1 D", shortName = "1 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class1e = createDivision(name = "1 E", shortName = "1 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class1f = createDivision(name = "1 F", shortName = "1 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class2a = createDivision(name = "2 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class2b = createDivision(name = "2 B", shortName = "2 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class2c = createDivision(name = "2 C", shortName = "2 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class2d = createDivision(name = "2 D", shortName = "2 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class2e = createDivision(name = "2 E", shortName = "2 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class2f = createDivision(name = "2 F", shortName = "2 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class3a = createDivision(name = "3 A", shortName = "3 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class3b = createDivision(name = "3 B", shortName = "3 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class3c = createDivision(name = "3 C", shortName = "3 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class3d = createDivision(name = "3 D", shortName = "3 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class3e = createDivision(name = "3 E", shortName = "3 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class3f = createDivision(name = "3 F", shortName = "3 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        div1aG1 = createDivision(name = "1A gr	 1", shortName = "Ang 1A gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
+        div1aG2 = createDivision(name = "1A gr	 2", shortName = "Ang 1A gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
+        divNie1G1 = createDivision(name = "Niemiecki 1 gr	 1", shortName = "Niem 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
+        divNie1G2 = createDivision(name = "Niemiecki 1 gr	 2", shortName = "Niem 1 gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1b))
+        divFra1G1 = createDivision(name = "Francuski 1 gr	 1", shortName = "Fra 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
+        divRos1G1 = createDivision(name = "Rosyjski 1 gr	 1", shortName = "Ros 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
+        divRos1G2 = createDivision(name = "Rosyjski 1 gr	 2", shortName = "Ros 1 gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
+        div1GrCh1 = createDivision(name = "WF 1 gr	 Chłopcy 1", shortName = "WF 1 gr	 Ch 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
+        div1GrCh2 = createDivision(name = "WF 1 gr	 Chłopcy 2", shortName = "WF 1 gr	 Ch 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1b, class1c))
+        div1GrDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a, class1c))
+        div1GrDz2 = createDivision(name = "WF 1 gr	 Dziewczyny 2", shortName = "WF 1 gr	 Dz 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1c))
+        div1bG1 = createDivision(name = "1B gr	 1", shortName = "Ang 1B gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1b))
+        div1bG2 = createDivision(name = "1B gr	 2", shortName = "Ang 1B gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1b))
+        div1Gr1bDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1b))
 
 
-        class1aGenerate = createDivision(name = "1 A generate", shortName = "1 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class1bGenerate = createDivision(name = "1 B generate", shortName = "1 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class1cGenerate = createDivision(name = "1 C generate", shortName = "1 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class1dGenerate = createDivision(name = "1 D generate", shortName = "1 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class1eGenerate = createDivision(name = "1 E generate", shortName = "1 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class1fGenerate = createDivision(name = "1 F generate", shortName = "1 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class1aGenerate = createDivision(name = "1 A generate", shortName = "1 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class1bGenerate = createDivision(name = "1 B generate", shortName = "1 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class1cGenerate = createDivision(name = "1 C generate", shortName = "1 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class1dGenerate = createDivision(name = "1 D generate", shortName = "1 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class1eGenerate = createDivision(name = "1 E generate", shortName = "1 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class1fGenerate = createDivision(name = "1 F generate", shortName = "1 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
 
-        class2aGenerate = createDivision(name = "2 A generate", shortName = "2 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class2bGenerate = createDivision(name = "2 B generate", shortName = "2 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class2cGenerate = createDivision(name = "2 C generate", shortName = "2 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class2dGenerate = createDivision(name = "2 D generate", shortName = "2 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class2eGenerate = createDivision(name = "2 E generate", shortName = "2 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class2fGenerate = createDivision(name = "2 F generate", shortName = "2 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
+        class2aGenerate = createDivision(name = "2 A generate", shortName = "2 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class2bGenerate = createDivision(name = "2 B generate", shortName = "2 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class2cGenerate = createDivision(name = "2 C generate", shortName = "2 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class2dGenerate = createDivision(name = "2 D generate", shortName = "2 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class2eGenerate = createDivision(name = "2 E generate", shortName = "2 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class2fGenerate = createDivision(name = "2 F generate", shortName = "2 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
 
-        class3aGenerate = createDivision(name = "3 A generate", shortName = "3 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class3bGenerate = createDivision(name = "3 B generate", shortName = "3 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class3cGenerate = createDivision(name = "3 C generate", shortName = "3 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class3dGenerate = createDivision(name = "3 D generate", shortName = "3 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class3eGenerate = createDivision(name = "3 E generate", shortName = "3 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-        class3fGenerate = createDivision(name = "3 F generate", shortName = "3 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, parents = hashSetOf(lo2))
-
-
-        div1aWychowanieFizyczne = createDivision(name = "div1aWychowanieFizyczne", shortName = "div1aWychowanieFizyczne", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, parents = hashSetOf(class1aGenerate))
-        div1aGirlWychowanieFizyczne = createDivision(name = "div1aGirlWychowanieFizyczne", shortName = "div1aGirlWychowanieFizyczne", divisionType = DivisionType.SUBGROUP, numberOfPeople = 15, parents = hashSetOf(div1aWychowanieFizyczne, class1aGenerate))
-        div1aBoyWychowanieFizyczne = createDivision(name = "div1aBoyWychowanieFizyczne", shortName = "div1aBoyWychowanieFizyczne", divisionType = DivisionType.SUBGROUP, numberOfPeople = 15, parents = hashSetOf(div1aWychowanieFizyczne, class1aGenerate))
+        class3aGenerate = createDivision(name = "3 A generate", shortName = "3 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class3bGenerate = createDivision(name = "3 B generate", shortName = "3 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class3cGenerate = createDivision(name = "3 C generate", shortName = "3 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class3dGenerate = createDivision(name = "3 D generate", shortName = "3 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class3eGenerate = createDivision(name = "3 E generate", shortName = "3 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class3fGenerate = createDivision(name = "3 F generate", shortName = "3 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
 
 
-        div1aGrupy = createDivision(name = "div1aGrupy", shortName = "div1aGrupy", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, parents = hashSetOf(class1aGenerate))
-        div1aGrupa1 = createDivision(name = "div1aGrupa1", shortName = "div1aGrupa1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(div1aGrupy, class1aGenerate))
-        div1aGrupa2 = createDivision(name = "div1aGrupa2", shortName = "div1aGrupa2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(div1aGrupy, class1aGenerate))
+        div1aWychowanieFizyczne = createDivision(name = "div1aWychowanieFizyczne", shortName = "div1aWychowanieFizyczne", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, schoolId  = lo2.id, parents = hashSetOf(class1aGenerate))
+        div1aGirlWychowanieFizyczne = createDivision(name = "div1aGirlWychowanieFizyczne", shortName = "div1aGirlWychowanieFizyczne", divisionType = DivisionType.SUBGROUP, numberOfPeople = 15, schoolId  = lo2.id, parents = hashSetOf(div1aWychowanieFizyczne, class1aGenerate))
+        div1aBoyWychowanieFizyczne = createDivision(name = "div1aBoyWychowanieFizyczne", shortName = "div1aBoyWychowanieFizyczne", divisionType = DivisionType.SUBGROUP, numberOfPeople = 15, schoolId  = lo2.id, parents = hashSetOf(div1aWychowanieFizyczne, class1aGenerate))
 
-        div1Gr1JezykObcy = createDivision(name = "div1Gr1JezykObcy", shortName = "div1Gr1JezykObcy", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, parents = hashSetOf(class1aGenerate))
-        div1Gr1Niemiecki1 = createDivision(name = " div1Gr1Niemiecki1", shortName = "div1Gr1Niemiecki1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(div1Gr1JezykObcy, class1aGenerate))
-        div1Gr1Niemiecki2 = createDivision(name = " div1Gr1Niemiecki2", shortName = "div1Gr1Niemiecki2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(div1Gr1JezykObcy, class1bGenerate))
-        div1Gr1Niemiecki3 = createDivision(name = " div1Gr1Niemiecki3", shortName = "div1Gr1Niemiecki3", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(div1Gr1JezykObcy, class1cGenerate))
-        div1Gr1Rosyjski1 = createDivision(name = " div1Gr1Rosyjski1", shortName = "div1Gr1Rosyjski1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(div1Gr1JezykObcy, class1aGenerate))
-        div1Gr1Rosyjski2 = createDivision(name = " div1Gr1Rosyjski2", shortName = "div1Gr1Rosyjski2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(div1Gr1JezykObcy, class1bGenerate, class1cGenerate))
-        div1Gr1Francuski1 = createDivision(name = " div1Gr1Francuski1", shortName = "div1Gr1Francuski1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, parents = hashSetOf(div1Gr1JezykObcy, class1aGenerate, class1bGenerate, class1cGenerate))
+
+        div1aGrupy = createDivision(name = "div1aGrupy", shortName = "div1aGrupy", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, schoolId  = lo2.id, parents = hashSetOf(class1aGenerate))
+        div1aGrupa1 = createDivision(name = "div1aGrupa1", shortName = "div1aGrupa1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1aGrupy, class1aGenerate))
+        div1aGrupa2 = createDivision(name = "div1aGrupa2", shortName = "div1aGrupa2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1aGrupy, class1aGenerate))
+
+        div1Gr1JezykObcy = createDivision(name = "div1Gr1JezykObcy", shortName = "div1Gr1JezykObcy", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, schoolId  = lo2.id, parents = hashSetOf(class1aGenerate))
+        div1Gr1Niemiecki1 = createDivision(name = " div1Gr1Niemiecki1", shortName = "div1Gr1Niemiecki1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1aGenerate))
+        div1Gr1Niemiecki2 = createDivision(name = " div1Gr1Niemiecki2", shortName = "div1Gr1Niemiecki2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1bGenerate))
+        div1Gr1Niemiecki3 = createDivision(name = " div1Gr1Niemiecki3", shortName = "div1Gr1Niemiecki3", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1cGenerate))
+        div1Gr1Rosyjski1 = createDivision(name = " div1Gr1Rosyjski1", shortName = "div1Gr1Rosyjski1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1aGenerate))
+        div1Gr1Rosyjski2 = createDivision(name = " div1Gr1Rosyjski2", shortName = "div1Gr1Rosyjski2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1bGenerate, class1cGenerate))
+        div1Gr1Francuski1 = createDivision(name = " div1Gr1Francuski1", shortName = "div1Gr1Francuski1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1aGenerate, class1bGenerate, class1cGenerate))
 
 
         // =====================================================
@@ -586,7 +586,7 @@ open class FillerResource(
         // Timetable
         // =====================================================
         // Klasa 1a
-        /*
+
         d1aMon2 = createTimetable(dayOfWeek = 1, lesson = l2, subject = biologia, teacher = SzTo, place = p8, division = class1a, period = semestLetniPeriod)
         d1aMon3 = createTimetable(dayOfWeek = 1, lesson = l3, subject = podstawyPrzedsiębiorczości, teacher = SuZb, place = p35, division = class1a, period = semestLetniPeriod)
         d1aMon4a = createTimetable(dayOfWeek = 1, lesson = l4, subject = jAngielski, teacher = KiBe, place = p7g, division = div1aG1, period = semestLetniPeriod)
@@ -692,7 +692,7 @@ open class FillerResource(
         d1bFri5b = createTimetable(dayOfWeek = 5, lesson = l5, subject = jAngielski, teacher = KiBe, place = p13, division = div1bG2, period = semestLetniPeriod)
         d1bFri6 = createTimetable(dayOfWeek = 5, lesson = l6, subject = jPolski, teacher = KlLu, place = p15, division = class1b, period = semestLetniPeriod)
         d1bFri7a = createTimetable(dayOfWeek = 5, lesson = l7, subject = jNiemiecki, teacher = PrKa, place = p22, division = divNie1G1, period = semestLetniPeriod)
-*/
+
         // =====================================================
         // Curriculum
         // =====================================================
@@ -1812,7 +1812,6 @@ open class FillerResource(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = matematyka.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
 
-            preferenceDivisionByPlace = hashSetOf(PreferenceDivisionByPlaceDTO(placeId = this.id, divisionId = class1a.id, points = 5))
             placeService.save(this)
         }
         p24.apply {
@@ -2631,8 +2630,8 @@ open class FillerResource(
         return lessonService.save(lesson)
     }
 
-    private fun createDivision(name: String, shortName: String, divisionType: DivisionType, numberOfPeople: Long, parents: Set<DivisionDTO> = emptySet()): DivisionDTO {
-        val division = DivisionDTO(name = name, shortName = shortName, divisionType = divisionType, numberOfPeople = numberOfPeople, parents = parents)
+    private fun createDivision(name: String, shortName: String, divisionType: DivisionType, numberOfPeople: Long, parents: Set<DivisionDTO> = emptySet(), schoolId: Long? = null): DivisionDTO {
+        val division = DivisionDTO(name = name, shortName = shortName, divisionType = divisionType, numberOfPeople = numberOfPeople, parents = parents, divisionOwnerId = schoolId)
         return divisionService.save(division)
     }
 

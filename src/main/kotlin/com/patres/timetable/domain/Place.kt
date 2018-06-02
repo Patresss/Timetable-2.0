@@ -45,6 +45,7 @@ class Place(
     var preferenceTeacherByPlace: Set<PreferenceTeacherByPlace> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true)
+    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferenceDivisionByPlace: Set<PreferenceDivisionByPlace> = HashSet(),
 

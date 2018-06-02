@@ -35,7 +35,7 @@ abstract class DivisionOwnerService<EntityType : AbstractDivisionOwner, EntityDt
         val login = SecurityUtils.getCurrentUserLogin()
         login?.let {
             val userFromRepository = userRepository.findOneByLogin(login)
-            if (userFromRepository?.authorities?.map { it.name }?.contains(AuthoritiesConstants.SCHOOL_ADMIN) == true) {
+            if (userFromRepository?.authorities?.map { it.name }?.contains(AuthoritiesConstants.SCHOOL_ADMIN) == true && userFromRepository.school?.id != null) {
                 entityDto.divisionOwnerId = userFromRepository.school?.id
             }
         }

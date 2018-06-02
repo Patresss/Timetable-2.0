@@ -31,7 +31,7 @@ open class DivisionService(entityRepository: DivisionRepository, entityMapper: E
     @Transactional(readOnly = true)
     open fun findClassesByParentId(parentId: Long): List<DivisionDTO> {
         log.debug("Request to get {} Class by parent Id", getEntityName())
-        return entityRepository.findByParentsIdAndDivisionTypeOrderByName(parentId, DivisionType.CLASS).map { entityMapper.toDtoWithSampleForm(it) }
+        return entityRepository.findByDivisionOwnerIdAndDivisionTypeOrderByName(parentId, DivisionType.CLASS).map { entityMapper.toDtoWithSampleForm(it) }
     }
 
     @Transactional(readOnly = true)

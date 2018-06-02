@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Timetable } from './timetable.model';
 import { TimetableService } from './timetable.service';
+import {Principal, ResponseWrapper} from '../../shared';
+import {Place} from '../place/place.model';
 
 @Injectable()
 export class TimetablePopupService {
@@ -11,7 +13,8 @@ export class TimetablePopupService {
     constructor(
         private modalService: NgbModal,
         private router: Router,
-        private timetableService: TimetableService
+        private timetableService: TimetableService,
+        private principal: Principal
 
     ) {
         this.ngbModalRef = null;
@@ -37,13 +40,24 @@ export class TimetablePopupService {
                     resolve(this.ngbModalRef);
                 });
             } else {
-                // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
-                setTimeout(() => {
-                    this.ngbModalRef = this.timetableModalRef(component, new Timetable());
-                    resolve(this.ngbModalRef);
-                }, 0);
+                const timetable = new Timetable();
+                if (this.principal.isAuthenticated()) {
+                    this.principal.identity().then((account) => {
+                        timetable.divisionOwnerId = account.schoolId;
+                        this.loadEmptyEntity(component, resolve, timetable)
+                    });
+                } else {
+                    setTimeout(() => {
+                        this.loadEmptyEntity(component, resolve, timetable)
+                    }, 0);
+                }
             }
         });
+    }
+
+    private loadEmptyEntity(component: Component, resolve: any, timetable: Timetable) {
+        this.ngbModalRef = this.timetableModalRef(component, timetable);
+        resolve(this.ngbModalRef);
     }
 
     timetableModalRef(component: Component, timetable: Timetable): NgbModalRef {

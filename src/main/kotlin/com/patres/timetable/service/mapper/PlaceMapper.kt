@@ -4,16 +4,11 @@ import com.patres.timetable.domain.Place
 import com.patres.timetable.repository.DivisionRepository
 import com.patres.timetable.repository.LessonRepository
 import com.patres.timetable.repository.SubjectRepository
-import com.patres.timetable.repository.TeacherRepository
 import com.patres.timetable.service.dto.PlaceDTO
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForPlaceDTO
-import com.patres.timetable.service.dto.preference.PreferenceDivisionByPlaceDTO
 import com.patres.timetable.service.dto.preference.PreferenceSubjectByPlaceDTO
-import com.patres.timetable.service.dto.preference.PreferenceTeacherByPlaceDTO
 import com.patres.timetable.service.mapper.preference.PreferenceDataTimeForPlaceMapper
-import com.patres.timetable.service.mapper.preference.PreferenceDivisionByPlaceMapper
 import com.patres.timetable.service.mapper.preference.PreferenceSubjectByPlaceMapper
-import com.patres.timetable.service.mapper.preference.PreferenceTeacherByPlaceMapper
 import com.patres.timetable.util.EntityUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -25,7 +20,6 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
 
     @Autowired
     private lateinit var divisionRepository: DivisionRepository
-
 
     @Autowired
     private lateinit var subjectRepository: SubjectRepository
@@ -40,13 +34,7 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
     private lateinit var divisionMapper: DivisionMapper
 
     @Autowired
-    private lateinit var preferenceDivisionByPlaceMapper: PreferenceDivisionByPlaceMapper
-
-    @Autowired
     private lateinit var preferenceSubjectByPlaceMapper: PreferenceSubjectByPlaceMapper
-
-    @Autowired
-    private lateinit var preferenceTeacherByPlaceMapper: PreferenceTeacherByPlaceMapper
 
     override fun toEntity(entityDto: PlaceDTO): Place {
         return Place(
@@ -59,11 +47,9 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
                 colorBackground = entityDto.colorBackground
                 colorText = entityDto.colorText
                 preferenceSubjectByPlace = preferenceSubjectByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceSubjectByPlace)
-                preferenceDivisionByPlace = preferenceDivisionByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceDivisionByPlace)
                 preferencesDataTimeForPlace = preferenceDataTimeForPlaceMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForPlace)
 
                 preferenceSubjectByPlace.forEach { it.place = this }
-                preferenceDivisionByPlace.forEach { it.place = this }
                 preferencesDataTimeForPlace.forEach { it.place = this }
 
 
@@ -86,8 +72,6 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
                 colorText = entity.colorText
                 preferenceSubjectByPlace = preferenceSubjectByPlaceMapper.entitySetToEntityDTOSet(entity.preferenceSubjectByPlace)
                 addNeutralPreferenceSubjectByPlace()
-                preferenceDivisionByPlace = preferenceDivisionByPlaceMapper.entitySetToEntityDTOSet(entity.preferenceDivisionByPlace)
-                addNeutralPreferenceDivisionByPlace()
                 preferencesDataTimeForPlace = preferenceDataTimeForPlaceMapper.entitySetToEntityDTOSet(entity.preferencesDataTimeForPlace)
                 addNeutralPreferencesDataTime()
             }
@@ -114,18 +98,6 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
                     .map { subject -> PreferenceSubjectByPlaceDTO(placeId = id, placeName = name ?: "", subjectId = subject.id, subjectName = subject.name ?: "") }
             preferenceSubjectByPlace += neutralPreferenceToAdd
             preferenceSubjectByPlace = preferenceSubjectByPlace.sortedBy { it.subjectName }.toSet()
-        }
-    }
-
-    private fun PlaceDTO.addNeutralPreferenceDivisionByPlace() {
-        divisionOwnerId?.let {
-            val divisions = divisionRepository.findByDivisionOwnerId(it)
-            val neutralPreferenceToAdd =
-                divisions
-                    .filter { division -> !preferenceDivisionByPlace.any { preference -> id == preference.placeId && division.id == preference.divisionId } }
-                    .map { division -> PreferenceDivisionByPlaceDTO(placeId = id, placeName = name ?: "", divisionId = division.id, divisionName = division.name ?: "") }
-            preferenceDivisionByPlace += neutralPreferenceToAdd
-            preferenceDivisionByPlace = preferenceDivisionByPlace.sortedBy { it.divisionName }.toSet()
         }
     }
 

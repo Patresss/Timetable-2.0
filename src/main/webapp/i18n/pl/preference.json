@@ -1,7 +1,7 @@
 {
     "timetableApp": {
         "preference": {
-            "preferenceLessonAndDate" : "Preferencja lekcji i daty",
+            "preferenceLessonAndDate" : "Preferencja lekcji i dnia tygodnia",
             "preferredSubjects" : "Preferowane przedmioty",
             "preferredDivisions" : "Preferowane grupy",
             "preferredPlaces" : "Preferowane miejsca",

@@ -76,4 +76,6 @@ interface DivisionRepository : DivisionOwnerRepository<Division> {
 
     fun findByParentsIdAndDivisionTypeOrderByName(parentId: Long, divisionType: DivisionType): List<Division>
 
+    fun findByDivisionOwnerIdAndDivisionTypeOrderByName(parentId: Long, divisionType: DivisionType): List<Division>
+
 }

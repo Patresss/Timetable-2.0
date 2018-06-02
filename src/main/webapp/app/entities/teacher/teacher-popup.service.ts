@@ -18,7 +18,6 @@ export class TeacherPopupService {
         this.ngbModalRef = null;
     }
 
-
     open(component: Component, id?: number | any): Promise<NgbModalRef> {
         return new Promise<NgbModalRef>((resolve, reject) => {
             const isOpen = this.ngbModalRef !== null;
