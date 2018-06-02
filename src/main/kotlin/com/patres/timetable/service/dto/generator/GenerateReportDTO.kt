@@ -20,9 +20,15 @@ class GenerateReportDTO {
 
     var globalIterations: Int = 0
 
+    var allTimeImMs: Long = 0
+
     var generateTimeImMs: Long = 0
 
-    var allTimeImMs: Long = 0
+    var generateTimeHandicapInWindowsAlgorithmImMs: Long = 0L
+
+    var generateTimeSwapInWindowAlgorithmImMs: Long = 0L
+
+    var generateTimeHandicapNearToBlockAlgorithmImMs: Long = 0L
 
     var minPoint: Int = 0
 

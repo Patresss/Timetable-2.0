@@ -7,14 +7,17 @@ import org.nield.kotlinstatistics.median
 
 class GenerateReport(
     var timetables: List<Timetable> = emptyList(),
-    var generateTimeImMs: Long = 0,
-    var allTimeImMs: Long = 0,
     var windows: List<Window> = emptyList(),
     var numberOfHandicapAlgorithmIterations: Int = 0,
     var numberOfHandicapNearToBlockAlgorithmIterations: Int = 0,
     var numberOfSwapAlgorithmIterations: Int = 0,
-    var globalIterations: Int = 0
-    ) {
+    var globalIterations: Int = 0,
+    var generateTimeImMs: Long = 0,
+    var allTimeImMs: Long = 0,
+    var generateTimeHandicapInWindowsAlgorithmImMs: Long = 0L,
+    var generateTimeSwapInWindowAlgorithmImMs: Long = 0L,
+    var generateTimeHandicapNearToBlockAlgorithmImMs: Long = 0L
+) {
 
     var unacceptedTimetables: List<Timetable> = emptyList()
         get() = timetables.filter { it.points <= PreferenceHierarchy.UNACCEPTED_EVENT }
@@ -23,10 +26,10 @@ class GenerateReport(
         get() = windows.size
 
     var minPoint: Int = 0
-        get() = timetables.map { it.points }.min()?: 0
+        get() = timetables.map { it.points }.min() ?: 0
 
     var maxPoints: Int = 0
-        get() = timetables.map { it.points }.max()?: 0
+        get() = timetables.map { it.points }.max() ?: 0
 
     var averagePoints: Double = 0.0
         get() = timetables.map { it.points }.average()

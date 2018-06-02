@@ -66,6 +66,9 @@ class TimetableGeneratorContainer(
 
         val changeDetector = ChangeDetector()
 
+        var generateTimeHandicapInWindowsAlgorithmImMs = 0L
+        var generateTimeSwapInWindowAlgorithmImMs = 0L
+        var generateTimeHandicapNearToBlockAlgorithmImMs = 0L
         val generateTimeImMs = measureTimeMillis {
             preferenceManager.calculatePreference()
             preferenceManager.calculateLessonAndDay()
@@ -74,24 +77,30 @@ class TimetableGeneratorContainer(
             do {
                 TimetableGeneratorContainer.log.info("Iteration: $globalIterations")
 
-                numberOfHandicapAlgorithmIterations += handicapInWindowsAlgorithm.run()
+                generateTimeHandicapInWindowsAlgorithmImMs += measureTimeMillis {
+                    numberOfHandicapAlgorithmIterations += handicapInWindowsAlgorithm.run()
+                }
                 windows = findWidows()
                 TimetableGeneratorContainer.log.info("Number of windows after numberOfHandicapAlgorithmIterations: ${windows.size}")
 
                 if (windows.isNotEmpty()) {
-                    numberOfSwapAlgorithmIterations += swapInWindowAlgorithm.run()
+                    generateTimeSwapInWindowAlgorithmImMs += measureTimeMillis {
+                        numberOfSwapAlgorithmIterations += swapInWindowAlgorithm.run()
+                    }
                     windows = findWidows()
                     TimetableGeneratorContainer.log.info("Number of windows after swapInWindowAlgorithm: ${windows.size}")
                 }
 
                 if (windows.isNotEmpty()) {
-                    numberOfHandicapNearToBlockAlgorithmIterations += handicapNearToBlockAlgorithm.run()
+                    generateTimeHandicapNearToBlockAlgorithmImMs += measureTimeMillis {
+                        numberOfHandicapNearToBlockAlgorithmIterations += handicapNearToBlockAlgorithm.run()
+                    }
                     windows = findWidows()
                     TimetableGeneratorContainer.log.info("Number of windows after handicapNearToBlockAlgorithm: ${windows.size}")
                 }
 
                 calculatePlace()
-            } while (windows.isNotEmpty() || (++globalIterations < TimetableGeneratorAlgorithm.MAX_ITERATIONS && changeDetector.hasChange()))
+            } while ((windows.isNotEmpty() && ++globalIterations < TimetableGeneratorAlgorithm.MAX_ITERATIONS) && changeDetector.hasChange())
 
         }
 
@@ -99,7 +108,18 @@ class TimetableGeneratorContainer(
         TimetableGeneratorContainer.log.info("Final number of windows: ${windows.size}")
         preferenceManager.calculateLessonAndDay()
         preferenceManager.fillFinallyPoints()
-        return GenerateReport(timetables = timetablesFromCurriculum, generateTimeImMs = generateTimeImMs, windows = windows.toList(), numberOfHandicapAlgorithmIterations = numberOfHandicapAlgorithmIterations, numberOfSwapAlgorithmIterations = numberOfSwapAlgorithmIterations, numberOfHandicapNearToBlockAlgorithmIterations = numberOfHandicapNearToBlockAlgorithmIterations)
+        return GenerateReport(
+            timetables = timetablesFromCurriculum,
+            generateTimeImMs = generateTimeImMs,
+            windows = windows.toList(),
+            numberOfHandicapAlgorithmIterations = numberOfHandicapAlgorithmIterations,
+            numberOfSwapAlgorithmIterations = numberOfSwapAlgorithmIterations,
+            numberOfHandicapNearToBlockAlgorithmIterations = numberOfHandicapNearToBlockAlgorithmIterations,
+            generateTimeHandicapInWindowsAlgorithmImMs = generateTimeHandicapInWindowsAlgorithmImMs,
+            generateTimeSwapInWindowAlgorithmImMs = generateTimeSwapInWindowAlgorithmImMs,
+            generateTimeHandicapNearToBlockAlgorithmImMs = generateTimeHandicapNearToBlockAlgorithmImMs
+
+        )
     }
 
     private fun calculatePlace() {

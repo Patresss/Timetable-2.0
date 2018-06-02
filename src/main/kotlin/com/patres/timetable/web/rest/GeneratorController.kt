@@ -6,8 +6,6 @@ import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 import com.patres.timetable.service.CurriculumListService
 import com.patres.timetable.service.TimetableService
 import com.patres.timetable.service.dto.generator.GenerateReportDTO
-import com.patres.timetable.service.mapper.TeacherMapper
-import com.patres.timetable.service.mapper.TimetableMapper
 import com.patres.timetable.service.mapper.WindowMapper
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -60,6 +58,9 @@ open class GeneratorController(
                 numberOfHandicapNearToBlockAlgorithmIterations = generateReport.numberOfHandicapNearToBlockAlgorithmIterations
                 numberOfSwapAlgorithmIterations = generateReport.numberOfSwapAlgorithmIterations
                 globalIterations = generateReport.globalIterations
+                generateTimeHandicapInWindowsAlgorithmImMs = generateReport.generateTimeHandicapInWindowsAlgorithmImMs
+                generateTimeSwapInWindowAlgorithmImMs = generateReport.generateTimeSwapInWindowAlgorithmImMs
+                generateTimeHandicapNearToBlockAlgorithmImMs = generateReport.generateTimeHandicapNearToBlockAlgorithmImMs
                 unacceptedTimetables = savedTimetablesDTO.filter { it.points <= PreferenceHierarchy.UNACCEPTED_EVENT } // TODO refactor - this same is in class GenerateReport
             }
         }
