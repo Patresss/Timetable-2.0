@@ -429,7 +429,7 @@ open class FillerResource(
         PrAr = createTeacher(degree = "mgr", name = "Arkadiusz", surname = "Prajsnar", divisionOwner = lo2)
         DyLu = createTeacher(degree = "mgr", name = "Lucjan", surname = "Dynowski", divisionOwner = lo2)
         LoEl = createTeacher(degree = "dr", name = "Elżbieta", surname = "Longosz", divisionOwner = lo2)
-        SwEl = createTeacher(degree = "mgr", name = "Elżbieta", surname = "SwEl", divisionOwner = lo2)
+        SwEl = createTeacher(degree = "mgr", name = "Elżbieta", surname = "Swistak", divisionOwner = lo2)
         BaEl = createTeacher(degree = "mgr", name = "Elżbieta", surname = "Baran", divisionOwner = lo2)
         KaMo = createTeacher(degree = "mgr", name = "Monika", surname = "Karnas", divisionOwner = lo2)
         KaTo = createTeacher(degree = "mgr", name = "Tomasz", surname = "Kasprzyk", divisionOwner = lo2)
@@ -1450,8 +1450,8 @@ open class FillerResource(
             preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historia.id, points = 10),
-                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historiaISpoleczenstwo.id, points = 10)
-
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = historiaISpoleczenstwo.id, points = 10),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = 10)
             )
         }
         SwEl = teacherService.save(SwEl)
@@ -1657,7 +1657,8 @@ open class FillerResource(
         JóSt.apply {
             preferenceSubjectByTeacher = hashSetOf(
                 PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = godzWych.id, points = 0),
-                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = 5)
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = fizyka.id, points = 5),
+                PreferenceSubjectByTeacherDTO(teacherId = this.id, subjectId = matematyka.id, points = 5)
             )
         }
         JóSt = teacherService.save(JóSt)
@@ -2360,9 +2361,7 @@ open class FillerResource(
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jNiemiecki.id, points = -10_000),
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jFrancuski.id, points = -10_000),
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jRosyjski.id, points = -10_000),
-                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = godzWych.id, points = -10_000),
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
-                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000),
 
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLacińskiPrawniczy.id, points = -10_000),
@@ -2394,7 +2393,6 @@ open class FillerResource(
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jFrancuski.id, points = -10_000),
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jRosyjski.id, points = -10_000),
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
-                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000),
 
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLacińskiPrawniczy.id, points = -10_000),
@@ -2426,7 +2424,6 @@ open class FillerResource(
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = geografia.id, points = -10_000),
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = fizyka.id, points = -10_000),
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
-                PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000),
 
                 PreferenceSubjectByDivisionDTO(divisionId = this.id, subjectId = jLacińskiPrawniczy.id, points = -10_000),

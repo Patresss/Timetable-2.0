@@ -214,6 +214,8 @@ dependencies {
     }
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
+
+    compile 'org.nield:kotlin-statistics:1.0.0'
 }
 
 clean {

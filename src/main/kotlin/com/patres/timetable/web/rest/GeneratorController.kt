@@ -2,10 +2,12 @@ package com.patres.timetable.web.rest
 
 import com.codahale.metrics.annotation.Timed
 import com.patres.timetable.generator.TimetableGeneratorManager
+import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 import com.patres.timetable.service.CurriculumListService
 import com.patres.timetable.service.TimetableService
 import com.patres.timetable.service.dto.generator.GenerateReportDTO
 import com.patres.timetable.service.mapper.TeacherMapper
+import com.patres.timetable.service.mapper.TimetableMapper
 import com.patres.timetable.service.mapper.WindowMapper
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -44,11 +46,17 @@ open class GeneratorController(
         val time = measureTimeMillis {
             val generateReport = timetableGeneratorManager.generate(curriculumListId)
             val savedTimetablesDTO = timetableService.saveEntityList(generateReport.timetables)
+            // TODO add mapper
             generateReportDTO.apply {
                 numberOfWindows = generateReport.numberOfWindows
                 timetables = savedTimetablesDTO
                 generateTimeImMs = generateReport.generateTimeImMs
                 windows = windowMapper.toDto(generateReport.windows)
+                minPoint = generateReport.minPoint
+                maxPoints = generateReport.maxPoints
+                medianPoints = generateReport.medianPoints
+                averagePoints = generateReport.averagePoints
+                unacceptedTimetables = savedTimetablesDTO.filter { it.points <= PreferenceHierarchy.UNACCEPTED_EVENT } // TODO refactor - this same is in class GenerateReport
             }
         }
         generateReportDTO.apply { allTimeImMs = time }

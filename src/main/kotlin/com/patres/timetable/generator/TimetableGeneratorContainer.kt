@@ -1,6 +1,7 @@
 package com.patres.timetable.generator
 
 import com.patres.timetable.domain.*
+import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.domain.preference.PreferenceDataTimeForPlace
 import com.patres.timetable.excpetion.ApplicationException
 import com.patres.timetable.excpetion.ExceptionMessage
