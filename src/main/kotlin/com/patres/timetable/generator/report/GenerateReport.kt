@@ -16,7 +16,8 @@ class GenerateReport(
     var allTimeImMs: Long = 0,
     var generateTimeHandicapInWindowsAlgorithmImMs: Long = 0L,
     var generateTimeSwapInWindowAlgorithmImMs: Long = 0L,
-    var generateTimeHandicapNearToBlockAlgorithmImMs: Long = 0L
+    var generateTimeHandicapNearToBlockAlgorithmImMs: Long = 0L,
+    var calculatePreferenceTimeImMs: Long = 0L
 ) {
 
     var unacceptedTimetables: List<Timetable> = emptyList()

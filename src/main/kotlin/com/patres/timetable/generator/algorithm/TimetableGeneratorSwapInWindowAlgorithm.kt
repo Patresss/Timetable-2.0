@@ -36,6 +36,7 @@ class TimetableGeneratorSwapInWindowAlgorithm(private var container: TimetableGe
                     if (!swapLessonAndDay) {
                         timetable.lesson = null
                         timetable.dayOfWeek = null
+                        timetable.place = null
                     }
                 }
             }

@@ -97,6 +97,7 @@ class Preference(
 
     fun calculateTakenPlace(takenTimetable: Set<Timetable>) {
         val takenPlacesId = takenTimetable.mapNotNull { it.place?.id }.toSet()
+        preferredPlaceMap.forEach { id, preference -> preference.taken = 0 }
         takenPlacesId.forEach { preferredPlaceMap[it]?.taken = PreferenceHierarchy.TAKEN }
     }
 

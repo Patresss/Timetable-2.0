@@ -36,6 +36,8 @@ class TimetableGeneratorHandicapNearToBlockAlgorithm(private var container: Time
                 .forEach { timetable ->
                     timetable.lesson = null
                     timetable.dayOfWeek = null
+                    timetable.place = null
+
                 }
         }
     }
@@ -49,6 +51,8 @@ class TimetableGeneratorHandicapNearToBlockAlgorithm(private var container: Time
                 .forEach { timetable ->
                     timetable.lesson = null
                     timetable.dayOfWeek = null
+                    timetable.place = null
+
                 }
         }
     }

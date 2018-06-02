@@ -47,7 +47,7 @@ class TimetableGeneratorPreferenceManager(private var container: TimetableGenera
         container.timetablesFromCurriculum = container.timetablesFromCurriculum.sortedByDescending { it.preference.preferredPlaceMap.maxBy { entry -> entry.value.points }?.value?.points }.toMutableList()
     }
 
-   fun calculateTakenLessonAndDay(timetableFromCurriculum: Timetable) {
+    fun calculateTakenLessonAndDay(timetableFromCurriculum: Timetable) {
         val takenTimetables = container.timetablesFromCurriculum.filter { it != timetableFromCurriculum }.toSet()
         timetableFromCurriculum.division?.let { timetableFromCurriculum.preference.calculateTakenLessonAndDayOfWeekByDivision(it, takenTimetables) }
         timetableFromCurriculum.teacher?.let { timetableFromCurriculum.preference.calculateTakenLessonAndDayOfWeekByTeacher(it, takenTimetables) }
@@ -58,6 +58,11 @@ class TimetableGeneratorPreferenceManager(private var container: TimetableGenera
         timetableFromCurriculum.preference.calculateTakenPlace(container.timetablesFromCurriculum.filter { it.lesson?.id == timetableFromCurriculum.lesson?.id && it.dayOfWeek == timetableFromCurriculum.dayOfWeek }.toSet())
     }
 
+    fun calculateTakenPlaces() {
+        container.timetablesFromCurriculum.forEach { timetableFromCurriculum ->
+            timetableFromCurriculum.preference.calculateTakenPlace(container.timetablesFromCurriculum.filter { it.lesson?.id == timetableFromCurriculum.lesson?.id && it.dayOfWeek == timetableFromCurriculum.dayOfWeek }.toSet())
+        }
+    }
 
     fun calculatePreference() {
         container.timetablesFromCurriculum.forEach {

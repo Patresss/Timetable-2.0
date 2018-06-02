@@ -35,6 +35,7 @@ class TimetableGeneratorHandicapInWindowsAlgorithm(private var container: Timeta
                 .forEach { timetable ->
                     timetable.lesson = null
                     timetable.dayOfWeek = null
+                    timetable.place = null
                 }
         }
     }
@@ -48,6 +49,8 @@ class TimetableGeneratorHandicapInWindowsAlgorithm(private var container: Timeta
                 .forEach { timetable ->
                     timetable.lesson = null
                     timetable.dayOfWeek = null
+                    timetable.place = null
+
                 }
         }
     }

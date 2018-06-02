@@ -61,6 +61,7 @@ open class GeneratorController(
                 generateTimeHandicapInWindowsAlgorithmImMs = generateReport.generateTimeHandicapInWindowsAlgorithmImMs
                 generateTimeSwapInWindowAlgorithmImMs = generateReport.generateTimeSwapInWindowAlgorithmImMs
                 generateTimeHandicapNearToBlockAlgorithmImMs = generateReport.generateTimeHandicapNearToBlockAlgorithmImMs
+                calculatePreferenceTimeImMs = generateReport.calculatePreferenceTimeImMs
                 unacceptedTimetables = savedTimetablesDTO.filter { it.points <= PreferenceHierarchy.UNACCEPTED_EVENT } // TODO refactor - this same is in class GenerateReport
             }
         }

@@ -30,6 +30,8 @@ class GenerateReportDTO {
 
     var generateTimeHandicapNearToBlockAlgorithmImMs: Long = 0L
 
+    var calculatePreferenceTimeImMs: Long = 0L
+
     var minPoint: Int = 0
 
     var maxPoints: Int = 0
