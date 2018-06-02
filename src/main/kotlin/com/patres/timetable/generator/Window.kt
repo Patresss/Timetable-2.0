@@ -4,7 +4,7 @@ import com.patres.timetable.domain.Division
 import com.patres.timetable.domain.Lesson
 
 class Window(
-    val dayOfWeek: Int,
-    val lesson: Lesson,
-    val division: Division
+    var dayOfWeek: Int? = null,
+    var lesson: Lesson? = null,
+    var division: Division? = null
 )

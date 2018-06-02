@@ -3,6 +3,7 @@ package com.patres.timetable.generator
 import com.patres.timetable.domain.Division
 import com.patres.timetable.domain.Place
 import com.patres.timetable.domain.Timetable
+import com.patres.timetable.domain.enumeration.DivisionType
 
 class TimetableGeneratorPreferenceManager(private var container: TimetableGeneratorContainer) {
 
@@ -13,15 +14,35 @@ class TimetableGeneratorPreferenceManager(private var container: TimetableGenera
             .filter { timetable -> timetable.lesson == null || timetable.dayOfWeek == null }
             .forEach { timetableFromCurriculum ->
                 calculateTakenLessonAndDay(timetableFromCurriculum)
-                val lessonDayOfWeekPreferenceElement = timetableFromCurriculum.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithWindowHandicap }
+                val lessonDayOfWeekPreferenceElement = timetableFromCurriculum.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithHandicap }
                 timetableFromCurriculum.lesson = container.lessons.find { it.id == lessonDayOfWeekPreferenceElement?.lessonId }
                 timetableFromCurriculum.dayOfWeek = lessonDayOfWeekPreferenceElement?.dayOfWeek
-                timetableFromCurriculum.points = timetableFromCurriculum.preference.getPreferenceByLessonAndDay(timetableFromCurriculum.dayOfWeek, timetableFromCurriculum.lesson?.id)?.preference?.points ?: 0
+
+
+
+                if (timetableFromCurriculum.type == DivisionType.SUBGROUP) {
+                    val parents = timetableFromCurriculum.division?.calculateContainersWithSetOfSubgroup()?: emptySet()
+                    val subgroups = parents
+                        .filter { parent -> parent.divisionType == DivisionType.SET_OF_SUBGROUPS }
+                        .flatMap { parent -> parent.children }
+                        .filter { parent -> parent.divisionType == DivisionType.SUBGROUP }
+                    container.timetablesFromCurriculum
+                        .filter { timetable -> subgroups.contains(timetable.division) }
+                        .forEach { timetable -> timetable.preference.calculateSubgroupHandicap(lessonDayOfWeekPreferenceElement?.dayOfWeek, lessonDayOfWeekPreferenceElement?.lessonId ) }
+                }
+
+            }
+    }
+
+    fun fillFinallyPoints() {
+        container.timetablesFromCurriculum
+            .forEach { timetableFromCurriculum ->
+                timetableFromCurriculum.points = timetableFromCurriculum.preference.calculateFullPreferencePoints(timetableFromCurriculum)
             }
     }
 
     private fun sortByPreferredLessonAndDay() {
-        container.timetablesFromCurriculum = container.timetablesFromCurriculum.sortedByDescending { it.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithWindowHandicap } }.toMutableList()
+        container.timetablesFromCurriculum = container.timetablesFromCurriculum.sortedByDescending { it.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithHandicap } }.toMutableList()
     }
 
     fun sortByPreferredPlace() {

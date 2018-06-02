@@ -25,15 +25,18 @@ class TimetableGeneratorSwapInWindowAlgorithm(private var container: TimetableGe
 
     private fun fillWindowAndSwap(window: Window) {
         val timetablesToFillAndSwap = timetablesFromCurriculum
-            .filter { it.lesson?.startTime ?: 1L >= window.lesson.startTime ?: 1L && it.division == window.division && it.dayOfWeek == window.dayOfWeek }
+            .filter { it.lesson?.startTime ?: 1L >= window.lesson?.startTime ?: 1L && it.division == window.division && it.dayOfWeek == window.dayOfWeek }
         timetablesToFillAndSwap
             .forEach { timetable ->
                 timetable.dayOfWeek = window.dayOfWeek
                 timetable.lesson = window.lesson
-                val swapLessonAndDay = tryChangeLessonAndDay(division = window.division, timetableWithCollision = timetable)
-                if (!swapLessonAndDay) {
-                    timetable.lesson = null
-                    timetable.dayOfWeek = null
+
+                window.division?.let {division ->
+                    val swapLessonAndDay = tryChangeLessonAndDay(division = division, timetableWithCollision = timetable)
+                    if (!swapLessonAndDay) {
+                        timetable.lesson = null
+                        timetable.dayOfWeek = null
+                    }
                 }
             }
     }

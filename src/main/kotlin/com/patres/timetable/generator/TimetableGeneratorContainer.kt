@@ -10,6 +10,7 @@ import com.patres.timetable.generator.report.GenerateReport
 import com.patres.timetable.preference.Preference
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import kotlin.system.measureTimeMillis
 
 
 class TimetableGeneratorContainer(
@@ -53,19 +54,20 @@ class TimetableGeneratorContainer(
     }
 
     fun generate(): GenerateReport {
-        preferenceManager.calculatePreference()
-        preferenceManager.calculateLessonAndDay()
+        val generateTimeImMs = measureTimeMillis {
+            preferenceManager.calculatePreference()
+            preferenceManager.calculateLessonAndDay()
 
-        handicapInWindowsAlgorithm.run()
-        swapInWindowAlgorithm.run()
+            handicapInWindowsAlgorithm.run()
+            swapInWindowAlgorithm.run()
 
-        calculatePlace()
-
-        val numberOfWindows = findWidows().size
-        TimetableGeneratorContainer.log.info("Final number of windows: $numberOfWindows")
-        return GenerateReport(timetablesFromCurriculum, numberOfWindows)
+            calculatePlace()
+        }
+        val windows = findWidows()
+        TimetableGeneratorContainer.log.info("Final number of windows: ${windows.size}")
+        preferenceManager.fillFinallyPoints()
+        return GenerateReport(timetables = timetablesFromCurriculum, generateTimeImMs = generateTimeImMs, windows = windows.toList())
     }
-
 
     private fun calculatePlace() {
         timetablesFromCurriculum.forEach { timetable ->

@@ -38,6 +38,20 @@ class Preference(
         timetable.division?.let { calculateTooSmallPlace(tooSmallPlaceId) }
     }
 
+    fun calculateFullPreferencePoints(timetable: Timetable): Int {
+        val pointsFromTeacher = timetable.teacher?.id?.let { preferredTeacherMap[it]?.points }?: 0
+        val pointsFromSubject = timetable.subject?.id?.let { preferredSubjectMap[it]?.points }?: 0
+        val pointsFromDivision = timetable.division?.id?.let { preferredDivisionMap[it]?.points }?: 0
+        val pointsFromPlace = timetable.place?.id?.let { preferredPlaceMap[it]?.points }?: 0
+        val pointsFromTime = getPreferenceByLessonAndDay(timetable.dayOfWeek, timetable.lesson?.id)?.preference?.points?: 0
+        return pointsFromTeacher + pointsFromSubject + pointsFromDivision + pointsFromPlace + pointsFromTime
+    }
+
+    fun calculateSubgroupHandicap(dayOfWeek: Int?, lessonId: Long?) {
+        val lessonDayOfWeekPreferenceElement = getPreferenceByLessonAndDay(dayOfWeek, lessonId)
+        lessonDayOfWeekPreferenceElement?.preference?.let { it.subgroupHandicap = PreferenceHierarchy.HANDICAP}
+    }
+
     fun getPreferenceByLessonAndDay(dayOfWeek: Int?, lessonId: Long?): LessonDayOfWeekPreferenceElement? {
         return preferredLessonAndDayOfWeekSet.find { it.dayOfWeek == dayOfWeek && it.lessonId == lessonId }
     }
