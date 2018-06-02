@@ -56,6 +56,10 @@ open class GeneratorController(
                 maxPoints = generateReport.maxPoints
                 medianPoints = generateReport.medianPoints
                 averagePoints = generateReport.averagePoints
+                numberOfHandicapAlgorithmIterations = generateReport.numberOfHandicapAlgorithmIterations
+                numberOfHandicapNearToBlockAlgorithmIterations = generateReport.numberOfHandicapNearToBlockAlgorithmIterations
+                numberOfSwapAlgorithmIterations = generateReport.numberOfSwapAlgorithmIterations
+                globalIterations = generateReport.globalIterations
                 unacceptedTimetables = savedTimetablesDTO.filter { it.points <= PreferenceHierarchy.UNACCEPTED_EVENT } // TODO refactor - this same is in class GenerateReport
             }
         }

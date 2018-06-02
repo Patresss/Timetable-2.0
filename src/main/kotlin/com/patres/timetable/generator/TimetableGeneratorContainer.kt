@@ -1,11 +1,12 @@
 package com.patres.timetable.generator
 
 import com.patres.timetable.domain.*
-import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.domain.preference.PreferenceDataTimeForPlace
 import com.patres.timetable.excpetion.ApplicationException
 import com.patres.timetable.excpetion.ExceptionMessage
+import com.patres.timetable.generator.algorithm.TimetableGeneratorAlgorithm
 import com.patres.timetable.generator.algorithm.TimetableGeneratorHandicapInWindowsAlgorithm
+import com.patres.timetable.generator.algorithm.TimetableGeneratorHandicapNearToBlockAlgorithm
 import com.patres.timetable.generator.algorithm.TimetableGeneratorSwapInWindowAlgorithm
 import com.patres.timetable.generator.report.GenerateReport
 import com.patres.timetable.preference.Preference
@@ -39,6 +40,7 @@ class TimetableGeneratorContainer(
 
     val preferenceManager = TimetableGeneratorPreferenceManager(this)
     private val handicapInWindowsAlgorithm = TimetableGeneratorHandicapInWindowsAlgorithm(this)
+    private val handicapNearToBlockAlgorithm = TimetableGeneratorHandicapNearToBlockAlgorithm(this)
     private val swapInWindowAlgorithm = TimetableGeneratorSwapInWindowAlgorithm(this)
 
 
@@ -55,19 +57,49 @@ class TimetableGeneratorContainer(
     }
 
     fun generate(): GenerateReport {
+        var numberOfHandicapAlgorithmIterations = 0
+        var numberOfSwapAlgorithmIterations = 0
+        var numberOfHandicapNearToBlockAlgorithmIterations = 0
+
+        var windows = findWidows()
+        var globalIterations = 1
+
+        val changeDetector = ChangeDetector()
+
         val generateTimeImMs = measureTimeMillis {
             preferenceManager.calculatePreference()
             preferenceManager.calculateLessonAndDay()
+            windows = findWidows()
+            TimetableGeneratorContainer.log.info("Number of windows at the beginning: ${windows.size}")
+            do {
+                TimetableGeneratorContainer.log.info("Iteration: $globalIterations")
 
-            handicapInWindowsAlgorithm.run()
-            swapInWindowAlgorithm.run()
+                numberOfHandicapAlgorithmIterations += handicapInWindowsAlgorithm.run()
+                windows = findWidows()
+                TimetableGeneratorContainer.log.info("Number of windows after numberOfHandicapAlgorithmIterations: ${windows.size}")
 
-            calculatePlace()
+                if (windows.isNotEmpty()) {
+                    numberOfSwapAlgorithmIterations += swapInWindowAlgorithm.run()
+                    windows = findWidows()
+                    TimetableGeneratorContainer.log.info("Number of windows after swapInWindowAlgorithm: ${windows.size}")
+                }
+
+                if (windows.isNotEmpty()) {
+                    numberOfHandicapNearToBlockAlgorithmIterations += handicapNearToBlockAlgorithm.run()
+                    windows = findWidows()
+                    TimetableGeneratorContainer.log.info("Number of windows after handicapNearToBlockAlgorithm: ${windows.size}")
+                }
+
+                calculatePlace()
+            } while (windows.isNotEmpty() || (++globalIterations < TimetableGeneratorAlgorithm.MAX_ITERATIONS && changeDetector.hasChange()))
+
         }
-        val windows = findWidows()
+
+
         TimetableGeneratorContainer.log.info("Final number of windows: ${windows.size}")
+        preferenceManager.calculateLessonAndDay()
         preferenceManager.fillFinallyPoints()
-        return GenerateReport(timetables = timetablesFromCurriculum, generateTimeImMs = generateTimeImMs, windows = windows.toList())
+        return GenerateReport(timetables = timetablesFromCurriculum, generateTimeImMs = generateTimeImMs, windows = windows.toList(), numberOfHandicapAlgorithmIterations = numberOfHandicapAlgorithmIterations, numberOfSwapAlgorithmIterations = numberOfSwapAlgorithmIterations, numberOfHandicapNearToBlockAlgorithmIterations = numberOfHandicapNearToBlockAlgorithmIterations)
     }
 
     private fun calculatePlace() {
@@ -132,8 +164,8 @@ class TimetableGeneratorContainer(
         return windows
     }
 
-    fun findAndSetupTheBiggestGroups(): Set<BlockWithoutWindow> {
-        val blocks = HashSet<BlockWithoutWindow>()
+    fun findAndSetupTheBiggestGroups(): Set<BlockWithTimetable> {
+        val blocks = HashSet<BlockWithTimetable>()
         val sortedTimetables = timetablesFromCurriculum.sortedBy { it.lesson?.startTime }
         val timetablesByDivision = sortedTimetables.groupBy { it.division }
         timetablesByDivision.forEach { _, timetables ->
@@ -143,14 +175,14 @@ class TimetableGeneratorContainer(
     }
 
 
-    fun findAndSetupTheBiggestGroupsByDivision(timetablesWithThisSameDivision: List<Timetable>): Set<BlockWithoutWindow> {
+    fun findAndSetupTheBiggestGroupsByDivision(timetablesWithThisSameDivision: List<Timetable>): Set<BlockWithTimetable> {
         if (timetablesWithThisSameDivision.isEmpty()) {
             return emptySet()
         } else if (timetablesWithThisSameDivision.any { timetablesWithThisSameDivision.first().division != it.division }) {
             throw ApplicationException(ExceptionMessage.TIMETABLES_MUST_HAVE_THIS_SAME_DIVISION)
         }
 
-        val groups = HashSet<BlockWithoutWindow>()
+        val groups = HashSet<BlockWithTimetable>()
         timetablesWithThisSameDivision
             .groupBy { it.dayOfWeek }
             .filterKeys { it != null }
@@ -180,7 +212,7 @@ class TimetableGeneratorContainer(
         return groups
     }
 
-    private fun setupAndReturnTheBiggestGroup(divisionTimetables: List<Timetable>): BlockWithoutWindow? {
+    private fun setupAndReturnTheBiggestGroup(divisionTimetables: List<Timetable>): BlockWithTimetable? {
         val groupOfBlock = findGroupsFromTimetablesWithThisSameDayAndDivision(divisionTimetables)
         val theBiggestGroup = groupOfBlock.getTheBiggestGroup()
         theBiggestGroup?.let {
@@ -198,14 +230,14 @@ class TimetableGeneratorContainer(
         }
 
         val groupOfBlockWithoutWindowByDayOfWeek = GroupOfBlockWithoutWindow()
-        var currentBlock = BlockWithoutWindow()
+        var currentBlock = BlockWithTimetable()
         for (lesson in lessons) {
             val currentTimetable = timetableWithThisSameDayAndDivision.find { it.lesson == lesson }
             if (currentTimetable != null) {
                 currentBlock.timetables.add(currentTimetable)
             } else if (!currentBlock.timetables.isEmpty()) {
                 groupOfBlockWithoutWindowByDayOfWeek.add(currentBlock)
-                currentBlock = BlockWithoutWindow()
+                currentBlock = BlockWithTimetable()
             }
 
             if (currentTimetable != null && lessons.last() == lesson) {

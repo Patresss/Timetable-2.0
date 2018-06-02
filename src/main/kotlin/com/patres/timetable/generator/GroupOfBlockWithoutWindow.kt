@@ -2,7 +2,7 @@ package com.patres.timetable.generator
 
 import com.patres.timetable.domain.Timetable
 
-class GroupOfBlockWithoutWindow(val blocksWithoutWindow: ArrayList<BlockWithoutWindow> = ArrayList()) {
+class GroupOfBlockWithoutWindow(val blocksWithoutWindow: ArrayList<BlockWithTimetable> = ArrayList()) {
 
     var size = 0
         get() = blocksWithoutWindow.size
@@ -11,11 +11,11 @@ class GroupOfBlockWithoutWindow(val blocksWithoutWindow: ArrayList<BlockWithoutW
         get() = blocksWithoutWindow.flatMap { it.timetables }
 
 
-    fun add(blockWithoutWindow: BlockWithoutWindow) {
+    fun add(blockWithoutWindow: BlockWithTimetable) {
         blocksWithoutWindow.add(blockWithoutWindow)
     }
 
-    fun getTheBiggestGroup(): BlockWithoutWindow? {
+    fun getTheBiggestGroup(): BlockWithTimetable? {
         return blocksWithoutWindow.maxWith(Comparator { g1, g2 ->
             when {
                 g1.timetables.size > g2.timetables.size -> 1
@@ -28,7 +28,7 @@ class GroupOfBlockWithoutWindow(val blocksWithoutWindow: ArrayList<BlockWithoutW
     }
 
 
-    fun setupBlock(blockWithoutWindow: BlockWithoutWindow) {
+    fun setupBlock(blockWithoutWindow: BlockWithTimetable) {
         blockWithoutWindow.hasBlockBefore = blocksWithoutWindow.indexOf(blockWithoutWindow) != 0
         blockWithoutWindow.hasBlockAfter = blocksWithoutWindow.indexOf(blockWithoutWindow) != size - 1
     }

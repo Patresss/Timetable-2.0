@@ -8,9 +8,17 @@ class GenerateReportDTO {
 
     var unacceptedTimetables: List<TimetableDTO> = emptyList()
 
+    var windows: List<WindowDTO> = emptyList()
+
     var numberOfWindows: Int = 0
 
-    var windows: List<WindowDTO> = emptyList()
+    var numberOfHandicapAlgorithmIterations: Int = 0
+
+    var numberOfSwapAlgorithmIterations: Int = 0
+
+    var numberOfHandicapNearToBlockAlgorithmIterations: Int = 0
+
+    var globalIterations: Int = 0
 
     var generateTimeImMs: Long = 0
 

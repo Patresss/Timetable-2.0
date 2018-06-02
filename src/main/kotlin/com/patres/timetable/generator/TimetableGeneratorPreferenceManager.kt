@@ -35,6 +35,7 @@ class TimetableGeneratorPreferenceManager(private var container: TimetableGenera
         container.timetablesFromCurriculum
             .forEach { timetableFromCurriculum ->
                 timetableFromCurriculum.points = timetableFromCurriculum.preference.calculateFullPreferencePoints(timetableFromCurriculum)
+
             }
     }
 

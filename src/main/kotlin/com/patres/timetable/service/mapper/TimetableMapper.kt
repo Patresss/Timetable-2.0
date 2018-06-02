@@ -60,6 +60,8 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
                 date = entityDto.date
             }
 
+            preferenceTimetableHierarchy = entityDto.preferenceTimetableHierarchy
+
         }
     }
 
@@ -110,6 +112,9 @@ open class TimetableMapper : EntityMapper<Timetable, TimetableDTO>() {
             } else {
                 date = entity.date
             }
+
+            preferenceTimetableHierarchy = entity.preferenceTimetableHierarchy
+
         }
     }
 

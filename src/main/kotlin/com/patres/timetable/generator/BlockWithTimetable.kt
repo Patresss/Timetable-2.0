@@ -6,7 +6,7 @@ import com.patres.timetable.domain.Timetable
 import com.patres.timetable.excpetion.ApplicationException
 import com.patres.timetable.excpetion.ExceptionMessage
 
-class BlockWithoutWindow(val timetables: HashSet<Timetable> = HashSet()){
+class BlockWithTimetable(val timetables: HashSet<Timetable> = HashSet()){
 
     var hasBlockBefore = false
     var hasBlockAfter = false
@@ -18,10 +18,18 @@ class BlockWithoutWindow(val timetables: HashSet<Timetable> = HashSet()){
         ).filterNotNull()
     }
 
-    fun getWindowBeforeBlock(lessons: Set<Lesson>):Window? {
+    fun getNearEmptySpace(lessons: Set<Lesson>): List<Window> {
+        return setOf(
+            getWindowBeforeBlock(lessons, false),
+            getWindowAfterBlock(lessons, false)
+        ).filterNotNull()
+    }
+
+
+    private fun getWindowBeforeBlock(lessons: Set<Lesson>, checkBlockWindow: Boolean = true):Window? {
         val dayOfWeek = dayOfWeek
         val division = division
-        if (dayOfWeek != null && division != null && hasBlockBefore) {
+        if (dayOfWeek != null && division != null && ((checkBlockWindow && hasBlockBefore) || !checkBlockWindow)) {
             val sortedLesson = lessons.sortedBy { it.startTime }
             val index = sortedLesson.indexOf(startLesson)
             val indexBefore = index - 1
@@ -33,10 +41,10 @@ class BlockWithoutWindow(val timetables: HashSet<Timetable> = HashSet()){
         return null
     }
 
-    fun getWindowAfterBlock(lessons: Set<Lesson>):Window? {
+    private fun getWindowAfterBlock(lessons: Set<Lesson>, checkBlockWindow: Boolean = true):Window? {
         val dayOfWeek = dayOfWeek
         val division = division
-        if (dayOfWeek != null && division != null && hasBlockAfter) {
+        if (dayOfWeek != null && division != null && ((checkBlockWindow && hasBlockAfter) || !checkBlockWindow)) {
             val sortedLesson = lessons.sortedBy { it.startTime }
             val index = sortedLesson.indexOf(endLesson)
             val indexAfter = index + 1

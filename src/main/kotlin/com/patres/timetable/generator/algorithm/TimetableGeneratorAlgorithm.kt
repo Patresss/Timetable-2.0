@@ -14,13 +14,13 @@ abstract class TimetableGeneratorAlgorithm(private var container: TimetableGener
     var preferenceManager = container.preferenceManager
 
 
-    fun run() {
+    fun run(): Int {
         preferenceManager.calculateLessonAndDay()
-        var counter = 1
+        var numberOfIterations = 1
         val changeDetector = ChangeDetector()
         val timetablesWithoutLessonAndDay = -1
         do {
-            TimetableGeneratorContainer.log.info("Iteration: $counter")
+            TimetableGeneratorContainer.log.info("Iteration: $numberOfIterations")
 
             val numberOfWindows = container.findWidows().size
             TimetableGeneratorContainer.log.info("Number of windows: $numberOfWindows")
@@ -32,8 +32,8 @@ abstract class TimetableGeneratorAlgorithm(private var container: TimetableGener
 
             changeDetector.updateValue(timetablesWithoutDayAndLesson)
             preferenceManager.calculateLessonAndDay()
-        } while ((timetablesWithoutLessonAndDay != 0 && ++counter < MAX_ITERATIONS) && changeDetector.hasChange())
-
+        } while ((timetablesWithoutLessonAndDay != 0 && ++numberOfIterations < MAX_ITERATIONS) && changeDetector.hasChange())
+        return numberOfIterations - 1
     }
 
     abstract fun runAlgorithm()

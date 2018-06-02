@@ -2,7 +2,7 @@ package com.patres.timetable.generator.algorithm
 
 import com.patres.timetable.domain.Division
 import com.patres.timetable.domain.Timetable
-import com.patres.timetable.generator.BlockWithoutWindow
+import com.patres.timetable.generator.BlockWithTimetable
 import com.patres.timetable.generator.TimetableGeneratorContainer
 import com.patres.timetable.generator.Window
 import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
@@ -15,7 +15,7 @@ class TimetableGeneratorSwapInWindowAlgorithm(private var container: TimetableGe
         fillWindowsAndSwap(getWindows(blocksWithTimetable))
     }
 
-    private fun getWindows(blocks: Set<BlockWithoutWindow>): List<Window> {
+    private fun getWindows(blocks: Set<BlockWithTimetable>): List<Window> {
         return blocks.flatMap { it.getWindows(container.lessons) }
     }
 

@@ -5,17 +5,18 @@ import com.patres.timetable.generator.TimetableGeneratorContainer
 import com.patres.timetable.generator.Window
 import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 
-class TimetableGeneratorHandicapInWindowsAlgorithm(private var container: TimetableGeneratorContainer) : TimetableGeneratorAlgorithm(container) {
+// TODO refactor this a lot of duplicate
+class TimetableGeneratorHandicapNearToBlockAlgorithm(private var container: TimetableGeneratorContainer) : TimetableGeneratorAlgorithm(container) {
 
     override fun runAlgorithm() {
         val blocksWithTimetable = container.findAndSetupTheBiggestGroups()
         removeTimetableBeforeBlocks(blocksWithTimetable)
         removeTimetableAfterBlocks(blocksWithTimetable)
-        addHandicapInWindows(getWindows(blocksWithTimetable))
+        addHandicap(getNearEmptySpace(blocksWithTimetable))
     }
 
-    private fun getWindows(blocks: Set<BlockWithTimetable>): List<Window> {
-        return blocks.flatMap { it.getWindows(container.lessons) }
+    private fun getNearEmptySpace(blocks: Set<BlockWithTimetable>): List<Window> {
+        return blocks.flatMap { it.getNearEmptySpace(container.lessons) }
     }
 
     private fun removeTimetableBeforeBlocks(blocks: Set<BlockWithTimetable>) {
@@ -53,11 +54,11 @@ class TimetableGeneratorHandicapInWindowsAlgorithm(private var container: Timeta
     }
 
 
-    private fun addHandicapInWindows(window: List<Window>) {
-        window.forEach { addHandicapInWindow(it) }
+    private fun addHandicap(window: List<Window>) {
+        window.forEach { addHandicap(it) }
     }
 
-    private fun addHandicapInWindow(window: Window) {
+    private fun addHandicap(window: Window) {
         timetablesFromCurriculum
             .filter { it.lesson == null && it.dayOfWeek == null && it.division == window.division }
             .forEach { timetable ->

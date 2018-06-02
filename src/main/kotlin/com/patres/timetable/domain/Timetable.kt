@@ -2,6 +2,7 @@ package com.patres.timetable.domain
 
 import com.patres.timetable.domain.enumeration.EventType
 import com.patres.timetable.preference.Preference
+import com.patres.timetable.preference.hierarchy.PreferenceTimetableHierarchy
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -76,6 +77,9 @@ class Timetable(
 
     @Transient
     var preference: Preference = Preference(),
+
+    @Transient
+    var preferenceTimetableHierarchy: PreferenceTimetableHierarchy = PreferenceTimetableHierarchy(),
 
     @Transient
     var points: Int = 0,
