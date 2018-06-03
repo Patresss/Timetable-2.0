@@ -12,8 +12,50 @@ class TimetableGeneratorSwapInWindowAlgorithm(private var container: TimetableGe
 
     override fun runAlgorithm() {
         val blocksWithTimetable = container.findAndSetupTheBiggestGroups()
+        removeTimetableBeforeBlocks(blocksWithTimetable)
+        removeTimetableAfterBlocks(blocksWithTimetable)
+
         fillWindowsAndSwap(getWindows(blocksWithTimetable))
     }
+
+    // TODO refactor - duplicate
+    private fun removeTimetableBeforeBlocks(blocks: Set<BlockWithTimetable>) {
+        blocks.filter { it.hasBlockBefore }.forEach { removeTimetableBeforeBlock(it) }
+    }
+    // TODO refactor - duplicate
+    private fun removeTimetableAfterBlocks(blocks: Set<BlockWithTimetable>) {
+        blocks.filter { it.hasBlockAfter }.forEach { removeTimetableAfterBlock(it) }
+    }
+    // TODO refactor - duplicate
+    private fun removeTimetableBeforeBlock(block: BlockWithTimetable) {
+        val timetablesToRemove = timetablesFromCurriculum
+            .filter { it.lesson?.endTime ?: 0L < block.startTime && it.division == block.division && it.dayOfWeek == block.dayOfWeek }
+        if (timetablesToRemove.isNotEmpty()) {
+            TimetableGeneratorContainer.log.debug("Remove windows for division: ${block.division?.name} in: day of week: ${block.dayOfWeek} after lesson when start ${block.startTime}")
+            timetablesToRemove
+                .forEach { timetable ->
+                    timetable.lesson = null
+                    timetable.dayOfWeek = null
+                    timetable.place = null
+                }
+        }
+    }
+    // TODO refactor - duplicate
+    private fun removeTimetableAfterBlock(block: BlockWithTimetable) {
+        val timetablesToRemove = timetablesFromCurriculum
+            .filter { it.lesson?.startTime ?: 0L > block.endTime && it.division == block.division && it.dayOfWeek == block.dayOfWeek }
+        if (timetablesToRemove.isNotEmpty()) {
+            TimetableGeneratorContainer.log.debug("Remove windows for division: ${block.division?.name} in: day of week: ${block.dayOfWeek} after lesson when start ${block.startTime}")
+            timetablesToRemove
+                .forEach { timetable ->
+                    timetable.lesson = null
+                    timetable.dayOfWeek = null
+                    timetable.place = null
+
+                }
+        }
+    }
+
 
     private fun getWindows(blocks: Set<BlockWithTimetable>): List<Window> {
         return blocks.flatMap { it.getWindows(container.lessons) }
@@ -25,7 +67,7 @@ class TimetableGeneratorSwapInWindowAlgorithm(private var container: TimetableGe
 
     private fun fillWindowAndSwap(window: Window) {
         val timetablesToFillAndSwap = timetablesFromCurriculum
-            .filter { it.lesson?.startTime ?: 1L >= window.lesson?.startTime ?: 1L && it.division == window.division && it.dayOfWeek == window.dayOfWeek }
+            .filter {it.lesson == null && it.dayOfWeek == null }
         timetablesToFillAndSwap
             .forEach { timetable ->
                 timetable.dayOfWeek = window.dayOfWeek
