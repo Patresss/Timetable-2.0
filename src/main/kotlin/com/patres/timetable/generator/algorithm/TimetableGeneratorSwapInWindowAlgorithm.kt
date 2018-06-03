@@ -91,7 +91,6 @@ class TimetableGeneratorSwapInWindowAlgorithm(private var container: TimetableGe
 
         val timetableToSwap = divisionTimetable.find { timetableToTest -> canChangeLessonAndDay(timetableWithCollision, timetableToTest) }
         return if (timetableToSwap == null) {
-            TimetableGeneratorContainer.log.warn("Not found timetables to swap lesson and day")
             false
         } else {
             TimetableGeneratorContainer.log.debug("Swap timetables: $timetableWithCollision <-> $timetableToSwap")

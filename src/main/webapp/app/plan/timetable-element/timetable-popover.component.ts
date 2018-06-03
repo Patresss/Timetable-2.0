@@ -125,6 +125,41 @@ export class TimetableElementComponent implements OnInit {
         } else {
             return {}
         }
+    }
 
+    getInformationWithInformation() {
+        if (this.timetable && this.timetable.colorBackgroundForSubject) {
+            let text = '';
+            const placeName = this.timetable.placeShortName ? this.timetable.placeShortName : this.timetable.placeName;
+            switch (this.colorType) {
+                case ColorType.SUBJECT: {
+                    const subjectName = this.timetable.subjectShortName ? this.timetable.subjectShortName : this.timetable.subjectName;
+                    text = subjectName + ' (' + placeName + ')';
+                    break;
+                }
+                case ColorType.DIVISION: {
+                    const divisionName = this.timetable.divisionShortName ? this.timetable.divisionShortName : this.timetable.divisionName;
+                    text = divisionName + ' (' + placeName + ')';
+                    break;
+                }
+                case ColorType.PLACE: {
+                    text = placeName;
+                    break;
+                }
+                case ColorType.TEACHER: {
+                    const teacherName = this.timetable.teacherShortName ? this.timetable.teacherShortName : this.timetable.teacherFullName;
+                    text = teacherName + ' (' + placeName + ')';
+                    break;
+                }
+                default: {
+                    const subjectName = this.timetable.subjectShortName ? this.timetable.subjectShortName : this.timetable.subjectName;
+                    text = subjectName + ' (' + placeName + ')';
+                    break;
+                }
+            }
+            return text;
+        } else {
+            return {}
+        }
     }
 }

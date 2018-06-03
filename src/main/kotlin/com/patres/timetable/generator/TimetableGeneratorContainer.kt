@@ -122,7 +122,7 @@ class TimetableGeneratorContainer(
 
 
         TimetableGeneratorContainer.log.info("Final number of windows: ${windows.size}")
-        preferenceManager.calculateLessonAndDay()
+        preferenceManager.calculateTakenLessonAndDay()
         preferenceManager.fillFinallyPoints()
         return GenerateReport(
             timetables = timetablesFromCurriculum,

@@ -50,5 +50,5 @@
 
 
 <a class="event" [ngStyle]="getColorStyle()" [ngbPopover]="popContent" #popoverRef="ngbPopover" (click)="setCurrentPopoverOpen(popoverRef)">
-    {{timetable.subjectShortName}} ({{timetable.placeShortName ? timetable.placeShortName : timetable.placeName}})
+    {{getInformationWithInformation()}}
 </a>

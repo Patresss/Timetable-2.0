@@ -24,7 +24,9 @@
             "type": {
                 "STUDENT": "Uczeń",
                 "TEACHER": "Nauczyciel",
-                "PLACE": "Miejsce"
+                "PLACE": "Miejsce",
+                "SUBJECT": "Przedmiot"
+
             },
             "plan-type": "Typ planu",
             "month-with-year": {

@@ -39,4 +39,11 @@ open class TimetableService(entityRepository: TimetableRepository, entityMapper:
         val timetables = entityRepository.findByPlaceIdAndDateFromPeriod(date, placeId)
         return timetables.map{ entityMapper.toDto(it)}.toSet()
     }
+
+    @Transactional(readOnly = true)
+    open fun findByDivisionListAndDateFromSubjectId(date: LocalDate, subjectId: Long ): Set<TimetableDTO> {
+        TimetableService.log.debug("Request to findByDivisionListAndDateFromSubjectId date: $date and subjectId: $subjectId")
+        val timetables = entityRepository.findBySubjectIdAndDateFromPeriod(date, subjectId)
+        return timetables.map{ entityMapper.toDto(it)}.toSet()
+    }
 }

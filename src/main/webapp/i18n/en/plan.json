@@ -24,7 +24,8 @@
             "type": {
                 "STUDENT": "Student",
                 "TEACHER": "Teacher",
-                "PLACE": "Place"
+                "PLACE": "Place",
+                "SUBJECT": "Subject"
             },
             "plan-type": "Type of plan",
             "month-with-year": {

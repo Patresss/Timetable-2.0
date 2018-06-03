@@ -4,6 +4,7 @@ import com.patres.timetable.domain.Division
 import com.patres.timetable.domain.Place
 import com.patres.timetable.domain.Timetable
 import com.patres.timetable.domain.enumeration.DivisionType
+import java.util.Collections.max
 
 class TimetableGeneratorPreferenceManager(private var container: TimetableGeneratorContainer) {
 
@@ -20,15 +21,22 @@ class TimetableGeneratorPreferenceManager(private var container: TimetableGenera
 
                 // TODO add handicap to subgropu, code belowe dont work with other class
                 if (DivisionType.SUBGROUP == timetableFromCurriculum.division?.divisionType) {
-                    val parents = timetableFromCurriculum.division?.parents?: emptySet()
+                    val parents = timetableFromCurriculum.division?.parents ?: emptySet()
                     val subgroups = parents
                         .filter { parent -> parent.divisionType == DivisionType.SET_OF_SUBGROUPS }
                         .flatMap { parent -> parent.subgroups }
                     container.timetablesFromCurriculum
                         .filter { timetable -> subgroups.contains(timetable.division) }
-                        .forEach { timetable -> timetable.preference.calculateSubgroupHandicap(lessonDayOfWeekPreferenceElement?.dayOfWeek, lessonDayOfWeekPreferenceElement?.lessonId ) }
+                        .forEach { timetable -> timetable.preference.calculateSubgroupHandicap(lessonDayOfWeekPreferenceElement?.dayOfWeek, lessonDayOfWeekPreferenceElement?.lessonId) }
                 }
 
+            }
+    }
+
+    fun calculateTakenLessonAndDay() {
+        container.timetablesFromCurriculum
+            .forEach { timetableFromCurriculum ->
+                calculateTakenLessonAndDay(timetableFromCurriculum)
             }
     }
 
@@ -42,8 +50,9 @@ class TimetableGeneratorPreferenceManager(private var container: TimetableGenera
 
     private fun sortByPreferredLessonAndDay() {
         container.timetablesFromCurriculum = container.timetablesFromCurriculum.sortedWith(compareBy(
-            { it.division?.divisionType?.order }, { it.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithHandicap } }
+            { it.division?.divisionType?.order }, { -max(it.preference.preferredLessonAndDayOfWeekSet.map { it.preference.pointsWithHandicap }) }
         )).toMutableList()
+        val myListTodebug = container.timetablesFromCurriculum.map {it.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithHandicap }}
     }
 
     fun sortByPreferredPlace() {

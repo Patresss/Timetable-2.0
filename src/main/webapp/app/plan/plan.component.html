@@ -71,6 +71,17 @@
                         </jhi-angular2-multiselect>
                     </div>
                 </div>
+
+                <div class="row plan-row-choose" *ngIf="selectedTypePlan[0].value === 'SUBJECT'">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        <label class="select-label" jhiTranslate="timetableApp.plan.type.SUBJECT"></label>
+                        <jhi-angular2-multiselect [data]="subjectSelectOption" [(ngModel)]="selectedSubject" [settings]="subjectSelectSettings"
+                                                  (onSelect)="reloadTimetables()"
+                                                  (onDeSelect)="reloadTimetables()" styleClass="plan-select">
+                        </jhi-angular2-multiselect>
+                    </div>
+                </div>
             </div>
 
         </div>

@@ -47,6 +47,17 @@ export class TimetableService extends EntityService<Timetable> {
         return this.http.get(`${this.resourceUrl}/place`, options).map((res: Response) => this.convertResponse(res));
     }
 
+    findByDateAndSubjectId(date: Date, subjectId: number): Observable<ResponseWrapper> {
+        const urlSearchParams: URLSearchParams = new URLSearchParams();
+        const dateObj = DateObject.fromDate(date);
+        const dateToServer = this.dateUtils.convertLocalDateToServer(dateObj);
+        urlSearchParams.set('date', dateToServer);
+        urlSearchParams.set('subjectId', subjectId.toString());
+        const options = {params: urlSearchParams};
+        return this.http.get(`${this.resourceUrl}/subject`, options).map((res: Response) => this.convertResponse(res));
+    }
+
+
     convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         for (let i = 0; i < jsonResponse.length; i++) {

@@ -88,6 +88,7 @@ open class SecurityConfiguration(
             .antMatchers(HttpMethod.GET, "/api/teachers/**").permitAll()
             .antMatchers(HttpMethod.GET, "/api/divisions/**").permitAll()
             .antMatchers(HttpMethod.GET, "/api/places/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/subjects/**").permitAll()
             .antMatchers(HttpMethod.GET, "/api/timetables/**").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/authenticate").permitAll()

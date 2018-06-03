@@ -2,9 +2,9 @@ import {BaseEntity} from '../../shared';
 import {Time} from '../../util/time.model';
 
 export enum EventType {
-   LESSON = 'LESSON',
-   SUBSTITUTION = 'SUBSTITUTION',
-   SPECIAL = 'SPECIAL'
+    LESSON = 'LESSON',
+    SUBSTITUTION = 'SUBSTITUTION',
+    SPECIAL = 'SPECIAL'
 }
 
 export enum DayOfWeek {
@@ -45,13 +45,14 @@ export class Timetable implements BaseEntity {
                 public subjectShortName?: string,
                 public teacherId?: number,
                 public teacherFullName?: string,
+                public teacherShortName?: string,
                 public divisionId?: number,
                 public divisionName?: string,
+                public divisionShortName?: string,
                 public lessonId?: number,
                 public lessonName?: number,
                 public periodId?: number,
                 public periodName?: string,
                 public series = false,
-                public usersId: number[] = []) {
-    }
+                public usersId: number[] = []) {}
 }

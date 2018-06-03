@@ -16,6 +16,10 @@ interface TimetableRepository : DivisionOwnerRepository<Timetable>, TimetableCus
     @Query("select distinct timetable from Timetable timetable left join fetch timetable.period  period left join fetch period.intervalTimes interval left join fetch timetable.place place WHERE place.id = :placeId AND (timetable.date = :date OR (interval.includedState is true AND :date BETWEEN interval.startDate AND interval.endDate)  AND interval.period NOT IN (SELECT interval.period from interval WHERE interval.includedState is false AND :date BETWEEN interval.startDate AND interval.endDate))")
     fun findByPlaceIdAndDateFromPeriod(@Param("date") date: LocalDate, @Param("placeId") placeId: Long?): Set<Timetable>
 
+    @Query("select distinct timetable from Timetable timetable left join fetch timetable.period  period left join fetch period.intervalTimes interval left join fetch timetable.subject subject WHERE subject.id = :subjectId AND (timetable.date = :date OR (interval.includedState is true AND :date BETWEEN interval.startDate AND interval.endDate)  AND interval.period NOT IN (SELECT interval.period from interval WHERE interval.includedState is false AND :date BETWEEN interval.startDate AND interval.endDate))")
+    fun findBySubjectIdAndDateFromPeriod(@Param("date") date: LocalDate, @Param("subjectId") subjectId: Long?): Set<Timetable>
+
+
     @Query("select distinct timetable from Timetable timetable left join fetch timetable.period  period left join fetch period.intervalTimes interval left join fetch timetable.teacher teacher WHERE teacher.id = :teacherId AND (timetable.date = :date OR (interval.includedState is true AND :date BETWEEN interval.startDate AND interval.endDate)  AND interval.period NOT IN (SELECT interval.period from interval WHERE interval.includedState is false AND :date BETWEEN interval.startDate AND interval.endDate))")
     fun findByTeacherIdAndDateFromPeriod(@Param("date") date: LocalDate, @Param("teacherId") teacherId: Long?): Set<Timetable>
 

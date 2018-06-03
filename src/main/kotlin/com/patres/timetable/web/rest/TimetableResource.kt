@@ -173,6 +173,22 @@ open class TimetableResource(
         return getTimetables(localDate, timetablesDTO)
     }
 
+    /**
+     * GET  /timetables/subject : get the timetable by dateAndDivisionList
+     *
+     * @param subjectId
+     * @param date
+     * @return the ResponseEntity with status 200 (OK) and with body the List of timetableDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/timetables/subject", params = ["subjectId", "date"])
+    @Timed
+    open fun getTimetableByDateAndSubjectId(@RequestParam(value = "subjectId") subjectId: Long, @RequestParam(value = "date") date: String): ResponseEntity<Set<TimetableDTO>> {
+        log.debug("REST request to get Timetable by date: $date Subject id: $subjectId")
+        val localDate = LocalDate.parse(date)
+        val timetablesDTO = timetableService.findByDivisionListAndDateFromSubjectId(localDate, subjectId)
+        return getTimetables(localDate, timetablesDTO)
+    }
+
     open fun getTimetables(localDate: LocalDate, timetables: Set<TimetableDTO>): ResponseEntity<Set<TimetableDTO>> {
         val filteredByWeekDay = timetables.filter { TimetableDateUtil.canAddByWeekDay(localDate, it) }
 

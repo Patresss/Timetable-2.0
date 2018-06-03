@@ -14,6 +14,7 @@ import {SelectType} from '../util/select-type.model';
 import {Time} from '../util/time.model';
 import {SelectUtil} from '../util/select-util.model';
 import {ColorType} from './color-type.';
+import {SubjectService} from '../entities/subject';
 
 @Component({
     selector: 'jhi-board',
@@ -79,10 +80,19 @@ export class PlanComponent implements OnInit, OnDestroy {
         enableSearchFilter: true
     };
 
+    subjectSelectOption = [];
+    selectedSubject = [];
+    subjectSelectSettings = {
+        singleSelection: true,
+        text: 'timetableApp.plan.choose.subject',
+        enableSearchFilter: true
+    };
+
     typePlanSelectOption = [
         new SelectType(1, '', 'timetableApp.plan.type.STUDENT', 'STUDENT'),
         new SelectType(2, '', 'timetableApp.plan.type.TEACHER', 'TEACHER'),
-        new SelectType(3, '', 'timetableApp.plan.type.PLACE', 'PLACE')];
+        new SelectType(3, '', 'timetableApp.plan.type.PLACE', 'PLACE'),
+        new SelectType(4, '', 'timetableApp.plan.type.SUBJECT', 'SUBJECT')];
     selectedTypePlan: SelectType[] = [this.typePlanSelectOption[0]];
     typePlanSelectSettings = {
         singleSelection: true,
@@ -112,6 +122,7 @@ export class PlanComponent implements OnInit, OnDestroy {
                 private paginationConfig: PaginationConfig,
                 private divisionService: DivisionService,
                 private teacherService: TeacherService,
+                private subjectService: SubjectService,
                 private placeService: PlaceService,
                 private timetableService: TimetableService) {
         this.itemsPerPage = ITEMS_PER_PAGE;
@@ -178,6 +189,10 @@ export class PlanComponent implements OnInit, OnDestroy {
         this.placeSelectOption = SelectUtil.entityListToSelectList(data);
     }
 
+    private onSuccessSubject(data) {
+        this.subjectSelectOption = SelectUtil.entityListToSelectList(data);
+    }
+
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
@@ -225,6 +240,10 @@ export class PlanComponent implements OnInit, OnDestroy {
         );
         this.placeService.findByDivisionOwner(schoolsId, {size: SelectType.MAX_INT_JAVA, sort: ['name']}).subscribe(
             (res: ResponseWrapper) => this.onSuccessPlace(res.json),
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+        this.subjectService.findByDivisionOwner(schoolsId, {size: SelectType.MAX_INT_JAVA, sort: ['name']}).subscribe(
+            (res: ResponseWrapper) => this.onSuccessSubject(res.json),
             (res: ResponseWrapper) => this.onError(res.json)
         );
     }
@@ -312,6 +331,15 @@ export class PlanComponent implements OnInit, OnDestroy {
                 case 'PLACE': {
                     if (this.selectedPlace[0] && this.selectedPlace[0].id) {
                         this.timetableService.findByDateAndPlaceId(weekDay.date, this.selectedPlace[0].id).subscribe(
+                            (res: ResponseWrapper) => this.onSuccessTimetable(weekDay, res.json),
+                            (res: ResponseWrapper) => this.onError(res.json)
+                        );
+                    }
+                    break;
+                }
+                case 'SUBJECT': {
+                    if (this.selectedSubject[0] && this.selectedSubject[0].id) {
+                        this.timetableService.findByDateAndSubjectId(weekDay.date, this.selectedSubject[0].id).subscribe(
                             (res: ResponseWrapper) => this.onSuccessTimetable(weekDay, res.json),
                             (res: ResponseWrapper) => this.onError(res.json)
                         );
