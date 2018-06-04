@@ -3,7 +3,6 @@ package com.patres.timetable.generator
 import com.patres.timetable.domain.Division
 import com.patres.timetable.domain.Place
 import com.patres.timetable.domain.Timetable
-import com.patres.timetable.domain.enumeration.DivisionType
 import java.util.Collections.max
 
 class TimetableGeneratorPreferenceManager(private var container: TimetableGeneratorContainer) {
@@ -20,15 +19,15 @@ class TimetableGeneratorPreferenceManager(private var container: TimetableGenera
                 timetableFromCurriculum.dayOfWeek = lessonDayOfWeekPreferenceElement?.dayOfWeek
 
                 // TODO add handicap to subgropu, code belowe dont work with other class
-                if (DivisionType.SUBGROUP == timetableFromCurriculum.division?.divisionType) {
-                    val parents = timetableFromCurriculum.division?.parents ?: emptySet()
-                    val subgroups = parents
-                        .filter { parent -> parent.divisionType == DivisionType.SET_OF_SUBGROUPS }
-                        .flatMap { parent -> parent.subgroups }
-                    container.timetablesFromCurriculum
-                        .filter { timetable -> subgroups.contains(timetable.division) }
-                        .forEach { timetable -> timetable.preference.calculateSubgroupHandicap(lessonDayOfWeekPreferenceElement?.dayOfWeek, lessonDayOfWeekPreferenceElement?.lessonId) }
-                }
+//                if (DivisionType.SUBGROUP == timetableFromCurriculum.division?.divisionType) {
+//                    val parents = timetableFromCurriculum.division?.parents ?: emptySet()
+//                    val subgroups = parents
+//                        .filter { parent -> parent.divisionType == DivisionType.SET_OF_SUBGROUPS }
+//                        .flatMap { parent -> parent.subgroups }
+//                    container.timetablesFromCurriculum
+//                        .filter { timetable -> subgroups.contains(timetable.division) }
+//                        .forEach { timetable -> timetable.preference.calculateSubgroupHandicap(lessonDayOfWeekPreferenceElement?.dayOfWeek, lessonDayOfWeekPreferenceElement?.lessonId) }
+//                }
 
             }
     }

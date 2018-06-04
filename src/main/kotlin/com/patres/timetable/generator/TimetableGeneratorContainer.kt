@@ -10,6 +10,7 @@ import com.patres.timetable.generator.algorithm.TimetableGeneratorHandicapNearTo
 import com.patres.timetable.generator.algorithm.TimetableGeneratorSwapInWindowAlgorithm
 import com.patres.timetable.generator.report.GenerateReport
 import com.patres.timetable.preference.Preference
+import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.system.measureTimeMillis
@@ -54,6 +55,7 @@ class TimetableGeneratorContainer(
         timetablesFromCurriculum.forEach {
             it.preference = Preference(teachersId = teachersId, subjectsId = subjectsId, divisionsId = divisionsId, lessonsId = lessonsId, placesId = placesId)
         }
+        preferenceManager.calculatePreference()
     }
 
     fun generate(): GenerateReport {
@@ -71,45 +73,82 @@ class TimetableGeneratorContainer(
         var generateTimeHandicapInWindowsAlgorithmImMs = 0L
         var generateTimeSwapInWindowAlgorithmImMs = 0L
         var generateTimeHandicapNearToBlockAlgorithmImMs = 0L
-        var calculatePreferenceTimeImMs = 0L
+        var calculateLessonAndTimeInMs = 0L
+        var calculatePlaceTimeInMs = 0L
+
+        var numberOfRemoveWindowsByHandicapInWindow = 0
+        var numberOfRemoveWindowsBySwapInWindow = 0
+        var numberOfRemoveHandicapNearToBlockInWindow = 0
+
         val generateTimeImMs = measureTimeMillis {
 
-            calculatePreferenceTimeImMs = measureTimeMillis {
-                preferenceManager.calculatePreference()
-            }
-            preferenceManager.calculateLessonAndDay()
 
+            calculateLessonAndTimeInMs += measureTimeMillis {
+                preferenceManager.calculateLessonAndDay()
+            }
             windows = findWidows()
+            changeWindowDetector.updateValue(windows.size)
             TimetableGeneratorContainer.log.info("Number of windows at the beginning: ${windows.size}")
             do {
+
                 do {
                     TimetableGeneratorContainer.log.info("Iteration: $globalIterations")
-
-                    generateTimeHandicapInWindowsAlgorithmImMs += measureTimeMillis {
-                        numberOfHandicapAlgorithmIterations += handicapInWindowsAlgorithm.run()
+                    if (windows.isNotEmpty()) {
+                        do {
+                            generateTimeHandicapInWindowsAlgorithmImMs += measureTimeMillis {
+                                numberOfHandicapAlgorithmIterations++
+                                handicapInWindowsAlgorithm.run()
+                                calculateLessonAndTimeInMs += measureTimeMillis {
+                                    preferenceManager.calculateLessonAndDay()
+                                }
+                                windows = findWidows()
+                                changeWindowDetector.updateValue(windows.size)
+                                numberOfRemoveWindowsByHandicapInWindow += changeWindowDetector.diffrentInValue
+                            }
+                        } while ((windows.isNotEmpty() && ++globalIterations < TimetableGeneratorAlgorithm.MAX_ITERATIONS) && changeWindowDetector.hasChange())
+                        TimetableGeneratorContainer.log.info("Number of windows after numberOfHandicapAlgorithmIterations: ${windows.size}")
                     }
-                    windows = findWidows()
-                    TimetableGeneratorContainer.log.info("Number of windows after numberOfHandicapAlgorithmIterations: ${windows.size}")
+
 
                     if (windows.isNotEmpty()) {
-                        generateTimeSwapInWindowAlgorithmImMs += measureTimeMillis {
-                            numberOfSwapAlgorithmIterations += swapInWindowAlgorithm.run()
-                        }
-                        windows = findWidows()
+                        do {
+                            generateTimeSwapInWindowAlgorithmImMs += measureTimeMillis {
+                                numberOfSwapAlgorithmIterations++
+                                swapInWindowAlgorithm.run()
+                                calculateLessonAndTimeInMs += measureTimeMillis {
+                                    preferenceManager.calculateLessonAndDay()
+                                }
+                                windows = findWidows()
+                                changeWindowDetector.updateValue(windows.size)
+                                numberOfRemoveWindowsBySwapInWindow += changeWindowDetector.diffrentInValue
+                            }
+                        } while ((windows.isNotEmpty() && ++globalIterations < TimetableGeneratorAlgorithm.MAX_ITERATIONS) && changeWindowDetector.hasChange())
                         TimetableGeneratorContainer.log.info("Number of windows after swapInWindowAlgorithm: ${windows.size}")
                     }
 
                     if (windows.isNotEmpty()) {
-                        generateTimeHandicapNearToBlockAlgorithmImMs += measureTimeMillis {
-                            numberOfHandicapNearToBlockAlgorithmIterations += handicapNearToBlockAlgorithm.run()
-                        }
-                        windows = findWidows()
+                        do {
+                            generateTimeHandicapNearToBlockAlgorithmImMs += measureTimeMillis {
+                                numberOfHandicapNearToBlockAlgorithmIterations++
+                                handicapNearToBlockAlgorithm.run()
+                                calculateLessonAndTimeInMs += measureTimeMillis {
+                                    preferenceManager.calculateLessonAndDay()
+                                }
+                                windows = findWidows()
+                                changeWindowDetector.updateValue(windows.size)
+                                numberOfRemoveHandicapNearToBlockInWindow += changeWindowDetector.diffrentInValue
+                            }
+                        } while ((windows.isNotEmpty() && ++globalIterations < TimetableGeneratorAlgorithm.MAX_ITERATIONS) && changeWindowDetector.hasChange())
                         TimetableGeneratorContainer.log.info("Number of windows after handicapNearToBlockAlgorithm: ${windows.size}")
                     }
-                    changeWindowDetector.updateValue(windows.size)
+
                 } while ((windows.isNotEmpty() && ++globalIterations < TimetableGeneratorAlgorithm.MAX_ITERATIONS) && changeWindowDetector.hasChange())
-                calculatePlace()
-                val timetablesWithoutPlace = timetablesFromCurriculum.filter { it.place == null }
+
+                calculatePlaceTimeInMs += measureTimeMillis {
+                    calculatePlace()
+                }
+
+                val timetablesWithoutPlace = timetablesFromCurriculum.filter { it.place == null || it.points < PreferenceHierarchy.CAN_BE_USED }
                 timetablesWithoutPlace.forEach {
                     it.dayOfWeek = null
                     it.lesson = null
@@ -134,7 +173,11 @@ class TimetableGeneratorContainer(
             generateTimeHandicapInWindowsAlgorithmImMs = generateTimeHandicapInWindowsAlgorithmImMs,
             generateTimeSwapInWindowAlgorithmImMs = generateTimeSwapInWindowAlgorithmImMs,
             generateTimeHandicapNearToBlockAlgorithmImMs = generateTimeHandicapNearToBlockAlgorithmImMs,
-            calculatePreferenceTimeImMs = calculatePreferenceTimeImMs,
+            calculateLessonAndTimeInMs = calculateLessonAndTimeInMs,
+            calculatePlaceTimeInMs = calculatePlaceTimeInMs,
+            numberOfRemoveWindowsByHandicapInWindow = numberOfRemoveWindowsByHandicapInWindow,
+            numberOfRemoveWindowsBySwapInWindow = numberOfRemoveWindowsBySwapInWindow,
+            numberOfRemoveHandicapNearToBlockInWindow = numberOfRemoveHandicapNearToBlockInWindow,
             globalIterations = globalIterations
         )
     }

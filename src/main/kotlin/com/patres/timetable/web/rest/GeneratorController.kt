@@ -54,6 +54,7 @@ open class GeneratorController(
                 maxPoints = generateReport.maxPoints
                 medianPoints = generateReport.medianPoints
                 averagePoints = generateReport.averagePoints
+                removeWindowsTimeImMs = generateReport.removeWindowsTimeImMs
                 numberOfHandicapAlgorithmIterations = generateReport.numberOfHandicapAlgorithmIterations
                 numberOfHandicapNearToBlockAlgorithmIterations = generateReport.numberOfHandicapNearToBlockAlgorithmIterations
                 numberOfSwapAlgorithmIterations = generateReport.numberOfSwapAlgorithmIterations
@@ -62,11 +63,56 @@ open class GeneratorController(
                 generateTimeSwapInWindowAlgorithmImMs = generateReport.generateTimeSwapInWindowAlgorithmImMs
                 generateTimeHandicapNearToBlockAlgorithmImMs = generateReport.generateTimeHandicapNearToBlockAlgorithmImMs
                 calculatePreferenceTimeImMs = generateReport.calculatePreferenceTimeImMs
+                calculateLessonAndTimeInMs = generateReport.calculateLessonAndTimeInMs
+                calculatePlaceTimeInMs = generateReport.calculatePlaceTimeInMs
+                numberOfRemoveWindowsByHandicapInWindow = generateReport.numberOfRemoveWindowsByHandicapInWindow
+                numberOfRemoveWindowsBySwapInWindow = generateReport.numberOfRemoveWindowsBySwapInWindow
+                numberOfRemoveHandicapNearToBlockInWindow = generateReport.numberOfRemoveHandicapNearToBlockInWindow
                 unacceptedTimetables = savedTimetablesDTO.filter { it.points <= PreferenceHierarchy.UNACCEPTED_EVENT } // TODO refactor - this same is in class GenerateReport
             }
         }
         generateReportDTO.apply { allTimeImMs = time }
         return ResponseEntity(generateReportDTO, HttpStatus.OK)
     }
+
+    @PostMapping("/generator/series")
+    @Timed
+    @Throws(URISyntaxException::class)
+    open fun generateSeries(@RequestParam curriculumListId: Long): ResponseEntity<List<GenerateReportDTO>> {
+        val list = ArrayList<GenerateReportDTO>()
+
+        for(i in 1..9) {
+            val generatorReport = generate(curriculumListId).body
+            list.add(generatorReport)
+
+            generatorReport.timetables.forEach {
+                timetableService.delete(it.id)
+            }
+        }
+
+        val generatorReport = generate(curriculumListId).body
+        list.add(generatorReport)
+        println("================================================")
+        println("")
+        list.forEach {
+            println(it.statistic1)
+        }
+        println("================================================")
+        println("")
+        list.forEach {
+            println(it.statistic2)
+        }
+        println("================================================")
+        println("")
+        list.forEach {
+            println(it.statistic3)
+        }
+        println("================================================")
+        println("")
+
+        return ResponseEntity(list, HttpStatus.OK)
+    }
+
+
 
 }

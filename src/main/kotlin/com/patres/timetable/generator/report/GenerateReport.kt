@@ -17,11 +17,20 @@ class GenerateReport(
     var generateTimeHandicapInWindowsAlgorithmImMs: Long = 0L,
     var generateTimeSwapInWindowAlgorithmImMs: Long = 0L,
     var generateTimeHandicapNearToBlockAlgorithmImMs: Long = 0L,
-    var calculatePreferenceTimeImMs: Long = 0L
+    var calculateLessonAndTimeInMs: Long = 0L,
+    var calculatePlaceTimeInMs: Long = 0L,
+    var calculatePreferenceTimeImMs: Long = 0L,
+    var numberOfRemoveWindowsByHandicapInWindow:Int = 0,
+    var numberOfRemoveWindowsBySwapInWindow:Int = 0,
+    var numberOfRemoveHandicapNearToBlockInWindow:Int = 0
 ) {
 
     var unacceptedTimetables: List<Timetable> = emptyList()
         get() = timetables.filter { it.points <= PreferenceHierarchy.UNACCEPTED_EVENT }
+
+    var removeWindowsTimeImMs: Long = 0
+        get() = generateTimeHandicapInWindowsAlgorithmImMs + generateTimeSwapInWindowAlgorithmImMs + generateTimeHandicapNearToBlockAlgorithmImMs
+
 
     var numberOfWindows: Int = 0
         get() = windows.size
