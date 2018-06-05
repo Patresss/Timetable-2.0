@@ -36,6 +36,13 @@
             </div>
 
             <div class="form-group">
+                <label class="form-control-label" jhiTranslate="timetableApp.subject.colorBackground" for="field_colorBackground">Color Background</label>
+                <input type="text" class="form-control" name="colorBackground" id="field_colorBackground"
+                       [value]="place.colorBackground" [(colorPicker)]="place.colorBackground" [style.background]="place.colorBackground" [cpOutputFormat]="'rgba'"
+                       [cpAlphaChannel]="'disabled'" (colorPickerChange)="place.colorBackground = $event" readonly/>
+            </div>
+
+            <div class="form-group">
                 <label jhiTranslate="timetableApp.place.divisionOwner" for="field_division">Division</label>
                 <select class="form-control" id="field_division" name="divisionOwner" [(ngModel)]="place.divisionOwnerId">
                     <option [ngValue]="null"></option>

@@ -15,6 +15,7 @@ import {
     placePopupRoute,
     PlaceResolvePagingParams,
 } from './';
+import {ColorPickerModule} from 'ngx-color-picker';
 
 const ENTITY_STATES = [
     ...placeRoute,
@@ -24,7 +25,8 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         TimetableSharedModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
+        ColorPickerModule // how to put it global
     ],
     declarations: [
         PlaceComponent,

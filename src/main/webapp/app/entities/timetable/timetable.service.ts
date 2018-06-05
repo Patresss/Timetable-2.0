@@ -57,7 +57,6 @@ export class TimetableService extends EntityService<Timetable> {
         return this.http.get(`${this.resourceUrl}/subject`, options).map((res: Response) => this.convertResponse(res));
     }
 
-
     convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         for (let i = 0; i < jsonResponse.length; i++) {
