@@ -59,11 +59,6 @@ class Preference(
         return timetable.preferenceTimetableHierarchy.points
     }
 
-    fun calculateSubgroupHandicap(dayOfWeek: Int?, lessonId: Long?) {
-        val lessonDayOfWeekPreferenceElement = getPreferenceByLessonAndDay(dayOfWeek, lessonId)
-        lessonDayOfWeekPreferenceElement?.preference?.let { it.subgroupHandicap = PreferenceHierarchy.HANDICAP }
-    }
-
     fun getPreferenceByLessonAndDay(dayOfWeek: Int?, lessonId: Long?): LessonDayOfWeekPreferenceElement? {
         return preferredLessonAndDayOfWeekSet.find { it.dayOfWeek == dayOfWeek && it.lessonId == lessonId }
     }
@@ -91,9 +86,6 @@ class Preference(
             divisions.forEach { preferredDivisionMap[it.id]?.taken = PreferenceHierarchy.TAKEN }
         }
     }
-
-    // for example get subgorups
-
 
     fun calculateTakenPlace(takenTimetable: Set<Timetable>) {
         val takenPlacesId = takenTimetable.mapNotNull { it.place?.id }.toSet()
@@ -192,9 +184,9 @@ class Preference(
         preferredPlaceMap.forEach { id, preferenceHierarchy ->
             val preferenceDataTime = preferenceDataTimes.find { it.place?.id == id }
             if (preferenceDataTime != null) {
-                preferenceHierarchy.preferredByDataTime = preferenceDataTime.points
+                preferenceHierarchy.preferredByDateTime = preferenceDataTime.points
             } else {
-                preferenceHierarchy.preferredByDataTime = 0
+                preferenceHierarchy.preferredByDateTime = 0
             }
         }
     }
@@ -203,9 +195,9 @@ class Preference(
         preferredDivisionMap.forEach { id, preferenceHierarchy ->
             val preferenceDataTime = preferenceDataTimes.find { it.division?.id == id }
             if (preferenceDataTime != null) {
-                preferenceHierarchy.preferredByDataTime = preferenceDataTime.points
+                preferenceHierarchy.preferredByDateTime = preferenceDataTime.points
             } else {
-                preferenceHierarchy.preferredByDataTime = 0
+                preferenceHierarchy.preferredByDateTime = 0
             }
         }
     }
@@ -214,9 +206,9 @@ class Preference(
         preferredSubjectMap.forEach { id, preferenceHierarchy ->
             val preferenceDataTime = preferenceDataTimes.find { it.subject?.id == id }
             if (preferenceDataTime != null) {
-                preferenceHierarchy.preferredByDataTime = preferenceDataTime.points
+                preferenceHierarchy.preferredByDateTime = preferenceDataTime.points
             } else {
-                preferenceHierarchy.preferredByDataTime = 0
+                preferenceHierarchy.preferredByDateTime = 0
             }
         }
     }
