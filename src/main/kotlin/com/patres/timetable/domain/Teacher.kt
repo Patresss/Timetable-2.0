@@ -1,7 +1,11 @@
 package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.patres.timetable.domain.preference.*
+import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
+import com.patres.timetable.domain.preference.PreferenceSubjectByTeacher
+import com.patres.timetable.domain.preference.PreferenceTeacherByDivision
+import com.patres.timetable.domain.preference.PreferenceTeacherByPlace
+import com.patres.timetable.preference.LessonDayOfWeekPreferenceElement
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -65,5 +69,6 @@ class Teacher(
         return "Teacher(fullName=${getFullName()})"
     }
 
+    fun getPreferenceDataTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferenceDataTimeForTeachers.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
 
 }

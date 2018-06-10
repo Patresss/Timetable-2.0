@@ -6,6 +6,7 @@ import com.patres.timetable.domain.preference.PreferenceDataTimeForDivision
 import com.patres.timetable.domain.preference.PreferenceDivisionByPlace
 import com.patres.timetable.domain.preference.PreferenceSubjectByDivision
 import com.patres.timetable.domain.preference.PreferenceTeacherByDivision
+import com.patres.timetable.preference.LessonDayOfWeekPreferenceElement
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -107,6 +108,9 @@ class Division(
     divisionOwner: Division? = null
 
 ) : AbstractDivisionOwner(divisionOwner), Serializable {
+
+    fun getPreferenceDataTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferencesDateTimeForDivision.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
+
 
     @Transient
     var subgroups:Set<Division> = emptySet()
