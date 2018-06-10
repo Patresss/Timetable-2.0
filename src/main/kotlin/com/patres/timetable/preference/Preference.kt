@@ -173,9 +173,9 @@ class Preference(
         preferredTeacherMap.forEach { id, preferenceHierarchy ->
             val preferenceDataTime = preferenceDataTimes.find { it.teacher?.id == id }
             if (preferenceDataTime != null) {
-                preferenceHierarchy.preferredByDataTime = preferenceDataTime.points
+                preferenceHierarchy.preferredByDateTime = preferenceDataTime.points
             } else {
-                preferenceHierarchy.preferredByDataTime = 0
+                preferenceHierarchy.preferredByDateTime = 0
             }
         }
     }
@@ -227,7 +227,7 @@ class Preference(
 
     private fun calculateLessonAndDayOfWeekByPlace(place: Place) {
         preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
-            val preferenceDataTime = place.preferencesDataTimeForPlace
+            val preferenceDataTime = place.preferencesDateTimeForPlace
                 .find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
             if (preferenceDataTime != null) {
                 lessonDayPreferenceElement.preference.preferredByPlace = preferenceDataTime.points
@@ -240,7 +240,7 @@ class Preference(
 
     private fun calculateLessonAndDayOfWeekByDivision(division: Division) {
         preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
-            val preferenceDataTime = division.preferencesDataTimeForDivision
+            val preferenceDataTime = division.preferencesDateTimeForDivision
                 .find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
             if (preferenceDataTime != null) {
                 lessonDayPreferenceElement.preference.preferredByDivision = preferenceDataTime.points
@@ -252,7 +252,7 @@ class Preference(
 
     private fun calculateLessonAndDayOfWeekBySubject(subject: Subject) {
         preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
-            val preferenceDataTime = subject.preferencesDataTimeForSubject
+            val preferenceDataTime = subject.preferencesDateTimeForSubject
                 .find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
             if (preferenceDataTime != null) {
                 lessonDayPreferenceElement.preference.preferredBySubject = preferenceDataTime.points

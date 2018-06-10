@@ -47,10 +47,10 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
                 colorBackground = entityDto.colorBackground
                 colorText = entityDto.colorText
                 preferenceSubjectByPlace = preferenceSubjectByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceSubjectByPlace)
-                preferencesDataTimeForPlace = preferenceDataTimeForPlaceMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForPlace)
+                preferencesDateTimeForPlace = preferenceDataTimeForPlaceMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForPlace)
 
                 preferenceSubjectByPlace.forEach { it.place = this }
-                preferencesDataTimeForPlace.forEach { it.place = this }
+                preferencesDateTimeForPlace.forEach { it.place = this }
 
 
                 if (colorBackground.isNullOrBlank()) {
@@ -72,7 +72,7 @@ open class PlaceMapper : EntityMapper<Place, PlaceDTO>() {
                 colorText = entity.colorText
                 preferenceSubjectByPlace = preferenceSubjectByPlaceMapper.entitySetToEntityDTOSet(entity.preferenceSubjectByPlace)
                 addNeutralPreferenceSubjectByPlace()
-                preferencesDataTimeForPlace = preferenceDataTimeForPlaceMapper.entitySetToEntityDTOSet(entity.preferencesDataTimeForPlace)
+                preferencesDataTimeForPlace = preferenceDataTimeForPlaceMapper.entitySetToEntityDTOSet(entity.preferencesDateTimeForPlace)
                 addNeutralPreferencesDataTime()
             }
     }

@@ -102,7 +102,7 @@ class Division(
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "division", orphanRemoval = true, fetch = FetchType.LAZY)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferencesDataTimeForDivision: Set<PreferenceDataTimeForDivision> = HashSet(),
+    var preferencesDateTimeForDivision: Set<PreferenceDataTimeForDivision> = HashSet(),
 
     divisionOwner: Division? = null
 

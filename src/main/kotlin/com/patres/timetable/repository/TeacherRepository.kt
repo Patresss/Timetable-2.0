@@ -14,7 +14,7 @@ interface TeacherRepository : DivisionOwnerRepository<Teacher> {
             teacher
         from
             Teacher teacher
-            left join fetch teacher.preferenceDataTimeForTeachers
+            left join fetch teacher.preferenceDateTimeForTeachers
             left join fetch teacher.preferenceTeacherByPlace
             left join fetch teacher.preferenceSubjectByTeacher
         """)
@@ -25,7 +25,7 @@ interface TeacherRepository : DivisionOwnerRepository<Teacher> {
             teacher
         from
             Teacher teacher
-            left join fetch teacher.preferenceDataTimeForTeachers
+            left join fetch teacher.preferenceDateTimeForTeachers
             left join fetch teacher.preferenceTeacherByPlace
             left join fetch teacher.preferenceSubjectByTeacher
         where
@@ -38,7 +38,7 @@ interface TeacherRepository : DivisionOwnerRepository<Teacher> {
             teacher
         from
             Teacher teacher
-            left join fetch teacher.preferenceDataTimeForTeachers
+            left join fetch teacher.preferenceDateTimeForTeachers
             left join fetch teacher.preferencesTeacherByDivision
             left join fetch teacher.preferenceTeacherByPlace
             left join fetch teacher.preferenceSubjectByTeacher
@@ -53,7 +53,7 @@ interface TeacherRepository : DivisionOwnerRepository<Teacher> {
         from
             Teacher teacher
             left join fetch teacher.divisionOwner
-            left join fetch teacher.preferenceDataTimeForTeachers
+            left join fetch teacher.preferenceDateTimeForTeachers
             left join fetch teacher.preferencesTeacherByDivision
             left join fetch teacher.preferenceTeacherByPlace
             left join fetch teacher.preferenceSubjectByTeacher

@@ -1,12 +1,12 @@
 package com.patres.timetable.preference
 
 import com.patres.timetable.domain.*
-import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
-import com.patres.timetable.domain.preference.PreferenceSubjectByTeacher
-import com.patres.timetable.domain.preference.PreferenceTeacherByDivision
-import com.patres.timetable.domain.preference.PreferenceTeacherByPlace
+import com.patres.timetable.domain.preference.*
 import org.junit.Assert
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import java.time.DayOfWeek
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -17,6 +17,10 @@ class PreferenceTest {
         surname = "Smith"
     }
 
+    private val johnsonTeacher = Teacher().apply {
+        id = 1002
+        surname = "Johnson"
+    }
 
     private val maths = Subject().apply {
         id = 2001
@@ -27,7 +31,6 @@ class PreferenceTest {
         id = 2002
         name = "Biology"
     }
-
 
     private val place22 = Place().apply {
         id = 3001
@@ -61,23 +64,129 @@ class PreferenceTest {
 
 
     init {
+        // Preference: Teacher <-> Subject
+        val preferenceSmithMath = PreferenceSubjectByTeacher(subject = maths, teacher = smithTeacher, points = 10)
+        val preferenceSmithBiology = PreferenceSubjectByTeacher(subject = biology, teacher = smithTeacher, points = 5)
+        val preferenceJohnsonMath = PreferenceSubjectByTeacher(subject = maths, teacher = johnsonTeacher, points = -10_000)
+
+        // Preference: Teacher <-> Place
+        val preferenceSmithPlace22 = PreferenceTeacherByPlace(teacher = smithTeacher, place = place22, points = 10)
+        val preferenceSmithPlaceGym = PreferenceTeacherByPlace(teacher = smithTeacher, place = placeGym, points = -10_000)
+        val preferenceJohnsonPlace22 = PreferenceTeacherByPlace(teacher = johnsonTeacher, place = place22, points = 3)
+
+        // Preference: Teacher <-> Division
+        val preferenceSmithDivision1A = PreferenceTeacherByDivision(teacher = smithTeacher, division = division1A, points = 10)
+        val preferenceSmithDivision1B = PreferenceTeacherByDivision(teacher = smithTeacher, division = division1B, points = 5)
+        val preferenceJohnsonDivision1A = PreferenceTeacherByDivision(teacher = johnsonTeacher, division = division1A, points = 3)
+
+        // Preference: Subject <-> Place
+        val preferenceMathPlace22 = PreferenceSubjectByPlace(subject = maths, place = place22, points = 10)
+        val preferenceMathPlaceGym = PreferenceSubjectByPlace(subject = maths, place = placeGym, points = -10_000)
+        val preferenceBiologyPlace22 = PreferenceSubjectByPlace(subject = biology, place = place22, points = 2)
+
+        // Preference: Subject <-> Division
+        val preferenceMathDivision1A = PreferenceSubjectByDivision(subject = maths, division = division1A, points = 3)
+        val preferenceMathDivision1B = PreferenceSubjectByDivision(subject = maths, division = division1B, points = -2)
+        val preferenceBiologyDivision1A = PreferenceSubjectByDivision(subject = biology, division = division1A, points = 1)
+
+        // Preference: Division <-> Place
+        val preferenceDivision1APlace22 = PreferenceDivisionByPlace(division = division1A, place = place22, points = 2)
+        val preferenceDivision1APlaceGym = PreferenceDivisionByPlace(division = division1A, place = placeGym, points = 1)
+        val preferenceDivision1BPlace22 = PreferenceDivisionByPlace(division = division1B, place = place22, points = 1)
+
+        // Preference: Teacher <-> LessonAndDayOfWeek
+        val preferenceSmithLesson1Monday = PreferenceDataTimeForTeacher(teacher = smithTeacher, lesson = lesson1, dayOfWeek = DayOfWeek.MONDAY.value, points = 10)
+        val preferenceSmithLesson2Monday = PreferenceDataTimeForTeacher(teacher = smithTeacher, lesson = lesson2, dayOfWeek = DayOfWeek.MONDAY.value, points = 5)
+        val preferenceJohnsonLesson1Monday = PreferenceDataTimeForTeacher(teacher = johnsonTeacher, lesson = lesson1, dayOfWeek = DayOfWeek.MONDAY.value, points = 2)
+
+        // Preference: Subject <-> LessonAndDayOfWeek
+        val preferenceMathLesson1Monday = PreferenceDataTimeForSubject(subject = maths, lesson = lesson1, dayOfWeek = DayOfWeek.MONDAY.value, points = 5)
+        val preferenceMathLesson2Monday = PreferenceDataTimeForSubject(subject = maths, lesson = lesson2, dayOfWeek = DayOfWeek.MONDAY.value, points = 3)
+        val preferenceBiologyLesson1Monday = PreferenceDataTimeForSubject(subject = maths, lesson = lesson1, dayOfWeek = DayOfWeek.MONDAY.value, points = 1)
+
+        // Preference: Division <-> LessonAndDayOfWeek
+        val preferenceDivision1ALesson1Monday = PreferenceDataTimeForDivision(division = division1A, lesson = lesson1, dayOfWeek = DayOfWeek.MONDAY.value, points = -5)
+        val preferenceDivision1ALesson2Monday = PreferenceDataTimeForDivision(division = division1A, lesson = lesson2, dayOfWeek = DayOfWeek.MONDAY.value, points = 2)
+        val preferenceDivision1BLesson1Monday = PreferenceDataTimeForDivision(division = division1B, lesson = lesson1, dayOfWeek = DayOfWeek.MONDAY.value, points = -3)
+
+        // Preference: Place <-> LessonAndDayOfWeek
+        val preferencePlace22Lesson1Monday = PreferenceDataTimeForPlace(place = place22, lesson = lesson1, dayOfWeek = DayOfWeek.MONDAY.value, points = 1)
+        val preferencePlace22Lesson2Monday = PreferenceDataTimeForPlace(place = place22, lesson = lesson2, dayOfWeek = DayOfWeek.MONDAY.value, points = 3)
+        val preferencePlaceGymLesson1Monday = PreferenceDataTimeForPlace(place = placeGym, lesson = lesson1, dayOfWeek = DayOfWeek.MONDAY.value, points = -1)
+
         smithTeacher.apply {
             preferenceSubjectByTeacher = setOf(
-                PreferenceSubjectByTeacher(subject = maths, teacher = this, points = 10),
-                PreferenceSubjectByTeacher(subject = biology, teacher = this, points = 5)
+                preferenceSmithMath,
+                preferenceSmithBiology
             )
             preferenceTeacherByPlace = setOf(
-                PreferenceTeacherByPlace(teacher = this, place = place22, points = 10),
-                PreferenceTeacherByPlace(teacher = this, place = placeGym, points = -10_000)
+                preferenceSmithPlace22,
+                preferenceSmithPlaceGym
             )
             preferencesTeacherByDivision = setOf(
-                PreferenceTeacherByDivision(teacher = this, division = division1A, points = 10),
-                PreferenceTeacherByDivision(teacher = this, division = division1B, points = 5)
+                preferenceSmithDivision1A,
+                preferenceSmithDivision1B
             )
-
             preferenceDataTimeForTeachers = setOf(
-                PreferenceDataTimeForTeacher(teacher = this, lesson = lesson1, dayOfWeek = DayOfWeek.MONDAY.value, points = 10),
-                PreferenceDataTimeForTeacher(teacher = this, lesson = lesson2, dayOfWeek = DayOfWeek.MONDAY.value, points = 5)
+                preferenceSmithLesson1Monday,
+                preferenceSmithLesson2Monday
+            )
+        }
+
+        maths.apply {
+            preferenceSubjectByTeacher = setOf(
+                preferenceSmithMath,
+                preferenceJohnsonMath
+            )
+            preferenceSubjectByPlace = setOf(
+                preferenceMathPlace22,
+                preferenceMathPlaceGym
+            )
+            preferencesSubjectByDivision = setOf(
+                preferenceMathDivision1A,
+                preferenceMathDivision1B
+            )
+            preferencesDateTimeForSubject = setOf(
+                preferenceMathLesson1Monday,
+                preferenceMathLesson2Monday
+            )
+        }
+
+        division1A.apply {
+            preferencesSubjectByDivision = setOf(
+                preferenceMathDivision1A,
+                preferenceBiologyDivision1A
+            )
+            preferencesTeacherByDivision = setOf(
+                preferenceSmithDivision1A,
+                preferenceJohnsonDivision1A
+            )
+            preferenceDivisionByPlace = setOf(
+                preferenceDivision1APlace22,
+                preferenceDivision1APlaceGym
+            )
+            preferencesDateTimeForDivision = setOf(
+                preferenceDivision1ALesson1Monday,
+                preferenceDivision1ALesson2Monday
+            )
+        }
+
+        place22.apply {
+            preferenceTeacherByPlace = setOf(
+                preferenceSmithPlace22,
+                preferenceJohnsonPlace22
+            )
+            preferenceSubjectByPlace = setOf(
+                preferenceMathPlace22,
+                preferenceBiologyPlace22
+            )
+            preferenceDivisionByPlace = setOf(
+                preferenceDivision1APlace22,
+                preferenceDivision1BPlace22
+            )
+            preferencesDateTimeForPlace = setOf(
+                preferencePlace22Lesson1Monday,
+                preferencePlace22Lesson2Monday
             )
         }
     }
@@ -88,7 +197,7 @@ class PreferenceTest {
     @BeforeEach
     internal fun setUp() {
         preference = Preference(
-            teachersId = setOf(smithTeacher.id!!),
+            teachersId = setOf(smithTeacher.id!!, johnsonTeacher.id!!),
             subjectsId = setOf(maths.id!!, biology.id!!),
             placesId = setOf(place22.id!!, placeGym.id!!),
             divisionsId = setOf(division1A.id!!, division1B.id!!),
@@ -101,7 +210,7 @@ class PreferenceTest {
     inner class CalculateByTeacherCase {
 
         @Test
-        fun `test calculate subject preferences by teacher`() {
+        fun `test calculate subject preferences`() {
             preference.calculateByTeacher(smithTeacher)
 
             val allPointsOfPreferenceMath = preference.preferredSubjectMap[maths.id]?.points
@@ -131,7 +240,7 @@ class PreferenceTest {
 
 
         @Test
-        fun `test calculate place preferences by teacher`() {
+        fun `test calculate place preferences`() {
             preference.calculateByTeacher(smithTeacher)
 
             val allPointsOfPreference22 = preference.preferredPlaceMap[place22.id]?.points
@@ -160,7 +269,7 @@ class PreferenceTest {
         }
 
         @Test
-        fun `test calculate division preferences by teacher`() {
+        fun `test calculate division preferences`() {
             preference.calculateByTeacher(smithTeacher)
 
             val allPointsOfPreferenceClass1A = preference.preferredDivisionMap[division1A.id]?.points
@@ -189,7 +298,13 @@ class PreferenceTest {
         }
 
         @Test
-        fun `test calculate lesson and day of week preferences by teacher`() {
+        fun `test calculate teacher preferences`() {
+            preference.calculateByTeacher(smithTeacher)
+            Assert.assertTrue(preference.preferredTeacherMap.all { it.value.points == 0 })
+        }
+
+        @Test
+        fun `test calculate lesson and day of week preferences`() {
             preference.calculateByTeacher(smithTeacher)
 
             val preferenceByLesson1AndMonday = preference.getPreferenceByLessonAndDay(DayOfWeek.MONDAY.value, lessonId = lesson1.id)!!.preference
@@ -213,11 +328,338 @@ class PreferenceTest {
             Assert.assertEquals(0, preferenceByLesson2AndFriday.preferredByPlace)
             Assert.assertEquals(0, preferenceByLesson2AndFriday.preferredBySubject)
         }
+    }
+
+
+    @Nested
+    inner class CalculateBySubjectCase {
+        @Test
+        fun `test calculate subject preferences`() {
+            preference.calculateBySubject(maths)
+            Assert.assertTrue(preference.preferredSubjectMap.all { it.value.points == 0 })
+        }
 
         @Test
-        fun `test calculate teacher preferences by teacher`() {
-            preference.calculateByTeacher(smithTeacher)
-            Assert.assertTrue(preference.preferredTeacherMap.all { it.value.points == 0 })
+        fun `test calculate place preferences`() {
+            preference.calculateBySubject(maths)
+
+            val preferencePlace22 = preference.preferredPlaceMap[place22.id]
+            preferencePlace22!!.run {
+                Assert.assertEquals(10, points)
+                Assert.assertEquals(0, preferredByDivision)
+                Assert.assertEquals(10, preferredBySubject)
+                Assert.assertEquals(0, preferredByTeacher)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+
+            val preferencePlaceGym = preference.preferredPlaceMap[placeGym.id]
+            preferencePlaceGym!!.run {
+                Assert.assertEquals(-10_000, points)
+                Assert.assertEquals(0, preferredByDivision)
+                Assert.assertEquals(-10_000, preferredBySubject)
+                Assert.assertEquals(0, preferredByTeacher)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+        }
+
+        @Test
+        fun `test calculate division preferences`() {
+            preference.calculateBySubject(maths)
+
+            val preferenceDivision1A = preference.preferredDivisionMap[division1A.id]
+            preferenceDivision1A!!.run {
+                Assert.assertEquals(3, points)
+                Assert.assertEquals(0, preferredByPlace)
+                Assert.assertEquals(3, preferredBySubject)
+                Assert.assertEquals(0, preferredByTeacher)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+
+            val preferenceDivision1B = preference.preferredDivisionMap[division1B.id]
+            preferenceDivision1B!!.run {
+                Assert.assertEquals(-2, points)
+                Assert.assertEquals(0, preferredByPlace)
+                Assert.assertEquals(-2, preferredBySubject)
+                Assert.assertEquals(0, preferredByTeacher)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+        }
+
+        @Test
+        fun `test calculate teacher preferences`() {
+            preference.calculateBySubject(maths)
+
+            val preferenceSmithTeacher = preference.preferredTeacherMap[smithTeacher.id]
+            preferenceSmithTeacher!!.run {
+                Assert.assertEquals(10, points)
+                Assert.assertEquals(0, preferredByPlace)
+                Assert.assertEquals(10, preferredBySubject)
+                Assert.assertEquals(0, preferredByDivision)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+
+            val preferenceJohnsonTeacher = preference.preferredTeacherMap[johnsonTeacher.id]
+            preferenceJohnsonTeacher!!.run {
+                Assert.assertEquals(-10_000, points)
+                Assert.assertEquals(0, preferredByPlace)
+                Assert.assertEquals(-10_000, preferredBySubject)
+                Assert.assertEquals(0, preferredByDivision)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+        }
+
+        @Test
+        fun `test calculate lesson and day of week preferences`() {
+            preference.calculateBySubject(maths)
+
+            val preferenceByLesson1AndMonday = preference.getPreferenceByLessonAndDay(DayOfWeek.MONDAY.value, lessonId = lesson1.id)!!.preference
+            preferenceByLesson1AndMonday.run {
+                Assert.assertEquals(5,points)
+                Assert.assertEquals(0, preferredByDivision)
+                Assert.assertEquals(0, preferredByPlace)
+                Assert.assertEquals(5, preferredBySubject)
+                Assert.assertEquals(0,preferredByTeacher)
+            }
+
+            val preferenceByLesson2AndMonday = preference.getPreferenceByLessonAndDay(DayOfWeek.MONDAY.value, lessonId = lesson2.id)!!.preference
+            preferenceByLesson2AndMonday.run {
+                Assert.assertEquals(3,points)
+                Assert.assertEquals(0, preferredByDivision)
+                Assert.assertEquals(0, preferredByPlace)
+                Assert.assertEquals(3, preferredBySubject)
+                Assert.assertEquals(0,preferredByTeacher)
+            }
+        }
+    }
+
+    @Nested
+    inner class CalculateByPlaceCase {
+        @Test
+        fun `test calculate subject preferences`() {
+            preference.calculateByPlace(place22)
+
+            val preferenceMath = preference.preferredSubjectMap[maths.id]
+            preferenceMath!!.run {
+                Assert.assertEquals(10, points)
+                Assert.assertEquals(0, preferredByDivision)
+                Assert.assertEquals(10, preferredByPlace)
+                Assert.assertEquals(0, preferredByTeacher)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+
+            val preferenceBiology = preference.preferredSubjectMap[biology.id]
+            preferenceBiology!!.run {
+                Assert.assertEquals(2, points)
+                Assert.assertEquals(0, preferredByDivision)
+                Assert.assertEquals(2, preferredByPlace)
+                Assert.assertEquals(0, preferredByTeacher)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+        }
+
+
+        @Test
+        fun `test calculate place preferences`() {
+            preference.calculateByPlace(place22)
+            Assert.assertTrue(preference.preferredPlaceMap.all { it.value.points == 0 })
+        }
+
+        @Test
+        fun `test calculate division preferences`() {
+            preference.calculateByPlace(place22)
+
+            val preferenceDivision1A = preference.preferredDivisionMap[division1A.id]
+            preferenceDivision1A!!.run {
+                Assert.assertEquals(2, points)
+                Assert.assertEquals(2, preferredByPlace)
+                Assert.assertEquals(0, preferredBySubject)
+                Assert.assertEquals(0, preferredByTeacher)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+
+            val preferenceDivision1B = preference.preferredDivisionMap[division1B.id]
+            preferenceDivision1B!!.run {
+                Assert.assertEquals(1, points)
+                Assert.assertEquals(1, preferredByPlace)
+                Assert.assertEquals(0, preferredBySubject)
+                Assert.assertEquals(0, preferredByTeacher)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+        }
+
+        @Test
+        fun `test calculate teacher preferences`() {
+            preference.calculateByPlace(place22)
+
+            val preferenceSmithTeacher = preference.preferredTeacherMap[smithTeacher.id]
+            preferenceSmithTeacher!!.run {
+                Assert.assertEquals(10, points)
+                Assert.assertEquals(0, preferredByDivision)
+                Assert.assertEquals(10, preferredByPlace)
+                Assert.assertEquals(0, preferredBySubject)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+
+            val preferenceJohnsonTeacher = preference.preferredTeacherMap[johnsonTeacher.id]
+            preferenceJohnsonTeacher!!.run {
+                Assert.assertEquals(3, points)
+                Assert.assertEquals(0, preferredByDivision)
+                Assert.assertEquals(3, preferredByPlace)
+                Assert.assertEquals(0, preferredBySubject)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+        }
+
+        @Test
+        fun `test calculate lesson and day of week preferences`() {
+            preference.calculateByPlace(place22)
+
+            val preferenceByLesson1AndMonday = preference.getPreferenceByLessonAndDay(DayOfWeek.MONDAY.value, lessonId = lesson1.id)!!.preference
+            preferenceByLesson1AndMonday.run {
+                Assert.assertEquals(1,points)
+                Assert.assertEquals(0, preferredByDivision)
+                Assert.assertEquals(1, preferredByPlace)
+                Assert.assertEquals(0, preferredBySubject)
+                Assert.assertEquals(0, preferredByTeacher)
+            }
+
+            val preferenceByLesson2AndMonday = preference.getPreferenceByLessonAndDay(DayOfWeek.MONDAY.value, lessonId = lesson2.id)!!.preference
+            preferenceByLesson2AndMonday.run {
+                Assert.assertEquals(3,points)
+                Assert.assertEquals(0, preferredByDivision)
+                Assert.assertEquals(3, preferredByPlace)
+                Assert.assertEquals(0, preferredBySubject)
+                Assert.assertEquals(0,preferredByTeacher)
+            }
+        }
+    }
+
+    @Nested
+    inner class CalculateByDivisionCase {
+        @Test
+        fun `test calculate subject preferences`() {
+            preference.calculateByDivision(division1A)
+
+            val preferenceMath = preference.preferredSubjectMap[maths.id]
+            preferenceMath!!.run {
+                Assert.assertEquals(3, points)
+                Assert.assertEquals(3, preferredByDivision)
+                Assert.assertEquals(0, preferredByPlace)
+                Assert.assertEquals(0, preferredByTeacher)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+
+            val preferenceBiology = preference.preferredSubjectMap[biology.id]
+            preferenceBiology!!.run {
+                Assert.assertEquals(1, points)
+                Assert.assertEquals(1, preferredByDivision)
+                Assert.assertEquals(0, preferredByPlace)
+                Assert.assertEquals(0, preferredByTeacher)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+        }
+
+        @Test
+        fun `test calculate place preferences`() {
+            preference.calculateByDivision(division1A)
+
+            val preferencePlace22 = preference.preferredPlaceMap[place22.id]
+            preferencePlace22!!.run {
+                Assert.assertEquals(2, points)
+                Assert.assertEquals(2, preferredByDivision)
+                Assert.assertEquals(0, preferredBySubject)
+                Assert.assertEquals(0, preferredByTeacher)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+
+            val preferencePlaceGym = preference.preferredPlaceMap[placeGym.id]
+            preferencePlaceGym!!.run {
+                Assert.assertEquals(1, points)
+                Assert.assertEquals(1, preferredByDivision)
+                Assert.assertEquals(0, preferredBySubject)
+                Assert.assertEquals(0, preferredByTeacher)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+        }
+
+        @Test
+        fun `test calculate division preferences`() {
+            preference.calculateByDivision(division1A)
+            Assert.assertTrue(preference.preferredDivisionMap.all { it.value.points == 0 })
+        }
+
+        @Test
+        fun `test calculate teacher preferences`() {
+            preference.calculateByDivision(division1A)
+
+            val preferenceSmith = preference.preferredTeacherMap[smithTeacher.id]
+            preferenceSmith!!.run {
+                Assert.assertEquals(10, points)
+                Assert.assertEquals(10, preferredByDivision)
+                Assert.assertEquals(0, preferredBySubject)
+                Assert.assertEquals(0, preferredByPlace)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+
+            val preferenceJohnson = preference.preferredTeacherMap[johnsonTeacher.id]
+            preferenceJohnson!!.run {
+                Assert.assertEquals(3, points)
+                Assert.assertEquals(3, preferredByDivision)
+                Assert.assertEquals(0, preferredBySubject)
+                Assert.assertEquals(0, preferredByPlace)
+                Assert.assertEquals(0, preferredByDateTime)
+            }
+        }
+
+        @Test
+        fun `test calculate lesson and day of week preferences`() {
+            preference.calculateByDivision(division1A)
+
+            val preferenceByLesson1AndMonday = preference.getPreferenceByLessonAndDay(DayOfWeek.MONDAY.value, lessonId = lesson1.id)!!.preference
+            preferenceByLesson1AndMonday.run {
+                Assert.assertEquals(-5,points)
+                Assert.assertEquals(-5, preferredByDivision)
+                Assert.assertEquals(0, preferredByPlace)
+                Assert.assertEquals(0, preferredBySubject)
+                Assert.assertEquals(0, preferredByTeacher)
+            }
+
+            val preferenceByLesson2AndMonday = preference.getPreferenceByLessonAndDay(DayOfWeek.MONDAY.value, lessonId = lesson2.id)!!.preference
+            preferenceByLesson2AndMonday.run {
+                Assert.assertEquals(2,points)
+                Assert.assertEquals(2, preferredByDivision)
+                Assert.assertEquals(0, preferredByPlace)
+                Assert.assertEquals(0, preferredBySubject)
+                Assert.assertEquals(0,preferredByTeacher)
+            }
+        }
+    }
+
+
+    @Nested
+    inner class CalculateByLessonAndDayOfWeekCase {
+        @Test
+        fun `test calculate subject preferences`() {
+        }
+
+
+        @Test
+        fun `test calculate place preferences`() {
+
+        }
+
+        @Test
+        fun `test calculate division preferences`() {
+
+        }
+
+        @Test
+        fun `test calculate teacher preferences`() {
+        }
+
+        @Test
+        fun `test calculate lesson and day of week preferences`() {
+
         }
     }
 

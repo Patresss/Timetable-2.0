@@ -17,7 +17,7 @@ interface SubjectRepository : DivisionOwnerRepository<Subject> {
             left join fetch subject.preferenceSubjectByPlace
             left join fetch subject.preferencesSubjectByDivision
             left join fetch subject.preferenceSubjectByTeacher
-            left join fetch subject.preferencesDataTimeForSubject
+            left join fetch subject.preferencesDateTimeForSubject
         where
             subject.id =:id
         """)
@@ -32,7 +32,7 @@ interface SubjectRepository : DivisionOwnerRepository<Subject> {
             left join fetch subject.preferenceSubjectByPlace
             left join fetch subject.preferencesSubjectByDivision
             left join fetch subject.preferenceSubjectByTeacher
-            left join fetch subject.preferencesDataTimeForSubject
+            left join fetch subject.preferencesDateTimeForSubject
         where
             subject.divisionOwner.id =:divisionOwnerId
         """)

@@ -20,7 +20,7 @@ interface DivisionRepository : DivisionOwnerRepository<Division> {
             left join fetch division.preferencesSubjectByDivision
             left join fetch division.preferencesTeacherByDivision
             left join fetch division.preferenceDivisionByPlace
-            left join fetch division.preferencesDataTimeForDivision
+            left join fetch division.preferencesDateTimeForDivision
         """)
     fun findAllWithEagerRelationships(): List<Division>
 
@@ -34,7 +34,7 @@ interface DivisionRepository : DivisionOwnerRepository<Division> {
             left join fetch division.preferencesSubjectByDivision
             left join fetch division.preferencesTeacherByDivision
             left join fetch division.preferenceDivisionByPlace
-            left join fetch division.preferencesDataTimeForDivision
+            left join fetch division.preferencesDateTimeForDivision
 
         where
             division.id =:id
@@ -52,7 +52,7 @@ interface DivisionRepository : DivisionOwnerRepository<Division> {
             left join fetch division.preferencesSubjectByDivision
             left join fetch division.preferencesTeacherByDivision
             left join fetch division.preferenceDivisionByPlace
-            left join fetch division.preferencesDataTimeForDivision
+            left join fetch division.preferencesDateTimeForDivision
         where
             division.divisionOwner.id =:divisionOwnerId
         """)
@@ -66,7 +66,7 @@ interface DivisionRepository : DivisionOwnerRepository<Division> {
             left join fetch division.preferencesSubjectByDivision
             left join fetch division.preferencesTeacherByDivision
             left join fetch division.preferenceDivisionByPlace
-            left join fetch division.preferencesDataTimeForDivision
+            left join fetch division.preferencesDateTimeForDivision
         where
             division.id =:id
         """)

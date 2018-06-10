@@ -288,7 +288,7 @@ open class PreferenceManagerTest {
         val preference = preferenceManager.createPreference(fillerResource.lo2.id!!)
         preferenceManager.calculateAll(preference, preferenceDependency)
 
-        assertEquals(10, preference.preferredTeacherMap[fillerResource.CzBe.id]?.preferredByDataTime)
+        assertEquals(10, preference.preferredTeacherMap[fillerResource.CzBe.id]?.preferredByDateTime)
     }
 
 

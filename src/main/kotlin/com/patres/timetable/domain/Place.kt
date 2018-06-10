@@ -52,7 +52,7 @@ class Place(
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferencesDataTimeForPlace: Set<PreferenceDataTimeForPlace> = HashSet(),
+    var preferencesDateTimeForPlace: Set<PreferenceDataTimeForPlace> = HashSet(),
 
     divisionOwner: Division? = null
 

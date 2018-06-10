@@ -36,7 +36,7 @@ class Lesson(
     private var timetables: Set<Timetable> = HashSet(),
 
     @OneToMany(mappedBy = "lesson", orphanRemoval = true)
-    var preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacher> = HashSet(),
+    var preferenceDateTimeForTeachers: Set<PreferenceDataTimeForTeacher> = HashSet(),
 
     divisionOwner: Division? = null
 

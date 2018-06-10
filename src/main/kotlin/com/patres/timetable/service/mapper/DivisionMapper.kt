@@ -3,7 +3,6 @@ package com.patres.timetable.service.mapper
 import com.patres.timetable.domain.Division
 import com.patres.timetable.repository.*
 import com.patres.timetable.service.dto.DivisionDTO
-import com.patres.timetable.service.dto.PlaceDTO
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForDivisionDTO
 import com.patres.timetable.service.dto.preference.PreferenceDivisionByPlaceDTO
 import com.patres.timetable.service.dto.preference.PreferenceSubjectByDivisionDTO
@@ -63,12 +62,12 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 divisionOwner = entityDto.divisionOwnerId?.let { divisionRepository.findOne(it) }
                 preferencesTeacherByDivision = preferenceTeacherByDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesTeacherByDivision)
                 preferencesSubjectByDivision = preferenceSubjectByDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesSubjectByDivision)
-                preferencesDataTimeForDivision = preferenceDataTimeForDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForDivision)
+                preferencesDateTimeForDivision = preferenceDataTimeForDivisionMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForDivision)
                 preferenceDivisionByPlace = preferenceDivisionByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceDivisionByPlace)
 
                 preferencesTeacherByDivision.forEach { it.division = this }
                 preferencesSubjectByDivision.forEach { it.division = this }
-                preferencesDataTimeForDivision.forEach { it.division = this }
+                preferencesDateTimeForDivision.forEach { it.division = this }
                 preferenceDivisionByPlace.forEach { it.division = this }
 
 
@@ -98,7 +97,7 @@ open class DivisionMapper : EntityMapper<Division, DivisionDTO>() {
                 addNeutralPreferenceSubjectByDivision()
                 preferenceDivisionByPlace = preferenceDivisionByPlaceMapper.entitySetToEntityDTOSet(entity.preferenceDivisionByPlace)
                 addNeutralPreferenceDivisionByPlace()
-                preferencesDataTimeForDivision = preferenceDataTimeForDivisionMapper.entitySetToEntityDTOSet(entity.preferencesDataTimeForDivision)
+                preferencesDataTimeForDivision = preferenceDataTimeForDivisionMapper.entitySetToEntityDTOSet(entity.preferencesDateTimeForDivision)
                 addNeutralPreferencesDataTime()
             }
 

@@ -36,9 +36,9 @@ open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
             shortName = entityDto.shortName
             colorBackground = entityDto.colorBackground
             colorText = entityDto.colorText
-            preferencesDataTimeForSubject = preferenceDataTimeForSubjectMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForSubject)
+            preferencesDateTimeForSubject = preferenceDataTimeForSubjectMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForSubject)
 
-            preferencesDataTimeForSubject.forEach { it.subject = this }
+            preferencesDateTimeForSubject.forEach { it.subject = this }
 
             if (colorBackground.isNullOrBlank()) {
                 colorBackground = EntityUtil.calculateRandomColor()
@@ -56,7 +56,7 @@ open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
             shortName = if (entity.shortName != null) entity.shortName else getShortName(name)
             colorBackground = entity.colorBackground
             colorText = entity.colorText
-            preferencesDataTimeForSubject = preferenceDataTimeForSubjectMapper.entitySetToEntityDTOSet(entity.preferencesDataTimeForSubject)
+            preferencesDataTimeForSubject = preferenceDataTimeForSubjectMapper.entitySetToEntityDTOSet(entity.preferencesDateTimeForSubject)
             addNeutralPreferencesDataTime()
 
         }

@@ -49,7 +49,7 @@ class Subject(
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "subject", orphanRemoval = true, fetch = FetchType.LAZY)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferencesDataTimeForSubject: Set<PreferenceDataTimeForSubject> = HashSet()
+    var preferencesDateTimeForSubject: Set<PreferenceDataTimeForSubject> = HashSet()
 
 ) : AbstractDivisionOwner(), Serializable {
 
