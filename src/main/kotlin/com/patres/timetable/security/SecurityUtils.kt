@@ -64,7 +64,7 @@ object SecurityUtils {
     fun isCurrentUserInRole(authority: String): Boolean {
         val securityContext = SecurityContextHolder.getContext()
         val authentication = securityContext.authentication
-        return authentication?.authorities?.stream()?.anyMatch { grantedAuthority -> grantedAuthority.authority == authority } ?: false
+        return authentication?.authorities?.any{ it.authority == authority}?: false
     }
 
 }

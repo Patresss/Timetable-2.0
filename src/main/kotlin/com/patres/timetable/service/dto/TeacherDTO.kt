@@ -26,7 +26,7 @@ class TeacherDTO(
 
     var preferenceSubjectByTeacher: Set<PreferenceSubjectByTeacherDTO> = HashSet(),
 
-    var preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacherDTO> = HashSet(),
+    var preferenceDateTimeForTeachers: Set<PreferenceDataTimeForTeacherDTO> = HashSet(),
 
     divisionOwnerId: Long? = null
 

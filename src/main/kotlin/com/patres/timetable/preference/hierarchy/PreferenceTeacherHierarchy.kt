@@ -1,5 +1,6 @@
 package com.patres.timetable.preference.hierarchy
 
+
 class PreferenceTeacherHierarchy : PreferenceHierarchy() {
 
     var preferredBySubject = 0

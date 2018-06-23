@@ -14,7 +14,7 @@ export class Teacher implements BaseEntity {
         public timetables?: BaseEntity[],
         public preferenceTeacherByPlace?: PreferenceTeacherByPlaceModel[],
         public preferenceSubjectByTeacher?: PreferenceSubjectByTeacherModel[],
-        public preferenceDataTimeForTeachers?: PreferenceForDataTimeForTeacherModel[],
+        public preferenceDateTimeForTeachers?: PreferenceForDataTimeForTeacherModel[],
         public divisionOwnerId?: number,
     ) {
     }

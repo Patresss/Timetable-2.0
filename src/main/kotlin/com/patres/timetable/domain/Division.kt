@@ -107,9 +107,9 @@ class Division(
 
     divisionOwner: Division? = null
 
-) : AbstractDivisionOwner(divisionOwner), Serializable {
+) : AbstractDivisionOwner(divisionOwner), Serializable, PreferableDateTime {
 
-    fun getPreferenceDataTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferencesDateTimeForDivision.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
+    override fun getPreferenceDateTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferencesDateTimeForDivision.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
 
 
     @Transient

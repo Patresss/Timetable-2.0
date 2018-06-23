@@ -57,9 +57,9 @@ class Place(
 
     divisionOwner: Division? = null
 
-) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
+) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable, PreferableDateTime {
 
-    fun getPreferenceDataTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferencesDateTimeForPlace.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
+    override fun getPreferenceDateTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferencesDateTimeForPlace.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
 
     fun isPlaceTooSmallEnough(division: Division?): Boolean {
         numberOfSeats?.let {seats ->

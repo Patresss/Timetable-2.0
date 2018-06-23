@@ -52,9 +52,9 @@ class Subject(
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     var preferencesDateTimeForSubject: Set<PreferenceDataTimeForSubject> = HashSet()
 
-) : AbstractDivisionOwner(), Serializable {
+) : AbstractDivisionOwner(), Serializable, PreferableDateTime {
 
-    fun getPreferenceDataTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferencesDateTimeForSubject.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
+    override fun getPreferenceDateTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferencesDateTimeForSubject.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
 
     override fun toString(): String {
         return "Subject(name=$name)"

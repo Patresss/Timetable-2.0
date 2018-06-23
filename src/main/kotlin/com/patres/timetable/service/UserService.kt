@@ -2,8 +2,6 @@ package com.patres.timetable.service
 
 import com.patres.timetable.config.Constants
 import com.patres.timetable.domain.Authority
-import com.patres.timetable.domain.Division
-import com.patres.timetable.domain.Teacher
 import com.patres.timetable.domain.User
 import com.patres.timetable.repository.AuthorityRepository
 import com.patres.timetable.repository.DivisionRepository
@@ -12,13 +10,10 @@ import com.patres.timetable.repository.UserRepository
 import com.patres.timetable.security.AuthoritiesConstants
 import com.patres.timetable.security.SecurityUtils
 import com.patres.timetable.service.dto.UserDTO
-import com.patres.timetable.service.mapper.DivisionMapper
-import com.patres.timetable.service.mapper.TeacherMapper
 import com.patres.timetable.service.mapper.UserMapper
 import com.patres.timetable.service.util.RandomUtil
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.CacheManager
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
@@ -31,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.*
-import java.util.stream.Collectors
 import kotlin.streams.toList
 
 @Service
@@ -45,7 +39,7 @@ open class UserService(
     private val divisionRepository: DivisionRepository,
     private val teacherRepository: TeacherRepository,
     private val authenticationManager: AuthenticationManager
-    ) {
+) {
 
 
     companion object {
@@ -82,11 +76,11 @@ open class UserService(
         log.debug("Reset user password for reset key {}", key)
 
         val user = userRepository.findOneByResetKey(key)
-        user?.takeIf {user.resetDate?.isAfter(Instant.now().minusSeconds(86400)) == true }?.apply {
-                password = passwordEncoder.encode(newPassword)
-                resetKey = null
-                resetDate = null
-                cacheManager.getCache(User::class.java.name).evict(user.login)
+        user?.takeIf { user.resetDate?.isAfter(Instant.now().minusSeconds(86400)) == true }?.apply {
+            password = passwordEncoder.encode(newPassword)
+            resetKey = null
+            resetDate = null
+            cacheManager.getCache(User::class.java.name).evict(user.login)
         }
         return user
     }
@@ -102,7 +96,7 @@ open class UserService(
     }
 
     open fun createUser(login: String, password: String, firstName: String? = null, lastName: String? = null, email: String,
-                   imageUrl: String? = null, langKey: String? = "en", schoolId: Long? = null, teacherId: Long? = null): User {
+                        imageUrl: String? = null, langKey: String? = "en", schoolId: Long? = null, teacherId: Long? = null): User {
 
         val newUser = User()
 
@@ -230,7 +224,7 @@ open class UserService(
 
     open fun changePassword(password: String) {
         val login = SecurityUtils.getCurrentUserLogin()
-        login?.let{
+        login?.let {
             val userFromRepository = userRepository.findOneByLogin(login)
             userFromRepository?.let { user ->
                 val encryptedPassword = passwordEncoder.encode(password)
@@ -243,16 +237,14 @@ open class UserService(
 
     @Transactional(readOnly = true)
     open fun getAllManagedUsers(pageable: Pageable): Page<UserDTO> {
-        val login = SecurityUtils.getCurrentUserLogin()
-            login?.let {
-                val userFromRepository = userRepository.findOneByLogin(login)
-            if (userFromRepository?.authorities?.map { it.name }?.contains(AuthoritiesConstants.ADMIN) == true) {
-                return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map { userMapper.toDto(it) }
-            }
-
-            if (userFromRepository?.authorities?.map { it.name }?.contains(AuthoritiesConstants.SCHOOL_ADMIN) == true) {
-                return userRepository.findAllByLoginNotAndSchoolId(pageable, Constants.ANONYMOUS_USER, userFromRepository.school?.id?: 0L).map { userMapper.toDto(it) }
-            }
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map { userMapper.toDto(it) }
+        }
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.SCHOOL_ADMIN)) {
+            val login = SecurityUtils.getCurrentUserLogin()
+            val userFromRepository = userRepository.findOneByLogin(login)
+            val schoolId = userFromRepository?.school?.id?: -1
+            return userRepository.findAllByLoginNotAndSchoolId(pageable, Constants.ANONYMOUS_USER, schoolId).map { userMapper.toDto(it) }
         }
         return PageImpl<UserDTO>(emptyList())
     }

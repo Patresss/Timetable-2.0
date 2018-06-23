@@ -261,10 +261,10 @@ open class DivisionResourceIntTest {
     @Throws(Exception::class)
     open fun `Get Classes Division by parentId`() {
         val school1 = createEntity().apply { divisionType = DivisionType.SCHOOL }
-        val school2 = createEntity().apply { divisionType = DivisionType.SCHOOL; parents = hashSetOf(school1) }
-        val class1 = createEntity().apply { divisionType = DivisionType.CLASS; parents = hashSetOf(school1)}
-        val class2 = createEntity().apply { divisionType = DivisionType.CLASS; parents = hashSetOf(school1)}
-        val class3 = createEntity().apply { divisionType = DivisionType.CLASS; parents = hashSetOf(school2)}
+        val school2 = createEntity().apply { divisionType = DivisionType.SCHOOL; divisionOwner = school1 }
+        val class1 = createEntity().apply { divisionType = DivisionType.CLASS; divisionOwner = school1}
+        val class2 = createEntity().apply { divisionType = DivisionType.CLASS; divisionOwner = school1}
+        val class3 = createEntity().apply { divisionType = DivisionType.CLASS; divisionOwner = school2}
 
         divisionRepository.saveAndFlush<Division>(school1)
         divisionRepository.saveAndFlush<Division>(school2)

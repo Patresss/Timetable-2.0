@@ -47,14 +47,11 @@ open class PreferenceManager(
         val lessonId = preferenceDependency.lesson?.id
         val dayOfWeek = preferenceDependency.dayOfWeek
         if (lessonId != null && dayOfWeek != null) {
-            val preferenceDataTimeForTeacherFromDatabase = getPreferenceDataTimeForTeacherFromDatabase(dayOfWeek, lessonId)
-            val preferenceDataTimeForSubjectFromDatabase = getPreferenceDataTimeForSubjectFromDatabase(dayOfWeek, lessonId)
-            val preferenceDataTimeForDivisionFromDatabase = getPreferenceDataTimeForDivisionFromDatabase(dayOfWeek, lessonId)
-            val preferenceDataTimeForPlaceFromDatabase = getPreferenceDataTimeForPlaceFromDatabase(dayOfWeek, lessonId)
-            preference.calculateTeacherByLessonAndDayOfWeek(preferenceDataTimeForTeacherFromDatabase)
-            preference.calculateSubjectByLessonAndDayOfWeek(preferenceDataTimeForSubjectFromDatabase)
-            preference.calculateDivisionByLessonAndDayOfWeek(preferenceDataTimeForDivisionFromDatabase)
-            preference.calculatePlaceByLessonAndDayOfWeek(preferenceDataTimeForPlaceFromDatabase)
+            val preferenceDataTimeForTeacher = getPreferenceDataTimeForTeacherFromDatabase(dayOfWeek, lessonId)
+            val preferenceDataTimeForSubject = getPreferenceDataTimeForSubjectFromDatabase(dayOfWeek, lessonId)
+            val preferenceDataTimeForDivision = getPreferenceDataTimeForDivisionFromDatabase(dayOfWeek, lessonId)
+            val preferenceDataTimeForPlace = getPreferenceDataTimeForPlaceFromDatabase(dayOfWeek, lessonId)
+            preference.calculateByLessonAndDayOfWeek(preferenceDataTimeForTeacher, preferenceDataTimeForSubject, preferenceDataTimeForDivision, preferenceDataTimeForPlace)
         }
 
         val takenTimetable = getTakenTimetableForLessonAndDayOfWeekFromDatabase(preferenceDependency)

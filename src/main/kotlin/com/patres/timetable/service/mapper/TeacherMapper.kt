@@ -53,11 +53,11 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             shortName = entityDto.shortName
             preferenceTeacherByPlace = preferenceTeacherByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceTeacherByPlace)
             preferenceSubjectByTeacher = preferenceSubjectByTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceSubjectByTeacher)
-            preferenceDataTimeForTeachers = preferenceDataTimeForTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceDataTimeForTeachers)
+            preferenceDateTimeForTeachers = preferenceDataTimeForTeacherMapper.entityDTOSetToEntitySet(entityDto.preferenceDateTimeForTeachers)
 
             preferenceTeacherByPlace.forEach { it.teacher = this }
             preferenceSubjectByTeacher.forEach { it.teacher = this }
-            preferenceDataTimeForTeachers.forEach { it.teacher = this }
+            preferenceDateTimeForTeachers.forEach { it.teacher = this }
 
             if (colorBackground.isNullOrBlank()) {
                 colorBackground = EntityUtil.calculateRandomColor()
@@ -82,7 +82,7 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             addNeutralPreferenceTeacherByPlace()
             preferenceSubjectByTeacher = preferenceSubjectByTeacherMapper.entitySetToEntityDTOSet(entity.preferenceSubjectByTeacher)
             addNeutralPreferenceSubjectByTeacher()
-            preferenceDataTimeForTeachers = preferenceDataTimeForTeacherMapper.entitySetToEntityDTOSet(entity.preferenceDataTimeForTeachers)
+            preferenceDateTimeForTeachers = preferenceDataTimeForTeacherMapper.entitySetToEntityDTOSet(entity.preferenceDateTimeForTeachers)
             addNeutralPreferenceDataTimeForTeachers()
         }
     }
@@ -144,13 +144,13 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             val daysOfWeeks = DayOfWeek.values().map { it.value }
             for (lesson in lessons) {
                 for (dayOfWeek in daysOfWeeks) {
-                    if (!preferenceDataTimeForTeachers.any { it.dayOfWeek == dayOfWeek && it.lessonId == lesson.id }) {
+                    if (!preferenceDateTimeForTeachers.any { it.dayOfWeek == dayOfWeek && it.lessonId == lesson.id }) {
                         neutralPreferenceDataTimeForTeachersToAdd.add(PreferenceDataTimeForTeacherDTO(teacherId = id, teacherFullName = fullName ?: "", lessonId = lesson.id, lessonName = lesson.name ?: "", dayOfWeek = dayOfWeek, points = 0))
                     }
                 }
             }
-            preferenceDataTimeForTeachers += neutralPreferenceDataTimeForTeachersToAdd
-            preferenceDataTimeForTeachers = preferenceDataTimeForTeachers.sortedBy { it.dayOfWeek }.toSet()
+            preferenceDateTimeForTeachers += neutralPreferenceDataTimeForTeachersToAdd
+            preferenceDateTimeForTeachers = preferenceDateTimeForTeachers.sortedBy { it.dayOfWeek }.toSet()
         }
     }
 }

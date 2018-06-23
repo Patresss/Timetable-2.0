@@ -33,6 +33,7 @@ import java.util.HashSet
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.containsInAnyOrder
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
@@ -104,6 +105,7 @@ open class UserResourceIntTest {
         fun createEntity(): User {
             return User().apply {
                 login = DEFAULT_LOGIN
+                authorities = setOf(Authority(AuthoritiesConstants.ADMIN))
                 password = RandomStringUtils.random(60)
                 activated = true
                 email = DEFAULT_EMAIL
@@ -280,6 +282,7 @@ open class UserResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(roles=["ADMIN"])
     @Throws(Exception::class)
     open fun getAllUsers() {
         // Initialize the database

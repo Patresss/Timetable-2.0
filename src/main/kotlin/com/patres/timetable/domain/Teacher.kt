@@ -58,17 +58,18 @@ class Teacher(
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "teacher", orphanRemoval = true, fetch = FetchType.LAZY)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    var preferenceDataTimeForTeachers: Set<PreferenceDataTimeForTeacher> = HashSet(),
+    var preferenceDateTimeForTeachers: Set<PreferenceDataTimeForTeacher> = HashSet(),
 
     divisionOwner: Division? = null
 
-) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
+) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable, PreferableDateTime {
+
+    override fun getPreferenceDateTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferenceDateTimeForTeachers.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
 
     fun getFullName() = "${degree ?: ""} ${name ?: ""} ${surname ?: ""}"
     override fun toString(): String {
         return "Teacher(fullName=${getFullName()})"
     }
 
-    fun getPreferenceDataTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferenceDataTimeForTeachers.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
 
 }

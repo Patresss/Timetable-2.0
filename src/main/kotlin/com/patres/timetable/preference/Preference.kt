@@ -51,9 +51,9 @@ class Preference(
             preferredByTeacher = pointsFromTeacher
             preferredByDivision = pointsFromDivision
             preferredByLessonAndDayOfWeek = pointsFromTime
-            takenByDivision = preferenceFromTime?.takenByDivision?: 0
-            takenByTeacher = preferenceFromTime?.takenByTeacher?: 0
-            takenByPlace = preferenceFromTime?.takenByPlace?: 0
+            takenByDivision = preferenceFromTime?.takenByDivision ?: 0
+            takenByTeacher = preferenceFromTime?.takenByTeacher ?: 0
+            takenByPlace = preferenceFromTime?.takenByPlace ?: 0
         }
 
         return timetable.preferenceTimetableHierarchy.points
@@ -159,6 +159,13 @@ class Preference(
         calculateLessonAndDayOfWeekBySubject(subject)
     }
 
+    fun calculateByLessonAndDayOfWeek(preferenceForTeacher: Set<PreferenceDataTimeForTeacher>, preferenceForSubject: Set<PreferenceDataTimeForSubject>, preferenceForDivision:  Set<PreferenceDataTimeForDivision>, preferenceForPlace: Set<PreferenceDataTimeForPlace> ) {
+        calculateTeacherByLessonAndDayOfWeek(preferenceForTeacher)
+        calculatePlaceByLessonAndDayOfWeek(preferenceForPlace)
+        calculateDivisionByLessonAndDayOfWeek(preferenceForDivision)
+        calculateSubjectByLessonAndDayOfWeek(preferenceForSubject)
+    }
+
     fun calculateTooSmallPlace(idOfTooSmallPlaces: Set<Long>) {
         preferredPlaceMap.forEach { id, preferenceHierarchy ->
             if (idOfTooSmallPlaces.contains(id)) {
@@ -171,223 +178,141 @@ class Preference(
 
     fun calculateTeacherByLessonAndDayOfWeek(preferenceDataTimes: Set<PreferenceDataTimeForTeacher>) {
         preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            val preferenceDataTime = preferenceDataTimes.find { it.teacher?.id == id }
-            if (preferenceDataTime != null) {
-                preferenceHierarchy.preferredByDateTime = preferenceDataTime.points
-            } else {
-                preferenceHierarchy.preferredByDateTime = 0
-            }
+            val preference = preferenceDataTimes.find { it.teacher?.id == id }
+            preferenceHierarchy.preferredByDateTime = preference?.points ?: 0
         }
     }
 
     fun calculatePlaceByLessonAndDayOfWeek(preferenceDataTimes: Set<PreferenceDataTimeForPlace>) {
         preferredPlaceMap.forEach { id, preferenceHierarchy ->
-            val preferenceDataTime = preferenceDataTimes.find { it.place?.id == id }
-            if (preferenceDataTime != null) {
-                preferenceHierarchy.preferredByDateTime = preferenceDataTime.points
-            } else {
-                preferenceHierarchy.preferredByDateTime = 0
-            }
+            val preference = preferenceDataTimes.find { it.place?.id == id }
+            preferenceHierarchy.preferredByDateTime = preference?.points ?: 0
         }
     }
 
     fun calculateDivisionByLessonAndDayOfWeek(preferenceDataTimes: Set<PreferenceDataTimeForDivision>) {
         preferredDivisionMap.forEach { id, preferenceHierarchy ->
-            val preferenceDataTime = preferenceDataTimes.find { it.division?.id == id }
-            if (preferenceDataTime != null) {
-                preferenceHierarchy.preferredByDateTime = preferenceDataTime.points
-            } else {
-                preferenceHierarchy.preferredByDateTime = 0
-            }
+            val preference = preferenceDataTimes.find { it.division?.id == id }
+            preferenceHierarchy.preferredByDateTime = preference?.points ?: 0
         }
     }
 
     fun calculateSubjectByLessonAndDayOfWeek(preferenceDataTimes: Set<PreferenceDataTimeForSubject>) {
         preferredSubjectMap.forEach { id, preferenceHierarchy ->
-            val preferenceDataTime = preferenceDataTimes.find { it.subject?.id == id }
-            if (preferenceDataTime != null) {
-                preferenceHierarchy.preferredByDateTime = preferenceDataTime.points
-            } else {
-                preferenceHierarchy.preferredByDateTime = 0
-            }
+            val preference = preferenceDataTimes.find { it.subject?.id == id }
+            preferenceHierarchy.preferredByDateTime = preference?.points ?: 0
         }
     }
 
     private fun calculateLessonAndDayOfWeekByTeacher(teacher: Teacher) {
         preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
-            val preferenceDataTime = teacher.getPreferenceDataTime(lessonDayPreferenceElement)
-            if (preferenceDataTime != null) {
-                lessonDayPreferenceElement.preference.preferredByTeacher = preferenceDataTime.points
-            } else {
-                lessonDayPreferenceElement.preference.preferredByTeacher = 0
-            }
+            val preference = teacher.getPreferenceDateTime(lessonDayPreferenceElement)
+            lessonDayPreferenceElement.preference.preferredByTeacher = preference?.points ?: 0
         }
     }
 
     private fun calculateLessonAndDayOfWeekByPlace(place: Place) {
         preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
-            val preferenceDataTime = place.getPreferenceDataTime(lessonDayPreferenceElement)
-            if (preferenceDataTime != null) {
-                lessonDayPreferenceElement.preference.preferredByPlace = preferenceDataTime.points
-            } else {
-                lessonDayPreferenceElement.preference.preferredByPlace = 0
-            }
+            val preference = place.getPreferenceDateTime(lessonDayPreferenceElement)
+            lessonDayPreferenceElement.preference.preferredByPlace = preference?.points ?: 0
         }
     }
 
-
     private fun calculateLessonAndDayOfWeekByDivision(division: Division) {
         preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
-            val preferenceDataTime = division.getPreferenceDataTime(lessonDayPreferenceElement)
-            if (preferenceDataTime != null) {
-                lessonDayPreferenceElement.preference.preferredByDivision = preferenceDataTime.points
-            } else {
-                lessonDayPreferenceElement.preference.preferredByDivision = 0
-            }
+            val preference = division.getPreferenceDateTime(lessonDayPreferenceElement)
+            lessonDayPreferenceElement.preference.preferredByDivision = preference?.points ?: 0
         }
     }
 
     private fun calculateLessonAndDayOfWeekBySubject(subject: Subject) {
         preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
-            val preferenceDataTime = subject.getPreferenceDataTime(lessonDayPreferenceElement)
-            if (preferenceDataTime != null) {
-                lessonDayPreferenceElement.preference.preferredBySubject = preferenceDataTime.points
-            } else {
-                lessonDayPreferenceElement.preference.preferredBySubject = 0
-            }
+            val preference = subject.getPreferenceDateTime(lessonDayPreferenceElement)
+            lessonDayPreferenceElement.preference.preferredBySubject = preference?.points ?: 0
         }
     }
 
-
     private fun calculatePlacesByTeacher(teacher: Teacher) {
         preferredPlaceMap.forEach { id, preferenceHierarchy ->
-            val preferredPlaces = teacher.preferenceTeacherByPlace.find { it.place?.id == id }
-            if (preferredPlaces != null) {
-                preferenceHierarchy.preferredByTeacher = preferredPlaces.points
-            } else {
-                preferenceHierarchy.preferredByTeacher = 0
-            }
+            val preference = teacher.preferenceTeacherByPlace.find { it.place?.id == id }
+            preferenceHierarchy.preferredByTeacher = preference?.points ?: 0
         }
     }
 
     private fun calculateDivisionsByTeacher(teacher: Teacher) {
         preferredDivisionMap.forEach { id, preferenceHierarchy ->
-            val preferredDivisions = teacher.preferencesTeacherByDivision.find { it.division?.id == id }
-            if (preferredDivisions != null) {
-                preferenceHierarchy.preferredByTeacher = preferredDivisions.points
-            } else {
-                preferenceHierarchy.preferredByTeacher = 0
-            }
+            val preference = teacher.preferencesTeacherByDivision.find { it.division?.id == id }
+            preferenceHierarchy.preferredByTeacher = preference?.points ?: 0
         }
     }
 
     private fun calculateSubjectsByTeacher(teacher: Teacher) {
         preferredSubjectMap.forEach { id, preferenceHierarchy ->
-            val preferenceSubject = teacher.preferenceSubjectByTeacher.find { it.subject?.id == id }
-            if (preferenceSubject != null) {
-                preferenceHierarchy.preferredByTeacher = preferenceSubject.points
-            } else {
-                preferenceHierarchy.preferredByTeacher = 0
-            }
+            val preference = teacher.preferenceSubjectByTeacher.find { it.subject?.id == id }
+            preferenceHierarchy.preferredByTeacher = preference?.points ?: 0
         }
     }
 
     private fun calculateSubjectsByPlace(place: Place) {
         preferredSubjectMap.forEach { id, preferenceHierarchy ->
-            val preferenceSubject = place.preferenceSubjectByPlace.find { it.subject?.id == id }
-            if (preferenceSubject != null) {
-                preferenceHierarchy.preferredByPlace = preferenceSubject.points
-            } else {
-                preferenceHierarchy.preferredByPlace = 0
-            }
+            val preference = place.preferenceSubjectByPlace.find { it.subject?.id == id }
+            preferenceHierarchy.preferredByPlace = preference?.points ?: 0
         }
     }
 
     private fun calculateDivisionsByPlace(place: Place) {
         preferredDivisionMap.forEach { id, preferenceHierarchy ->
-            val preferenceDivision = place.preferenceDivisionByPlace.find { it.division?.id == id }
-            if (preferenceDivision != null) {
-                preferenceHierarchy.preferredByPlace = preferenceDivision.points
-            } else {
-                preferenceHierarchy.preferredByPlace = 0
-            }
+            val preference = place.preferenceDivisionByPlace.find { it.division?.id == id }
+            preferenceHierarchy.preferredByPlace = preference?.points ?: 0
         }
     }
 
     private fun calculateTeachersByPlace(place: Place) {
         preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            val preferenceTeacher = place.preferenceTeacherByPlace.find { it.teacher?.id == id }
-            if (preferenceTeacher != null) {
-                preferenceHierarchy.preferredByPlace = preferenceTeacher.points
-            } else {
-                preferenceHierarchy.preferredByPlace = 0
-            }
+            val preference = place.preferenceTeacherByPlace.find { it.teacher?.id == id }
+            preferenceHierarchy.preferredByPlace = preference?.points ?: 0
         }
     }
 
     private fun calculateSubjectsByDivision(division: Division) {
         preferredSubjectMap.forEach { id, preferenceHierarchy ->
-            val preferredSubjects = division.preferencesSubjectByDivision.find { it.subject?.id == id }
-            if (preferredSubjects != null) {
-                preferenceHierarchy.preferredByDivision = preferredSubjects.points
-            } else {
-                preferenceHierarchy.preferredByDivision = 0
-            }
+            val preference = division.preferencesSubjectByDivision.find { it.subject?.id == id }
+            preferenceHierarchy.preferredByDivision = preference?.points ?: 0
         }
     }
 
     private fun calculatePlacesByDivision(division: Division) {
         preferredPlaceMap.forEach { id, preferenceHierarchy ->
-            val preferredPlaces = division.preferenceDivisionByPlace.find { it.place?.id == id }
-            if (preferredPlaces != null) {
-                preferenceHierarchy.preferredByDivision = preferredPlaces.points
-            } else {
-                preferenceHierarchy.preferredByDivision = 0
-            }
+            val preference = division.preferenceDivisionByPlace.find { it.place?.id == id }
+            preferenceHierarchy.preferredByDivision = preference?.points ?: 0
         }
     }
 
     private fun calculateTeachersByDivision(division: Division) {
         preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            val preferredTeachers = division.preferencesTeacherByDivision.find { it.teacher?.id == id }
-            if (preferredTeachers != null) {
-                preferenceHierarchy.preferredByDivision = preferredTeachers.points
-            } else {
-                preferenceHierarchy.preferredByDivision = 0
-            }
+            val preference = division.preferencesTeacherByDivision.find { it.teacher?.id == id }
+            preferenceHierarchy.preferredByDivision = preference?.points ?: 0
         }
     }
 
     private fun calculatePlacesBySubject(subject: Subject) {
         preferredPlaceMap.forEach { id, preferenceHierarchy ->
-            val preferredPlaces = subject.preferenceSubjectByPlace.find { it.place?.id == id }
-            if (preferredPlaces != null) {
-                preferenceHierarchy.preferredBySubject = preferredPlaces.points
-            } else {
-                preferenceHierarchy.preferredBySubject = 0
-            }
+            val preference = subject.preferenceSubjectByPlace.find { it.place?.id == id }
+            preferenceHierarchy.preferredBySubject = preference?.points ?: 0
         }
     }
 
     private fun calculateDivisionsBySubject(subject: Subject) {
         preferredDivisionMap.forEach { id, preferenceHierarchy ->
-            val preferredDivisions = subject.preferencesSubjectByDivision.find { it.division?.id == id }
-            if (preferredDivisions != null) {
-                preferenceHierarchy.preferredBySubject = preferredDivisions.points
-            } else {
-                preferenceHierarchy.preferredBySubject = 0
-            }
+            val preference = subject.preferencesSubjectByDivision.find { it.division?.id == id }
+            preferenceHierarchy.preferredBySubject = preference?.points ?: 0
         }
     }
 
     private fun calculateTeachersBySubject(subject: Subject) {
         preferredTeacherMap.forEach { id, preferenceHierarchy ->
             val preferredTeachers = subject.preferenceSubjectByTeacher.find { it.teacher?.id == id }
-            if (preferredTeachers != null) {
-                preferenceHierarchy.preferredBySubject = preferredTeachers.points
-            } else {
-                preferenceHierarchy.preferredBySubject = 0
-            }
+            preferenceHierarchy.preferredBySubject = preferredTeachers?.points ?: 0
         }
     }
 
