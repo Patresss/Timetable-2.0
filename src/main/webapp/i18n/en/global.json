@@ -43,6 +43,7 @@
                 "apidocs": "API",
                 "database": "Database",
                 "fill-database": "Fill database",
+                "delete-all-timetables": "Delete all timetables",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
             "language": "Language"

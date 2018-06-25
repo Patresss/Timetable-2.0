@@ -9,6 +9,7 @@ import {JhiLanguageHelper, Principal, LoginModalService, LoginService, Account} 
 import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 import {FillerService} from '../../admin/filler/filler.service';
 import {Subscription} from 'rxjs/Subscription';
+import {TimetableService} from '../../entities/timetable';
 
 @Component({
     selector: 'jhi-navbar',
@@ -30,6 +31,7 @@ export class NavbarComponent implements OnInit {
 
     constructor(
         private fillerService: FillerService,
+        private timetableService: TimetableService,
         private loginService: LoginService,
         private languageService: JhiLanguageService,
         private languageHelper: JhiLanguageHelper,
@@ -103,5 +105,9 @@ export class NavbarComponent implements OnInit {
 
     fillDatabase() {
         this.fillerService.fill().subscribe()
+    }
+
+    deleteAllTimetables() {
+        this.timetableService.deleteAll().subscribe();
     }
 }

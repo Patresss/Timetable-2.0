@@ -173,6 +173,13 @@
                                 <span jhiTranslate="global.menu.admin.fill-database">Fill database</span>
                             </a>
                         </li>
+
+                        <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                            <a class="dropdown-item" (click)="deleteAllTimetables()">
+                                <i class="fa fa-fw fa-minus-square" aria-hidden="true"></i>
+                                <span jhiTranslate="global.menu.admin.delete-all-timetables">Delete all timetables</span>
+                            </a>
+                        </li>
                         <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
                     </ul>
                 </li>

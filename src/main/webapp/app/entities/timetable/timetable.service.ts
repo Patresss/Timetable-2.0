@@ -17,6 +17,10 @@ export class TimetableService extends EntityService<Timetable> {
         super(http, 'timetables');
     }
 
+    deleteAll(): Observable<Response> {
+        return this.http.delete(`${this.resourceUrl}/all`);
+    }
+
     findByDateAndDivisionList(date: Date, divisionIdList: Array<number>): Observable<ResponseWrapper> {
         const urlSearchParams: URLSearchParams = new URLSearchParams();
         const dateObj = DateObject.fromDate(date);

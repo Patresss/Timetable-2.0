@@ -43,6 +43,7 @@
                 "apidocs": "API",
                 "database": "Baza danych",
                 "fill-database": "Wypełnij bazę",
+                "delete-all-timetables": "Usuń wszystkie zajęcia",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
             "language": "Język"

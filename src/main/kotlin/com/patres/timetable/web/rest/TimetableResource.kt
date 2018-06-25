@@ -125,6 +125,15 @@ open class TimetableResource(
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id!!.toString())).build()
     }
 
+    @DeleteMapping("/timetables/all")
+    @Timed
+    open fun deleteAllTimetable(): ResponseEntity<Void> {
+        log.debug("REST request to delete all Timetables ")
+        timetableService.deleteAll()
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, "all")).build()
+    }
+
+
     /**
      * GET  /timetables/division-list : get the timetable by dateAndDivisionList
      *

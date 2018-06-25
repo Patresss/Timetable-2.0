@@ -46,4 +46,9 @@ open class TimetableService(entityRepository: TimetableRepository, entityMapper:
         val timetables = entityRepository.findBySubjectIdAndDateFromPeriod(date, subjectId)
         return timetables.map{ entityMapper.toDto(it)}.toSet()
     }
+
+    open fun deleteAll() {
+        TimetableService.log.debug("Request to delete all Timetables")
+        entityRepository.deleteAll()
+    }
 }
