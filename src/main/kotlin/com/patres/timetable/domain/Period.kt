@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "period")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Period(
 
     @get:NotNull
@@ -21,12 +21,12 @@ class Period(
     var name: String? = null,
 
     @OneToMany(cascade = [(CascadeType.ALL)], orphanRemoval = true, mappedBy = "period")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var intervalTimes: Set<Interval> = HashSet(),
 
     @OneToMany(mappedBy = "period")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var timetables: Set<Timetable> = HashSet(),
 
     divisionOwner: Division? = null

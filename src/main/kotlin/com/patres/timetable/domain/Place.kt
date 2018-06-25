@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "place")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Place(
 
     @get:NotNull
@@ -33,26 +33,26 @@ class Place(
 
     @OneToMany(mappedBy = "place")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var timetables: Set<Timetable> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferenceSubjectByPlace: Set<PreferenceSubjectByPlace> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true)
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferenceTeacherByPlace: Set<PreferenceTeacherByPlace> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true)
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferenceDivisionByPlace: Set<PreferenceDivisionByPlace> = HashSet(),
 
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "place", orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferencesDateTimeForPlace: Set<PreferenceDataTimeForPlace> = HashSet(),
 
     divisionOwner: Division? = null

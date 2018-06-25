@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "property")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Property(
 
     @get:NotNull

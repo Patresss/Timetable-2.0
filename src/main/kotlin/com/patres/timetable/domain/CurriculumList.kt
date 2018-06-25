@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "curriculum_list")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class CurriculumList(
 
     @get:NotNull
@@ -18,7 +18,7 @@ class CurriculumList(
     var name: String = "",
 
     @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "curriculum_list_curriculum", joinColumns = [(JoinColumn(name = "curriculum_list_id", referencedColumnName = "id"))], inverseJoinColumns = [(JoinColumn(name = "curriculum_id", referencedColumnName = "id"))])
     var curriculums: Set<Curriculum> = HashSet(),
 

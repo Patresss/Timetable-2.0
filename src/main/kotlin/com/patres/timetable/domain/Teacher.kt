@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "teacher")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Teacher(
 
     @get:NotNull
@@ -40,24 +40,24 @@ class Teacher(
 
     @OneToMany(mappedBy = "teacher")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var timetables: Set<Timetable> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "teacher", orphanRemoval = true, fetch = FetchType.LAZY)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferenceSubjectByTeacher: Set<PreferenceSubjectByTeacher> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "teacher", orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferencesTeacherByDivision: Set<PreferenceTeacherByDivision> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "teacher", orphanRemoval = true, fetch = FetchType.LAZY)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferenceTeacherByPlace: Set<PreferenceTeacherByPlace> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "teacher", orphanRemoval = true, fetch = FetchType.LAZY)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferenceDateTimeForTeachers: Set<PreferenceDataTimeForTeacher> = HashSet(),
 
     divisionOwner: Division? = null

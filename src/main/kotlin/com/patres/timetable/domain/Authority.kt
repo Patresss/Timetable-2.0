@@ -15,7 +15,7 @@ import javax.validation.constraints.Size
  */
 @Entity
 @Table(name = "jhi_authority")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Authority(
 
     @get:NotNull

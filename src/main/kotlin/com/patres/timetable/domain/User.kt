@@ -20,7 +20,7 @@ import javax.persistence.FetchType
 
 @Entity
 @Table(name = "jhi_user")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class User : AbstractAuditingEntity(), Serializable {
 
     @get:NotNull
@@ -79,7 +79,7 @@ class User : AbstractAuditingEntity(), Serializable {
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "jhi_user_authority", joinColumns = arrayOf(JoinColumn(name = "user_id", referencedColumnName = "id")), inverseJoinColumns = arrayOf(JoinColumn(name = "authority_name", referencedColumnName = "name")))
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @BatchSize(size = 20)
     var authorities: Set<Authority> = HashSet()
 

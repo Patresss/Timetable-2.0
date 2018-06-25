@@ -17,7 +17,7 @@ import kotlin.jvm.Transient
 
 @Entity
 @Table(name = "division")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Division(
 
     @get:NotNull
@@ -43,41 +43,41 @@ class Division(
 
     @OneToMany(mappedBy = "division")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var timetables: Set<Timetable> = HashSet(),
 
     @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var divisionPlaces: Set<Place> = HashSet(),
 
     @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var divisionTeachers: Set<Teacher> = HashSet(),
 
     @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var divisionSubjects: Set<Subject> = HashSet(),
 
     @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var divisionLessons: Set<Lesson> = HashSet(),
 
     @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var divisionPeriods: Set<Period> = HashSet(),
 
     @OneToMany(mappedBy = "divisionOwner")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var divisionProperties: Set<Property> = HashSet(),
 
     @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "division_parent", joinColumns = [(JoinColumn(name = "divisions_id", referencedColumnName = "id"))], inverseJoinColumns = [(JoinColumn(name = "parents_id", referencedColumnName = "id"))])
     var parents: Set<Division> = HashSet(),
 
@@ -86,23 +86,23 @@ class Division(
     var children: Set<Division> = HashSet(),
 
     @OneToMany(mappedBy = "school")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var users: Set<User> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "division", orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferencesSubjectByDivision: Set<PreferenceSubjectByDivision> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "division", orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferencesTeacherByDivision: Set<PreferenceTeacherByDivision> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "division", orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferenceDivisionByPlace: Set<PreferenceDivisionByPlace> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "division", orphanRemoval = true, fetch = FetchType.LAZY)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferencesDateTimeForDivision: Set<PreferenceDataTimeForDivision> = HashSet(),
 
     divisionOwner: Division? = null

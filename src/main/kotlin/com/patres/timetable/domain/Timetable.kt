@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "timetable")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Timetable(
 
     @Column(name = "title")

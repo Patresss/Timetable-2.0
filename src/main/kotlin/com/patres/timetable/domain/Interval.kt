@@ -12,7 +12,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "interval")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 data class Interval(
 
     @Column(name = "included_state")

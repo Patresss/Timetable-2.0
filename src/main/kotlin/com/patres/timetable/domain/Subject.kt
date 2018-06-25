@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "subject")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Subject(
 
     @get:NotNull
@@ -30,26 +30,26 @@ class Subject(
 
     @OneToMany(mappedBy = "subject")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var timetables: Set<Timetable> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "subject", orphanRemoval = true)
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferenceSubjectByTeacher: Set<PreferenceSubjectByTeacher> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "subject", orphanRemoval = true)
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferenceSubjectByPlace: Set<PreferenceSubjectByPlace> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "subject", orphanRemoval = true)
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferencesSubjectByDivision: Set<PreferenceSubjectByDivision> = HashSet(),
 
     @OneToMany(cascade = [(CascadeType.ALL)], mappedBy = "subject", orphanRemoval = true, fetch = FetchType.LAZY)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferencesDateTimeForSubject: Set<PreferenceDataTimeForSubject> = HashSet()
 
 ) : AbstractDivisionOwner(), Serializable, PreferableDateTime {

@@ -15,7 +15,7 @@ import kotlin.collections.HashSet
 
 @Entity
 @Table(name = "lesson")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Lesson(
 
     @get:NotNull
@@ -32,7 +32,7 @@ class Lesson(
 
     @OneToMany(mappedBy = "lesson")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private var timetables: Set<Timetable> = HashSet(),
 
     @OneToMany(mappedBy = "lesson", orphanRemoval = true)

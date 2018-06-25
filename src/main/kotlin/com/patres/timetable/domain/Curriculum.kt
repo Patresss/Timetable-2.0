@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "curriculum")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Curriculum(
 
     @Column(name = "name")
@@ -49,7 +49,7 @@ class Curriculum(
 
     @ManyToMany(mappedBy = "curriculums")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var curriculumnListes: Set<CurriculumList> = HashSet(),
 
     divisionOwner: Division? = null
