@@ -12,43 +12,43 @@ import {Response} from '@angular/http';
 import {GenerateReportModel} from './generate-report.model';
 import {Chart} from 'chart.js'
 
-Chart.pluginService.register({
-    beforeDraw: function (chart) {
+Chart.pluginService.register( {
+    beforeDraw: (chart) => {
         if (chart.config.options.elements.center) {
-            //Get ctx from string
-            var ctx = chart.chart.ctx;
+            // Get ctx from string
+            const ctx = chart.chart.ctx;
 
-            //Get options from the center object in options
-            var centerConfig = chart.config.options.elements.center;
-            var fontStyle = centerConfig.fontStyle || 'Arial';
-            var txt = centerConfig.text;
-            var color = centerConfig.color || '#000';
-            var sidePadding = centerConfig.sidePadding || 20;
-            var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
-            //Start with a base font of 30px
+            // Get options from the center object in options
+            const centerConfig = chart.config.options.elements.center;
+            const fontStyle = centerConfig.fontStyle || 'Arial';
+            const txt = centerConfig.text;
+            const color = centerConfig.color || '#000';
+            const sidePadding = centerConfig.sidePadding || 20;
+            const sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+            // Start with a base font of 30px
             ctx.font = '30px ' + fontStyle;
 
-            //Get the width of the string and also the width of the element minus 10 to give it 5px side padding
-            var stringWidth = ctx.measureText(txt).width;
-            var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+            // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+            const stringWidth = ctx.measureText(txt).width;
+            const elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
 
             // Find out how much the font can grow in width.
-            var widthRatio = elementWidth / stringWidth;
-            var newFontSize = Math.floor(30 * widthRatio);
-            var elementHeight = (chart.innerRadius * 2);
+            const widthRatio = elementWidth / stringWidth;
+            const newFontSize = Math.floor(30 * widthRatio);
+            const elementHeight = (chart.innerRadius * 2);
 
             // Pick a new font size so it will not be larger than the height of label.
-            var fontSizeToUse = Math.min(newFontSize, elementHeight);
+            const fontSizeToUse = Math.min(newFontSize, elementHeight);
 
-            //Set font settings to draw it correctly.
+            // Set font settings to draw it correctly.
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
-            var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+            const centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+            const centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
             ctx.font = fontSizeToUse + 'px ' + fontStyle;
             ctx.fillStyle = color;
 
-            //Draw text in center
+            // Draw text in center
             ctx.fillText(txt, centerX, centerY);
         }
     }
@@ -75,7 +75,7 @@ export class CurriculumListGenerateDialogComponent {
         this.translateService.instant('timetableApp.curriculum-list.report.other'),
     ];
     timeCalculateChartData: number[];
-    timeCalculateChartType: string = 'doughnut';
+    timeCalculateChartType = 'doughnut';
 
     timeCalculateOptions = {
         elements: {
@@ -94,7 +94,7 @@ export class CurriculumListGenerateDialogComponent {
         this.translateService.instant('timetableApp.curriculum-list.report.handicapNearToBlockMethod')
     ];
     timeRemoveWindowsChartData: number[];
-    timeRemoveWindowsChartType: string = 'doughnut';
+    timeRemoveWindowsChartType = 'doughnut';
 
     timeRemoveWindowsOptions = {
         elements: {
@@ -120,7 +120,7 @@ export class CurriculumListGenerateDialogComponent {
         this.translateService.instant('timetableApp.curriculum-list.report.averagePoints'),
         this.translateService.instant('timetableApp.curriculum-list.report.medianPoints')
     ];
-    public barStatisticPointsChartType: string = 'bar';
+    public barStatisticPointsChartType = 'bar';
     public barStatisticPointsChartData: any[];
 
     barStatisticIterationsChartOptions: any = {
@@ -142,7 +142,7 @@ export class CurriculumListGenerateDialogComponent {
         this.translateService.instant('timetableApp.curriculum-list.report.swapInWindowMethod'),
         this.translateService.instant('timetableApp.curriculum-list.report.handicapNearToBlockMethod')
     ];
-    public barStatisticIterationsChartType: string = 'bar';
+    public barStatisticIterationsChartType = 'bar';
     public barStatisticIterationsChartData: any[] = [];
 
     GenerateState = GenerateState;
@@ -184,7 +184,8 @@ export class CurriculumListGenerateDialogComponent {
             this.generateReport.calculatePreferenceTimeImMs,
             this.generateReport.calculateLessonAndTimeInMs,
             this.generateReport.calculatePlaceTimeInMs,
-            this.generateReport.otherTimeImMs,];
+            this.generateReport.otherTimeImMs
+        ];
         const allTimeCalculateImS = (this.generateReport.allTimeImMs / 1000.0).toFixed(1);
         this.timeCalculateOptions.elements.center.text = allTimeCalculateImS.toString() + ' s';
 

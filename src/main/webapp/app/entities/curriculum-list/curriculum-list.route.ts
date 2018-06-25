@@ -5,15 +5,15 @@ import {UserRouteAccessService} from '../../shared';
 import {JhiPaginationUtil} from 'ng-jhipster';
 import {CurriculumListComponent} from './curriculum-list.component';
 import {CurriculumListDetailComponent} from './curriculum-list-detail.component';
-import {CurriculumListDialogComponent, CurriculumListPopupComponent} from './curriculum-list-dialog.component';
+import {CurriculumListPopupComponent} from './curriculum-list-dialog.component';
 import {CurriculumListDeletePopupComponent} from './curriculum-list-delete-dialog.component';
 import {CurriculumListGeneratePopupComponent} from './curriculum-list-generate-dialog.component';
-import {CurriculumListReportPopupComponent} from './curriculum-list-report-dialog.component';
 
 @Injectable()
 export class CurriculumListResolvePagingParams implements Resolve<any> {
 
-    constructor(private paginationUtil: JhiPaginationUtil) {}
+    constructor(private paginationUtil: JhiPaginationUtil) {
+    }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
@@ -22,7 +22,7 @@ export class CurriculumListResolvePagingParams implements Resolve<any> {
             page: this.paginationUtil.parsePage(page),
             predicate: this.paginationUtil.parsePredicate(sort),
             ascending: this.paginationUtil.parseAscending(sort)
-      };
+        };
     }
 }
 
@@ -83,16 +83,6 @@ export const curriculumListPopupRoute: Routes = [
     {
         path: 'curriculum-list/:id/generate',
         component: CurriculumListGeneratePopupComponent,
-        data: {
-            authorities: ['ROLE_SCHOOL_ADMIN'],
-            pageTitle: 'timetableApp.curriculum-list'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'curriculum-list/:id/report',
-        component: CurriculumListReportPopupComponent,
         data: {
             authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.curriculum-list'
