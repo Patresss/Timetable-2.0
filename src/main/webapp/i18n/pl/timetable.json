@@ -16,6 +16,7 @@
                 "title": "Wydarzneie"
             },
             "title": "Tytuł",
+            "points": "Punkty",
             "startTime": "Czas rozpoczęcia",
             "endTime": "Czas zakończenia",
             "startDate": "Data początkowa ",

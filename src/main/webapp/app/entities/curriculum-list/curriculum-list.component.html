@@ -52,8 +52,12 @@
                             <span class="fa fa-remove"></span>
                             <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
                         </button>
-                        <button class="btn btn-secondary btn-sm" (click)="generate(curriculumList.id)">
-                            <span class="fas fa-play"></span>&nbsp;<span jhiTranslate="entity.action.generate">Generate</span>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'curriculum-list/'+ curriculumList.id + '/generate'} }]"
+                                replaceUrl="true"
+                                class="btn btn-secondary btn-sm">
+                            <span class="fa fa-play"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.generate">Generate</span>
                         </button>
                     </div>
                 </td>

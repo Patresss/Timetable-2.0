@@ -16,6 +16,7 @@
                 "title": "Timetable"
             },
             "title": "Title",
+            "points": "Points",
             "startTime": "Start Time",
             "endTime": "End Time",
             "startDate": "Start Date",

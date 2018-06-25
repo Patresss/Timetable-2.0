@@ -29,8 +29,6 @@ class GenerateReportDTO {
 
     var generateTimeImMs: Long = 0
 
-    var removeWindowsTimeImMs: Long = 0
-
     var generateTimeHandicapInWindowsAlgorithmImMs: Long = 0L
 
     var generateTimeSwapInWindowAlgorithmImMs: Long = 0L
@@ -42,6 +40,12 @@ class GenerateReportDTO {
     var calculateLessonAndTimeInMs: Long = 0L
 
     var calculatePlaceTimeInMs: Long = 0L
+
+    var removeWindowsTimeImMs: Long = 0
+        get() = generateTimeHandicapInWindowsAlgorithmImMs + generateTimeSwapInWindowAlgorithmImMs + generateTimeHandicapNearToBlockAlgorithmImMs
+
+    var otherTimeImMs: Long = 0
+        get() = allTimeImMs - (removeWindowsTimeImMs + calculatePreferenceTimeImMs + calculateLessonAndTimeInMs + calculatePlaceTimeInMs)
 
     var numberOfRemoveWindowsByHandicapInWindow: Int = 0
 

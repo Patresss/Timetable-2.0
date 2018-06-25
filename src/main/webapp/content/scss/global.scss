@@ -278,7 +278,6 @@ ui bootstrap tweaks
     justify-content: center !important;
 }
 
-
 .plan-row-choose {
     margin-bottom: 25px;
 }
@@ -915,9 +914,6 @@ button.app-primary-button:focus {
     cursor: pointer;
 }
 
-
-
-
 // ================================================================
 // Other
 // ================================================================
@@ -925,10 +921,6 @@ button.app-primary-button:focus {
     width: 90%;
     opacity: 0.9;
     margin: auto;
-}
-
-.modal-content {
-    background: transparent;
 }
 
 .card-header {
@@ -952,3 +944,27 @@ button.app-primary-button:focus {
     }
 
 }
+
+.spinner {
+    margin: auto;
+    display: block;
+    color: $accent-color-dark;
+}
+
+.modal-open .container-fluid, .modal-open .container {
+    -webkit-filter: blur(3px);
+}
+
+.modal-content {
+    background: transparentize($accent-color-strong-light, 0.1);
+    color: $accent-color-strong-dark;
+    a {
+        color: $accent-color-strong-dark;
+    }
+}
+
+.generator-statistic {
+    padding-bottom: 30px;
+}
+
+

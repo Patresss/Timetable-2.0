@@ -27,6 +27,7 @@ export class Timetable implements BaseEntity {
                 public date?: any,
                 public type?: EventType,
                 public divisionOwnerId?: number,
+                public points?: number,
                 public everyWeek?: number,
                 public startWithWeek?: number,
                 public description?: string,

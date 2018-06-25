@@ -127,7 +127,8 @@
             "open": "Otwórz",
             "save": "Zapisz",
             "view": "Widok",
-            "generate": "Generuj"
+            "generate": "Generuj",
+            "ok": "OK"
         },
         "detail": {
             "field": "Pole",
@@ -135,6 +136,9 @@
         },
         "delete": {
             "title": "Potwierdź usunięcie"
+        },
+        "generate": {
+            "title": "Potwierdź generowanie"
         },
         "validation": {
             "required": "To pole jest wymagane.",
@@ -158,7 +162,9 @@
         "userexists": "Użytkownik o takiej nazwie już istnieje!",
         "emailexists": "Użytkownik z takim adresem email już istnieje!",
         "idexists": "Nowy {{entityName}} nie może jeszcze mieć przypisanego ID",
-        "accessDenied": "Access denied"
+        "accessDenied": "Access denied",
+        "something-went-wrong": "Coś poszło nie tak",
+        "contact-administrator": "Proszę skontaktować się z administratorem"
     },
     "footer": "To jest stopka",
     "customColor": "Wybierz color"

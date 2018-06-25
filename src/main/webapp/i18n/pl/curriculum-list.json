@@ -12,6 +12,40 @@
             "delete": {
                 "question": "Czy na pewno chcesz usunąć Plany nauczania {{ id }}?"
             },
+            "generate": {
+                "confirm": "Proszę potwierdzić generowanie planu",
+                "confirm-question": "Czy na pewno chcesz wygenerować plan??",
+                "generating": "Generowanie...",
+                "please-wait": "Generowanie planu lekcji, proszę czekać",
+                "success": "Plan lekcji został wygenerowany",
+                "question": "Czy na pewno chcesz wygenerować plan lekcji {{ id }}?"
+
+            },
+            "report": {
+                "title": "Raport",
+                "removeWindows": "Usunięte okienka",
+                "other": "Inne (logowanie, połączenie z bazą danych itp.",
+                "calculatePreference": "Liczenie preferencji",
+                "calculateLessonAndDayOfWeek": "Dopasowanie lekcji i dnia tygodnia",
+                "calculatePlace": "Dopasowanie miejsca",
+                "handicapInWindowsMethod": "Handicap w okienkach",
+                "swapInWindowMethod": "Zamiana w okienkach",
+                "handicapNearToBlockMethod": "Handicap w blokach obok",
+                "generation-time": "Czas generowania",
+                "remove-windows-time": "Czas usuwania okienek",
+
+                "points-statistic": "Statystyka punktów",
+                "minPoints": "Min. punktów",
+                "maxPoints": "Max. punktów",
+                "averagePoints": "Średnia punktów",
+                "medianPoints": "Mediana punktów",
+
+                "iterations-statistic": "Statystyka iteracji",
+                "windows": "Okienka",
+                "no-windows": "Brak okienek",
+                "unaccepted-timetables": "Nieakceptowalne zajęcia",
+                "no-unaccepted-timetables": "Brak nieakceptowalnych zajęć"
+            },
             "detail": {
                 "title": "Plany nauczania"
             },

@@ -7,6 +7,8 @@ import {CurriculumListComponent} from './curriculum-list.component';
 import {CurriculumListDetailComponent} from './curriculum-list-detail.component';
 import {CurriculumListDialogComponent, CurriculumListPopupComponent} from './curriculum-list-dialog.component';
 import {CurriculumListDeletePopupComponent} from './curriculum-list-delete-dialog.component';
+import {CurriculumListGeneratePopupComponent} from './curriculum-list-generate-dialog.component';
+import {CurriculumListReportPopupComponent} from './curriculum-list-report-dialog.component';
 
 @Injectable()
 export class CurriculumListResolvePagingParams implements Resolve<any> {
@@ -71,6 +73,26 @@ export const curriculumListPopupRoute: Routes = [
     {
         path: 'curriculum-list/:id/delete',
         component: CurriculumListDeletePopupComponent,
+        data: {
+            authorities: ['ROLE_SCHOOL_ADMIN'],
+            pageTitle: 'timetableApp.curriculum-list'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
+    },
+    {
+        path: 'curriculum-list/:id/generate',
+        component: CurriculumListGeneratePopupComponent,
+        data: {
+            authorities: ['ROLE_SCHOOL_ADMIN'],
+            pageTitle: 'timetableApp.curriculum-list'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
+    },
+    {
+        path: 'curriculum-list/:id/report',
+        component: CurriculumListReportPopupComponent,
         data: {
             authorities: ['ROLE_SCHOOL_ADMIN'],
             pageTitle: 'timetableApp.curriculum-list'

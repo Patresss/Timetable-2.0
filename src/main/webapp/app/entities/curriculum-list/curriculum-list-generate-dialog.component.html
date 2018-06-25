@@ -1,0 +1,192 @@
+<form name="deleteForm" (ngSubmit)="confirmGenerate(curriculumList.id)">
+
+    <div *ngIf="generateState == GenerateState.BEFORE">
+        <div class="modal-header">
+            <h4 class="modal-title" jhiTranslate="timetableApp.curriculum-list.generate.confirm">Confirm generate operation</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                    (click)="close()">&times;
+            </button>
+        </div>
+        <div class="modal-body">
+            <jhi-alert-error></jhi-alert-error>
+            <p jhiTranslate="timetableApp.curriculum-list.generate.confirm-question">Are you sure you want to generate this CurriculumList?</p>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">
+                <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+            <button type="submit" class="btn app-primary-button">
+                <span class="fa fa-play"></span>&nbsp;<span jhiTranslate="entity.action.generate">Generate</span>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="generateState == GenerateState.DURING">
+        <div class="modal-header">
+            <h4 class="modal-title" jhiTranslate="timetableApp.curriculum-list.generate.generating">Generating...</h4>
+        </div>
+        <div class="modal-body">
+            <jhi-alert-error></jhi-alert-error>
+            <p jhiTranslate="timetableApp.curriculum-list.generate.please-wait">Generating the school timetable, please wait</p>
+            <span class="fas fa-spinner  fa-spin fa-3x fa-fw spinner"></span>
+        </div>
+    </div>
+
+    <div *ngIf="generateState == GenerateState.SUCCESS">
+        <div class="modal-header">
+            <h4 class="modal-title" jhiTranslate="timetableApp.curriculum-list.generate.success">The timetable has been generated</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                    (click)="close()">&times;
+            </button>
+        </div>
+        <div class="modal-body">
+            <jhi-alert-error></jhi-alert-error>
+
+            <div class="generator-statistic">
+                <h4 jhiTranslate="timetableApp.curriculum-list.report.generation-time">Generation time</h4>
+                <canvas baseChart
+                        [data]="timeCalculateChartData"
+                        [labels]="timeCalculateChartLabels"
+                        [chartType]="timeCalculateChartType"
+                        [options]="timeCalculateOptions">
+                </canvas>
+            </div>
+
+            <div class="generator-statistic">
+                <h4 jhiTranslate="timetableApp.curriculum-list.report.remove-windows-time">Remove windows time</h4>
+                <canvas baseChart
+                        [data]="timeRemoveWindowsChartData"
+                        [labels]="timeRemoveWindowsChartLabels"
+                        [chartType]="timeRemoveWindowsChartType"
+                        [options]="timeRemoveWindowsOptions"></canvas>
+            </div>
+
+            <div class="generator-statistic">
+                <h4 jhiTranslate="timetableApp.curriculum-list.report.points-statistic">Points statistic</h4>
+                <canvas baseChart
+                        [datasets]="barStatisticPointsChartData"
+                        [labels]="barStatisticPointsChartLabels"
+                        [chartType]="barStatisticPointsChartType"
+                        [options]="barStatisticPointsChartOptions"></canvas>
+            </div>
+
+
+            <div class="generator-statistic">
+                <h4 jhiTranslate="timetableApp.curriculum-list.report.iterations-statistic">Iterations statistic</h4>
+                <canvas baseChart
+                        [datasets]="barStatisticIterationsChartData"
+                        [labels]="barStatisticIterationsChartLabels"
+                        [chartType]="barStatisticIterationsChartType"
+                        [options]="barStatisticIterationsChartOptions"></canvas>
+            </div>
+
+            <div class="generator-statistic">
+                <h4 jhiTranslate="timetableApp.curriculum-list.report.unaccepted-timetables">Unaccepted timetables</h4>
+                <h5 *ngIf="generateReport.unacceptedTimetables?.length == 0" jhiTranslate="timetableApp.curriculum-list.report.no-unaccepted-timetables">NO unaccepted timetables</h5>
+                <div class="table-responsive" *ngIf="generateReport.unacceptedTimetables && generateReport.unacceptedTimetables?.length > 0">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr jhiSort>
+                            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> </th>
+                            <th jhiSortBy="points"><span jhiTranslate="timetableApp.timetable.points">Points</span> </th>
+                            <th jhiSortBy="dayOfWeek"><span jhiTranslate="timetableApp.timetable.day-of-week">Day of week</span> </th>
+                            <th jhiSortBy="placeName"><span jhiTranslate="timetableApp.timetable.place">Place</span> </th>
+                            <th jhiSortBy="subjectName"><span jhiTranslate="timetableApp.timetable.subject">Subject</span> </th>
+                            <th jhiSortBy="teacherSurname"><span jhiTranslate="timetableApp.timetable.teacher">Teacher</span> </th>
+                            <th jhiSortBy="divisionName"><span jhiTranslate="timetableApp.timetable.division">Division</span> </th>
+                            <th jhiSortBy="lessonName"><span jhiTranslate="timetableApp.timetable.lesson">Lesson</span> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let timetable of generateReport.unacceptedTimetables ;trackBy: trackId">
+                            <td><a [routerLink]="['../timetable', timetable.id ]">{{timetable.id}}</a></td>
+                            <td>{{timetable.points}}</td>
+                            <td jhiTranslate="{{'global.date.week-day.' + timetable.dayOfWeek}}">{{timetable.dayOfWeek}}</td>
+                            <td>
+                                <div *ngIf="timetable.placeId">
+                                    <a [routerLink]="['../place', timetable.placeId  ]">{{timetable.placeName}}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="timetable.subjectId">
+                                    <a [routerLink]="['../subject', timetable.subjectId  ]">{{timetable.subjectName}}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="timetable.teacherId">
+                                    <a [routerLink]="['../teacher', timetable.teacherId  ]">{{timetable.teacherFullName}}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="timetable.divisionId">
+                                    <a [routerLink]="['../division', timetable.divisionId  ]">{{timetable.divisionName}}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="timetable.lessonId">
+                                    <a [routerLink]="['../lesson', timetable.lessonId  ]">{{timetable.lessonName}}</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="generator-statistic">
+                <h4 jhiTranslate="timetableApp.curriculum-list.report.windows">Windows</h4>
+                <h5 *ngIf="generateReport.windows?.length == 0" jhiTranslate="timetableApp.curriculum-list.report.no-windows">No windows</h5>
+                <div class="table-responsive" *ngIf="generateReport.windows && generateReport.windows?.length > 0">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr jhiSort>
+                            <th jhiSortBy="divisionName"><span jhiTranslate="timetableApp.timetable.division">Division</span> </th>
+                            <th jhiSortBy="dayOfWeek"><span jhiTranslate="timetableApp.timetable.day-of-week">Day of week</span> </th>
+                            <th jhiSortBy="lessonName"><span jhiTranslate="timetableApp.timetable.lesson">Lesson</span> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let window of generateReport.windows ;trackBy: trackId">
+                            <td>
+                                <div *ngIf="window.divisionId">
+                                    <a [routerLink]="['../division', window.divisionId  ]">{{window.divisionName}}</a>
+                                </div>
+                            </td>
+                            <td jhiTranslate="{{'global.date.week-day.' + window.dayOfWeek}}">{{window.dayOfWeek}}</td>
+                            <td>
+                                <div *ngIf="timetable.lessonId">
+                                    <a [routerLink]="['../lesson', window.lessonId  ]">{{window.lessonName}}</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">
+                    <span jhiTranslate="entity.action.ok">Ok</span>
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="generateState == GenerateState.ERROR">
+            <div class="modal-header">
+                <h4 class="modal-title" jhiTranslate="error.something-went-wrong">Something went wrong</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="close()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <jhi-alert-error></jhi-alert-error>
+                <p jhiTranslate="error.contact-administrator">Please contact the administrator</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">
+                    ;<span jhiTranslate="entity.action.ok">Ok</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</form>

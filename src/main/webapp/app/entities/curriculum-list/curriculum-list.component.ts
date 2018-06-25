@@ -129,21 +129,4 @@ export class CurriculumListComponent implements OnInit, OnDestroy {
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
-
-    private subscribeToSaveResponse(result: Observable<any>) {
-        result.subscribe((res: Curriculum) =>
-            this.onSaveSuccess(res), (res: Response) => this.onSaveError());
-    }
-
-    private onSaveSuccess(result: Curriculum) {
-        this.eventManager.broadcast({ name: 'generate', content: 'OK'});
-    }
-
-    private onSaveError() {
-    }
-
-    generate(id: number) {
-        console.log(id);
-        this.subscribeToSaveResponse(this.curriculumListService.generate(id));
-    }
 }

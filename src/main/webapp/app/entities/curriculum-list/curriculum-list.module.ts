@@ -10,6 +10,10 @@ import {CurriculumListService} from './curriculum-list.service';
 import {CurriculumListPopupService} from './curriculum-list-popup.service';
 import {curriculumListPopupRoute, CurriculumListResolvePagingParams, curriculumListRoute} from './curriculum-list.route';
 import {AngularMultiSelectModule} from '../../components/angular2-multiselect-dropdown';
+import {CurriculumListGenerateDialogComponent, CurriculumListGeneratePopupComponent} from './curriculum-list-generate-dialog.component';
+import {CurriculumListReportDialogComponent, CurriculumListReportPopupComponent} from './curriculum-list-report-dialog.component';
+import {ChartsModule} from 'ng2-charts';
+
 
 const ENTITY_STATES = [
     ...curriculumListRoute,
@@ -20,7 +24,8 @@ const ENTITY_STATES = [
     imports: [
         TimetableSharedModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
-        AngularMultiSelectModule
+        AngularMultiSelectModule,
+        ChartsModule
     ],
     declarations: [
         CurriculumListComponent,
@@ -28,7 +33,11 @@ const ENTITY_STATES = [
         CurriculumListDialogComponent,
         CurriculumListDeleteDialogComponent,
         CurriculumListPopupComponent,
-        CurriculumListDeletePopupComponent
+        CurriculumListDeletePopupComponent,
+        CurriculumListGeneratePopupComponent,
+        CurriculumListGenerateDialogComponent,
+        CurriculumListReportPopupComponent,
+        CurriculumListReportDialogComponent,
     ],
     entryComponents: [
         CurriculumListComponent,
@@ -36,6 +45,10 @@ const ENTITY_STATES = [
         CurriculumListPopupComponent,
         CurriculumListDeleteDialogComponent,
         CurriculumListDeletePopupComponent,
+        CurriculumListGeneratePopupComponent,
+        CurriculumListGenerateDialogComponent,
+        CurriculumListReportPopupComponent,
+        CurriculumListReportDialogComponent,
     ],
     providers: [
         CurriculumListService,

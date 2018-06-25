@@ -12,6 +12,39 @@
             "delete": {
                 "question": "Are you sure you want to delete Curriculum List {{ id }}?"
             },
+            "generate": {
+                "confirm": "Confirm generate operation",
+                "confirm-question": "Are you sure you want to generate this CurriculumList?",
+                "generating": "Generating...",
+                "please-wait": "Generating the school timetable, please wait",
+                "success": "The timetable has been generated",
+                "question": "Are you sure you want to generate Curriculum List {{ id }}?"
+            },
+            "report": {
+                "title": "Report",
+                "removeWindows": "Removing windows",
+                "other": "Other calculating (logging, connect to database itp.",
+                "calculatePreference": "Calculating preferences",
+                "calculateLessonAndDayOfWeek": "Calculating lesson and day of week",
+                "calculatePlace": "Calculating lesson and day of week",
+                "handicapInWindowsMethod": "Handicap in windows method",
+                "swapInWindowMethod": "Swap in window method",
+                "handicapNearToBlockMethod": "Handicap near to block method",
+                "generation-time": "Generation time",
+                "remove-windows-time": "Remove windows time",
+
+                "points-statistic": "Points statistic",
+                "minPoints": "Min points",
+                "maxPoints": "Max points",
+                "averagePoints": "Average points",
+                "medianPoints": "Median points",
+
+                "iterations-statistic": "Iterations statistic",
+                "windows": "Windows",
+                "no-windows": "No windows",
+                "unaccepted-timetables": "Unaccepted timetables",
+                "no-unaccepted-timetables": "No unaccepted timetables"
+            },
             "detail": {
                 "title": "Curriculum List"
             },

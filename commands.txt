@@ -3,3 +3,6 @@ jhipster import-jdl entity.jdl
 
 DROP DATABASE "timetable";
 CREATE DATABASE Timetable;
+
+
+git clean -f -d // remove unversioned file
