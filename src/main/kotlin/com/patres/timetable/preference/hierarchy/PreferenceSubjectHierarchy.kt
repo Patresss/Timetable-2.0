@@ -8,6 +8,8 @@ class PreferenceSubjectHierarchy : PreferenceHierarchy() {
     var preferredByDateTime = 0
 
     override var points = 0
-        get() = preferredByDateTime + preferredByTeacher + preferredByPlace + preferredByDivision
+        get() = preferencePoints
 
+    override var preferencePoints = 0
+        get() = preferredByDateTime + preferredByTeacher + preferredByPlace + preferredByDivision
 }

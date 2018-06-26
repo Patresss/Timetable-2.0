@@ -3,9 +3,13 @@ package com.patres.timetable.service.mapper
 import com.patres.timetable.domain.Subject
 import com.patres.timetable.repository.DivisionRepository
 import com.patres.timetable.repository.LessonRepository
+import com.patres.timetable.repository.PlaceRepository
+import com.patres.timetable.service.dto.PlaceDTO
 import com.patres.timetable.service.dto.SubjectDTO
 import com.patres.timetable.service.dto.preference.PreferenceDataTimeForSubjectDTO
+import com.patres.timetable.service.dto.preference.PreferenceSubjectByPlaceDTO
 import com.patres.timetable.service.mapper.preference.PreferenceDataTimeForSubjectMapper
+import com.patres.timetable.service.mapper.preference.PreferenceSubjectByPlaceMapper
 import com.patres.timetable.util.EntityUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -25,7 +29,13 @@ open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
     private lateinit var lessonRepository: LessonRepository
 
     @Autowired
+    private lateinit var placeRepository: PlaceRepository
+
+    @Autowired
     private lateinit var preferenceDataTimeForSubjectMapper: PreferenceDataTimeForSubjectMapper
+
+    @Autowired
+    private lateinit var preferenceSubjectByPlaceMapper: PreferenceSubjectByPlaceMapper
 
     override fun toEntity(entityDto: SubjectDTO): Subject {
         return Subject(
@@ -37,8 +47,10 @@ open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
             colorBackground = entityDto.colorBackground
             colorText = entityDto.colorText
             preferencesDateTimeForSubject = preferenceDataTimeForSubjectMapper.entityDTOSetToEntitySet(entityDto.preferencesDataTimeForSubject)
+            preferenceSubjectByPlace = preferenceSubjectByPlaceMapper.entityDTOSetToEntitySet(entityDto.preferenceSubjectByPlace)
 
             preferencesDateTimeForSubject.forEach { it.subject = this }
+            preferenceSubjectByPlace.forEach { it.subject = this }
 
             if (colorBackground.isNullOrBlank()) {
                 colorBackground = EntityUtil.calculateRandomColor()
@@ -58,7 +70,8 @@ open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
             colorText = entity.colorText
             preferencesDataTimeForSubject = preferenceDataTimeForSubjectMapper.entitySetToEntityDTOSet(entity.preferencesDateTimeForSubject)
             addNeutralPreferencesDataTime()
-
+            preferenceSubjectByPlace = preferenceSubjectByPlaceMapper.entitySetToEntityDTOSet(entity.preferenceSubjectByPlace)
+            addNeutralPreferenceSubjectByPlace()
         }
     }
 
@@ -89,6 +102,18 @@ open class SubjectMapper : EntityMapper<Subject, SubjectDTO>() {
             }
             preferencesDataTimeForSubject += neutralPreferenceDataTimeForToAdd
             preferencesDataTimeForSubject = preferencesDataTimeForSubject.sortedBy { it.dayOfWeek }.toSet()
+        }
+    }
+
+    private fun SubjectDTO.addNeutralPreferenceSubjectByPlace() {
+        divisionOwnerId?.let {
+            val places = placeRepository.findByDivisionOwnerId(it)
+            val neutralPreferenceToAdd =
+                places
+                    .filter { place -> !preferenceSubjectByPlace.any { preference -> id == preference.subjectId && place.id == preference.placeId } }
+                    .map { place -> PreferenceSubjectByPlaceDTO(subjectId = id, subjectName = name ?: "", placeId = place.id, placeName = place.name ?: "") }
+            preferenceSubjectByPlace += neutralPreferenceToAdd
+            preferenceSubjectByPlace = preferenceSubjectByPlace.sortedBy { it.placeName }.toSet()
         }
     }
 

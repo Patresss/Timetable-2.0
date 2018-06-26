@@ -4,6 +4,7 @@ import com.patres.timetable.domain.Division
 import com.patres.timetable.domain.Place
 import com.patres.timetable.domain.Timetable
 import java.util.Collections.max
+import kotlin.math.absoluteValue
 
 class TimetableGeneratorPreferenceManager(private var container: TimetableGeneratorContainer) {
 
@@ -51,11 +52,14 @@ class TimetableGeneratorPreferenceManager(private var container: TimetableGenera
         container.timetablesFromCurriculum = container.timetablesFromCurriculum.sortedWith(compareBy(
             { it.division?.divisionType?.order }, { -max(it.preference.preferredLessonAndDayOfWeekSet.map { it.preference.pointsWithHandicap }) }
         )).toMutableList()
-        val myListTodebug = container.timetablesFromCurriculum.map {it.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithHandicap }}
     }
 
     fun sortByPreferredPlace() {
-        container.timetablesFromCurriculum = container.timetablesFromCurriculum.sortedByDescending { it.preference.preferredPlaceMap.maxBy { entry -> entry.value.points }?.value?.points }.toMutableList()
+        container.timetablesFromCurriculum = container.timetablesFromCurriculum
+            .sortedByDescending { it.preference.preferredPlaceMap
+                .map { entry -> entry.value.points.absoluteValue }
+                .sum() }
+            .toMutableList()
     }
 
     fun calculateTakenLessonAndDay(timetableFromCurriculum: Timetable) {

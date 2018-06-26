@@ -11,6 +11,8 @@ class PreferencePlaceHierarchy : PreferenceHierarchy() {
     var taken = 0
 
     override var points = 0
-        get() = preferredByDateTime + preferredByTeacher + preferredBySubject + preferredByDivision + tooSmallPlace + taken
+        get() = preferencePoints + taken
 
+    override var preferencePoints = 0
+        get() = preferredByDateTime + preferredByTeacher + preferredBySubject + preferredByDivision + tooSmallPlace
 }

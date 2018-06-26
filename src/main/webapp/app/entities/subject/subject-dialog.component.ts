@@ -13,12 +13,14 @@ import { Division, DivisionService } from '../division';
 import { Teacher, TeacherService } from '../teacher';
 import { Place, PlaceService } from '../place';
 import { ResponseWrapper } from '../../shared';
+import {Preference} from '../../preference/preferecne.model';
 
 @Component({
     selector: 'jhi-subject-dialog',
     templateUrl: './subject-dialog.component.html'
 })
 export class SubjectDialogComponent implements OnInit {
+    preferenceSelectTypes = Preference.preferenceSelectTypes;
 
     subject: Subject;
     isSaving: boolean;

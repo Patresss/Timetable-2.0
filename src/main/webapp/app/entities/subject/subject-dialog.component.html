@@ -48,6 +48,32 @@
             <ngb-accordion #acc="ngbAccordion">
                 <ngb-panel>
                     <ng-template ngbPanelTitle>
+                        <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferredPlaces">Preferred places</span>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th jhiTranslate="timetableApp.place.main">Place</th>
+                                <th jhiTranslate="timetableApp.preference.preference">Preference</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let preferenceSubjectByPlace of subject.preferenceSubjectByPlace">
+                                <td>{{preferenceSubjectByPlace.placeName}}</td>
+                                <td>
+                                    <select class="form-control" name="preference_{{preferenceSubjectByPlace.subjectId}}{{preferenceSubjectByPlace.placeId}}" [(ngModel)]="preferenceSubjectByPlace.points">
+                                        <option *ngFor="let selectType of preferenceSelectTypes" [ngValue]="selectType.value" jhiTranslate="{{selectType.itemTranslate}}">{{selectType.value}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </ng-template>
+                </ngb-panel>
+                <br>
+                <ngb-panel>
+                    <ng-template ngbPanelTitle>
                         <span class="fa fa-angle-down"></span><span jhiTranslate="timetableApp.preference.preferenceLessonAndDate">Preference lesson and date </span>
                     </ng-template>
                     <ng-template ngbPanelContent>

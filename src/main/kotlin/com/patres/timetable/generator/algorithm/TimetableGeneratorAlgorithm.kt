@@ -7,7 +7,7 @@ abstract class TimetableGeneratorAlgorithm(private var container: TimetableGener
 
 
     companion object {
-        const val MAX_ITERATIONS = 50
+        const val MAX_ITERATIONS = 20
     }
 
     var timetablesFromCurriculum = container.timetablesFromCurriculum

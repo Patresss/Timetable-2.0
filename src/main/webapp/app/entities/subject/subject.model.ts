@@ -1,5 +1,6 @@
 import {BaseEntity} from './../../shared';
 import {PreferenceForDataTimeForSubjectModel} from '../../preference/preference-for-data-time-for-subject.model';
+import {PreferenceSubjectByPlaceModel} from '../../preference/preference-subject-by-place.model';
 
 export class Subject implements BaseEntity {
     constructor(
@@ -14,6 +15,7 @@ export class Subject implements BaseEntity {
         public preferredDivisions?: BaseEntity[],
         public preferredPlaces?: BaseEntity[],
         public preferencesDataTimeForSubject?: PreferenceForDataTimeForSubjectModel[],
+        public preferenceSubjectByPlace?: PreferenceSubjectByPlaceModel[],
     ) {
     }
 }

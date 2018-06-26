@@ -164,15 +164,11 @@ export class CurriculumListGenerateDialogComponent {
 
     private subscribeToSaveResponse(result: Observable<any>) {
         result.subscribe((res: Response) =>
-            this.onSuccess(res), (res: Response) => this.onSaveError());
+            this.onSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
     private onSuccess(result: Response) {
         this.generateReport = result.json();
-        this.eventManager.broadcast({
-            name: 'curriculumListGenerate',
-            content: 'Generate a curriculumList'
-        });
         this.updateChars();
         this.generateState = GenerateState.SUCCESS;
         this.eventManager.broadcast({name: 'generate', content: 'OK'});
@@ -218,7 +214,8 @@ export class CurriculumListGenerateDialogComponent {
         ];
     }
 
-    private onSaveError() {
+    private onSaveError(result: Response) {
+        console.log("fail")
         this.generateState = GenerateState.ERROR;
     }
 

@@ -105,7 +105,7 @@ export class PlanComponent implements OnInit, OnDestroy {
     numberOfColumns = 5;
     timeArray = [];
     startHour = new Time('6:00');
-    endHour = new Time('17:00');
+    endHour = new Time('17:59');
     firstColumnWidth = 5.0;
     columnWidth = (100.0 - this.firstColumnWidth) / this.numberOfColumns;
     planColumns: PlanColumn[] = [];

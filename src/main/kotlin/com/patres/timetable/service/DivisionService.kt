@@ -15,12 +15,6 @@ open class DivisionService(entityRepository: DivisionRepository, entityMapper: E
 
     private val log = LoggerFactory.getLogger(DivisionService::class.java)
 
-    @Transactional(readOnly = true)
-    override fun findOne(id: Long?): DivisionDTO? {
-        log.debug("Request to get Division : {}", id)
-        val division = entityRepository.findOneWithEagerRelationships(id)
-        return if (division != null) entityMapper.toDto(division) else null
-    }
 
     @Transactional(readOnly = true)
     open fun findByDivisionType(divisionType: DivisionType): List<DivisionDTO> {

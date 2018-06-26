@@ -39,10 +39,10 @@ class Preference(
     }
 
     fun calculateFullPreferencePoints(timetable: Timetable): Int {
-        val pointsFromTeacher = timetable.teacher?.id?.let { preferredTeacherMap[it]?.points } ?: 0
-        val pointsFromSubject = timetable.subject?.id?.let { preferredSubjectMap[it]?.points } ?: 0
-        val pointsFromDivision = timetable.division?.id?.let { preferredDivisionMap[it]?.points } ?: 0
-        val pointsFromPlace = timetable.place?.id?.let { preferredPlaceMap[it]?.points } ?: 0
+        val pointsFromTeacher = timetable.teacher?.id?.let { preferredTeacherMap[it]?.preferencePoints } ?: 0
+        val pointsFromSubject = timetable.subject?.id?.let { preferredSubjectMap[it]?.preferencePoints } ?: 0
+        val pointsFromDivision = timetable.division?.id?.let { preferredDivisionMap[it]?.preferencePoints } ?: 0
+        val pointsFromPlace = timetable.place?.id?.let { preferredPlaceMap[it]?.preferencePoints } ?: 0
         val preferenceFromTime = getPreferenceByLessonAndDay(timetable.dayOfWeek, timetable.lesson?.id)?.preference
         val pointsFromTime = preferenceFromTime?.points ?: 0
         timetable.preferenceTimetableHierarchy = PreferenceTimetableHierarchy().apply {
@@ -289,10 +289,15 @@ class Preference(
     }
 
     private fun calculateTeachersByDivision(division: Division) {
-        preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            val preference = division.preferencesTeacherByDivision.find { it.teacher?.id == id }
-            preferenceHierarchy.preferredByDivision = preference?.points ?: 0
+        try {
+            preferredTeacherMap.forEach { id, preferenceHierarchy ->
+                val preference = division.preferencesTeacherByDivision.find { it.teacher?.id == id }
+                preferenceHierarchy.preferredByDivision = preference?.points ?: 0
+            }
+        } catch (e: Exception) {
+            e
         }
+
     }
 
     private fun calculatePlacesBySubject(subject: Subject) {

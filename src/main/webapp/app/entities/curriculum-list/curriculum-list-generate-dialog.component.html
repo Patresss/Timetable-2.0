@@ -88,14 +88,14 @@
                     <table class="table table-striped">
                         <thead>
                         <tr jhiSort>
-                            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> </th>
-                            <th jhiSortBy="points"><span jhiTranslate="timetableApp.timetable.points">Points</span> </th>
-                            <th jhiSortBy="dayOfWeek"><span jhiTranslate="timetableApp.timetable.day-of-week">Day of week</span> </th>
-                            <th jhiSortBy="placeName"><span jhiTranslate="timetableApp.timetable.place">Place</span> </th>
-                            <th jhiSortBy="subjectName"><span jhiTranslate="timetableApp.timetable.subject">Subject</span> </th>
-                            <th jhiSortBy="teacherSurname"><span jhiTranslate="timetableApp.timetable.teacher">Teacher</span> </th>
-                            <th jhiSortBy="divisionName"><span jhiTranslate="timetableApp.timetable.division">Division</span> </th>
-                            <th jhiSortBy="lessonName"><span jhiTranslate="timetableApp.timetable.lesson">Lesson</span> </th>
+                            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span></th>
+                            <th jhiSortBy="points"><span jhiTranslate="timetableApp.timetable.points">Points</span></th>
+                            <th jhiSortBy="dayOfWeek"><span jhiTranslate="timetableApp.timetable.day-of-week">Day of week</span></th>
+                            <th jhiSortBy="placeName"><span jhiTranslate="timetableApp.timetable.place">Place</span></th>
+                            <th jhiSortBy="subjectName"><span jhiTranslate="timetableApp.timetable.subject">Subject</span></th>
+                            <th jhiSortBy="teacherSurname"><span jhiTranslate="timetableApp.timetable.teacher">Teacher</span></th>
+                            <th jhiSortBy="divisionName"><span jhiTranslate="timetableApp.timetable.division">Division</span></th>
+                            <th jhiSortBy="lessonName"><span jhiTranslate="timetableApp.timetable.lesson">Lesson</span></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -141,9 +141,9 @@
                     <table class="table table-striped">
                         <thead>
                         <tr jhiSort>
-                            <th jhiSortBy="divisionName"><span jhiTranslate="timetableApp.timetable.division">Division</span> </th>
-                            <th jhiSortBy="dayOfWeek"><span jhiTranslate="timetableApp.timetable.day-of-week">Day of week</span> </th>
-                            <th jhiSortBy="lessonName"><span jhiTranslate="timetableApp.timetable.lesson">Lesson</span> </th>
+                            <th jhiSortBy="divisionName"><span jhiTranslate="timetableApp.timetable.division">Division</span></th>
+                            <th jhiSortBy="dayOfWeek"><span jhiTranslate="timetableApp.timetable.day-of-week">Day of week</span></th>
+                            <th jhiSortBy="lessonName"><span jhiTranslate="timetableApp.timetable.lesson">Lesson</span></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -155,7 +155,7 @@
                             </td>
                             <td jhiTranslate="{{'global.date.week-day.' + window.dayOfWeek}}">{{window.dayOfWeek}}</td>
                             <td>
-                                <div *ngIf="timetable.lessonId">
+                                <div *ngIf="window.lessonId">
                                     <a [routerLink]="['../lesson', window.lessonId  ]">{{window.lessonName}}</a>
                                 </div>
                             </td>
@@ -171,22 +171,24 @@
                 </button>
             </div>
         </div>
+    </div>
 
-        <div *ngIf="generateState == GenerateState.ERROR">
-            <div class="modal-header">
-                <h4 class="modal-title" jhiTranslate="error.something-went-wrong">Something went wrong</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="close()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <jhi-alert-error></jhi-alert-error>
-                <p jhiTranslate="error.contact-administrator">Please contact the administrator</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">
-                    ;<span jhiTranslate="entity.action.ok">Ok</span>
-                </button>
-            </div>
+
+    <div *ngIf="generateState == GenerateState.ERROR">
+        <div class="modal-header">
+            <h4 class="modal-title" jhiTranslate="error.something-went-wrong">Something went wrong</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="close()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <jhi-alert-error></jhi-alert-error>
+            <p jhiTranslate="error.contact-administrator">Please contact the administrator</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">
+                <span jhiTranslate="entity.action.ok">Ok</span>
+            </button>
         </div>
     </div>
+
 
 </form>

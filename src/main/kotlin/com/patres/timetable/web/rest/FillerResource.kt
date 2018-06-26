@@ -107,7 +107,6 @@ open class FillerResource(
     var div1Gr1Francuski1 = DivisionDTO()
 
 
-
     var historia = SubjectDTO()
     var wiedzaOSpołeczeństwie = SubjectDTO()
     var wiedzaOKulturze = SubjectDTO()
@@ -446,7 +445,7 @@ open class FillerResource(
         ChAg = createTeacher(degree = "dr", name = "Agata", surname = "Chodorowicz-Bąk", divisionOwner = lo2)
         SeMo = createTeacher(degree = "mgr", name = "Monika", surname = "Serwatka", divisionOwner = lo2)
         GoTa = createTeacher(degree = "mgr", name = "Tatiana", surname = "Gonet", divisionOwner = lo2)
-        GuMa = createTeacher(degree = "mgr", name = "Maciej", surname = "Guzik", divisionOwner = lo2)
+        GuMa = createTeacher(degree = "mgr", name = "Maciej", surname = "Nitka", divisionOwner = lo2) // Guzik
         SzTo = createTeacher(degree = "mgr", name = "Tomasz", surname = "Szarłowicz", divisionOwner = lo2)
         DaJa = createTeacher(degree = "mgr", name = "Jacek", surname = "Dawidko", divisionOwner = lo2)
         WiWo = createTeacher(degree = "mgr", name = "Wojciech", surname = "Wilk", divisionOwner = lo2)
@@ -470,89 +469,89 @@ open class FillerResource(
         // =====================================================
         // Division
         // =====================================================
-        class1a = createDivision(name = "1 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class1b = createDivision(name = "1 B", shortName = "1 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class1c = createDivision(name = "1 C", shortName = "1 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class1d = createDivision(name = "1 D", shortName = "1 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class1e = createDivision(name = "1 E", shortName = "1 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class1f = createDivision(name = "1 F", shortName = "1 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class2a = createDivision(name = "2 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class2b = createDivision(name = "2 B", shortName = "2 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class2c = createDivision(name = "2 C", shortName = "2 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class2d = createDivision(name = "2 D", shortName = "2 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class2e = createDivision(name = "2 E", shortName = "2 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class2f = createDivision(name = "2 F", shortName = "2 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class3a = createDivision(name = "3 A", shortName = "3 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class3b = createDivision(name = "3 B", shortName = "3 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class3c = createDivision(name = "3 C", shortName = "3 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class3d = createDivision(name = "3 D", shortName = "3 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class3e = createDivision(name = "3 E", shortName = "3 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class3f = createDivision(name = "3 F", shortName = "3 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        div1aG1 = createDivision(name = "1A gr	 1", shortName = "Ang 1A gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
-        div1aG2 = createDivision(name = "1A gr	 2", shortName = "Ang 1A gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
-        divNie1G1 = createDivision(name = "Niemiecki 1 gr	 1", shortName = "Niem 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
-        divNie1G2 = createDivision(name = "Niemiecki 1 gr	 2", shortName = "Niem 1 gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1b))
-        divFra1G1 = createDivision(name = "Francuski 1 gr	 1", shortName = "Fra 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
-        divRos1G1 = createDivision(name = "Rosyjski 1 gr	 1", shortName = "Ros 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
-        divRos1G2 = createDivision(name = "Rosyjski 1 gr	 2", shortName = "Ros 1 gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
-        div1GrCh1 = createDivision(name = "WF 1 gr	 Chłopcy 1", shortName = "WF 1 gr	 Ch 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a))
-        div1GrCh2 = createDivision(name = "WF 1 gr	 Chłopcy 2", shortName = "WF 1 gr	 Ch 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1b, class1c))
-        div1GrDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1a, class1c))
-        div1GrDz2 = createDivision(name = "WF 1 gr	 Dziewczyny 2", shortName = "WF 1 gr	 Dz 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1c))
-        div1bG1 = createDivision(name = "1B gr	 1", shortName = "Ang 1B gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1b))
-        div1bG2 = createDivision(name = "1B gr	 2", shortName = "Ang 1B gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1b))
-        div1Gr1bDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(class1b))
+        class1a = createDivision(name = "1 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class1b = createDivision(name = "1 B", shortName = "1 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class1c = createDivision(name = "1 C", shortName = "1 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class1d = createDivision(name = "1 D", shortName = "1 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class1e = createDivision(name = "1 E", shortName = "1 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class1f = createDivision(name = "1 F", shortName = "1 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class2a = createDivision(name = "2 A", shortName = "1 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class2b = createDivision(name = "2 B", shortName = "2 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class2c = createDivision(name = "2 C", shortName = "2 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class2d = createDivision(name = "2 D", shortName = "2 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class2e = createDivision(name = "2 E", shortName = "2 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class2f = createDivision(name = "2 F", shortName = "2 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class3a = createDivision(name = "3 A", shortName = "3 A", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class3b = createDivision(name = "3 B", shortName = "3 B", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class3c = createDivision(name = "3 C", shortName = "3 C", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class3d = createDivision(name = "3 D", shortName = "3 D", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class3e = createDivision(name = "3 E", shortName = "3 E", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class3f = createDivision(name = "3 F", shortName = "3 F", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        div1aG1 = createDivision(name = "1A gr	 1", shortName = "Ang 1A gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1a))
+        div1aG2 = createDivision(name = "1A gr	 2", shortName = "Ang 1A gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1a))
+        divNie1G1 = createDivision(name = "Niemiecki 1 gr	 1", shortName = "Niem 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1a))
+        divNie1G2 = createDivision(name = "Niemiecki 1 gr	 2", shortName = "Niem 1 gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1b))
+        divFra1G1 = createDivision(name = "Francuski 1 gr	 1", shortName = "Fra 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1a))
+        divRos1G1 = createDivision(name = "Rosyjski 1 gr	 1", shortName = "Ros 1 gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1a))
+        divRos1G2 = createDivision(name = "Rosyjski 1 gr	 2", shortName = "Ros 1 gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1a))
+        div1GrCh1 = createDivision(name = "WF 1 gr	 Chłopcy 1", shortName = "WF 1 gr	 Ch 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1a))
+        div1GrCh2 = createDivision(name = "WF 1 gr	 Chłopcy 2", shortName = "WF 1 gr	 Ch 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1b, class1c))
+        div1GrDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1a, class1c))
+        div1GrDz2 = createDivision(name = "WF 1 gr	 Dziewczyny 2", shortName = "WF 1 gr	 Dz 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1c))
+        div1bG1 = createDivision(name = "1B gr	 1", shortName = "Ang 1B gr	 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1b))
+        div1bG2 = createDivision(name = "1B gr	 2", shortName = "Ang 1B gr	 2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1b))
+        div1Gr1bDz1 = createDivision(name = "WF 1 gr	 Dziewczyny 1", shortName = "WF 1 gr	 Dz 1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(class1b))
 
 
-        class1aGenerate = createDivision(name = "1 A generate", shortName = "1 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class1bGenerate = createDivision(name = "1 B generate", shortName = "1 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class1cGenerate = createDivision(name = "1 C generate", shortName = "1 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class1dGenerate = createDivision(name = "1 D generate", shortName = "1 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class1eGenerate = createDivision(name = "1 E generate", shortName = "1 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class1fGenerate = createDivision(name = "1 F generate", shortName = "1 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class1aGenerate = createDivision(name = "1 A generate", shortName = "1 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class1bGenerate = createDivision(name = "1 B generate", shortName = "1 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class1cGenerate = createDivision(name = "1 C generate", shortName = "1 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class1dGenerate = createDivision(name = "1 D generate", shortName = "1 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class1eGenerate = createDivision(name = "1 E generate", shortName = "1 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class1fGenerate = createDivision(name = "1 F generate", shortName = "1 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
 
-        class2aGenerate = createDivision(name = "2 A generate", shortName = "2 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class2bGenerate = createDivision(name = "2 B generate", shortName = "2 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class2cGenerate = createDivision(name = "2 C generate", shortName = "2 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class2dGenerate = createDivision(name = "2 D generate", shortName = "2 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class2eGenerate = createDivision(name = "2 E generate", shortName = "2 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class2fGenerate = createDivision(name = "2 F generate", shortName = "2 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
+        class2aGenerate = createDivision(name = "2 A generate", shortName = "2 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class2bGenerate = createDivision(name = "2 B generate", shortName = "2 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class2cGenerate = createDivision(name = "2 C generate", shortName = "2 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class2dGenerate = createDivision(name = "2 D generate", shortName = "2 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class2eGenerate = createDivision(name = "2 E generate", shortName = "2 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class2fGenerate = createDivision(name = "2 F generate", shortName = "2 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
 
-        class3aGenerate = createDivision(name = "3 A generate", shortName = "3 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class3bGenerate = createDivision(name = "3 B generate", shortName = "3 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class3cGenerate = createDivision(name = "3 C generate", shortName = "3 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class3dGenerate = createDivision(name = "3 D generate", shortName = "3 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class3eGenerate = createDivision(name = "3 E generate", shortName = "3 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-        class3fGenerate = createDivision(name = "3 F generate", shortName = "3 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId  = lo2.id)
-
-
-        div1aWychowanieFizyczne = createDivision(name = "div1aWychowanieFizyczne", shortName = "div1aWychowanieFizyczne", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, schoolId  = lo2.id, parents = hashSetOf(class1aGenerate))
-        div1aGirlWychowanieFizyczne = createDivision(name = "div1aGirlWychowanieFizyczne", shortName = "div1aGirlWychowanieFizyczne", divisionType = DivisionType.SUBGROUP, numberOfPeople = 15, schoolId  = lo2.id, parents = hashSetOf(div1aWychowanieFizyczne, class1aGenerate))
-        div1aBoyWychowanieFizyczne = createDivision(name = "div1aBoyWychowanieFizyczne", shortName = "div1aBoyWychowanieFizyczne", divisionType = DivisionType.SUBGROUP, numberOfPeople = 15, schoolId  = lo2.id, parents = hashSetOf(div1aWychowanieFizyczne, class1aGenerate))
+        class3aGenerate = createDivision(name = "3 A generate", shortName = "3 A G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class3bGenerate = createDivision(name = "3 B generate", shortName = "3 B G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class3cGenerate = createDivision(name = "3 C generate", shortName = "3 C G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class3dGenerate = createDivision(name = "3 D generate", shortName = "3 D G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class3eGenerate = createDivision(name = "3 E generate", shortName = "3 E G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
+        class3fGenerate = createDivision(name = "3 F generate", shortName = "3 F G", divisionType = DivisionType.CLASS, numberOfPeople = 32, schoolId = lo2.id)
 
 
-        div1aGrupy = createDivision(name = "div1aGrupy", shortName = "div1aGrupy", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, schoolId  = lo2.id, parents = hashSetOf(class1aGenerate))
-        div1aGrupa1 = createDivision(name = "div1aGrupa1", shortName = "div1aGrupa1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1aGrupy, class1aGenerate))
-        div1aGrupa2 = createDivision(name = "div1aGrupa2", shortName = "div1aGrupa2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1aGrupy, class1aGenerate))
+        div1aWychowanieFizyczne = createDivision(name = "div1aWychowanieFizyczne", shortName = "div1aWychowanieFizyczne", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, schoolId = lo2.id, parents = hashSetOf(class1aGenerate))
+        div1aGirlWychowanieFizyczne = createDivision(name = "div1aGirlWychowanieFizyczne", shortName = "div1aGirlWychowanieFizyczne", divisionType = DivisionType.SUBGROUP, numberOfPeople = 15, schoolId = lo2.id, parents = hashSetOf(div1aWychowanieFizyczne, class1aGenerate))
+        div1aBoyWychowanieFizyczne = createDivision(name = "div1aBoyWychowanieFizyczne", shortName = "div1aBoyWychowanieFizyczne", divisionType = DivisionType.SUBGROUP, numberOfPeople = 15, schoolId = lo2.id, parents = hashSetOf(div1aWychowanieFizyczne, class1aGenerate))
 
-        div1Gr1JezykObcy = createDivision(name = "div1Gr1JezykObcy", shortName = "div1Gr1JezykObcy", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, schoolId  = lo2.id, parents = hashSetOf(class1aGenerate))
-        div1Gr1Niemiecki1 = createDivision(name = " div1Gr1Niemiecki1", shortName = "div1Gr1Niemiecki1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1aGenerate))
-        div1Gr1Niemiecki2 = createDivision(name = " div1Gr1Niemiecki2", shortName = "div1Gr1Niemiecki2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1bGenerate))
-        div1Gr1Niemiecki3 = createDivision(name = " div1Gr1Niemiecki3", shortName = "div1Gr1Niemiecki3", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1cGenerate))
-        div1Gr1Rosyjski1 = createDivision(name = " div1Gr1Rosyjski1", shortName = "div1Gr1Rosyjski1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1aGenerate))
-        div1Gr1Rosyjski2 = createDivision(name = " div1Gr1Rosyjski2", shortName = "div1Gr1Rosyjski2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1bGenerate, class1cGenerate))
-        div1Gr1Francuski1 = createDivision(name = " div1Gr1Francuski1", shortName = "div1Gr1Francuski1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId  = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1aGenerate, class1bGenerate, class1cGenerate))
+
+        div1aGrupy = createDivision(name = "div1aGrupy", shortName = "div1aGrupy", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, schoolId = lo2.id, parents = hashSetOf(class1aGenerate))
+        div1aGrupa1 = createDivision(name = "div1aGrupa1", shortName = "div1aGrupa1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(div1aGrupy, class1aGenerate))
+        div1aGrupa2 = createDivision(name = "div1aGrupa2", shortName = "div1aGrupa2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(div1aGrupy, class1aGenerate))
+
+        div1Gr1JezykObcy = createDivision(name = "div1Gr1JezykObcy", shortName = "div1Gr1JezykObcy", divisionType = DivisionType.SET_OF_SUBGROUPS, numberOfPeople = 32, schoolId = lo2.id, parents = hashSetOf(class1aGenerate))
+        div1Gr1Niemiecki1 = createDivision(name = " div1Gr1Niemiecki1", shortName = "div1Gr1Niemiecki1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1aGenerate))
+        div1Gr1Niemiecki2 = createDivision(name = " div1Gr1Niemiecki2", shortName = "div1Gr1Niemiecki2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1bGenerate))
+        div1Gr1Niemiecki3 = createDivision(name = " div1Gr1Niemiecki3", shortName = "div1Gr1Niemiecki3", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1cGenerate))
+        div1Gr1Rosyjski1 = createDivision(name = " div1Gr1Rosyjski1", shortName = "div1Gr1Rosyjski1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1aGenerate))
+        div1Gr1Rosyjski2 = createDivision(name = " div1Gr1Rosyjski2", shortName = "div1Gr1Rosyjski2", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1bGenerate, class1cGenerate))
+        div1Gr1Francuski1 = createDivision(name = " div1Gr1Francuski1", shortName = "div1Gr1Francuski1", divisionType = DivisionType.SUBGROUP, numberOfPeople = 16, schoolId = lo2.id, parents = hashSetOf(div1Gr1JezykObcy, class1aGenerate, class1bGenerate, class1cGenerate))
 
 
         // =====================================================
         // Place
         // =====================================================
-        p4 = createPlace(name = "4", numberOfSeats = 34, division = lo2)
+        p4 = createPlace(name = "4I", numberOfSeats = 34, division = lo2)
         p5 = createPlace(name = "5", numberOfSeats = 34, division = lo2)
         p6 = createPlace(name = "6", numberOfSeats = 34, division = lo2)
         p7 = createPlace(name = "7", numberOfSeats = 34, division = lo2)
         p7g = createPlace(name = "7g", numberOfSeats = 16, division = lo2)
-        p8 = createPlace(name = "8", numberOfSeats = 34, division = lo2)
+        p8 = createPlace(name = "8B", numberOfSeats = 34, division = lo2)
         p10 = createPlace(name = "10", numberOfSeats = 34, division = lo2)
         p11 = createPlace(name = "11", numberOfSeats = 34, division = lo2)
         p12 = createPlace(name = "12", numberOfSeats = 34, division = lo2)
@@ -721,7 +720,6 @@ open class FillerResource(
         val curriculum1aGodzWych = createCurriculum(division = class1aGenerate, subject = godzWych, teacher = DzMa, numberOfActivities = 1)
         val curriculum1aWychowaniedoZyciaWRodzinie = createCurriculum(division = class1aGenerate, subject = wychowaniedoZyciaWRodzinie, teacher = SoRy, numberOfActivities = 1)
         val curriculum1aReligia = createCurriculum(division = class1aGenerate, subject = religia, teacher = PiTa, numberOfActivities = 2)
-
 
 
         val curriculum1bJPolski = createCurriculum(division = class1bGenerate, subject = jPolski, teacher = GrRe, numberOfActivities = 3)
@@ -1350,6 +1348,25 @@ open class FillerResource(
         )))
 
 
+
+
+//        userService.createUser(
+//            login = "2lo",
+//            password = "pass",
+//            firstName = null,
+//            lastName = null,
+//            email = "2lo@gmail.com",
+//            imageUrl = null,
+//            langKey = "en",
+//            schoolId = lo2.id,
+//            teacherId = null
+//        )
+        setPreference()
+        setPreferenceToThesis()
+
+    }
+
+    private fun setPreference() {
         // =====================================================
         // Preference Teacher
         // =====================================================
@@ -1755,96 +1772,195 @@ open class FillerResource(
         // =====================================================
         p4.apply {
             preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = techAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDziennikarska.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = ekonomiaWPraktyce.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizykaMedyczna.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historiaISpoleczenstwo.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = literaturaObca.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = medycznyJezykAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = przyroda.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOKulturze.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = matematyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = podstawyPrzedsiębiorczości.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = biologia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = chemia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = geografia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jPolski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jNiemiecki.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jFrancuski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jLacińskiPrawniczy.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = jRosyjski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = godzWych.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = religia.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
         }
+        p4 = placeService.save(p4)
+
         p5.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p5 = placeService.save(p5)
 
         p6.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p6 = placeService.save(p6)
+
         p7.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p7 = placeService.save(p7)
+
         p7g.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p7g = placeService.save(p7g)
+
         p8.apply {
             preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = biologia.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
         }
+        p8 = placeService.save(p8)
+
         p10.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p10 = placeService.save(p10)
+
+        p11.apply {
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+        }
+        p11 = placeService.save(p11)
+
+        p12.apply {
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
+        }
+        p12 = placeService.save(p12)
+
         p13.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p13 = placeService.save(p13)
+
         p14.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p14 = placeService.save(p14)
+
         p15.apply {
             preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizyka.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
         }
+        p15 = placeService.save(p15)
+
         p16.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p16 = placeService.save(p16)
+
         p20.apply {
             preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = geografia.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
         }
+        p20 = placeService.save(p20)
+
         p21.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p21 = placeService.save(p21)
+
         p22.apply {
             preferenceSubjectByPlace = hashSetOf(
-                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = matematyka.id, points = 10),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-
-            placeService.save(this)
         }
+        p22 = placeService.save(p22)
+
         p24.apply {
             preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = chemia.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
         }
+        p24 = placeService.save(p24)
+
         p25.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p25 = placeService.save(p25)
+
         p31.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p31 = placeService.save(p31)
+
         p35.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p35 = placeService.save(p35)
+
         p36.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        p36 = placeService.save(p36)
+
         pds.apply {
             preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = techAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDziennikarska.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = ekonomiaWPraktyce.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizykaMedyczna.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historiaISpoleczenstwo.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = literaturaObca.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = medycznyJezykAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = przyroda.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
@@ -1866,10 +1982,19 @@ open class FillerResource(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            placeService.save(this)
         }
+        pds = placeService.save(pds)
+
         pS.apply {
             preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = techAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDziennikarska.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = ekonomiaWPraktyce.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizykaMedyczna.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historiaISpoleczenstwo.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = literaturaObca.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = medycznyJezykAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = przyroda.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
@@ -1891,10 +2016,19 @@ open class FillerResource(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            placeService.save(this)
         }
+        pS = placeService.save(pS)
+
         pb.apply {
             preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = techAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDziennikarska.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = ekonomiaWPraktyce.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizykaMedyczna.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historiaISpoleczenstwo.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = literaturaObca.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = medycznyJezykAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = przyroda.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
@@ -1916,10 +2050,19 @@ open class FillerResource(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            placeService.save(this)
         }
+        pb = placeService.save(pb)
+
         ph.apply {
             preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = techAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDziennikarska.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = ekonomiaWPraktyce.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = fizykaMedyczna.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historiaISpoleczenstwo.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = literaturaObca.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = medycznyJezykAngielski.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = przyroda.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = 10),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = historia.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wiedzaOSpołeczeństwie.id, points = -10_000),
@@ -1941,12 +2084,16 @@ open class FillerResource(
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = edukacjaDoBezpieczeństwa.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = religia.id, points = -10_000),
                 PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowaniedoZyciaWRodzinie.id, points = -10_000))
-            placeService.save(this)
         }
+        ph = placeService.save(ph)
+
         pG4.apply {
-            preferenceSubjectByPlace = hashSetOf(PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
-            placeService.save(this)
+            preferenceSubjectByPlace = hashSetOf(
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = informatyka.id, points = -10_000),
+                PreferenceSubjectByPlaceDTO(placeId = this.id, subjectId = wychowanieFizyczne.id, points = -10_000))
         }
+        pG4 = placeService.save(pG4)
+
 
         // =====================================================
         // Preference Divisions
@@ -1988,6 +2135,9 @@ open class FillerResource(
                 PreferenceTeacherByDivisionDTO(divisionId = this.id, teacherId = DzMa.id, points = 5)
             )
             preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
+            preferenceDivisionByPlace = hashSetOf(
+                PreferenceDivisionByPlaceDTO(divisionId = this.id, placeId = p22.id, points = 10)
+            )
 
         }
         class1aGenerate = divisionService.save(class1aGenerate)
@@ -2008,7 +2158,16 @@ open class FillerResource(
                 PreferenceTeacherByDivisionDTO(divisionId = this.id, teacherId = DyLu.id, points = 10)
             )
             preferencesDataTimeForDivision = calculateTypicalPreferenceForTime()
-
+            preferenceDivisionByPlace = hashSetOf(
+                PreferenceDivisionByPlaceDTO(divisionId = this.id, placeId = p20.id, points = -10_000),
+                PreferenceDivisionByPlaceDTO(divisionId = this.id, placeId = p21.id, points = -10_000),
+                PreferenceDivisionByPlaceDTO(divisionId = this.id, placeId = p22.id, points = -10_000),
+                PreferenceDivisionByPlaceDTO(divisionId = this.id, placeId = p24.id, points = -10_000),
+                PreferenceDivisionByPlaceDTO(divisionId = this.id, placeId = p25.id, points = -10_000),
+                PreferenceDivisionByPlaceDTO(divisionId = this.id, placeId = p31.id, points = -10_000),
+                PreferenceDivisionByPlaceDTO(divisionId = this.id, placeId = p35.id, points = -10_000),
+                PreferenceDivisionByPlaceDTO(divisionId = this.id, placeId = p36.id, points = -10_000)
+            )
         }
         class1bGenerate = divisionService.save(class1bGenerate)
 
@@ -2501,20 +2660,30 @@ open class FillerResource(
         }
         class3fGenerate = divisionService.save(class3fGenerate)
 
+        matematyka.apply {
+            preferencesDataTimeForSubject = calculateEarlyPreferenceForTime()
+        }
+        matematyka = subjectService.save(matematyka)
 
-        userService.createUser(
-            login = "2lo",
-            password = "pass",
-            firstName = null,
-            lastName = null,
-            email = "2lo@gmail.com",
-            imageUrl = null,
-            langKey = "en",
-            schoolId = lo2.id,
-            teacherId = null
-        )
 
+        fizyka.apply {
+            preferencesDataTimeForSubject = calculateEarlyPreferenceForTime()
+        }
+        fizyka = subjectService.save(fizyka)
+
+        chemia.apply {
+            preferencesDataTimeForSubject = calculateEarlyPreferenceForTime()
+        }
+        chemia = subjectService.save(chemia)
     }
+
+    private fun setPreferenceToThesis() {
+        GuMa = teacherService.save(GuMa)
+        GuMa.preferenceDateTimeForTeachers.filter { it.dayOfWeek == 1 || it.dayOfWeek == 2 }.forEach { it.points = 10 }
+        GuMa.preferenceDateTimeForTeachers.filter { !(it.dayOfWeek == 1 || it.dayOfWeek == 2) }.forEach { it.points = -10_000 }
+        GuMa = teacherService.save(GuMa)
+    }
+
 
     private fun DivisionDTO.calculateTypicalPreferenceForTime(): HashSet<PreferenceDataTimeForDivisionDTO> {
         return hashSetOf(
@@ -2610,6 +2779,101 @@ open class FillerResource(
             PreferenceDataTimeForDivisionDTO(divisionId = this.id, lessonId = l11.id, dayOfWeek = 7, points = -10000))
 
 
+    }
+
+    private fun SubjectDTO.calculateEarlyPreferenceForTime(): HashSet<PreferenceDataTimeForSubjectDTO> {
+        return hashSetOf(
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l0.id, dayOfWeek = 1, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l1.id, dayOfWeek = 1, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l2.id, dayOfWeek = 1, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l3.id, dayOfWeek = 1, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l4.id, dayOfWeek = 1, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l5.id, dayOfWeek = 1, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l6.id, dayOfWeek = 1, points = -5),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l7.id, dayOfWeek = 1, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l8.id, dayOfWeek = 1, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l9.id, dayOfWeek = 1, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l10.id, dayOfWeek = 1, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l11.id, dayOfWeek = 1, points = -10),
+
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l0.id, dayOfWeek = 2, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l1.id, dayOfWeek = 2, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l2.id, dayOfWeek = 2, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l3.id, dayOfWeek = 2, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l4.id, dayOfWeek = 2, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l5.id, dayOfWeek = 2, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l6.id, dayOfWeek = 2, points = -5),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l7.id, dayOfWeek = 2, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l8.id, dayOfWeek = 2, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l9.id, dayOfWeek = 2, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l10.id, dayOfWeek = 2, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l11.id, dayOfWeek = 2, points = -10),
+
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l0.id, dayOfWeek = 3, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l1.id, dayOfWeek = 3, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l2.id, dayOfWeek = 3, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l3.id, dayOfWeek = 3, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l4.id, dayOfWeek = 3, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l5.id, dayOfWeek = 3, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l6.id, dayOfWeek = 3, points = -5),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l7.id, dayOfWeek = 3, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l8.id, dayOfWeek = 3, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l9.id, dayOfWeek = 3, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l10.id, dayOfWeek = 3, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l11.id, dayOfWeek = 3, points = -10),
+
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l0.id, dayOfWeek = 4, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l1.id, dayOfWeek = 4, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l2.id, dayOfWeek = 4, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l3.id, dayOfWeek = 4, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l4.id, dayOfWeek = 4, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l5.id, dayOfWeek = 4, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l6.id, dayOfWeek = 4, points = -5),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l7.id, dayOfWeek = 4, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l8.id, dayOfWeek = 4, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l9.id, dayOfWeek = 4, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l10.id, dayOfWeek = 4, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l11.id, dayOfWeek = 4, points = -10),
+
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l0.id, dayOfWeek = 5, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l1.id, dayOfWeek = 5, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l2.id, dayOfWeek = 5, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l3.id, dayOfWeek = 5, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l4.id, dayOfWeek = 5, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l5.id, dayOfWeek = 5, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l6.id, dayOfWeek = 5, points = -5),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l7.id, dayOfWeek = 5, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l8.id, dayOfWeek = 5, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l9.id, dayOfWeek = 5, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l10.id, dayOfWeek = 5, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l11.id, dayOfWeek = 5, points = -10),
+
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l0.id, dayOfWeek = 6, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l1.id, dayOfWeek = 6, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l2.id, dayOfWeek = 6, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l3.id, dayOfWeek = 6, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l4.id, dayOfWeek = 6, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l5.id, dayOfWeek = 6, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l6.id, dayOfWeek = 6, points = -5),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l7.id, dayOfWeek = 6, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l8.id, dayOfWeek = 6, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l9.id, dayOfWeek = 6, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l10.id, dayOfWeek = 6, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l11.id, dayOfWeek = 6, points = -10),
+
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l0.id, dayOfWeek = 7, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l1.id, dayOfWeek = 7, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l2.id, dayOfWeek = 7, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l3.id, dayOfWeek = 7, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l4.id, dayOfWeek = 7, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l5.id, dayOfWeek = 7, points = 10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l6.id, dayOfWeek = 7, points = -5),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l7.id, dayOfWeek = 7, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l8.id, dayOfWeek = 7, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l9.id, dayOfWeek = 7, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l10.id, dayOfWeek = 7, points = -10),
+            PreferenceDataTimeForSubjectDTO(subjectId = this.id, lessonId = l11.id, dayOfWeek = 7, points = -10)
+        )
     }
 
 
