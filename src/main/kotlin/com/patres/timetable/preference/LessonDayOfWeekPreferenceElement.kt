@@ -5,7 +5,7 @@ import com.patres.timetable.preference.hierarchy.PreferenceLessonAndDayOfWeekHie
 class LessonDayOfWeekPreferenceElement(
     val dayOfWeek: Int,
     val lessonId: Long,
-    val preference: PreferenceLessonAndDayOfWeekHierarchy
+    val preference: PreferenceLessonAndDayOfWeekHierarchy = PreferenceLessonAndDayOfWeekHierarchy()
 ) : Comparable<LessonDayOfWeekPreferenceElement> {
 
     override fun compareTo(other: LessonDayOfWeekPreferenceElement): Int {

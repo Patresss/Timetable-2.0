@@ -111,30 +111,25 @@ class Division(
 
     override fun getPreferenceDateTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferencesDateTimeForDivision.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
 
-
-    @Transient
-    var subgroups:Set<Division> = emptySet()
-        get() = children.filter { DivisionType.SUBGROUP == it.divisionType }.toSet()
-
     fun calculateContainersWithSetOfSubgroup(): Set<Division> {
         return parents.filter { it.divisionType == DivisionType.SET_OF_SUBGROUPS }.toSet()
     }
 
     fun calculateAllTakenDivisionFromDivision(): Set<Division> {
         val takenDivisions = HashSet<Division>()
-            val setOfGroups = calculateContainersWithSetOfSubgroup()
-            takenDivisions.add(this)
-            parents
-                .filter { parent -> parent.divisionType == DivisionType.CLASS }
-                .forEach { parent ->
-                    takenDivisions.add(parent)
-                    parent.children
-                        .filter { it.divisionType == DivisionType.SUBGROUP && it.parents.intersect(setOfGroups).isEmpty() }
-                        .forEach { child -> takenDivisions.add(child) }
-                }
-            children
-                .filter { child -> child.divisionType == DivisionType.SUBGROUP }
-                .forEach { child -> takenDivisions.add(child) }
+        val setOfGroups = calculateContainersWithSetOfSubgroup()
+        takenDivisions.add(this)
+        parents
+            .filter { parent -> parent.divisionType == DivisionType.CLASS }
+            .forEach { parent ->
+                takenDivisions.add(parent)
+                parent.children
+                    .filter { it.divisionType == DivisionType.SUBGROUP && it.parents.intersect(setOfGroups).isEmpty() }
+                    .forEach { child -> takenDivisions.add(child) }
+            }
+        children
+            .filter { child -> child.divisionType == DivisionType.SUBGROUP }
+            .forEach { child -> takenDivisions.add(child) }
         return takenDivisions
     }
 

@@ -7,7 +7,7 @@ import org.nield.kotlinstatistics.median
 
 class GenerateReport(
     var timetables: List<Timetable> = emptyList(),
-    var windows: List<Window> = emptyList(),
+    var windows: Set<Window> = emptySet(),
     var numberOfHandicapAlgorithmIterations: Int = 0,
     var numberOfHandicapNearToBlockAlgorithmIterations: Int = 0,
     var numberOfSwapAlgorithmIterations: Int = 0,

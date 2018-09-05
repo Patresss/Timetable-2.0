@@ -37,10 +37,11 @@ open class PreferenceManager(
     }
 
     fun calculateAll(preference: Preference, preferenceDependency: PreferenceDependency) {
-        preferenceDependency.teacher?.let { preference.calculateByTeacher(it) }
-        preferenceDependency.subject?.let { preference.calculateBySubject(it) }
-        preferenceDependency.place?.let { preference.calculateByPlace(it) }
-        preferenceDependency.division?.let { preference.calculateByDivision(it) }
+        preference.calculatePreferences(
+            teacher = preferenceDependency.teacher,
+            subject = preferenceDependency.subject,
+            place = preferenceDependency.place,
+            division = preferenceDependency.division)
         preferenceDependency.division?.let { preference.calculateTooSmallPlace(getIdOfTooSmallPlacesFromDatabase(it)) }
         preference.calculateTaken(getTakenTimetableFromDatabase(preferenceDependency))
 

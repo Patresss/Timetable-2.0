@@ -13,7 +13,7 @@ class GenerateReportDTO {
 
     var unacceptedTimetables: List<TimetableDTO> = emptyList()
 
-    var windows: List<WindowDTO> = emptyList()
+    var windows: Set<WindowDTO> = emptySet()
 
     var numberOfWindows: Int = 0
 

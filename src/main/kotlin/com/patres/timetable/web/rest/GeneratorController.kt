@@ -49,7 +49,7 @@ open class GeneratorController(
                 numberOfWindows = generateReport.numberOfWindows
                 timetables = savedTimetablesDTO
                 generateTimeImMs = generateReport.generateTimeImMs
-                windows = windowMapper.toDto(generateReport.windows)
+                windows = windowMapper.entitySetToEntityDTOSet(generateReport.windows)
                 minPoint = generateReport.minPoint
                 maxPoints = generateReport.maxPoints
                 medianPoints = generateReport.medianPoints

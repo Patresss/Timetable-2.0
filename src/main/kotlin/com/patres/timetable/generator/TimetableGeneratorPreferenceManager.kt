@@ -3,7 +3,7 @@ package com.patres.timetable.generator
 import com.patres.timetable.domain.Division
 import com.patres.timetable.domain.Place
 import com.patres.timetable.domain.Timetable
-import java.util.Collections.max
+import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 import kotlin.math.absoluteValue
 
 class TimetableGeneratorPreferenceManager(private var container: TimetableGeneratorContainer) {
@@ -33,6 +33,33 @@ class TimetableGeneratorPreferenceManager(private var container: TimetableGenera
             }
     }
 
+    fun calculateTimeAndPlace() {
+        val timetablesToCalculate = container.timetablesFromCurriculum
+            .filter { timetable -> timetable.lesson == null || timetable.dayOfWeek == null || timetable.place == null}
+
+        timetablesToCalculate.forEach { timetableFromCurriculum ->
+            calculateTakenLessonAndDay(timetableFromCurriculum)
+            calculateTakenPlace(timetableFromCurriculum)
+
+
+            val availablePlaces = timetableFromCurriculum.preference.preferredPlaceMap
+                .filterValues { it.points > PreferenceHierarchy.CAN_BE_USED }
+
+
+        }
+
+
+
+
+// TOODO jestes pijanty, ale chyba cos zjebales, bo jak posortowac cos niezaleznie? Trzeba labo jakos pomyslec albo przy kazdym dopasowaniu przeliczac jeszcze raz. Elo, z fartem!
+//
+//        timetablesToCalculate.sortedBy { it.preference.preferredPlaceMap }
+//                val lessonDayOfWeekPreferenceElement = timetableFromCurriculum.preference.preferredLessonAndDayOfWeekSet.maxBy { preferred -> preferred.preference.pointsWithHandicap }
+//                timetableFromCurriculum.lesson = container.lessons.find { it.id == lessonDayOfWeekPreferenceElement?.lessonId }
+//                timetableFromCurriculum.dayOfWeek = lessonDayOfWeekPreferenceElement?.dayOfWeek
+
+    }
+
     fun calculateTakenLessonAndDay() {
         container.timetablesFromCurriculum
             .forEach { timetableFromCurriculum ->
@@ -49,16 +76,22 @@ class TimetableGeneratorPreferenceManager(private var container: TimetableGenera
     }
 
     private fun sortByPreferredLessonAndDay() {
-        container.timetablesFromCurriculum = container.timetablesFromCurriculum.sortedWith(compareBy(
-            { it.division?.divisionType?.order }, { -max(it.preference.preferredLessonAndDayOfWeekSet.map { it.preference.pointsWithHandicap }) }
-        )).toMutableList()
+        container.timetablesFromCurriculum = container.timetablesFromCurriculum
+            .sortedByDescending {
+                it.preference.preferredLessonAndDayOfWeekSet
+                    .map { it.preference.pointsWithHandicap.absoluteValue }
+                    .sum()
+            }
+            .toMutableList()
     }
 
     fun sortByPreferredPlace() {
         container.timetablesFromCurriculum = container.timetablesFromCurriculum
-            .sortedByDescending { it.preference.preferredPlaceMap
-                .map { entry -> entry.value.points.absoluteValue }
-                .sum() }
+            .sortedByDescending {
+                it.preference.preferredPlaceMap
+                    .map { entry -> entry.value.points.absoluteValue }
+                    .sum()
+            }
             .toMutableList()
     }
 
@@ -70,7 +103,9 @@ class TimetableGeneratorPreferenceManager(private var container: TimetableGenera
     }
 
     fun calculateTakenPlace(timetableFromCurriculum: Timetable) {
-        timetableFromCurriculum.preference.calculateTakenPlace(container.timetablesFromCurriculum.filter { it.lesson?.id == timetableFromCurriculum.lesson?.id && it.dayOfWeek == timetableFromCurriculum.dayOfWeek }.toSet())
+        timetableFromCurriculum.preference.calculateTakenPlace(container.timetablesFromCurriculum
+            .filter { it.lesson?.id == timetableFromCurriculum.lesson?.id && it.dayOfWeek == timetableFromCurriculum.dayOfWeek }
+            .toSet())
     }
 
     fun calculateTakenPlaces() {

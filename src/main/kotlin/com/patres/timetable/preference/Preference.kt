@@ -1,5 +1,6 @@
 package com.patres.timetable.preference
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.patres.timetable.domain.*
 import com.patres.timetable.domain.preference.PreferenceDataTimeForDivision
 import com.patres.timetable.domain.preference.PreferenceDataTimeForPlace
@@ -21,21 +22,89 @@ class Preference(
     val preferredPlaceMap = placesId.map { it to PreferencePlaceHierarchy() }.toMap().toSortedMap()
     val preferredDivisionMap = divisionsId.map { it to PreferenceDivisionHierarchy() }.toMap().toSortedMap()
     val preferredLessonAndDayOfWeekSet = HashSet<LessonDayOfWeekPreferenceElement>()
+    val preferredAvailableTimeAndPlace = HashSet<TimeAndPlacePreferenceElement>()  // TODO implements
+
+    @JsonIgnore
+    var selectPlace: Place? = null
+    @JsonIgnore
+    var selectDivision: Division? = null
+    @JsonIgnore
+    var selectTeacher: Teacher? = null
+    @JsonIgnore
+    var selectSubject: Subject? = null
+    @JsonIgnore
+    var selectLesson: Lesson? = null
+    @JsonIgnore
+    var selectDayOfWeek: DayOfWeek? = null
 
     init {
         DayOfWeek.values().forEach { dayOfWeek ->
             lessonsId.forEach { lessonId ->
-                preferredLessonAndDayOfWeekSet.add(LessonDayOfWeekPreferenceElement(dayOfWeek = dayOfWeek.value, lessonId = lessonId, preference = PreferenceLessonAndDayOfWeekHierarchy()))
+                preferredLessonAndDayOfWeekSet.add(LessonDayOfWeekPreferenceElement(dayOfWeek = dayOfWeek.value, lessonId = lessonId))
+                placesId.forEach { placeId ->
+                    preferredAvailableTimeAndPlace.add(TimeAndPlacePreferenceElement(dayOfWeek = dayOfWeek.value, lessonId = lessonId, placeId = placeId))
+                }
             }
         }
     }
+//
+//
+//    fun calculateAvailableTimeAndPlace() {
+////        preferredPlaceMap.forEach { placeEntry ->
+////            preferredAvailableTimeAndPlace
+////                .filter { it.placeId == placeEntry.key }
+////                .forEach { it.preference.takenByPlace = placeEntry.value.taken }
+////        }
+//
+//        preferredLessonAndDayOfWeekSet.forEach { lessonDatOfWeekPrefElement ->
+//            preferredAvailableTimeAndPlace
+//                .filter { it.lessonId == lessonDatOfWeekPrefElement.lessonId && it.dayOfWeek == lessonDatOfWeekPrefElement.dayOfWeek }
+//                .forEach {
+//                    it.preference.takenByDivision = lessonDatOfWeekPrefElement.preference.takenByDivision
+//                    it.preference.takenByTeacher = lessonDatOfWeekPrefElement.preference.takenByDivision
+//                    it.preference.takenByPlace = lessonDatOfWeekPrefElement.preference.takenByDivision
+//
+//                    it.preference.takenByPlace = lessonDatOfWeekPrefElement.preference.p
+//                }
+//        }
+//    }
+
 
     fun calculateAllForTimetable(timetable: Timetable, tooSmallPlaceId: Set<Long>) {
-        timetable.teacher?.let { calculateByTeacher(it) }
-        timetable.subject?.let { calculateBySubject(it) }
-        timetable.place?.let { calculateByPlace(it) }
-        timetable.division?.let { calculateByDivision(it) }
-        timetable.division?.let { calculateTooSmallPlace(tooSmallPlaceId) }
+        setSelectedPropertiesByTimetable(timetable)
+        calculateByTeacher()
+        calculateBySubject()
+        calculateByPlace()
+        calculateByDivision()
+        calculateTooSmallPlace(tooSmallPlaceId)
+    }
+
+    fun calculatePreferences(place: Place? = null, division: Division? = null, subject: Subject? = null, teacher: Teacher? = null) {
+        place?.takeIf { it != selectPlace }?.let {
+            selectPlace = it
+            calculateByPlace()
+        }
+        subject?.takeIf { it != selectSubject }?.let {
+            selectSubject = it
+            calculateBySubject()
+        }
+        teacher?.takeIf { it != selectTeacher }?.let {
+            selectTeacher = it
+            calculateByTeacher()
+        }
+        division?.takeIf { it != selectDivision }?.let {
+            selectDivision = it
+            calculateByDivision()
+        }
+    }
+
+    private fun setSelectedPropertiesByTimetable(timetable: Timetable) {
+        selectPlace = timetable.place
+        selectDivision = timetable.division
+        selectTeacher = timetable.teacher
+        selectSubject = timetable.subject
+        selectLesson = timetable.lesson
+        selectDayOfWeek = timetable.dayOfWeek?.let { DayOfWeek.of(it) }
     }
 
     fun calculateFullPreferencePoints(timetable: Timetable): Int {
@@ -131,35 +200,35 @@ class Preference(
         }
     }
 
-    fun calculateByTeacher(teacher: Teacher) {
-        calculateSubjectsByTeacher(teacher)
-        calculateDivisionsByTeacher(teacher)
-        calculatePlacesByTeacher(teacher)
-        calculateLessonAndDayOfWeekByTeacher(teacher)
+    fun calculateByTeacher() {
+        calculateSubjectsByTeacher()
+        calculateDivisionsByTeacher()
+        calculatePlacesByTeacher()
+        calculateLessonAndDayOfWeekByTeacher()
     }
 
-    fun calculateByPlace(place: Place) {
-        calculateTeachersByPlace(place)
-        calculateDivisionsByPlace(place)
-        calculateSubjectsByPlace(place)
-        calculateLessonAndDayOfWeekByPlace(place)
+    fun calculateByPlace() {
+        calculateTeachersByPlace()
+        calculateDivisionsByPlace()
+        calculateSubjectsByPlace()
+        calculateLessonAndDayOfWeekByPlace()
     }
 
-    fun calculateByDivision(division: Division) {
-        calculateTeachersByDivision(division)
-        calculatePlacesByDivision(division)
-        calculateSubjectsByDivision(division)
-        calculateLessonAndDayOfWeekByDivision(division)
+    fun calculateByDivision() {
+        calculateTeachersByDivision()
+        calculatePlacesByDivision()
+        calculateSubjectsByDivision()
+        calculateLessonAndDayOfWeekByDivision()
     }
 
-    fun calculateBySubject(subject: Subject) {
-        calculateTeachersBySubject(subject)
-        calculateDivisionsBySubject(subject)
-        calculatePlacesBySubject(subject)
-        calculateLessonAndDayOfWeekBySubject(subject)
+    fun calculateBySubject() {
+        calculateTeachersBySubject()
+        calculateDivisionsBySubject()
+        calculatePlacesBySubject()
+        calculateLessonAndDayOfWeekBySubject()
     }
 
-    fun calculateByLessonAndDayOfWeek(preferenceForTeacher: Set<PreferenceDataTimeForTeacher>, preferenceForSubject: Set<PreferenceDataTimeForSubject>, preferenceForDivision:  Set<PreferenceDataTimeForDivision>, preferenceForPlace: Set<PreferenceDataTimeForPlace> ) {
+    fun calculateByLessonAndDayOfWeek(preferenceForTeacher: Set<PreferenceDataTimeForTeacher>, preferenceForSubject: Set<PreferenceDataTimeForSubject>, preferenceForDivision: Set<PreferenceDataTimeForDivision>, preferenceForPlace: Set<PreferenceDataTimeForPlace>) {
         calculateTeacherByLessonAndDayOfWeek(preferenceForTeacher)
         calculatePlaceByLessonAndDayOfWeek(preferenceForPlace)
         calculateDivisionByLessonAndDayOfWeek(preferenceForDivision)
@@ -204,122 +273,150 @@ class Preference(
         }
     }
 
-    private fun calculateLessonAndDayOfWeekByTeacher(teacher: Teacher) {
-        preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
-            val preference = teacher.getPreferenceDateTime(lessonDayPreferenceElement)
-            lessonDayPreferenceElement.preference.preferredByTeacher = preference?.points ?: 0
+    private fun calculateLessonAndDayOfWeekByTeacher() {
+        selectTeacher?.let { teacher ->
+            preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
+                val preference = teacher.getPreferenceDateTime(lessonDayPreferenceElement)
+                lessonDayPreferenceElement.preference.preferredByTeacher = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculateLessonAndDayOfWeekByPlace(place: Place) {
-        preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
-            val preference = place.getPreferenceDateTime(lessonDayPreferenceElement)
-            lessonDayPreferenceElement.preference.preferredByPlace = preference?.points ?: 0
+    private fun calculateLessonAndDayOfWeekByPlace() {
+        selectPlace?.let { place ->
+            preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
+                val preference = place.getPreferenceDateTime(lessonDayPreferenceElement)
+                lessonDayPreferenceElement.preference.preferredByPlace = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculateLessonAndDayOfWeekByDivision(division: Division) {
-        preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
-            val preference = division.getPreferenceDateTime(lessonDayPreferenceElement)
-            lessonDayPreferenceElement.preference.preferredByDivision = preference?.points ?: 0
+    private fun calculateLessonAndDayOfWeekByDivision() {
+        selectDivision?.let { division ->
+            preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
+                val preference = division.getPreferenceDateTime(lessonDayPreferenceElement)
+                lessonDayPreferenceElement.preference.preferredByDivision = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculateLessonAndDayOfWeekBySubject(subject: Subject) {
-        preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
-            val preference = subject.getPreferenceDateTime(lessonDayPreferenceElement)
-            lessonDayPreferenceElement.preference.preferredBySubject = preference?.points ?: 0
+    private fun calculateLessonAndDayOfWeekBySubject() {
+        selectSubject?.let { subject ->
+            preferredLessonAndDayOfWeekSet.forEach { lessonDayPreferenceElement ->
+                val preference = subject.getPreferenceDateTime(lessonDayPreferenceElement)
+                lessonDayPreferenceElement.preference.preferredBySubject = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculatePlacesByTeacher(teacher: Teacher) {
-        preferredPlaceMap.forEach { id, preferenceHierarchy ->
-            val preference = teacher.preferenceTeacherByPlace.find { it.place?.id == id }
-            preferenceHierarchy.preferredByTeacher = preference?.points ?: 0
+    private fun calculatePlacesByTeacher() {
+        selectTeacher?.let { teacher ->
+            preferredPlaceMap.forEach { id, preferenceHierarchy ->
+                val preference = teacher.preferenceTeacherByPlace.find { it.place?.id == id }
+                preferenceHierarchy.preferredByTeacher = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculateDivisionsByTeacher(teacher: Teacher) {
-        preferredDivisionMap.forEach { id, preferenceHierarchy ->
-            val preference = teacher.preferencesTeacherByDivision.find { it.division?.id == id }
-            preferenceHierarchy.preferredByTeacher = preference?.points ?: 0
+    private fun calculateDivisionsByTeacher() {
+        selectTeacher?.let { teacher ->
+            preferredDivisionMap.forEach { id, preferenceHierarchy ->
+                val preference = teacher.preferencesTeacherByDivision.find { it.division?.id == id }
+                preferenceHierarchy.preferredByTeacher = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculateSubjectsByTeacher(teacher: Teacher) {
-        preferredSubjectMap.forEach { id, preferenceHierarchy ->
-            val preference = teacher.preferenceSubjectByTeacher.find { it.subject?.id == id }
-            preferenceHierarchy.preferredByTeacher = preference?.points ?: 0
+    private fun calculateSubjectsByTeacher() {
+        selectTeacher?.let { teacher ->
+            preferredSubjectMap.forEach { id, preferenceHierarchy ->
+                val preference = teacher.preferenceSubjectByTeacher.find { it.subject?.id == id }
+                preferenceHierarchy.preferredByTeacher = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculateSubjectsByPlace(place: Place) {
-        preferredSubjectMap.forEach { id, preferenceHierarchy ->
-            val preference = place.preferenceSubjectByPlace.find { it.subject?.id == id }
-            preferenceHierarchy.preferredByPlace = preference?.points ?: 0
+    private fun calculateSubjectsByPlace() {
+        selectPlace?.let { place ->
+            preferredSubjectMap.forEach { id, preferenceHierarchy ->
+                val preference = place.preferenceSubjectByPlace.find { it.subject?.id == id }
+                preferenceHierarchy.preferredByPlace = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculateDivisionsByPlace(place: Place) {
-        preferredDivisionMap.forEach { id, preferenceHierarchy ->
-            val preference = place.preferenceDivisionByPlace.find { it.division?.id == id }
-            preferenceHierarchy.preferredByPlace = preference?.points ?: 0
+    private fun calculateDivisionsByPlace() {
+        selectPlace?.let { place ->
+            preferredDivisionMap.forEach { id, preferenceHierarchy ->
+                val preference = place.preferenceDivisionByPlace.find { it.division?.id == id }
+                preferenceHierarchy.preferredByPlace = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculateTeachersByPlace(place: Place) {
-        preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            val preference = place.preferenceTeacherByPlace.find { it.teacher?.id == id }
-            preferenceHierarchy.preferredByPlace = preference?.points ?: 0
+    private fun calculateTeachersByPlace() {
+        selectPlace?.let { place ->
+            preferredTeacherMap.forEach { id, preferenceHierarchy ->
+                val preference = place.preferenceTeacherByPlace.find { it.teacher?.id == id }
+                preferenceHierarchy.preferredByPlace = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculateSubjectsByDivision(division: Division) {
-        preferredSubjectMap.forEach { id, preferenceHierarchy ->
-            val preference = division.preferencesSubjectByDivision.find { it.subject?.id == id }
-            preferenceHierarchy.preferredByDivision = preference?.points ?: 0
+    private fun calculateSubjectsByDivision() {
+        selectDivision?.let { division ->
+            preferredSubjectMap.forEach { id, preferenceHierarchy ->
+                val preference = division.preferencesSubjectByDivision.find { it.subject?.id == id }
+                preferenceHierarchy.preferredByDivision = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculatePlacesByDivision(division: Division) {
-        preferredPlaceMap.forEach { id, preferenceHierarchy ->
-            val preference = division.preferenceDivisionByPlace.find { it.place?.id == id }
-            preferenceHierarchy.preferredByDivision = preference?.points ?: 0
+    private fun calculatePlacesByDivision() {
+        selectDivision?.let { division ->
+
+            preferredPlaceMap.forEach { id, preferenceHierarchy ->
+                val preference = division.preferenceDivisionByPlace.find { it.place?.id == id }
+                preferenceHierarchy.preferredByDivision = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculateTeachersByDivision(division: Division) {
-        try {
+    private fun calculateTeachersByDivision() {
+        selectDivision?.let { division ->
             preferredTeacherMap.forEach { id, preferenceHierarchy ->
                 val preference = division.preferencesTeacherByDivision.find { it.teacher?.id == id }
                 preferenceHierarchy.preferredByDivision = preference?.points ?: 0
             }
-        } catch (e: Exception) {
-            e
-        }
 
-    }
-
-    private fun calculatePlacesBySubject(subject: Subject) {
-        preferredPlaceMap.forEach { id, preferenceHierarchy ->
-            val preference = subject.preferenceSubjectByPlace.find { it.place?.id == id }
-            preferenceHierarchy.preferredBySubject = preference?.points ?: 0
         }
     }
 
-    private fun calculateDivisionsBySubject(subject: Subject) {
-        preferredDivisionMap.forEach { id, preferenceHierarchy ->
-            val preference = subject.preferencesSubjectByDivision.find { it.division?.id == id }
-            preferenceHierarchy.preferredBySubject = preference?.points ?: 0
+    private fun calculatePlacesBySubject() {
+        selectSubject?.let { subject ->
+            preferredPlaceMap.forEach { id, preferenceHierarchy ->
+                val preference = subject.preferenceSubjectByPlace.find { it.place?.id == id }
+                preferenceHierarchy.preferredBySubject = preference?.points ?: 0
+            }
         }
     }
 
-    private fun calculateTeachersBySubject(subject: Subject) {
-        preferredTeacherMap.forEach { id, preferenceHierarchy ->
-            val preferredTeachers = subject.preferenceSubjectByTeacher.find { it.teacher?.id == id }
-            preferenceHierarchy.preferredBySubject = preferredTeachers?.points ?: 0
+    private fun calculateDivisionsBySubject() {
+        selectSubject?.let { subject ->
+            preferredDivisionMap.forEach { id, preferenceHierarchy ->
+                val preference = subject.preferencesSubjectByDivision.find { it.division?.id == id }
+                preferenceHierarchy.preferredBySubject = preference?.points ?: 0
+            }
         }
     }
 
+    private fun calculateTeachersBySubject() {
+        selectSubject?.let { subject ->
+            preferredTeacherMap.forEach { id, preferenceHierarchy ->
+                val preferredTeachers = subject.preferenceSubjectByTeacher.find { it.teacher?.id == id }
+                preferenceHierarchy.preferredBySubject = preferredTeachers?.points ?: 0
+            }
+        }
+    }
 
 }
