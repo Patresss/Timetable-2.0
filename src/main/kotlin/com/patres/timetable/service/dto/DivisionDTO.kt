@@ -2,15 +2,12 @@ package com.patres.timetable.service.dto
 
 
 import com.patres.timetable.domain.enumeration.DivisionType
-import com.patres.timetable.domain.preference.PreferenceSubjectByDivision
-import com.patres.timetable.domain.preference.PreferenceTeacherByDivision
-import com.patres.timetable.service.dto.preference.*
-import org.hibernate.annotations.Cache
-import org.hibernate.annotations.CacheConcurrencyStrategy
+import com.patres.timetable.service.dto.preference.relation.PreferenceDataTimeForDivisionDTO
+import com.patres.timetable.service.dto.preference.relation.PreferenceDivisionByPlaceDTO
+import com.patres.timetable.service.dto.preference.relation.PreferenceSubjectByDivisionDTO
+import com.patres.timetable.service.dto.preference.relation.PreferenceTeacherByDivisionDTO
 import java.io.Serializable
 import java.util.*
-import javax.persistence.CascadeType
-import javax.persistence.OneToMany
 import javax.validation.constraints.NotNull
 
 class DivisionDTO(

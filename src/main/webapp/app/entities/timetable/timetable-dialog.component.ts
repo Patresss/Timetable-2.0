@@ -306,7 +306,8 @@ export class TimetableDialogComponent implements OnInit {
             for (const lesson of this.lessons) {
                 const translatedCurrentDayOfWeek = this.translateService.instant(dayOfWeekSelect.itemTranslate);
                 const itemName = translatedDayOfWeek + ': ' + translatedCurrentDayOfWeek + '\t - ' + translatedLesson + ': ' + lesson.name;
-                const dayOfWeekAndLesson = new SelectType(id++, itemName, '', null, new LessonDayOfWeekPreferenceElement(dayOfWeekSelect.day.valueOf(), lesson.id));
+                const lessonDayOfWeekPreferenceElement = new LessonDayOfWeekPreferenceElement(dayOfWeekSelect.day.valueOf(), lesson.id);
+                const dayOfWeekAndLesson = new SelectType(id++, itemName, '', null, lessonDayOfWeekPreferenceElement, lessonDayOfWeekPreferenceElement.preferenceLessonAndDayOfWeekHierarchy);
                 this.dayOfWeekAndLessonSelectOption.push(dayOfWeekAndLesson);
             }
         }
@@ -480,7 +481,8 @@ export class TimetableDialogComponent implements OnInit {
         this.entityLessonSelectSort(this.lessonSelectOption);
 
         for (const element of preference.preferredLessonAndDayOfWeekSet) {
-            this.updateDayOfWeekAndLessonSelectOption(element.lessonId, element.dayOfWeek, element.preference)
+            const dayOfWeekNumber = parseInt(DayOfWeek[element.dayOfWeek], 10);
+            this.updateDayOfWeekAndLessonSelectOption(element.lessonId, dayOfWeekNumber, element)
         }
         this.dayOfWeekAndLessonSelectSort(this.dayOfWeekAndLessonSelectOption);
     }

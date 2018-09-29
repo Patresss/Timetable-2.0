@@ -1,7 +1,7 @@
 package com.patres.timetable.web.rest
 
 import com.patres.timetable.TimetableApp
-import com.patres.timetable.preference.PreferenceManager
+import com.patres.timetable.preference.PreferenceFactory
 import com.patres.timetable.service.*
 import com.patres.timetable.service.mapper.preference.PreferenceDependencyMapper
 import com.patres.timetable.web.rest.errors.ExceptionTranslator
@@ -57,7 +57,7 @@ open class PreferenceResourceIntTest {
     private lateinit var placeService: PlaceService
 
     @Autowired
-    private lateinit var preferenceManager: PreferenceManager
+    private lateinit var preferenceManager: PreferenceFactory
 
     private lateinit var restPreferenceMockMvc: MockMvc
     private lateinit var restFillerMockMvc: MockMvc

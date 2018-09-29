@@ -1,8 +1,10 @@
 package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.patres.timetable.domain.preference.*
-import com.patres.timetable.preference.LessonDayOfWeekPreferenceElement
+import com.patres.timetable.domain.preference.PreferenceDataTimeForSubject
+import com.patres.timetable.domain.preference.PreferenceSubjectByDivision
+import com.patres.timetable.domain.preference.PreferenceSubjectByPlace
+import com.patres.timetable.domain.preference.PreferenceSubjectByTeacher
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -52,9 +54,7 @@ class Subject(
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     var preferencesDateTimeForSubject: Set<PreferenceDataTimeForSubject> = HashSet()
 
-) : AbstractDivisionOwner(), Serializable, PreferableDateTime {
-
-    override fun getPreferenceDateTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferencesDateTimeForSubject.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
+) : AbstractDivisionOwner(), Serializable {
 
     override fun toString(): String {
         return "Subject(name=$name)"

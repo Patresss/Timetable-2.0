@@ -1,9 +1,9 @@
 package com.patres.timetable.service.dto
 
 
-import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
-import com.patres.timetable.service.dto.preference.PreferenceSubjectByTeacherDTO
-import com.patres.timetable.service.dto.preference.PreferenceTeacherByPlaceDTO
+import com.patres.timetable.service.dto.preference.relation.PreferenceDataTimeForTeacherDTO
+import com.patres.timetable.service.dto.preference.relation.PreferenceSubjectByTeacherDTO
+import com.patres.timetable.service.dto.preference.relation.PreferenceTeacherByPlaceDTO
 import java.io.Serializable
 import java.util.*
 import javax.validation.constraints.NotNull

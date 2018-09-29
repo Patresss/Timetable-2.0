@@ -1,6 +1,7 @@
 package com.patres.timetable.preference.hierarchy
 
-abstract class PreferenceHierarchy {
+abstract class PreferenceHierarchy(
+) {
 
     companion object : Comparator<PreferenceHierarchy> {
         const val HANDICAP = 10
@@ -15,5 +16,6 @@ abstract class PreferenceHierarchy {
 
     open var points = 0
     open var preferencePoints = 0
+
 
 }

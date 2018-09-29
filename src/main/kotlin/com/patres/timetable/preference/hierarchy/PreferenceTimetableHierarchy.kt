@@ -1,6 +1,6 @@
 package com.patres.timetable.preference.hierarchy
 
-class PreferenceTimetableHierarchy : PreferenceHierarchy() {
+class PreferenceTimetableHierarchy {
 
     var preferredBySubject = 0
     var preferredByPlace = 0
@@ -12,7 +12,7 @@ class PreferenceTimetableHierarchy : PreferenceHierarchy() {
     var takenByTeacher = 0
     var takenByDivision = 0
 
-    override var points = 0
+    var points = 0
         get() = preferredByDivision + preferredBySubject + preferredByPlace + preferredByTeacher + preferredByLessonAndDayOfWeek
 
 }

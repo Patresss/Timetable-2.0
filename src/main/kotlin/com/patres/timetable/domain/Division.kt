@@ -6,14 +6,12 @@ import com.patres.timetable.domain.preference.PreferenceDataTimeForDivision
 import com.patres.timetable.domain.preference.PreferenceDivisionByPlace
 import com.patres.timetable.domain.preference.PreferenceSubjectByDivision
 import com.patres.timetable.domain.preference.PreferenceTeacherByDivision
-import com.patres.timetable.preference.LessonDayOfWeekPreferenceElement
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotNull
-import kotlin.jvm.Transient
 
 @Entity
 @Table(name = "division")
@@ -107,9 +105,7 @@ class Division(
 
     divisionOwner: Division? = null
 
-) : AbstractDivisionOwner(divisionOwner), Serializable, PreferableDateTime {
-
-    override fun getPreferenceDateTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferencesDateTimeForDivision.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
+) : AbstractDivisionOwner(divisionOwner), Serializable {
 
     fun calculateContainersWithSetOfSubgroup(): Set<Division> {
         return parents.filter { it.divisionType == DivisionType.SET_OF_SUBGROUPS }.toSet()

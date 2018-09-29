@@ -4,12 +4,12 @@ import com.patres.timetable.domain.Teacher
 import com.patres.timetable.domain.preference.PreferenceSubjectByTeacher
 import com.patres.timetable.repository.*
 import com.patres.timetable.service.dto.TeacherDTO
-import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
-import com.patres.timetable.service.dto.preference.PreferenceSubjectByTeacherDTO
-import com.patres.timetable.service.dto.preference.PreferenceTeacherByPlaceDTO
-import com.patres.timetable.service.mapper.preference.PreferenceDataTimeForTeacherMapper
-import com.patres.timetable.service.mapper.preference.PreferenceSubjectByTeacherMapper
-import com.patres.timetable.service.mapper.preference.PreferenceTeacherByPlaceMapper
+import com.patres.timetable.service.dto.preference.relation.PreferenceDataTimeForTeacherDTO
+import com.patres.timetable.service.dto.preference.relation.PreferenceSubjectByTeacherDTO
+import com.patres.timetable.service.dto.preference.relation.PreferenceTeacherByPlaceDTO
+import com.patres.timetable.service.mapper.preference.relation.PreferenceDataTimeForTeacherMapper
+import com.patres.timetable.service.mapper.preference.relation.PreferenceSubjectByTeacherMapper
+import com.patres.timetable.service.mapper.preference.relation.PreferenceTeacherByPlaceMapper
 import com.patres.timetable.util.EntityUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -131,7 +131,7 @@ open class TeacherMapper : EntityMapper<Teacher, TeacherDTO>() {
             val neutralPreferenceToAdd =
                 places
                     .filter { place -> !preferenceTeacherByPlace.any { preference -> id == preference.teacherId && place.id == preference.placeId } }
-                    .map { place -> PreferenceTeacherByPlaceDTO(placeId = place.id, placeName = place.name ?: "", teacherId = id, teacherFullName = fullName?: "", teacherDegree = degree ?: "", teacherName = name ?: "", teacherSurname = surname ?: "") }
+                    .map { place -> PreferenceTeacherByPlaceDTO(placeId = place.id, placeName = place.name ?: "", teacherId = id, teacherFullName = fullName ?: "", teacherDegree = degree ?: "", teacherName = name ?: "", teacherSurname = surname ?: "") }
             preferenceTeacherByPlace += neutralPreferenceToAdd
             preferenceTeacherByPlace = preferenceTeacherByPlace.sortedBy { it.placeName }.toSet()
         }

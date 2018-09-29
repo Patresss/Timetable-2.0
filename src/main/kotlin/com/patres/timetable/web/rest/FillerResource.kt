@@ -5,7 +5,7 @@ import com.patres.timetable.domain.enumeration.DivisionType
 import com.patres.timetable.domain.enumeration.EventType
 import com.patres.timetable.service.*
 import com.patres.timetable.service.dto.*
-import com.patres.timetable.service.dto.preference.*
+import com.patres.timetable.service.dto.preference.relation.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.transaction.annotation.Transactional
@@ -577,7 +577,7 @@ open class FillerResource(
         // =====================================================
         // Period Interval
         // =====================================================
-        interval = IntervalDTO(startDate = LocalDate.parse("2018-02-26"), endDate = LocalDate.parse("2018-07-01"), includedState = true)
+        interval = IntervalDTO(startDate = LocalDate.parse("2018-02-26"), endDate = LocalDate.parse("2019-07-01"), includedState = true)
         semestLetniPeriod = PeriodDTO(name = "Semestr letni 2018", intervalTimes = hashSetOf(interval), divisionOwnerId = lo2.id)
         semestLetniPeriod = periodService.save(semestLetniPeriod)
 

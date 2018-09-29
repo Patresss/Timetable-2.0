@@ -2,7 +2,6 @@ package com.patres.timetable.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.patres.timetable.domain.preference.*
-import com.patres.timetable.preference.LessonDayOfWeekPreferenceElement
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -57,9 +56,7 @@ class Place(
 
     divisionOwner: Division? = null
 
-) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable, PreferableDateTime {
-
-    override fun getPreferenceDateTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferencesDateTimeForPlace.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
+) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
 
     fun isPlaceTooSmallEnough(division: Division?): Boolean {
         numberOfSeats?.let {seats ->

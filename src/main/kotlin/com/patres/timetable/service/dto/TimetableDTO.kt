@@ -2,13 +2,10 @@ package com.patres.timetable.service.dto
 
 
 import com.patres.timetable.domain.enumeration.EventType
-import com.patres.timetable.preference.Preference
 import com.patres.timetable.preference.hierarchy.PreferenceTimetableHierarchy
 import java.io.Serializable
 import java.time.LocalDate
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Transient
 import javax.validation.constraints.NotNull
 
 class TimetableDTO(

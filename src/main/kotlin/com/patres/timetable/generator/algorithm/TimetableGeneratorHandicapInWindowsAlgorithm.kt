@@ -61,11 +61,11 @@ class TimetableGeneratorHandicapInWindowsAlgorithm(private var container: Timeta
     }
 
     private fun addHandicapInWindow(window: Window) {
-        timetablesFromCurriculum
-            .filter { it.lesson == null && it.dayOfWeek == null && it.division == window.division }
-            .forEach { timetable ->
-                val preference = timetable.preference.getPreferenceByLessonAndDay(window.dayOfWeek, window.lesson?.id)?.preference
-                preference?.let { it.windowHandicap += PreferenceHierarchy.HANDICAP }
-            }
+//        timetablesFromCurriculum
+//            .filter { it.lesson == null && it.dayOfWeek == null && it.division == window.division }
+//            .forEach { timetable ->
+//                val preference = timetable.preference.getPreferenceByLessonAndDay(window.dayOfWeek, window.lesson?.id)?.preferenceLessonAndDayOfWeekHierarchy
+//                preference?.let { it.windowHandicap += PreferenceHierarchy.HANDICAP }
+//            }
     }
 }

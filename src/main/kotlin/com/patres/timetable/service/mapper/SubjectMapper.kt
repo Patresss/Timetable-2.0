@@ -4,12 +4,11 @@ import com.patres.timetable.domain.Subject
 import com.patres.timetable.repository.DivisionRepository
 import com.patres.timetable.repository.LessonRepository
 import com.patres.timetable.repository.PlaceRepository
-import com.patres.timetable.service.dto.PlaceDTO
 import com.patres.timetable.service.dto.SubjectDTO
-import com.patres.timetable.service.dto.preference.PreferenceDataTimeForSubjectDTO
-import com.patres.timetable.service.dto.preference.PreferenceSubjectByPlaceDTO
-import com.patres.timetable.service.mapper.preference.PreferenceDataTimeForSubjectMapper
-import com.patres.timetable.service.mapper.preference.PreferenceSubjectByPlaceMapper
+import com.patres.timetable.service.dto.preference.relation.PreferenceDataTimeForSubjectDTO
+import com.patres.timetable.service.dto.preference.relation.PreferenceSubjectByPlaceDTO
+import com.patres.timetable.service.mapper.preference.relation.PreferenceDataTimeForSubjectMapper
+import com.patres.timetable.service.mapper.preference.relation.PreferenceSubjectByPlaceMapper
 import com.patres.timetable.util.EntityUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

@@ -5,7 +5,6 @@ import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import com.patres.timetable.domain.preference.PreferenceSubjectByTeacher
 import com.patres.timetable.domain.preference.PreferenceTeacherByDivision
 import com.patres.timetable.domain.preference.PreferenceTeacherByPlace
-import com.patres.timetable.preference.LessonDayOfWeekPreferenceElement
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.io.Serializable
@@ -62,9 +61,7 @@ class Teacher(
 
     divisionOwner: Division? = null
 
-) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable, PreferableDateTime {
-
-    override fun getPreferenceDateTime(lessonDayPreferenceElement: LessonDayOfWeekPreferenceElement) = preferenceDateTimeForTeachers.find { preference -> preference.lesson?.id == lessonDayPreferenceElement.lessonId && preference.dayOfWeek == lessonDayPreferenceElement.dayOfWeek }
+) : AbstractDivisionOwner(divisionOwner = divisionOwner), Serializable {
 
     fun getFullName() = "${degree ?: ""} ${name ?: ""} ${surname ?: ""}"
     override fun toString(): String {

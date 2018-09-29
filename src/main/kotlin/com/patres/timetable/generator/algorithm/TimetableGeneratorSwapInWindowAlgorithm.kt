@@ -87,7 +87,7 @@ class TimetableGeneratorSwapInWindowAlgorithm(private var container: TimetableGe
     private fun tryChangeLessonAndDay(division: Division, timetableWithCollision: Timetable): Boolean {
         val divisionTimetable = timetablesFromCurriculum
             .filter { it.division == division && it.lesson != null && it.dayOfWeek != null && it != timetableWithCollision }
-            .sortedBy { it.preference.getPreferencePointsByLessonAndDay(it) }
+          //  .sortedBy { it.preference.getPreferencePointsByLessonAndDay(it) }
 
         val timetableToSwap = divisionTimetable.find { timetableToTest -> canChangeLessonAndDay(timetableWithCollision, timetableToTest) }
         return if (timetableToSwap == null) {
@@ -112,6 +112,6 @@ class TimetableGeneratorSwapInWindowAlgorithm(private var container: TimetableGe
         preferenceManager.calculateTakenLessonAndDay(timetable2)
     }
 
-    private fun isValidPointsAfterChangeLessonAndDay(timetableWithCollision: Timetable, timetableToTest: Timetable) = timetableWithCollision.preference.getPreferencePointsByLessonAndDay(timetableWithCollision) ?: 0 >= PreferenceHierarchy.CAN_BE_USED && timetableToTest.preference.getPreferencePointsByLessonAndDay(timetableToTest) ?: 0 >= PreferenceHierarchy.CAN_BE_USED
+    private fun isValidPointsAfterChangeLessonAndDay(timetableWithCollision: Timetable, timetableToTest: Timetable) = true //timetableWithCollision.preference.getPreferencePointsByLessonAndDay(timetableWithCollision) ?: 0 >= PreferenceHierarchy.CAN_BE_USED && timetableToTest.preference.getPreferencePointsByLessonAndDay(timetableToTest) ?: 0 >= PreferenceHierarchy.CAN_BE_USED
 
 }

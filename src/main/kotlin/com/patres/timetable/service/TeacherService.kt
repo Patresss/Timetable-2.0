@@ -1,22 +1,16 @@
 package com.patres.timetable.service
 
 import com.patres.timetable.domain.Teacher
-import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
-import com.patres.timetable.repository.LessonRepository
 import com.patres.timetable.repository.TeacherRepository
-import com.patres.timetable.repository.UserRepository
 import com.patres.timetable.security.AuthoritiesConstants
 import com.patres.timetable.security.SecurityUtils
 import com.patres.timetable.service.dto.AbstractDivisionOwnerDTO
 import com.patres.timetable.service.dto.TeacherDTO
-import com.patres.timetable.service.dto.preference.PreferenceDataTimeForTeacherDTO
 import com.patres.timetable.service.mapper.EntityMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.DayOfWeek
 
 @Service
 @Transactional

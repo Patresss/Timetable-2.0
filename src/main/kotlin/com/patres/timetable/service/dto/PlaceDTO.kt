@@ -1,6 +1,7 @@
 package com.patres.timetable.service.dto
 
-import com.patres.timetable.service.dto.preference.*
+import com.patres.timetable.service.dto.preference.relation.PreferenceDataTimeForPlaceDTO
+import com.patres.timetable.service.dto.preference.relation.PreferenceSubjectByPlaceDTO
 import java.io.Serializable
 import java.util.*
 import javax.validation.constraints.NotNull

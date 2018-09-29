@@ -9,7 +9,6 @@ import com.patres.timetable.generator.algorithm.TimetableGeneratorHandicapInWind
 import com.patres.timetable.generator.algorithm.TimetableGeneratorHandicapNearToBlockAlgorithm
 import com.patres.timetable.generator.algorithm.TimetableGeneratorSwapInWindowAlgorithm
 import com.patres.timetable.generator.report.GenerateReport
-import com.patres.timetable.preference.Preference
 import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -53,7 +52,7 @@ class TimetableGeneratorContainer(
             }
         }
         timetablesFromCurriculum.forEach {
-            it.preference = Preference(teachersId = teachersId, subjectsId = subjectsId, divisionsId = divisionsId, lessonsId = lessonsId, placesId = placesId)
+          //  it.preference = PreferenceContainer(teachersId = teachersId, subjectsId = subjectsId, divisionsId = divisionsId, lessonsId = lessonsId, placesId = placesId)
         }
         preferenceManager.calculatePreference()
     }
@@ -181,8 +180,7 @@ class TimetableGeneratorContainer(
 
     private fun calculatePlace() {
         timetablesFromCurriculum.forEach { timetable ->
-            val preferences = preferencesDataTimeForPlace.filter { it.lesson?.id == timetable.lesson?.id }.toSet()
-            timetable.preference.calculatePlaceByLessonAndDayOfWeek(preferences)
+         //   timetable.preference.preferenceDateTimeForPlace = preferencesDataTimeForPlace //czy to ma sens po refaktoryzacji?? TODO
         }
 
         preferenceManager.sortByPreferredPlace()
