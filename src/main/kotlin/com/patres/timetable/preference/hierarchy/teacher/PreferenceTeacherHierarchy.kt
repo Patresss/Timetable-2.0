@@ -6,7 +6,7 @@ import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 
 abstract class PreferenceTeacherHierarchy(
     val teacherId: Long,
-    private val preferenceContainer: PreferenceContainer) : PreferenceHierarchy() {
+    val preferenceContainer: PreferenceContainer) : PreferenceHierarchy() {
 
     var preferredBySubject: Int = 0
         get() = preferenceContainer.selectSubject?.preferenceSubjectByTeacher?.find { it.teacher?.id == teacherId }?.points ?: 0

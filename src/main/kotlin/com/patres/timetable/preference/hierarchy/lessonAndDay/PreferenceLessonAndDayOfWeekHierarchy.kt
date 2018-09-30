@@ -35,6 +35,7 @@ abstract class PreferenceLessonAndDayOfWeekHierarchy(
     override var preferencePoints = 0
         get() = preferredByDivision + preferredBySubject + preferredByPlace + preferredByTeacher
 
+
     abstract fun calculateTakenByPlace(): Int
     abstract fun calculateTakenByTeacher(): Int
     abstract fun calculateTakenByDivision(): Int

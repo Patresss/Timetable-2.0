@@ -1,6 +1,6 @@
 package com.patres.timetable.preference.hierarchy.lessonAndDay
 
-import com.patres.timetable.preference.container.single.PreferenceContainerForSingle
+import com.patres.timetable.preference.container.PreferenceContainerForSingle
 import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 import java.time.DayOfWeek
 

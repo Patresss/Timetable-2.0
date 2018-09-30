@@ -1,11 +1,10 @@
-package com.patres.timetable.preference.container.single
+package com.patres.timetable.preference.container
 
 import com.patres.timetable.domain.Timetable
 import com.patres.timetable.domain.preference.PreferenceDataTimeForDivision
 import com.patres.timetable.domain.preference.PreferenceDataTimeForPlace
 import com.patres.timetable.domain.preference.PreferenceDataTimeForSubject
 import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
-import com.patres.timetable.preference.container.PreferenceContainer
 import com.patres.timetable.preference.hierarchy.division.PreferenceDivisionHierarchyForSingle
 import com.patres.timetable.preference.hierarchy.lessonAndDay.PreferenceLessonAndDayHierarchyForSingle
 import com.patres.timetable.preference.hierarchy.place.PreferencePlaceHierarchyForSingle

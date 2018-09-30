@@ -1,5 +1,6 @@
 package com.patres.timetable.preference
 
+import com.patres.timetable.domain.Curriculum
 import com.patres.timetable.domain.Division
 import com.patres.timetable.domain.Timetable
 import com.patres.timetable.domain.preference.PreferenceDataTimeForDivision
@@ -7,8 +8,8 @@ import com.patres.timetable.domain.preference.PreferenceDataTimeForPlace
 import com.patres.timetable.domain.preference.PreferenceDataTimeForSubject
 import com.patres.timetable.domain.preference.PreferenceDataTimeForTeacher
 import com.patres.timetable.preference.container.PreferenceContainer
-import com.patres.timetable.preference.container.global.PreferenceContainerForGlobal
-import com.patres.timetable.preference.container.single.PreferenceContainerForSingle
+import com.patres.timetable.preference.container.PreferenceContainerForGlobal
+import com.patres.timetable.preference.container.PreferenceContainerForSingle
 import com.patres.timetable.repository.*
 import com.patres.timetable.repository.preference.PreferenceDataTimeForDivisionRepository
 import com.patres.timetable.repository.preference.PreferenceDataTimeForPlaceRepository
@@ -69,8 +70,8 @@ open class PreferenceFactory(
         return preferenceContainerMapper.toDto(preferenceContainer)
     }
 
-    fun createGlobalPreference(divisionOwnerId: Long, preferenceDependency: PreferenceDependency, takeDataFromGlobalSchool: Boolean): PreferenceContainerDTO {
-        val schoolDataToPreference = SchoolDataToPreference(
+    fun createSchoolDataToPreference(divisionOwnerId: Long): SchoolDataToPreference {
+        return SchoolDataToPreference(
             divisionOwnerId = divisionOwnerId,
             placesId = placeRepository.findIdByDivisionOwnerId(divisionOwnerId),
             teachersId = teacherRepository.findIdByDivisionOwnerId(divisionOwnerId),
@@ -79,24 +80,25 @@ open class PreferenceFactory(
             lessonsId = lessonRepository.findIdByDivisionOwnerId(divisionOwnerId),
 
             places = placeRepository.findByDivisionOwnerId(divisionOwnerId),
+            lessons = lessonRepository.findByDivisionOwnerId(divisionOwnerId),
 
             preferenceDateTimeForTeacher = getPreferenceDateTimeForTeacherFromDatabase(),
             preferenceDateTimeForSubject = getPreferenceDateTimeForSubjectFromDatabase(),
             preferenceDateTimeForDivision = getPreferenceDateTimeForDivisionFromDatabase(),
             preferenceDateTimeForPlace = getPreferenceDateTimeForPlaceFromDatabase()
         )
+    }
 
+    fun createGlobalPreference(schoolDataToPreference: SchoolDataToPreference, timetable: Timetable): PreferenceContainerForGlobal {
         val preferenceContainer = PreferenceContainerForGlobal(schoolDataToPreference)
         preferenceContainer.apply {
-            selectTeacher = preferenceDependency.teacher
-            selectSubject = preferenceDependency.subject
-            selectPlace = preferenceDependency.place
-            selectDivision = preferenceDependency.division
-            selectLesson = preferenceDependency.lesson
-            selectDayOfWeek = preferenceDependency.dayOfWeek?.let { DayOfWeek.of(it) }
+            selectTeacher = timetable.teacher
+            selectSubject = timetable.subject
+            selectPlace = timetable.place
+            selectDivision = timetable.division
         }
 
-        return preferenceContainerMapper.toDto(preferenceContainer)
+        return preferenceContainer
     }
 
     private fun getIdOfTooSmallPlacesFromDatabase(division: Division): Set<Long> {

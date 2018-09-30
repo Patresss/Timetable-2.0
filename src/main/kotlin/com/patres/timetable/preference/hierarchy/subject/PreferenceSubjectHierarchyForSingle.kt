@@ -1,6 +1,6 @@
 package com.patres.timetable.preference.hierarchy.subject
 
-import com.patres.timetable.preference.container.single.PreferenceContainerForSingle
+import com.patres.timetable.preference.container.PreferenceContainerForSingle
 
 class PreferenceSubjectHierarchyForSingle(
     subjectId: Long,

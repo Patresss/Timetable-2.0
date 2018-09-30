@@ -2,8 +2,7 @@ package com.patres.timetable.preference
 
 import com.patres.timetable.domain.*
 import com.patres.timetable.domain.preference.*
-import com.patres.timetable.preference.container.PreferenceContainer
-import com.patres.timetable.preference.container.single.PreferenceContainerForSingle
+import com.patres.timetable.preference.container.PreferenceContainerForSingle
 import org.junit.Assert
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested

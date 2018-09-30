@@ -1,6 +1,6 @@
 package com.patres.timetable.preference.hierarchy.place
 
-import com.patres.timetable.preference.container.single.PreferenceContainerForSingle
+import com.patres.timetable.preference.container.PreferenceContainerForSingle
 import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 
 class PreferencePlaceHierarchyForSingle(

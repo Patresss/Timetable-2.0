@@ -1,6 +1,8 @@
 package com.patres.timetable.preference.hierarchy.lessonAndDay
 
-import com.patres.timetable.preference.container.global.PreferenceContainerForGlobal
+import com.patres.timetable.domain.Timetable
+import com.patres.timetable.preference.container.PreferenceContainerForGlobal
+import com.patres.timetable.preference.hierarchy.PreferenceHierarchy
 import java.time.DayOfWeek
 
 class PreferenceLessonAndDayHierarchyForGlobal(
@@ -8,19 +10,26 @@ class PreferenceLessonAndDayHierarchyForGlobal(
     dayOfWeek: DayOfWeek,
     preferenceContainerForGlobal: PreferenceContainerForGlobal) : PreferenceLessonAndDayOfWeekHierarchy(lessonId, dayOfWeek, preferenceContainerForGlobal) {
 
-    private val schoolDataToPreference = preferenceContainerForGlobal.schoolDataToPreference
+    private val schoolData = preferenceContainerForGlobal.schoolDataToPreference
+
+    var calculatedPoints = 0
 
     override fun calculateTakenByPlace(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return if (takenTimetables().any { it.place?.id == preferenceContainer.selectPlace?.id }) PreferenceHierarchy.TAKEN else 0
     }
 
     override fun calculateTakenByTeacher(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return if (takenTimetables().any { it.teacher?.id == preferenceContainer.selectTeacher?.id }) PreferenceHierarchy.TAKEN else 0
     }
 
     override fun calculateTakenByDivision(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return if (takenTimetables().any { it.division?.id == preferenceContainer.selectDivision?.id }) PreferenceHierarchy.TAKEN else 0
     }
 
+    fun takenTimetables():Set<Timetable> = schoolData.takenTimetables.filter { it.lesson?.id == lessonId && it.dayOfWeek == dayOfWeek.value }.toSet()
+
+    fun calculateCalculatedPoints() {
+        calculatedPoints = points
+    }
 
 }

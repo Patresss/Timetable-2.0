@@ -17,8 +17,9 @@ class SchoolDataToPreference(
     val divisionsId: Set<Long> = emptySet(),
     val lessonsId: Set<Long> = emptySet(),
     var places: Set<Place> = emptySet(),
+    var lessons: Set<Lesson> = emptySet(),
 
-    var takenTimetables: Set<Timetable> = emptySet(),
+    var takenTimetables: List<Timetable> = emptyList(),
 
     var preferenceDateTimeForTeacher: Set<PreferenceDataTimeForTeacher> = emptySet(),
     var preferenceDateTimeForSubject: Set<PreferenceDataTimeForSubject> = emptySet(),
